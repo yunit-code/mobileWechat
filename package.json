@@ -11,7 +11,8 @@
     "ant-design-vue": "^1.7.6",
     "core-js": "^3.6.5",
     "sass-loader": "^8.0.2",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vuedraggable": "^2.24.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -39,12 +40,12 @@
     },
     "rules": {
       "no-unused-vars": 0,
-      "no-empty":0
+      "no-empty": 0
     },
-    "globals":{
+    "globals": {
       "IDM": true,
       "$": true,
-      "_":true
+      "_": true
     }
   },
   "browserslist": [

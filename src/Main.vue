@@ -31,4 +31,7 @@ export default {
 <style lang="scss">
 #app{
 }
+// body {
+//   background-color: #ccc;
+// }
 </style>
