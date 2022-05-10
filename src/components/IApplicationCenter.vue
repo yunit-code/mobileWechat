@@ -367,11 +367,14 @@ export default {
                     filedExp;
                 var dataObject = { IDM: window.IDM };
                 dataObject[dataName] = resultData;
-                _defaultVal = window.IDM.express.replace.call(
-                    this,
-                    "@[" + filedExp + "]",
-                    dataObject
-                );
+                if ( window.IDM.express && window.IDM.express.replace ) {
+                    _defaultVal = window.IDM.express.replace.call(
+                        this,
+                        "@[" + filedExp + "]",
+                        dataObject
+                    );
+                }
+                
             }
             //对结果进行再次函数自定义
             if (this.propData.customFunction && this.propData.customFunction.length > 0) {

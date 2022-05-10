@@ -1,7 +1,7 @@
 {
-    "classId": "idm.componet.console.iapplicationcenter",
+    "classId": "idm.componet.console.applicationshortcut",
     "comName": "应用中心",
-    "className": "IApplicationCenter",
+    "className": "IApplicationShortcut",
     "comType": "common",
     "comLangue": "vue",
     "compositeAttr": [

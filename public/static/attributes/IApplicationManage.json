@@ -1,7 +1,7 @@
 {
-    "classId": "idm.componet.console.iapplicationcenter",
-    "comName": "应用中心",
-    "className": "IApplicationCenter",
+    "classId": "idm.componet.mobilewechat.applicationmanage",
+    "comName": "应用管理",
+    "className": "IApplicationManage",
     "comType": "common",
     "comLangue": "vue",
     "compositeAttr": [

@@ -1,5 +1,5 @@
 {
-    "version": "1.0.2",
+    "version": "1.0.3",
     "lasttime": "2021-04-05 00:36:27",
     "author": "申龙",
     "className": "mobileWechat",
@@ -12,28 +12,28 @@
             "comLangue": "vue"
         },
         {
-            "classId": "idm.componet.basics.applicationcenter",
+            "classId": "idm.componet.mobilewechat.applicationcenter",
             "comName": "应用中心",
             "className": "IApplicationCenter",
             "comType": "common",
             "comLangue": "vue"
         },
         {
-            "classId": "idm.componet.basics.applicationshortcut",
+            "classId": "idm.componet.mobilewechat.applicationshortcut",
             "comName": "应用中心快捷方式",
             "className": "IApplicationShortcut",
             "comType": "common",
             "comLangue": "vue"
         },
         {
-            "classId": "idm.componet.basics.applicationmanage",
+            "classId": "idm.componet.mobilewechat.applicationmanage",
             "comName": "应用管理",
             "className": "IApplicationManage",
             "comType": "common",
             "comLangue": "vue"
         },
         {
-            "classId": "idm.componet.basics.applicationsearch",
+            "classId": "idm.componet.mobilewechat.applicationsearch",
             "comName": "应用中心搜索",
             "className": "IApplicationSearch",
             "comType": "common",

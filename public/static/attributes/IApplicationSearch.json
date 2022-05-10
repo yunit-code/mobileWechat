@@ -1,5 +1,5 @@
 {
-    "classId": "idm.componet.console.iapplicationsearch",
+    "classId": "idm.componet.mobilewechat.applicationsearch",
     "comName": "应用中心搜索",
     "className": "IApplicationSearch",
     "comType": "common",

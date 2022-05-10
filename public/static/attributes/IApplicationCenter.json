@@ -1,5 +1,5 @@
 {
-    "classId": "idm.componet.console.iapplicationcenter",
+    "classId": "idm.componet.mobilewechat.applicationcenter",
     "comName": "应用中心",
     "className": "IApplicationCenter",
     "comType": "common",
