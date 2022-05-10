@@ -6,6 +6,13 @@ import config from '../public/static/config.json';
 import '@/icons' // icon
 //按需的ant组件注册，没有用到antd最好删除
 import "@/plugins/antd"
+import proportion from 'vue-proportion-directive';
+
+Vue.use(proportion);
+
+import Vant from 'vant';
+import 'vant/lib/index.css';
+Vue.use(Vant);
 
 const requireComponent = require.context(
   // 其组件目录的相对路径
@@ -39,6 +46,7 @@ requireComponent.keys().forEach(fileName => {
     componentConfig.default || componentConfig
   )
 })
+Vue.config.devtools = true
 Vue.prototype.IDM = window.IDM;
 Vue.config.productionTip = false
 //这里每次打包都会生成一个随机的变量，唯一，保证能加载到对应的对象
