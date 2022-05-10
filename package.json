@@ -12,12 +12,8 @@
     "core-js": "^3.6.5",
     "sass-loader": "^8.0.2",
     "vant": "^2.12.47",
-<<<<<<< HEAD
     "vue": "^2.6.11",
     "vue-proportion-directive": "^1.1.0"
-=======
-    "vue": "^2.6.11"
->>>>>>> b632e37e8ca86ca4b1c4a7a4e5a489a68f93b4a5
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
