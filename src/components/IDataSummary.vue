@@ -8,50 +8,65 @@
   <div idm-ctrl="idm_module"
    :id="moduleObject.id" 
    :idm-ctrl-id="moduleObject.id" 
-   :title="propData.htmlTitle" 
-   v-show="propData.defaultStatus!='hidden'" 
-   @click="textClickHandle"
-   class="box">
-    <div class="box-title d-flex align-c just-b">
-      <div class="d-flex align-c">
-        <span>{{propData.htmlTitle}}</span>
-        <img src="../assets/red-three.png" class="box-title-icon" alt="">
+   @click="shortClickHandle">
+    <!--
+      组件内部容器
+      增加class="drag_container" 必选
+      idm-ctrl-id：组件的id，这个必须不能为空
+      idm-container-index  组件的内部容器索引，不重复唯一且不变，必选
+    -->
+    <div class="com-box">
+      <div class="com-inner-box">
+        <div class="com-title" draggable="true">{{propData.comTitle}}
+          <span class="title-after"></span>
+          <span class="title-after"></span>
+          <span class="title-after"></span>
+        </div>
+        <ul class="summary-box">
+          <li v-for="(v,i) in propData.summaryConfigList" :key="i" class="summary-item"
+          style="width: 50%">
+            <div class="summary-bg" :style="{backgroundImage: 'url('+ v.bgUrl + ')', backgroundColor: !v.bgUrl && '#f3a2a3'}" v-proportion="0.5">
+              <div style="marginBottom: 5px">{{v.name}}</div>
+              <div>{{v.num}}</div>
+            </div>
+          </li>
+        </ul>
       </div>
-      <van-icon class="box-title-more" name="ellipsis" @click="handleClickMore" />
     </div>
-    <div class="box-sub" v-for="(item, index) in propData.list" :key="index" @click="handleClickItem(item)">
-      <div class="box-sub-title" :class="{'box-sub-no-read': true}">
-        {{item.title}}
-      </div>
-      <div class="box-sub-intr">
-        <div class="d-flex align-c"><svg-icon iconClass="duihao" class="box-sub-icon"></svg-icon> <span>已读</span> </div>
-        <div class="d-flex align-c">
-          <svg-icon iconClass="person" class="box-sub-icon"></svg-icon> <span>文档处</span> </div>
-        <div class="d-flex align-c"><svg-icon iconClass="time" class="box-sub-icon"></svg-icon> <span>2022-05-09 09:00</span></div>
-      </div>
-    </div>
+    
   </div>
 </template>
 
 <script>
 export default {
-  name: 'IUnifiedTodo',
+  name: 'IDataSummary',
   data(){
     return {
       moduleObject:{},
       propData:this.$root.propData.compositeAttr||{
-        htmlTitle:"紧急代办",
-        width: '100%',
-        height: 'auto',
-        borderRadius: '5px',
-        bgColor: '#fff',
-        list:[{
-          title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
-        },{
-          title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
-        },{
-          title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
-        }]
+        comTitle: '数据汇总',
+        summaryConfigList:[
+          {
+            name: '省政府领导分工',
+            num: 10,
+            bgUrl: '',
+          },
+          {
+            name: 'test1',
+            num: 10,
+            bgUrl: '',
+          },
+          {
+            name: 'test2',
+            num: 10,
+            bgUrl: '',
+          },
+          {
+            name: 'test3',
+            num: 10,
+            bgUrl: '',
+          },
+        ]
       }
     }
   },
@@ -59,22 +74,20 @@ export default {
   },
   created() {
     this.moduleObject = this.$root.moduleObject
-    // console.log(this.moduleObject)
     this.convertAttrToStyleObject();
   },
   mounted() {
     //赋值给window提供跨页面调用
     this.$nextTick(function(params) {
-      //单独组件不能使用这种方式
-      // window[this.moduleObject.packageid] = this;
+      this.moduleObject && this.moduleObject.packageid
+        ? (window[this.moduleObject.packageid] = this)
+        : null;
     });
   },
   destroyed() {},
   methods:{
-    handleClickItem(item){
-      console.log(item)
+    onSelect(action) {
     },
-    handleClickMore() {},
     /**
      * 提供父级组件调用的刷新prop数据组件
      */
@@ -206,9 +219,6 @@ export default {
               styleObject["text-align"]=element.fontTextAlign;
               styleObject["text-decoration"]=element.fontDecoration;
               break;
-            case "borderRadius":
-              styleObject["border-radius"]=element;
-              break;
           }
         }
       }
@@ -249,8 +259,7 @@ export default {
           this.propData.customInterfaceUrl&&window.IDM.http.get(this.propData.customInterfaceUrl,params)
           .then((res) => {
             //res.data
-            that.$set(that.propData,"list",that.getExpressData("resultData",that.propData.dataFiled,res.data));
-            // that.propData.fontContent = ;
+            that.$set(that.propData,"summaryConfigList",res.data);
           })
           .catch(function (error) {
             
@@ -266,53 +275,15 @@ export default {
               resValue = window[this.propData.customFunction[0].name]&&window[this.propData.customFunction[0].name].call(this,{...params,...this.propData.customFunction[0].param,moduleObject:this.moduleObject});
             } catch (error) {
             }
-            that.propData.list = resValue;
+            that.propData.summaryConfigList = resValue;
           }
           break;
       }
     },
     /**
-     * 通用的获取表达式匹配后的结果
-     */
-    getExpressData(dataName,dataFiled,resultData){
-      //给defaultValue设置dataFiled的值
-      var _defaultVal = undefined;
-      if(dataFiled){
-        var filedExp = dataFiled;
-        filedExp =
-          dataName +
-          (filedExp.startsWiths("[") ? "" : ".") +
-          filedExp;
-        var dataObject = { IDM: window.IDM };
-        dataObject[dataName] = resultData;
-        _defaultVal = window.IDM.express.replace.call(
-          this,
-          "@[" + filedExp + "]",
-          dataObject
-        );
-      }
-      //对结果进行再次函数自定义
-      if(this.propData.customFunction&&this.propData.customFunction.length>0){
-        var params = this.commonParam();
-        var resValue = "";
-        try {
-          resValue = window[this.propData.customFunction[0].name]&&window[this.propData.customFunction[0].name].call(this,{
-            ...params,
-            ...this.propData.customFunction[0].param,
-            moduleObject:this.moduleObject,
-            expressData:_defaultVal,interfaceData:resultData
-          });
-        } catch (error) {
-        }
-        _defaultVal = resValue;
-      }
-      
-      return _defaultVal;
-    },
-    /**
      * 文本点击事件
      */
-    textClickHandle(){
+    shortClickHandle(){
       let that = this;
       if(this.moduleObject.env=="develop"){
         //开发模式下不执行此事件
@@ -337,12 +308,6 @@ export default {
         });
       })
     },
-    showThisModuleHandle(){
-      this.propData.defaultStatus = "default";
-    },
-    hideThisModuleHandle(){
-      this.propData.defaultStatus = "hidden";
-    },
     /**
      * 组件通信：接收消息的方法
      * @param {
@@ -356,9 +321,7 @@ export default {
     receiveBroadcastMessage(object){
       console.log("组件收到消息",object)
       if(object.type&&object.type=="linkageShowModule"){
-        this.showThisModuleHandle();
       }else if(object.type&&object.type=="linkageHideModule"){
-        this.hideThisModuleHandle();
       }
     },
     /**
@@ -391,77 +354,68 @@ export default {
       //这里使用的是子表，所以要循环匹配所有子表的属性然后再去设置修改默认值
       if (object.key == this.propData.dataName) {
         // this.propData.fontContent = this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data);
-        this.$set(this.propData,"list",this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data));
+        this.$set(this.propData,"summaryConfigList",object.data);
       }
     }
   }
 }
 </script>
-
 <style lang="scss" scoped>
-.d-flex{
-  display: flex;
-}
-.align-c{
-  align-items: center;
-}
-.just-b{
-  justify-content: space-between;
-}
-.box{
-  padding: 3vw;
-  background-color: #fff;
-  border-radius: 5px;
-  overflow: hidden;
-  &-title{
-    font-size: 18px;
-    font-weight: 600;
-    &-icon{
-      width: 18px;
-      height: 18px;
-      margin: 0 0 0 8px;
-    }
-    &-more{
-      font-size: 23px;
+  ul, li{
+    padding:0;
+    margin:0;
+    list-style-type:none;
+  }
+  .com-inner-box{
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px;
+  }
+  .com-box{
+    background: #eef2fa;
+    padding: 10px;
+    .com-title{
+      color: #333;
+      font-size: 24px;
+      vertical-align: middle;
+      margin-bottom: 10px;
+      .title-after{
+        display: inline-block;
+        width: 8px;
+        height: 18px;
+        background: #245399;
+        border-radius: 10px 0 10px 0;
+        margin-right: 2px;
+        &:nth-child(2){
+          opacity: 0.6;
+        }
+        &:nth-child(3){
+          opacity: 0.2;
+        }
+      }
     }
   }
-  &-sub{
-    border-bottom: .6px solid #eee;
-    &-title{
-      margin: 8px 0 0 0;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      display: -moz-box;
-      -moz-line-clamp: 2;
-      -moz-box-orient: vertical;
-      overflow-wrap: break-word;
-      word-break: break-all;
-      white-space: normal;
-      overflow: hidden;
-      letter-spacing: 1px;
+  .summary-box{
+    display: flex;
+    margin: 0 -5px;
+    flex-wrap: wrap;
+    .summary-item{
       font-size: 15px;
+      padding: 0 5px;
+      text-align: center;
+      margin-bottom: 10px;
     }
-    &-no-read{
-      color: #000;
-      font-weight: 500;
-    }
-    &-intr{
-      padding: 8px 0;
-      @extend .d-flex;
-      @extend .align-c;
-      @extend .just-b;
-      color: #999;
-      font-size: 15px;
-    }
-    &:last-child{
-      border-bottom: 0
-    }
-    &-icon{
-      width: 15px;
-      margin: 0 5px 0 0;
+    .summary-bg{
+      border-radius: 6px;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      color: #fff;
+      padding-left: 5px;
     }
   }
-}
 </style>

@@ -1,13 +1,20 @@
 {
     "version": "1.0.3",
-    "lasttime": "2021-05-10 00:36:27",
+    "lasttime": "2021-04-05 00:36:27",
     "author": "申龙",
     "className": "mobileWechat",
     "module": [
         {
-            "classId": "idm.componet.mobilewechat.text",
-            "comName": "文本",
-            "className": "IText",
+            "classId": "idm.componet.mobileWechat.shortcut",
+            "comName": "快捷方式",
+            "className": "IShortCut",
+            "comType": "common",
+            "comLangue": "vue"
+        },
+        {
+            "classId": "idm.componet.mobileWechat.datasummary",
+            "comName": "数据汇总",
+            "className": "IDataSummary",
             "comType": "common",
             "comLangue": "vue"
         },
@@ -48,6 +55,20 @@
             "classId": "idm.componet.mobilewechat.messageList",
             "comName": "信息列表",
             "className": "IMessageList",
+            "comType": "common",
+            "comLangue": "vue"
+        },
+        {
+            "classId": "idm.componet.mobileWechat.isort",
+            "comName": "排序组件",
+            "className": "ISort",
+            "comType": "common",
+            "comLangue": "vue"
+        },
+        {
+            "classId": "idm.componet.mobileWechat.ischedule",
+            "comName": "日程提醒组件",
+            "className": "ISchedule",
             "comType": "common",
             "comLangue": "vue"
         }

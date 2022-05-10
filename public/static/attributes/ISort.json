@@ -1,7 +1,7 @@
 {
-    "classId": "idm.componet.mobilewechat.text",
-    "comName": "文本",
-    "className": "IText",
+    "classId": "idm.componet.mobileWechat.isort",
+    "comName": "排序组件",
+    "className": "ISort",
     "comType": "common",
     "comLangue": "vue",
     "compositeAttr": [
@@ -21,36 +21,20 @@
             "desc": "提供设置组件能达到展示效果的基本属性设置信息",
             "children": [
                 {
-                    "type": "textarea",
+                    "type": "input",
                     "layoutType": "inline",
-                    "text": "文本内容",
-                    "bindKey": "fontContent",
-                    "default": "文本内容"
+                    "text": "组件列表接口地址",
+                    "bindKey": "componentListUrl",
+                    "desc":"用于获取当前页面一级组件列表,pageid为当前页面id,默认自动获取",
+                    "default": "/ctrl/idm/api/fetchPageSettingData?pageid=@[url('pageid')]"
                 },
                 {
-                    "type": "switch",
+                    "type": "input",
                     "layoutType": "inline",
-                    "text": "title",
-                    "bindKey": "htmlTitle",
-                    "desc": "将内容显示为html标签的title，也就是鼠标放上去会有显示文本内容的文字",
-                    "disabled": false
-                },
-                {
-                    "type": "radio",
-                    "layoutType": "inline",
-                    "text": "默认状态",
-                    "bindKey": "defaultStatus",
-                    "dictionary": [
-                        {
-                            "label": "普通",
-                            "value": "default"
-                        },
-                        {
-                            "label": "隐藏",
-                            "value": "hidden"
-                        }
-                    ],
-                    "default": "default"
+                    "text": "保存接口地址",
+                    "bindKey": "saveUrl",
+                    "desc":"用于保存拖拽结果",
+                    "default": ""
                 }
             ]
         },
