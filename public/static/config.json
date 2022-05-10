@@ -78,6 +78,12 @@
             "className": "IPublicAccounts",
             "comType": "common",
             "comLangue": "vue"
+        },{
+            "classId": "idm.componet.mobileWechat.banner",
+            "comName": "广告轮播",
+            "className": "IBanner",
+            "comType": "common",
+            "comLangue": "vue"
         }
     ]
 }
