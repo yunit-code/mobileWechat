@@ -18,7 +18,7 @@
           <span>{{propData.htmlTitle}}</span>
         </div>
         <div class="box-title-right" @click="handleClickMore">
-          更多 >
+          更多 <van-icon name="arrow" />
         </div>
       </div>
     </template>
@@ -27,7 +27,7 @@
         <div class="box-top-left flex-1">
           <span v-for="(item, index) in propData.titleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.title}}</span>
         </div>
-        <img  class="box-top-more" @click="handleClickMore" src="../assets/more.png" alt="">
+        <van-icon class="box-top-more" name="ellipsis" @click="handleClickMore" />
       </div>
       <div v-else class="box-top2 d-flex just-b align-c">
         <div class="box-top2-left d-flex flex-1">
@@ -76,7 +76,7 @@ export default {
           paddingRightVal: '10px',
         },
         borderRadius: '5px',
-        compStyle: 'styleFour',
+        compStyle: 'styleThree',
         titleList:[{
           title: '标题标1'
         },{
@@ -396,6 +396,7 @@ export default {
   }
   &-top{
     font-size: 20px;
+    margin: 0 0 10px 0;
     &-left{
       overflow: hidden;
       >span{
@@ -416,10 +417,11 @@ export default {
       }
     }
     &-more{
-      width: 20px;
+      font-size: 23px;
     }
   }
   &-top2{
+    margin: 0 0 10px 0;
     font-size: 15px;
     &-left{
       overflow: hidden;

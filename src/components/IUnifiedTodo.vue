@@ -17,7 +17,7 @@
         <span>{{propData.htmlTitle}}</span>
         <img src="../assets/red-three.png" class="box-title-icon" alt="">
       </div>
-      <img class="box-title-more" @click="handleClickMore" src="../assets/more.png" alt="">
+      <van-icon class="box-title-more" name="ellipsis" @click="handleClickMore" />
     </div>
     <div class="box-sub" v-for="(item, index) in propData.list" :key="index" @click="handleClickItem(item)">
       <div class="box-sub-title" :class="{'box-sub-no-read': true}">
@@ -421,7 +421,7 @@ export default {
       margin: 0 0 0 8px;
     }
     &-more{
-      width: 18px;
+      font-size: 23px;
     }
   }
   &-sub{
