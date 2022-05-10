@@ -7,6 +7,10 @@ import '@/icons' // icon
 //按需的ant组件注册，没有用到antd最好删除
 import "@/plugins/antd"
 
+import Vant from 'vant';
+import 'vant/lib/index.css';
+Vue.use(Vant);
+
 const requireComponent = require.context(
   // 其组件目录的相对路径
   './components',

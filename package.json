@@ -11,6 +11,7 @@
     "ant-design-vue": "^1.7.6",
     "core-js": "^3.6.5",
     "sass-loader": "^8.0.2",
+    "vant": "^2.12.47",
     "vue": "^2.6.11"
   },
   "devDependencies": {
@@ -39,12 +40,12 @@
     },
     "rules": {
       "no-unused-vars": 0,
-      "no-empty":0
+      "no-empty": 0
     },
-    "globals":{
+    "globals": {
       "IDM": true,
       "$": true,
-      "_":true
+      "_": true
     }
   },
   "browserslist": [

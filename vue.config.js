@@ -48,6 +48,7 @@ const externals = {
 }
 module.exports = {
     publicPath:"./",
+	  lintOnSave: false,
     assetsDir:assetsDir,
     pages:{
       index: {
