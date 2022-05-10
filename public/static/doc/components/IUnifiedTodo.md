@@ -3,7 +3,7 @@
 ## 组件类名（className）
 IUnifiedTodo
 ## 组件类ID（classId）
-idm.componet.console.unifiedTodo
+idm.componet.mobilewechat.unifiedTodo
 ## 组件开发语言（comLangue）
 vue
 ## 组件类型（comType）

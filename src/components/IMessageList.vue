@@ -381,17 +381,17 @@ export default {
   overflow: hidden;
   &-title{
     padding: 2vw 0;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
      &-icon{
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       margin: 0 7px 0 0;
     }
     &-right{
       font-weight: 400;
       color: #aaa;
-      font-size: 18px;
+      font-size: 16px;
     }
   }
   &-top{

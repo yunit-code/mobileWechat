@@ -72,19 +72,6 @@
                             "default": "auto"
                         }
                     ]
-                },
-                {
-                    "type": "input",
-                    "text": "边框圆角",
-                    "desc": "点击？查看边框圆角用法指南",
-                    "bindKey": "borderRadius",
-                    "default": "5px"
-                },
-                {
-                    "type": "border",
-                    "layoutType": "block",
-                    "text": "边框",
-                    "bindKey": "border"
                 }
             ]
         },
