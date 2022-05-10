@@ -8,28 +8,49 @@
   <div idm-ctrl="idm_module"
    :id="moduleObject.id" 
    :idm-ctrl-id="moduleObject.id" 
-   :title="propData.htmlTitle?propData.fontContent:''" 
+   :title="propData.htmlTitle" 
    v-show="propData.defaultStatus!='hidden'" 
-   @click="textClickHandle">
-    <!--
-      组件内部容器
-      增加class="drag_container" 必选
-      idm-ctrl-id：组件的id，这个必须不能为空
-      idm-container-index  组件的内部容器索引，不重复唯一且不变，必选
-    -->
-    {{propData.fontContent}}
-    <a-tag>234</a-tag>
+   @click="textClickHandle"
+   class="box">
+    <div class="box-title d-flex align-c just-b">
+      <div class="d-flex align-c">
+        <span>{{propData.htmlTitle}}</span>
+        <img src="../assets/red-three.png" class="box-title-icon" alt="">
+      </div>
+      <img class="box-title-more" @click="handleClickMore" src="../assets/more.png" alt="">
+    </div>
+    <div class="box-sub" v-for="(item, index) in propData.list" :key="index" @click="handleClickItem(item)">
+      <div class="box-sub-title" :class="{'box-sub-no-read': true}">
+        {{item.title}}
+      </div>
+      <div class="box-sub-intr">
+        <div class="d-flex align-c"><img class="box-sub-icon" src="../assets/dui.png" alt=""> <span>已读</span> </div>
+        <div class="d-flex align-c"><img class="box-sub-icon" src="../assets/ren.png" alt=""> <span>文档处</span> </div>
+        <div class="d-flex align-c"><img class="box-sub-icon" src="../assets/shijian.png" alt=""> <span>2022-05-09 09:00</span></div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'IText',
+  name: 'IUnifiedTodo',
   data(){
     return {
       moduleObject:{},
       propData:this.$root.propData.compositeAttr||{
-        fontContent:"Hello Word"
+        htmlTitle:"紧急代办",
+        width: '100%',
+        height: 'auto',
+        borderRadius: '5px',
+        bgColor: '#fff',
+        list:[{
+          title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
+        },{
+          title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
+        },{
+          title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
+        }]
       }
     }
   },
@@ -49,6 +70,10 @@ export default {
   },
   destroyed() {},
   methods:{
+    handleClickItem(item){
+      console.log(item)
+    },
+    handleClickMore() {},
     /**
      * 提供父级组件调用的刷新prop数据组件
      */
@@ -180,6 +205,9 @@ export default {
               styleObject["text-align"]=element.fontTextAlign;
               styleObject["text-decoration"]=element.fontDecoration;
               break;
+            case "borderRadius":
+              styleObject["border-radius"]=element;
+              break;
           }
         }
       }
@@ -220,7 +248,7 @@ export default {
           this.propData.customInterfaceUrl&&window.IDM.http.get(this.propData.customInterfaceUrl,params)
           .then((res) => {
             //res.data
-            that.$set(that.propData,"fontContent",that.getExpressData("resultData",that.propData.dataFiled,res.data));
+            that.$set(that.propData,"list",that.getExpressData("resultData",that.propData.dataFiled,res.data));
             // that.propData.fontContent = ;
           })
           .catch(function (error) {
@@ -237,7 +265,7 @@ export default {
               resValue = window[this.propData.customFunction[0].name]&&window[this.propData.customFunction[0].name].call(this,{...params,...this.propData.customFunction[0].param,moduleObject:this.moduleObject});
             } catch (error) {
             }
-            that.propData.fontContent = resValue;
+            that.propData.list = resValue;
           }
           break;
       }
@@ -362,9 +390,77 @@ export default {
       //这里使用的是子表，所以要循环匹配所有子表的属性然后再去设置修改默认值
       if (object.key == this.propData.dataName) {
         // this.propData.fontContent = this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data);
-        this.$set(this.propData,"fontContent",this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data));
+        this.$set(this.propData,"list",this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data));
       }
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.d-flex{
+  display: flex;
+}
+.align-c{
+  align-items: center;
+}
+.just-b{
+  justify-content: space-between;
+}
+.box{
+  padding: 3vw;
+  background-color: #fff;
+  border-radius: 5px;
+  overflow: hidden;
+  &-title{
+    font-size: 18px;
+    font-weight: 600;
+    &-icon{
+      width: 18px;
+      height: 18px;
+      margin: 0 0 0 8px;
+    }
+    &-more{
+      width: 18px;
+    }
+  }
+  &-sub{
+    border-bottom: .6px solid #eee;
+    &-title{
+      margin: 8px 0 0 0;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      display: -moz-box;
+      -moz-line-clamp: 2;
+      -moz-box-orient: vertical;
+      overflow-wrap: break-word;
+      word-break: break-all;
+      white-space: normal;
+      overflow: hidden;
+      letter-spacing: 1px;
+      font-size: 15px;
+    }
+    &-no-read{
+      color: #000;
+      font-weight: 500;
+    }
+    &-intr{
+      padding: 8px 0;
+      @extend .d-flex;
+      @extend .align-c;
+      @extend .just-b;
+      color: #999;
+      font-size: 15px;
+    }
+    &:last-child{
+      border-bottom: 0
+    }
+    &-icon{
+      width: 15px;
+      margin: 0 5px 0 0;
+    }
+  }
+}
+</style>

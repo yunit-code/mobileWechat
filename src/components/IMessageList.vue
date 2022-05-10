@@ -8,28 +8,82 @@
   <div idm-ctrl="idm_module"
    :id="moduleObject.id" 
    :idm-ctrl-id="moduleObject.id" 
-   :title="propData.htmlTitle?propData.fontContent:''" 
+   :title="propData.htmlTitle" 
    v-show="propData.defaultStatus!='hidden'" 
    @click="textClickHandle">
-    <!--
-      组件内部容器
-      增加class="drag_container" 必选
-      idm-ctrl-id：组件的id，这个必须不能为空
-      idm-container-index  组件的内部容器索引，不重复唯一且不变，必选
-    -->
-    {{propData.fontContent}}
-    <a-tag>234</a-tag>
+    <template v-if="propData.compStyle !== 'styleFour'">
+      <div class="box-title d-flex align-c just-b">
+        <div class="d-flex align-c">
+          <img src="../assets/red-three.png" class="box-title-icon" alt="">
+          <span>{{propData.htmlTitle}}</span>
+        </div>
+        <div class="box-title-right" @click="handleClickMore">
+          更多 >
+        </div>
+      </div>
+    </template>
+    <div class="box" :style="{width: propData.width, height: propData.height}">
+      <div v-if="propData.compStyle === 'styleFour'" class="box-top d-flex just-b align-c">
+        <div class="box-top-left flex-1">
+          <span v-for="(item, index) in propData.titleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.title}}</span>
+        </div>
+        <img  class="box-top-more" @click="handleClickMore" src="../assets/more.png" alt="">
+      </div>
+      <div v-else class="box-top2 d-flex just-b align-c">
+        <div class="box-top2-left d-flex flex-1">
+          <div v-for="(item, index) in propData.titleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.title}}</div>
+        </div>
+      </div>
+      <ul class="box-list" v-if="propData.compStyle === 'styleFour' || propData.compStyle === 'styleOne'">
+        <li class="d-flex align-c" v-for="item in 3" :key="item" @click="handleItemClick(item)">
+          <span class="box-list-style-square"></span>
+          <span class="box-list-content">1231123123sdfa撒发射点发射点法发打法师打222222222222222</span>
+          <span class="box-list-time" v-if="propData.compStyle !== 'styleOne'">2022-05-09</span>
+          </li>
+      </ul>
+      <ul class="box-list2" v-if="propData.compStyle === 'styleTwo' || propData.compStyle === 'styleThree'">
+        <li class="d-flex" v-for="item in 3" :key="item" @click="handleItemClick(item)">
+          <img src="../assets/red-three.png" :class="propData.compStyle === 'styleTwo' ? 'box-list2-left-img' : 'box-list2-left-img2'" alt="">
+          <div style="overflow:hidden">
+            <div class="box-list2-title" :class="propData.compStyle === 'styleTwo' ? 'box-list2-title' : 'box-list2-title2'">
+              士大夫萨芬萨芬撒旦撒旦发法国电视企鹅请问齐威王嗡嗡嗡嗡嗡嗡嗡嗡嗡嗡嗡嗡公司哇强强强强强强强强强强
+            </div>
+            <div class="box-list2-title-bottom">
+              2022-05-09
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'IText',
+  name: 'IMessageList',
   data(){
     return {
       moduleObject:{},
+      defaultIndex: 0,
       propData:this.$root.propData.compositeAttr||{
-        fontContent:"Hello Word"
+        htmlTitle:"信息列表",
+        width: '100%',
+        height: 'auto',
+        bgColor: {hex8: '#eee'},
+        box: {
+          paddingBottomVal: '10px',
+          paddingLeftVal: '10px',
+          paddingRightVal: '10px',
+        },
+        borderRadius: '5px',
+        compStyle: 'styleFour',
+        titleList:[{
+          title: '标题标1'
+        },{
+          title: '标题标2'
+        },{
+          title: '标题标3'
+        }]
       }
     }
   },
@@ -49,6 +103,15 @@ export default {
   },
   destroyed() {},
   methods:{
+    // 顶部tabs点击
+    handleTitleClick(item, index) {
+      console.log(index)
+      this.defaultIndex = index
+    },
+    // 点击列
+    handleItemClick(){},
+    // 更多
+    handleClickMore(){},
     /**
      * 提供父级组件调用的刷新prop数据组件
      */
@@ -79,10 +142,6 @@ export default {
             continue;
           }
           switch (key) {
-            case "width":
-            case "height":
-              styleObject[key]=element;
-              break;
             case "bgColor":
               if(element&&element.hex8){
                 styleObject["background-color"]=element.hex8;
@@ -113,72 +172,6 @@ export default {
               if(element.paddingLeftVal){
                 styleObject["padding-left"]=`${element.paddingLeftVal}`;
               }
-              break;
-            case "bgImgUrl":
-              styleObject["background-image"]=`url(${window.IDM.url.getWebPath(element)})`;
-              break;
-            case "positionX":
-              //背景横向偏移
-              
-              break;
-            case "positionY":
-              //背景纵向偏移
-              
-              break;
-            case "bgRepeat":
-              //平铺模式
-                styleObject["background-repeat"]=element;
-              break;
-            case "bgAttachment":
-              //背景模式
-                styleObject["background-attachment"]=element;
-              break;
-            case "border":
-              if(element.border.top.width>0){
-                styleObject["border-top-width"]=element.border.top.width+element.border.top.widthUnit;
-                styleObject["border-top-style"]=element.border.top.style;
-                if(element.border.top.colors.hex8){
-                  styleObject["border-top-color"]=element.border.top.colors.hex8;
-                }
-              }
-              if(element.border.right.width>0){
-                styleObject["border-right-width"]=element.border.right.width+element.border.right.widthUnit;
-                styleObject["border-right-style"]=element.border.right.style;
-                if(element.border.right.colors.hex8){
-                  styleObject["border-right-color"]=element.border.right.colors.hex8;
-                }
-              }
-              if(element.border.bottom.width>0){
-                styleObject["border-bottom-width"]=element.border.bottom.width+element.border.bottom.widthUnit;
-                styleObject["border-bottom-style"]=element.border.bottom.style;
-                if(element.border.bottom.colors.hex8){
-                  styleObject["border-bottom-color"]=element.border.bottom.colors.hex8;
-                }
-              }
-              if(element.border.left.width>0){
-                styleObject["border-left-width"]=element.border.left.width+element.border.left.widthUnit;
-                styleObject["border-left-style"]=element.border.left.style;
-                if(element.border.left.colors.hex8){
-                  styleObject["border-left-color"]=element.border.left.colors.hex8;
-                }
-              }
-              
-              styleObject["border-top-left-radius"]=element.radius.leftTop.radius+element.radius.leftTop.radiusUnit;
-              styleObject["border-top-right-radius"]=element.radius.rightTop.radius+element.radius.rightTop.radiusUnit;
-              styleObject["border-bottom-left-radius"]=element.radius.leftBottom.radius+element.radius.leftBottom.radiusUnit;
-              styleObject["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
-              break;
-            case "font":
-              styleObject["font-family"]=element.fontFamily;
-              if(element.fontColors.hex8){
-                styleObject["color"]=element.fontColors.hex8;
-              }
-              styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
-              styleObject["font-style"]=element.fontStyle;
-              styleObject["font-size"]=element.fontSize+element.fontSizeUnit;
-              styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
-              styleObject["text-align"]=element.fontTextAlign;
-              styleObject["text-decoration"]=element.fontDecoration;
               break;
           }
         }
@@ -220,7 +213,7 @@ export default {
           this.propData.customInterfaceUrl&&window.IDM.http.get(this.propData.customInterfaceUrl,params)
           .then((res) => {
             //res.data
-            that.$set(that.propData,"fontContent",that.getExpressData("resultData",that.propData.dataFiled,res.data));
+            that.$set(that.propData,"list",that.getExpressData("resultData",that.propData.dataFiled,res.data));
             // that.propData.fontContent = ;
           })
           .catch(function (error) {
@@ -235,9 +228,8 @@ export default {
             var resValue = "";
             try {
               resValue = window[this.propData.customFunction[0].name]&&window[this.propData.customFunction[0].name].call(this,{...params,...this.propData.customFunction[0].param,moduleObject:this.moduleObject});
-            } catch (error) {
-            }
-            that.propData.fontContent = resValue;
+            } catch (error) {}
+            that.propData.list = resValue;
           }
           break;
       }
@@ -362,9 +354,179 @@ export default {
       //这里使用的是子表，所以要循环匹配所有子表的属性然后再去设置修改默认值
       if (object.key == this.propData.dataName) {
         // this.propData.fontContent = this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data);
-        this.$set(this.propData,"fontContent",this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data));
+        this.$set(this.propData,"list",this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data));
       }
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.d-flex{
+  display: flex;
+}
+.align-c{
+  align-items: center;
+}
+.just-b{
+  justify-content: space-between;
+}
+.flex-1{
+  flex: 1;
+}
+.box{
+  padding: 3vw;
+  background-color: #fff;
+  border-radius: 5px;
+  overflow: hidden;
+  &-title{
+    padding: 2vw 0;
+    font-size: 20px;
+    font-weight: 600;
+     &-icon{
+      width: 20px;
+      height: 20px;
+      margin: 0 7px 0 0;
+    }
+    &-right{
+      font-weight: 400;
+      color: #aaa;
+      font-size: 18px;
+    }
+  }
+  &-top{
+    font-size: 20px;
+    &-left{
+      overflow: hidden;
+      >span{
+        color: #999;
+        border-right: 1px solid #ccc;
+        padding: 0 15px;
+        &:first-child{
+          padding: 0 15px 0 0;
+        }
+        &:last-child{
+          padding: 0 0 0 15px;
+          border: 0;
+        }
+      }
+      .active{
+        color: #000;
+        font-weight: 500;
+      }
+    }
+    &-more{
+      width: 20px;
+    }
+  }
+  &-top2{
+    font-size: 15px;
+    &-left{
+      overflow: hidden;
+      >div{
+        background-color: #eee;
+        border-radius: 20px;
+        overflow: hidden;
+        margin: 0 4px;
+        color: #000;
+        padding: 2px 15px;
+        &:last-child{
+          
+        }
+      }
+      .active{
+        background-color: #fff;
+        color: rgb(61, 140, 243);
+        font-weight: 500;
+      }
+    }
+    &-more{
+      width: 5vw;
+      height: 1vw;
+    }
+  }
+  &-list{
+    padding: 0;
+    list-style: none;
+    > li{
+      font-size: 18px;
+      margin: 0 0 10px 0;
+      &:last-child{
+        margin:  0;
+      }
+    }
+    &-style-square{
+      width: 1.2vw;
+      height: 1vw;
+      background-color: #000;
+      transform: rotate(45deg);
+      margin: 0 5px 0 0;
+    }
+    &-content{
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+      white-space: nowrap;
+    }
+    &-time{
+      white-space: nowrap;
+      color: #ccc;
+      font-size: 18px;
+      margin: 0 0 0 10px;
+    }
+  }
+  &-list2{
+    padding: 0;
+    list-style: none;
+    > li{
+      
+      width: 100%;
+      margin: 0 0 10px 0;
+      &:last-child{
+        margin:  0;
+      }
+    }
+    &-left-img{
+      width: 80px;
+      height: 70px;
+      margin:0 10px 0 0;
+    }
+    &-left-img2{
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin:0 10px 0 0;
+    }
+    &-title{
+      width: 100%;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      display:-webkit-box;
+      -webkit-box-orient:vertical;
+      -webkit-line-clamp:2;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    &-title2{
+      width: 100%;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      display:-webkit-box;
+      -webkit-box-orient:vertical;
+      -webkit-line-clamp:1;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    &-title-bottom{
+      margin: 10px 0 0 0;
+      color: #ccc;
+      font-size: 14px;
+    }
+    &-title-bottom2{
+      margin: 10px 0 0 0;
+      color: #ccc;
+      font-size: 3.7vw;
+    }
+  }
+}
+</style>

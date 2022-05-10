@@ -1,6 +1,6 @@
 {
     "version": "1.0.3",
-    "lasttime": "2021-04-05 00:36:27",
+    "lasttime": "2021-05-10 00:36:27",
     "author": "申龙",
     "className": "mobileWechat",
     "module": [
@@ -15,6 +15,12 @@
             "classId": "idm.componet.mobilewechat.applicationcenter",
             "comName": "应用中心",
             "className": "IApplicationCenter",
+            "comType": "common",
+            "comLangue": "vue"
+        },{
+            "classId": "idm.componet.mobilewechat.unifiedTodo",
+            "comName": "统一待办",
+            "className": "IUnifiedTodo",
             "comType": "common",
             "comLangue": "vue"
         },
@@ -36,6 +42,12 @@
             "classId": "idm.componet.mobilewechat.applicationsearch",
             "comName": "应用中心搜索",
             "className": "IApplicationSearch",
+            "comType": "common",
+            "comLangue": "vue"
+        },{
+            "classId": "idm.componet.mobilewechat.messageList",
+            "comName": "信息列表",
+            "className": "IMessageList",
             "comType": "common",
             "comLangue": "vue"
         }
