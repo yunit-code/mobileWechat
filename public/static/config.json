@@ -59,7 +59,21 @@
             "comLangue": "vue"
         },
         {
-            "classId": "idm.componet.mobilewechat.publicaccounts",
+            "classId": "idm.componet.mobileWechat.isort",
+            "comName": "排序组件",
+            "className": "ISort",
+            "comType": "common",
+            "comLangue": "vue"
+        },
+        {
+            "classId": "idm.componet.mobileWechat.ischedule",
+            "comName": "日程提醒组件",
+            "className": "ISchedule",
+            "comType": "common",
+            "comLangue": "vue"
+        },
+        {
+            "classId": "idm.componet.mobileWechat.publicaccounts",
             "comName": "公共账号",
             "className": "IPublicAccounts",
             "comType": "common",

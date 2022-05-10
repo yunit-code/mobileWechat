@@ -11,6 +11,8 @@
     "ant-design-vue": "^1.7.6",
     "core-js": "^3.6.5",
     "sass-loader": "^8.0.2",
+    "swiper": "^4.5.0",
+    "vuedraggable": "^2.24.3",
     "vant": "^2.12.47",
     "vue": "^2.6.11",
     "vue-proportion-directive": "^1.1.0"

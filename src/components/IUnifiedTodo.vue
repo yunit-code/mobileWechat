@@ -24,9 +24,10 @@
         {{item.title}}
       </div>
       <div class="box-sub-intr">
-        <div class="d-flex align-c"><img class="box-sub-icon" src="../assets/dui.png" alt=""> <span>已读</span> </div>
-        <div class="d-flex align-c"><img class="box-sub-icon" src="../assets/ren.png" alt=""> <span>文档处</span> </div>
-        <div class="d-flex align-c"><img class="box-sub-icon" src="../assets/shijian.png" alt=""> <span>2022-05-09 09:00</span></div>
+        <div class="d-flex align-c"><svg-icon iconClass="duihao" class="box-sub-icon"></svg-icon> <span>已读</span> </div>
+        <div class="d-flex align-c">
+          <svg-icon iconClass="person" class="box-sub-icon"></svg-icon> <span>文档处</span> </div>
+        <div class="d-flex align-c"><svg-icon iconClass="time" class="box-sub-icon"></svg-icon> <span>2022-05-09 09:00</span></div>
       </div>
     </div>
   </div>

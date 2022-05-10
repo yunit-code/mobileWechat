@@ -1,0 +1,296 @@
+<template>
+  <!--
+    根目录规范(必须不能为空)：
+    idm-ctrl：控件类型 drag_container：容器，drag_container_inlieblock：行内容器，idm_module：非容器的组件
+    id：使用moduleObject.id，如果id不使用这个将会被idm-ctrl-id属性替换
+    idm-ctrl-id：组件的id，这个必须不能为空
+  -->
+  <div
+    idm-ctrl="idm_module"
+    :id="moduleObject.id"
+    :idm-ctrl-id="moduleObject.id"
+    :title="propData.htmlTitle"
+  >
+    <div class="i-sort-outer">
+			<draggable handle=".i-sort-item-handle" v-model="listData" animation="200">
+				<div
+					class="i-sort-item"
+					v-for="(item, index) in listData"
+					:key="`sort-${index}`"
+				>
+					<div class="i-sort-item-handle">
+						<svg-icon icon-class="isort-drag" />
+					</div>
+					<div class="i-sort-item-name">{{item.comName}}</div>
+					<div class="i-sort-item-operation">
+						<span @click="toppingClick(index)">
+							<svg-icon v-show="index !== 0" icon-class="isort-topping" />
+						</span>
+						<span @click="visibleClick(item)">
+							<svg-icon :icon-class="item.visible === '1' ? 'isort-visible' : 'isort-invisible'"/>
+						</span>
+					</div>
+				</div>
+			</draggable>
+    </div>
+  </div>
+</template>
+
+<script>
+import Draggable from "vuedraggable"
+export default {
+  name: "ISort",
+	components:{
+		Draggable
+	},
+  data() {
+    return {
+      moduleObject: {},
+      propData: this.$root.propData.compositeAttr || {},
+      listData: [],
+    };
+  },
+  props: {},
+  created() {
+    this.moduleObject = this.$root.moduleObject;
+		this.convertAttrToStyleObject();
+    if (!this.moduleObject || this.moduleObject.env == "develop") {
+      //开发模式下给例子数据
+      this.listData = [
+        {
+					"comId": "1",
+					"comName": "广告轮播",
+					"visible":"1"
+        },
+        {
+					"comId": "2",
+					"comName": "统一待办",
+					"visible":"1"
+        },
+        {
+					"comId": "3",
+					"comName": "待办列表",
+					"visible":"1"
+        },
+        {
+					"comId": "4",
+					"comName": "应用中心",
+					"visible":"1"
+        },
+        {
+					"comId": "5",
+					"comName": "信息列表",
+					"visible":"1"
+        },
+      ];
+    }else{
+      const url = IDM.express.replace("/ctrl/idm/api/fetchPageSettingData?pageid=@[url('pageid')]",{},true)
+      IDM.http.get(url).done((d) => {
+        alert('模拟Get请求成功', true)
+      }).error((response) => {
+        alert('模拟Get请求失败', false)
+      }).always((res) => {
+      })
+    }
+  },
+  mounted() {},
+  destroyed() {},
+  methods: {
+    /**
+     * 提供父级组件调用的刷新prop数据组件
+     */
+    propDataWatchHandle(propData) {
+      this.propData = propData.compositeAttr || {};
+			this.convertAttrToStyleObject();
+    },
+		/**
+     * 把属性转换成样式对象
+     */
+    convertAttrToStyleObject(){
+      var styleObject = {};
+      if(this.propData.bgSize&&this.propData.bgSize=="custom"){
+        styleObject["background-size"]=(this.propData.bgSizeWidth?this.propData.bgSizeWidth.inputVal+this.propData.bgSizeWidth.selectVal:"auto")+" "+(this.propData.bgSizeHeight?this.propData.bgSizeHeight.inputVal+this.propData.bgSizeHeight.selectVal:"auto")
+      }else if(this.propData.bgSize){
+        styleObject["background-size"]=this.propData.bgSize;
+      }
+      if(this.propData.positionX&&this.propData.positionX.inputVal){
+        styleObject["background-position-x"]=this.propData.positionX.inputVal+this.propData.positionX.selectVal;
+      }
+      if(this.propData.positionY&&this.propData.positionY.inputVal){
+        styleObject["background-position-y"]=this.propData.positionY.inputVal+this.propData.positionY.selectVal;
+      }
+      for (const key in this.propData) {
+        if (this.propData.hasOwnProperty.call(this.propData, key)) {
+          const element = this.propData[key];
+          if(!element&&element!==false&&element!=0){
+            continue;
+          }
+          switch (key) {
+            case "width":
+            case "height":
+              styleObject[key]=element;
+              break;
+            case "bgColor":
+              if(element&&element.hex8){
+                styleObject["background-color"]=element.hex8;
+              }
+              break;
+            case "box":
+              if(element.marginTopVal){
+                styleObject["margin-top"]=`${element.marginTopVal}`;
+              }
+              if(element.marginRightVal){
+                styleObject["margin-right"]=`${element.marginRightVal}`;
+              }
+              if(element.marginBottomVal){
+                styleObject["margin-bottom"]=`${element.marginBottomVal}`;
+              }
+              if(element.marginLeftVal){
+                styleObject["margin-left"]=`${element.marginLeftVal}`;
+              }
+              if(element.paddingTopVal){
+                styleObject["padding-top"]=`${element.paddingTopVal}`;
+              }
+              if(element.paddingRightVal){
+                styleObject["padding-right"]=`${element.paddingRightVal}`;
+              }
+              if(element.paddingBottomVal){
+                styleObject["padding-bottom"]=`${element.paddingBottomVal}`;
+              }
+              if(element.paddingLeftVal){
+                styleObject["padding-left"]=`${element.paddingLeftVal}`;
+              }
+              break;
+            case "bgImgUrl":
+              styleObject["background-image"]=`url(${window.IDM.url.getWebPath(element)})`;
+              break;
+            case "positionX":
+              //背景横向偏移
+              
+              break;
+            case "positionY":
+              //背景纵向偏移
+              
+              break;
+            case "bgRepeat":
+              //平铺模式
+                styleObject["background-repeat"]=element;
+              break;
+            case "bgAttachment":
+              //背景模式
+                styleObject["background-attachment"]=element;
+              break;
+            case "border":
+              if(element.border.top.width>0){
+                styleObject["border-top-width"]=element.border.top.width+element.border.top.widthUnit;
+                styleObject["border-top-style"]=element.border.top.style;
+                if(element.border.top.colors.hex8){
+                  styleObject["border-top-color"]=element.border.top.colors.hex8;
+                }
+              }
+              if(element.border.right.width>0){
+                styleObject["border-right-width"]=element.border.right.width+element.border.right.widthUnit;
+                styleObject["border-right-style"]=element.border.right.style;
+                if(element.border.right.colors.hex8){
+                  styleObject["border-right-color"]=element.border.right.colors.hex8;
+                }
+              }
+              if(element.border.bottom.width>0){
+                styleObject["border-bottom-width"]=element.border.bottom.width+element.border.bottom.widthUnit;
+                styleObject["border-bottom-style"]=element.border.bottom.style;
+                if(element.border.bottom.colors.hex8){
+                  styleObject["border-bottom-color"]=element.border.bottom.colors.hex8;
+                }
+              }
+              if(element.border.left.width>0){
+                styleObject["border-left-width"]=element.border.left.width+element.border.left.widthUnit;
+                styleObject["border-left-style"]=element.border.left.style;
+                if(element.border.left.colors.hex8){
+                  styleObject["border-left-color"]=element.border.left.colors.hex8;
+                }
+              }
+              
+              styleObject["border-top-left-radius"]=element.radius.leftTop.radius+element.radius.leftTop.radiusUnit;
+              styleObject["border-top-right-radius"]=element.radius.rightTop.radius+element.radius.rightTop.radiusUnit;
+              styleObject["border-bottom-left-radius"]=element.radius.leftBottom.radius+element.radius.leftBottom.radiusUnit;
+              styleObject["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
+              break;
+            case "font":
+              styleObject["font-family"]=element.fontFamily;
+              if(element.fontColors.hex8){
+                styleObject["color"]=element.fontColors.hex8;
+              }
+              styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
+              styleObject["font-style"]=element.fontStyle;
+              styleObject["font-size"]=element.fontSize+element.fontSizeUnit;
+              styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
+              styleObject["text-align"]=element.fontTextAlign;
+              styleObject["text-decoration"]=element.fontDecoration;
+              break;
+          }
+        }
+      }
+      window.IDM.setStyleToPageHead(this.moduleObject.id,styleObject);
+      // this.initData();
+    },
+		/**
+		 * 置顶
+		 */
+		toppingClick(index){
+			this.listData.unshift(this.listData.splice(index,1)[0]) 
+		},
+		/**
+		 * 	是否可见
+		 */
+		visibleClick(item){
+			item.visible = item.visible === "1" ? "0":"1"
+		},
+  },
+};
+</script>
+<style scoped lang="scss">
+.i-sort-outer {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 14px 10px;
+	
+	.i-sort-item {
+		display: flex;
+		height: 50px;
+		line-height: 50px;
+		font-family: PingFangSC-Regular;
+		font-size: 16px;
+		color: #333333;
+		margin-bottom: 14px;
+		border-radius: 10px;
+		background-color: #fff;
+
+		.i-sort-item-handle {
+			width: 40px;
+			height: 100%;
+			text-align: center;
+		}
+
+		.i-sort-item-name {
+			flex: 1;
+			white-space:nowrap;
+			overflow:hidden;
+			text-overflow:ellipsis;
+		}
+
+		.i-sort-item-operation {
+			width: 80px;
+			height: 100%;
+			text-align: center;
+			display: flex;
+			justify-content:center;
+
+			span {
+				display: inline-block;
+				height: 100%;
+				width: 30px;
+			}
+		}
+	}
+}
+</style>
