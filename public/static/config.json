@@ -57,6 +57,20 @@
             "className": "IMessageList",
             "comType": "common",
             "comLangue": "vue"
+        },
+        {
+            "classId": "idm.componet.mobileWechat.isort",
+            "comName": "排序组件",
+            "className": "ISort",
+            "comType": "common",
+            "comLangue": "vue"
+        },
+        {
+            "classId": "idm.componet.mobileWechat.ischedule",
+            "comName": "日程提醒组件",
+            "className": "ISchedule",
+            "comType": "common",
+            "comLangue": "vue"
         }
     ]
 }
