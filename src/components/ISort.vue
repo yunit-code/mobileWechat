@@ -54,7 +54,7 @@ export default {
   created() {
     this.moduleObject = this.$root.moduleObject;
 		this.convertAttrToStyleObject();
-    // if (this.moduleObject.env == "develop") {
+    if (!this.moduleObject || this.moduleObject.env == "develop") {
       //开发模式下给例子数据
       this.listData = [
         {
@@ -83,7 +83,15 @@ export default {
 					"visible":"1"
         },
       ];
-    // }
+    }else{
+      const url = IDM.express.replace("/ctrl/idm/api/fetchPageSettingData?pageid=@[url('pageid')]",{},true)
+      IDM.http.get(url).done((d) => {
+        alert('模拟Get请求成功', true)
+      }).error((response) => {
+        alert('模拟Get请求失败', false)
+      }).always((res) => {
+      })
+    }
   },
   mounted() {},
   destroyed() {},

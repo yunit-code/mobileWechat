@@ -5,14 +5,21 @@
     "className": "mobileWechat",
     "module": [
         {
-            "classId": "idm.componet.mobileWechat.sort",
+            "classId": "idm.componet.mobilewechat.text",
+            "comName": "文本",
+            "className": "IText",
+            "comType": "common",
+            "comLangue": "vue"
+        },
+        {
+            "classId": "idm.componet.mobileWechat.isort",
             "comName": "排序组件",
             "className": "ISort",
             "comType": "common",
             "comLangue": "vue"
         },
         {
-            "classId": "idm.componet.mobileWechat.schedule",
+            "classId": "idm.componet.mobileWechat.ischedule",
             "comName": "日程提醒组件",
             "className": "ISchedule",
             "comType": "common",

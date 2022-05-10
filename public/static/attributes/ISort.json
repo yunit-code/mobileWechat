@@ -1,7 +1,7 @@
 {
-    "classId": "idm.componet.basics.text",
-    "comName": "文本",
-    "className": "IText",
+    "classId": "idm.componet.mobileWechat.isort",
+    "comName": "排序组件",
+    "className": "ISort",
     "comType": "common",
     "comLangue": "vue",
     "compositeAttr": [
@@ -25,7 +25,16 @@
                     "layoutType": "inline",
                     "text": "组件列表接口地址",
                     "bindKey": "componentListUrl",
-                    "desc":"用于获取当前页面一级组件列表,pageid为当前页面id,默认自动获取"
+                    "desc":"用于获取当前页面一级组件列表,pageid为当前页面id,默认自动获取",
+                    "default": "/ctrl/idm/api/fetchPageSettingData?pageid=@[url('pageid')]"
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "保存接口地址",
+                    "bindKey": "saveUrl",
+                    "desc":"用于保存拖拽结果",
+                    "default": ""
                 }
             ]
         },
