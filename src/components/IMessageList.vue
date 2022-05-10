@@ -375,7 +375,7 @@ export default {
   flex: 1;
 }
 .box{
-  padding: 3vw;
+  padding: 10px;
   background-color: #fff;
   border-radius: 5px;
   overflow: hidden;

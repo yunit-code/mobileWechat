@@ -409,7 +409,7 @@ export default {
   justify-content: space-between;
 }
 .box{
-  padding: 3vw;
+  padding: 10px;
   background-color: #fff;
   border-radius: 5px;
   overflow: hidden;
