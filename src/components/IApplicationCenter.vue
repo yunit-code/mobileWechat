@@ -41,7 +41,7 @@ export default {
             moduleObject: {},
             propData: this.$root.propData.compositeAttr || {
                 title: '应用中心',
-                showRows: 2,
+                showRows: 1,
                 showColumn: 5,
                 showConfig: false,
                 showTodoNumber: false,
@@ -127,6 +127,7 @@ export default {
         console.log(this.moduleObject)
         this.convertAttrToStyleObject();
         this.application_data = JSON.parse(JSON.stringify(this.application_data_copy))
+        this.changeLines()
     },
     mounted() {
         //赋值给window提供跨页面调用
@@ -157,7 +158,7 @@ export default {
             })
         },
         changeLines() {
-            if ( this.application_data > this.propData.showRows * this.propData.showColumn ) {
+            if ( this.application_data.length > this.propData.showRows * this.propData.showColumn ) {
                 this.application_data = this.application_data_copy.splice(0,this.propData.showRows * this.propData.showColumn)
             }
         },
