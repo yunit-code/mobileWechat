@@ -15,57 +15,49 @@
       idm-ctrl-id：组件的id，这个必须不能为空
       idm-container-index  组件的内部容器索引，不重复唯一且不变，必选
     -->
-    <div class="com-box">
-      <div class="com-inner-box">
-        <div class="com-title" draggable="true">{{propData.comTitle}}
-          <span class="title-after"></span>
-          <span class="title-after"></span>
-          <span class="title-after"></span>
-        </div>
-        <ul class="summary-box">
-          <li v-for="(v,i) in propData.summaryConfigList && propData.summaryConfigList.slice(0, propData.maxNumber)" :key="i" class="summary-item"
-          style="width: 50%">
-            <div class="summary-bg" :style="{backgroundImage: 'url('+ v.bgUrl + ')', backgroundColor: !v.bgUrl && '#f3a2a3'}" v-proportion="0.5">
-              <div style="marginBottom: 5px">{{v.name}}</div>
-              <div>{{v.num}}</div>
-            </div>
-          </li>
-        </ul>
-      </div>
+    <div class="drag-bar-wrapper" @touchstart="down"  @touchmove="move"  @touchend="end">
+      <van-popover
+        v-model="showPopover"
+        trigger="click"
+        :placement="placement"
+        :actions="propData.accountList"
+        @select="onSelect"
+      >
+        <template #reference>
+          <img v-if="propData.accountUrl" :src="propData.accountUrl" alt="">
+          <span v-else :style="{background: !propData.accountUrl && '#ccc'}" :class="!propData.accountUrl && 'accout-icon'"></span>
+        </template>
+      </van-popover>
     </div>
     
   </div>
 </template>
 
 <script>
+import { Popover } from 'vant';
 export default {
-  name: 'IDataSummary',
+  name: 'IPublicAccounts',
   data(){
     return {
+      showPopover: false,
+      placement: 'left',
+      flags: false,
+      position: { x: 0, y: 0 },
+      nx: "",
+      ny: "",
+      dx: "",
+      dy: "",
+      xPum: "",
+      yPum: "",
       moduleObject:{},
       propData:this.$root.propData.compositeAttr||{
-        comTitle: '数据汇总',
-        maxNumber: 4,
-        summaryConfigList:[
+        accountUrl: '',
+        accountList:[
           {
-            name: '省政府领导分工',
-            num: 10,
-            bgUrl: '',
+            text: 'test',
           },
           {
-            name: 'test1',
-            num: 10,
-            bgUrl: '',
-          },
-          {
-            name: 'test2',
-            num: 10,
-            bgUrl: '',
-          },
-          {
-            name: 'test3',
-            num: 10,
-            bgUrl: '',
+            text: 'test1',
           },
         ]
       }
@@ -78,6 +70,7 @@ export default {
     this.convertAttrToStyleObject();
   },
   mounted() {
+    
     //赋值给window提供跨页面调用
     this.$nextTick(function(params) {
       this.moduleObject && this.moduleObject.packageid
@@ -87,7 +80,82 @@ export default {
   },
   destroyed() {},
   methods:{
+    // 实现移动端拖拽
+    down() {
+      let item_box = document.querySelector(".drag-bar-wrapper");
+      this.flags = true;
+      var touch;
+      if (event.touches) {
+        touch = event.touches[0];
+      } else {
+        touch = event;
+      }
+      this.maxW = IDM.getClientWH().width - item_box.offsetWidth;
+      this.maxH = IDM.getClientWH().height - item_box.offsetHeight;
+      this.position.x = touch.clientX - item_box.offsetLeft;
+      this.position.y = touch.clientY - item_box.offsetTop;
+      this.dx = touch.clientX;
+      this.dy = touch.clientY;
+    },
+    move(event) {
+      event.preventDefault();
+      let item_box = document.querySelector(".drag-bar-wrapper");
+      if (this.flags) {
+        var touch;
+        if (event.touches) {
+          touch = event.touches[0];
+        } else {
+          touch = event;
+        }
+        this.nx = touch.clientX - this.position.x;
+        this.ny = touch.clientY - this.position.y;
+        if (this.nx < 0) {
+          this.nx = 0;
+        } else if (this.nx > this.maxW) {
+          this.nx = this.maxW;
+        }
+ 
+        if (this.ny < 0) {
+          this.ny = 0;
+        } else if (this.ny >= this.maxH) {
+          this.ny = this.maxH;
+        }
+        item_box.style.left = this.nx + "px";
+        item_box.style.top = this.ny + "px";
+        if((this.maxW - this.nx) > 66 && this.nx > 66 && this.ny > 132 ) {
+          this.placement = 'top'
+        }
+        if((this.maxW - this.nx) < 66 ) {
+          this.placement = 'left'
+        }
+        if(this.nx < 66 ) {
+          this.placement = 'right'
+        }
+        if(this.ny < 132 ) {
+          this.placement = 'bottom'
+        }
+        this.showPopover = false;
+        document.addEventListener(
+          "touchmove",
+          function() {
+            // event.preventDefault()
+          },
+          false
+        );
+      }
+    },
+    //鼠标释放
+    end() {
+      this.flags = false;
+    },
+    // 点击发送消息
     onSelect(action) {
+      const obj = {
+        type: 'linkageReload',
+        message: '',
+        rangeModule:''
+      }
+      this.sendBroadcastMessage(obj)
     },
     /**
      * 提供父级组件调用的刷新prop数据组件
@@ -260,7 +328,7 @@ export default {
           this.propData.customInterfaceUrl&&window.IDM.http.get(this.propData.customInterfaceUrl,params)
           .then((res) => {
             //res.data
-            that.$set(that.propData,"summaryConfigList",res.data);
+            that.$set(that.propData,"accountList",res.data);
           })
           .catch(function (error) {
             
@@ -276,7 +344,7 @@ export default {
               resValue = window[this.propData.customFunction[0].name]&&window[this.propData.customFunction[0].name].call(this,{...params,...this.propData.customFunction[0].param,moduleObject:this.moduleObject});
             } catch (error) {
             }
-            that.propData.summaryConfigList = resValue;
+            that.propData.accountList = resValue;
           }
           break;
       }
@@ -355,68 +423,26 @@ export default {
       //这里使用的是子表，所以要循环匹配所有子表的属性然后再去设置修改默认值
       if (object.key == this.propData.dataName) {
         // this.propData.fontContent = this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data);
-        this.$set(this.propData,"summaryConfigList",object.data);
+        this.$set(this.propData,"accountList",object.data);
       }
     }
   }
 }
 </script>
 <style lang="scss" scoped>
-  ul, li{
-    padding:0;
-    margin:0;
-    list-style-type:none;
+  .drag-bar-wrapper{
+    width: 20px;
+    height: 20px;
+    position: fixed;
+    z-index: 2;
+    right: 20px;
+    bottom: 30vh;
   }
-  .com-inner-box{
-    background: #fff;
-    border-radius: 10px;
-    padding: 10px;
-  }
-  .com-box{
-    background: #eef2fa;
-    padding: 10px;
-    .com-title{
-      color: #333;
-      font-size: 24px;
-      vertical-align: middle;
-      margin-bottom: 10px;
-      .title-after{
-        display: inline-block;
-        width: 8px;
-        height: 18px;
-        background: #245399;
-        border-radius: 10px 0 10px 0;
-        margin-right: 2px;
-        &:nth-child(2){
-          opacity: 0.6;
-        }
-        &:nth-child(3){
-          opacity: 0.2;
-        }
-      }
-    }
-  }
-  .summary-box{
-    display: flex;
-    margin: 0 -5px;
-    flex-wrap: wrap;
-    .summary-item{
-      font-size: 15px;
-      padding: 0 5px;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-    .summary-bg{
-      border-radius: 6px;
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      background-position: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-start;
-      color: #fff;
-      padding-left: 5px;
-    }
+
+  .accout-icon{
+    display: inline-block;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
   }
 </style>

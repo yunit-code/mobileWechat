@@ -57,6 +57,13 @@
             "className": "IMessageList",
             "comType": "common",
             "comLangue": "vue"
+        },
+        {
+            "classId": "idm.componet.mobilewechat.publicaccounts",
+            "comName": "公共账号",
+            "className": "IPublicAccounts",
+            "comType": "common",
+            "comLangue": "vue"
         }
     ]
 }

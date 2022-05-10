@@ -1,7 +1,7 @@
 {
-    "classId": "idm.componet.mobileWechat.datasummary",
-    "comName": "数据汇总",
-    "className": "IDataSummary",
+    "classId": "idm.componet.mobileWechat.publicaccounts",
+    "comName": "快捷方式",
+    "className": "IPublicAccounts",
     "comType": "common",
     "comLangue": "vue",
     "compositeAttr": [
@@ -25,53 +25,19 @@
                     "layoutType": "inline",
                     "text": "标题",
                     "bindKey": "comTitle",
-                    "default": "数据汇总"
+                    "default": "公共账号"
                 },
                 {
-                    "type": "slider",
+                    "type": "uploadImage",
                     "layoutType": "inline",
-                    "text": "最多显示",
-                    "bindKey": "maxNumber",
-                    "desc":"",
-                    "default":"4"
-                },
-                {
-                    "type": "table",
-                    "layoutType": "inline",
-                    "text": "数据汇总配置",
-                    "bindKey": "summaryConfigList",
-                    "tabText": "汇总[index]",
-                    "children": [
-                        {
-                            "type": "input",
-                            "layoutType": "inline",
-                            "text": "名称",
-                            "bindKey": "name",
-                            "desc":"",
-                            "default":"",
-                            "placeholder":"请输入名称"
-                        },
-                        {
-                            "type": "inputNumber",
-                            "layoutType": "inline",
-                            "text": "数量",
-                            "bindKey": "num",
-                            "desc":"",
-                            "default":0
-                        },
-                        {
-                            "type": "uploadImage",
-                            "layoutType": "inline",
-                            "text": "背景图片",
-                            "bindKey": "bgUrl",
-                            "placeholder": "可输入图片地址或直接上传",
-                            "ctrlAttrObject": {
-                                "width": "",
-                                "height": "",
-                                "cropper": true
-                            }
-                        }
-                    ]
+                    "text": "图标",
+                    "bindKey": "accountUrl",
+                    "placeholder": "可输入图片地址或直接上传",
+                    "ctrlAttrObject": {
+                        "width": "",
+                        "height": "",
+                        "cropper": true
+                    }
                 }
             ]
         },
