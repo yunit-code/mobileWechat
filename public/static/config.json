@@ -1,5 +1,5 @@
 {
-    "version": "1.0.0",
+    "version": "1.0.3",
     "lasttime": "2021-04-05 00:36:27",
     "author": "申龙",
     "className": "mobileWechat",
@@ -15,6 +15,46 @@
             "classId": "idm.componet.mobileWechat.datasummary",
             "comName": "数据汇总",
             "className": "IDataSummary",
+            "comType": "common",
+            "comLangue": "vue"
+        },
+        {
+            "classId": "idm.componet.mobilewechat.applicationcenter",
+            "comName": "应用中心",
+            "className": "IApplicationCenter",
+            "comType": "common",
+            "comLangue": "vue"
+        },{
+            "classId": "idm.componet.mobilewechat.unifiedTodo",
+            "comName": "统一待办",
+            "className": "IUnifiedTodo",
+            "comType": "common",
+            "comLangue": "vue"
+        },
+        {
+            "classId": "idm.componet.mobilewechat.applicationshortcut",
+            "comName": "应用中心快捷方式",
+            "className": "IApplicationShortcut",
+            "comType": "common",
+            "comLangue": "vue"
+        },
+        {
+            "classId": "idm.componet.mobilewechat.applicationmanage",
+            "comName": "应用管理",
+            "className": "IApplicationManage",
+            "comType": "common",
+            "comLangue": "vue"
+        },
+        {
+            "classId": "idm.componet.mobilewechat.applicationsearch",
+            "comName": "应用中心搜索",
+            "className": "IApplicationSearch",
+            "comType": "common",
+            "comLangue": "vue"
+        },{
+            "classId": "idm.componet.mobilewechat.messageList",
+            "comName": "信息列表",
+            "className": "IMessageList",
             "comType": "common",
             "comLangue": "vue"
         }
