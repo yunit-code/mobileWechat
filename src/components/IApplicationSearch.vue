@@ -30,8 +30,13 @@
 </template>
 
 <script>
+import { Search } from 'vant';
+import 'vant/lib/search/style';
 export default {
     name: 'IApplicationSearch',
+    components: {
+        [Search.name]: Search
+    },
     data() {
         return {
             moduleObject: {},

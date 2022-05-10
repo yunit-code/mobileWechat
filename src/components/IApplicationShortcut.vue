@@ -14,7 +14,6 @@
                 <van-grid :border="false" :column-num="5">
                     <van-grid-item v-for="(item,index) in application_data" :key="index">
                         <div class="idm_applicationcenter_main_list">
-                            <!-- <van-image :src="item.img" /> -->
                             <img :src="item.img">
                             <div class="idm_applicationcenter_main_list_name">{{ item.name }}</div>
                             <div class="number">10</div>
@@ -24,31 +23,26 @@
             </div>
             <div v-else class="idm_applicationcenter_main">
                 <div class="swiper_block flex_start">
-                    <span v-for="(item,index) in application_data" key="index" class="swiper_block_list">
+                    <span v-for="(item,index) in application_data" :key="index" class="swiper_block_list">
                         <img :src="item.img">
                         <div class="idm_applicationcenter_main_list_name">{{ item.name }}</div>
                         <div class="number">10</div>
                     </span>
                 </div>
-                <!-- <van-tabs>
-                    <van-tab v-for="(item,index) in application_data" :key="index">
-                        <template #title> 
-                            <div class="idm_applicationcenter_main_list">
-                                <img :src="item.img">
-                                <div class="idm_applicationcenter_main_list_name">{{ item.name }}</div>
-                                <div class="number">10</div>
-                            </div>
-                        </template>
-                    </van-tab>
-                </van-tabs> -->
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import { Grid, GridItem } from 'vant';
+import 'vant/lib/grid/style';
 export default {
     name: 'IApplicationShortcut',
+    components: {
+        [Grid.name]: Grid,
+        [GridItem.name]: GridItem,
+    },
     data() {
         return {
             moduleObject: {},

@@ -10,10 +10,6 @@ import proportion from 'vue-proportion-directive';
 
 Vue.use(proportion);
 
-import Vant from 'vant';
-import 'vant/lib/index.css';
-Vue.use(Vant);
-
 const requireComponent = require.context(
   // 其组件目录的相对路径
   './components',
