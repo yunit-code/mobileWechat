@@ -1,7 +1,7 @@
 {
-    "classId": "idm.componet.basics.text",
-    "comName": "文本",
-    "className": "IText",
+    "classId": "idm.componet.mobileWechat.shortcut",
+    "comName": "快捷方式",
+    "className": "IShortCut",
     "comType": "common",
     "comLangue": "vue",
     "compositeAttr": [
@@ -21,36 +21,55 @@
             "desc": "提供设置组件能达到展示效果的基本属性设置信息",
             "children": [
                 {
-                    "type": "textarea",
+                    "type": "input",
                     "layoutType": "inline",
-                    "text": "文本内容",
-                    "bindKey": "fontContent",
-                    "default": "文本内容"
+                    "text": "标题",
+                    "bindKey": "comTitle",
+                    "default": "快捷方式"
                 },
                 {
-                    "type": "switch",
+                    "type": "table",
                     "layoutType": "inline",
-                    "text": "title",
-                    "bindKey": "htmlTitle",
-                    "desc": "将内容显示为html标签的title，也就是鼠标放上去会有显示文本内容的文字",
-                    "disabled": false
-                },
-                {
-                    "type": "radio",
-                    "layoutType": "inline",
-                    "text": "默认状态",
-                    "bindKey": "defaultStatus",
-                    "dictionary": [
+                    "text": "快捷方式配置",
+                    "bindKey": "shortConfigList",
+                    "tabText": "快捷方式[index]",
+                    "children": [
                         {
-                            "label": "普通",
-                            "value": "default"
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "名称",
+                            "bindKey": "name",
+                            "desc":"",
+                            "default":"",
+                            "placeholder":"请输入名称"
+                        },{
+                            "type": "select",
+                            "layoutType": "inline",
+                            "text": "类型",
+                            "bindKey": "shotType",
+                            "desc":"",
+                            "placeholder": "请选择类型"
+                        },{
+                            "type": "textarea",
+                            "layoutType": "inline",
+                            "text": "URL",
+                            "bindKey": "shotUrl",
+                            "desc":"",
+                            "placeholder": "跳转链接"
                         },
                         {
-                            "label": "隐藏",
-                            "value": "hidden"
+                            "type": "uploadImage",
+                            "layoutType": "inline",
+                            "text": "背景图片",
+                            "bindKey": "bgUrl",
+                            "placeholder": "可输入图片地址或直接上传",
+                            "ctrlAttrObject": {
+                                "width": "",
+                                "height": "",
+                                "cropper": true
+                            }
                         }
-                    ],
-                    "default": "default"
+                    ]
                 }
             ]
         },

@@ -2,12 +2,19 @@
     "version": "1.0.0",
     "lasttime": "2021-04-05 00:36:27",
     "author": "申龙",
-    "className": "basics",
+    "className": "mobileWechat",
     "module": [
         {
-            "classId": "idm.componet.basics.text",
-            "comName": "文本",
-            "className": "IText",
+            "classId": "idm.componet.mobileWechat.shortcut",
+            "comName": "快捷方式",
+            "className": "IShortCut",
+            "comType": "common",
+            "comLangue": "vue"
+        },
+        {
+            "classId": "idm.componet.mobileWechat.datasummary",
+            "comName": "数据汇总",
+            "className": "IDataSummary",
             "comType": "common",
             "comLangue": "vue"
         }

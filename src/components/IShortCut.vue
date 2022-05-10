@@ -8,27 +8,58 @@
   <div idm-ctrl="idm_module"
    :id="moduleObject.id" 
    :idm-ctrl-id="moduleObject.id" 
-   :title="propData.htmlTitle?propData.fontContent:''" 
-   v-show="propData.defaultStatus!='hidden'" 
-   @click="textClickHandle">
+   @click="shortClickHandle">
     <!--
       组件内部容器
       增加class="drag_container" 必选
       idm-ctrl-id：组件的id，这个必须不能为空
       idm-container-index  组件的内部容器索引，不重复唯一且不变，必选
     -->
-    {{propData.fontContent}}
+    <div class="com-box">
+      <div class="com-inner-box">
+        <div class="com-title">{{propData.comTitle}}
+        <span class="title-after"></span>
+        <span class="title-after"></span>
+        <span class="title-after"></span>
+        </div>
+        <ul class="short-box">
+          <li v-for="(v,i) in propData.shortConfigList" :key="i" class="short-item"
+          style="flex: .33">
+            <div class="short-bg" :style="{backgroundImage: 'url('+ v.bgUrl + ')', backgroundColor: !v.bgUrl && '#f3a2a3'}" v-proportion="0.4" @click="goUrl(v)">
+              <span>{{v.name}}</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
   </div>
 </template>
 
 <script>
 export default {
-  name: 'IText',
+  name: 'IShortCut',
   data(){
     return {
       moduleObject:{},
       propData:this.$root.propData.compositeAttr||{
-        fontContent:"Hello Word"
+        comTitle: '快捷方式',
+        showType: 'else',
+        shortConfigList:[
+          {
+            bgUrl: '',
+            name: '省政府领导分工',
+            shotUrl: 'https://www.baidu.com/'
+          },
+          {
+            bgUrl: '',
+            name: 'test1'
+          },
+          {
+            bgUrl: '',
+            name: 'test2'
+          }
+        ]
       }
     }
   },
@@ -36,18 +67,22 @@ export default {
   },
   created() {
     this.moduleObject = this.$root.moduleObject
-    // console.log(this.moduleObject)
     this.convertAttrToStyleObject();
   },
   mounted() {
     //赋值给window提供跨页面调用
     this.$nextTick(function(params) {
-      //单独组件不能使用这种方式
-      // window[this.moduleObject.packageid] = this;
+      this.moduleObject && this.moduleObject.packageid
+        ? (window[this.moduleObject.packageid] = this)
+        : null;
     });
   },
   destroyed() {},
   methods:{
+    // 快捷方式跳转
+    goUrl(v) {
+      v.shotUrl && window.open(v.shotUrl)
+    },
     /**
      * 提供父级组件调用的刷新prop数据组件
      */
@@ -219,8 +254,7 @@ export default {
           this.propData.customInterfaceUrl&&window.IDM.http.get(this.propData.customInterfaceUrl,params)
           .then((res) => {
             //res.data
-            that.$set(that.propData,"fontContent",that.getExpressData("resultData",that.propData.dataFiled,res.data));
-            // that.propData.fontContent = ;
+            that.$set(that.propData,"shortConfigList",res.data);
           })
           .catch(function (error) {
             
@@ -236,53 +270,15 @@ export default {
               resValue = window[this.propData.customFunction[0].name]&&window[this.propData.customFunction[0].name].call(this,{...params,...this.propData.customFunction[0].param,moduleObject:this.moduleObject});
             } catch (error) {
             }
-            that.propData.fontContent = resValue;
+            that.propData.shortConfigList = resValue;
           }
           break;
       }
     },
     /**
-     * 通用的获取表达式匹配后的结果
-     */
-    getExpressData(dataName,dataFiled,resultData){
-      //给defaultValue设置dataFiled的值
-      var _defaultVal = undefined;
-      if(dataFiled){
-        var filedExp = dataFiled;
-        filedExp =
-          dataName +
-          (filedExp.startsWiths("[") ? "" : ".") +
-          filedExp;
-        var dataObject = { IDM: window.IDM };
-        dataObject[dataName] = resultData;
-        _defaultVal = window.IDM.express.replace.call(
-          this,
-          "@[" + filedExp + "]",
-          dataObject
-        );
-      }
-      //对结果进行再次函数自定义
-      if(this.propData.customFunction&&this.propData.customFunction.length>0){
-        var params = this.commonParam();
-        var resValue = "";
-        try {
-          resValue = window[this.propData.customFunction[0].name]&&window[this.propData.customFunction[0].name].call(this,{
-            ...params,
-            ...this.propData.customFunction[0].param,
-            moduleObject:this.moduleObject,
-            expressData:_defaultVal,interfaceData:resultData
-          });
-        } catch (error) {
-        }
-        _defaultVal = resValue;
-      }
-      
-      return _defaultVal;
-    },
-    /**
      * 文本点击事件
      */
-    textClickHandle(){
+    shortClickHandle(){
       let that = this;
       if(this.moduleObject.env=="develop"){
         //开发模式下不执行此事件
@@ -307,12 +303,6 @@ export default {
         });
       })
     },
-    showThisModuleHandle(){
-      this.propData.defaultStatus = "default";
-    },
-    hideThisModuleHandle(){
-      this.propData.defaultStatus = "hidden";
-    },
     /**
      * 组件通信：接收消息的方法
      * @param {
@@ -326,9 +316,7 @@ export default {
     receiveBroadcastMessage(object){
       console.log("组件收到消息",object)
       if(object.type&&object.type=="linkageShowModule"){
-        this.showThisModuleHandle();
       }else if(object.type&&object.type=="linkageHideModule"){
-        this.hideThisModuleHandle();
       }
     },
     /**
@@ -361,9 +349,64 @@ export default {
       //这里使用的是子表，所以要循环匹配所有子表的属性然后再去设置修改默认值
       if (object.key == this.propData.dataName) {
         // this.propData.fontContent = this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data);
-        this.$set(this.propData,"fontContent",this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data));
+        this.$set(this.propData,"shortConfigList",object.data);
       }
     }
   }
 }
 </script>
+<style lang="scss" scoped>
+  ul, li{
+    padding:0;
+    margin:0;
+    list-style-type:none;
+  }
+  .com-inner-box{
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px;
+  }
+  .com-box{
+    background: #eef2fa;
+    padding: 10px;
+    .com-title{
+      color: #333;
+      font-size: 24px;
+      vertical-align: middle;
+      margin-bottom: 10px;
+      .title-after{
+        display: inline-block;
+        width: 8px;
+        height: 18px;
+        background: #245399;
+        border-radius: 10px 0 10px 0;
+        margin-right: 2px;
+        &:nth-child(2){
+          opacity: 0.6;
+        }
+        &:nth-child(3){
+          opacity: 0.2;
+        }
+      }
+    }
+  }
+  .short-box{
+    display: flex;
+    margin: 0 -5px;
+    .short-item{
+      font-size: 15px;
+      padding: 0 5px;
+      text-align: center;
+    }
+    .short-bg{
+      border-radius: 6px;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+  }
+</style>
