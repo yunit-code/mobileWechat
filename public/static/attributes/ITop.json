@@ -54,7 +54,7 @@
                 },
                 {
                     "type": "uploadImage",
-                    "layoutType": "inline",
+                    "layoutType": "block",
                     "text": "自定义头部背景",
                     "bindKey": "headerBgUrl",
                     "placeholder": "可输入图片地址或直接上传",

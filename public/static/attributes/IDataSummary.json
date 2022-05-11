@@ -36,6 +36,30 @@
                     "default":"4"
                 },
                 {
+                    "type": "box",
+                    "layoutType": "block",
+                    "text": "外层内外边距",
+                    "bindKey": "comBox"
+                },
+                {
+                    "type": "box",
+                    "layoutType": "block",
+                    "text": "内层内外边距",
+                    "bindKey": "comInnerBox"
+                },
+                {
+                    "type": "border",
+                    "layoutType": "block",
+                    "text": "边框",
+                    "bindKey": "comBorder"
+                },
+                {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "标题文字",
+                    "bindKey": "titleFont"
+                },
+                {
                     "type": "table",
                     "layoutType": "inline",
                     "text": "数据汇总配置",

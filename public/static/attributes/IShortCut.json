@@ -28,6 +28,30 @@
                     "default": "快捷方式"
                 },
                 {
+                    "type": "box",
+                    "layoutType": "block",
+                    "text": "外层内外边距",
+                    "bindKey": "comBox"
+                },
+                {
+                    "type": "box",
+                    "layoutType": "block",
+                    "text": "内层内外边距",
+                    "bindKey": "comInnerBox"
+                },
+                {
+                    "type": "border",
+                    "layoutType": "block",
+                    "text": "边框",
+                    "bindKey": "comBorder"
+                },
+                {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "标题文字",
+                    "bindKey": "titleFont"
+                },
+                {
                     "type": "table",
                     "layoutType": "inline",
                     "text": "快捷方式配置",
@@ -42,13 +66,6 @@
                             "desc":"",
                             "default":"",
                             "placeholder":"请输入名称"
-                        },{
-                            "type": "select",
-                            "layoutType": "inline",
-                            "text": "类型",
-                            "bindKey": "shotType",
-                            "desc":"",
-                            "placeholder": "请选择类型"
                         },{
                             "type": "textarea",
                             "layoutType": "inline",
