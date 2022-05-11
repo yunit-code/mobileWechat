@@ -56,6 +56,7 @@ export default {
         height: 'auto',
         borderRadius: '5px',
         bgColor: '#fff',
+        maxCount: '3', // 最多显示几条
         list
       }
     }

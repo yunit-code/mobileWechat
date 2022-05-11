@@ -81,14 +81,16 @@ export default {
           paddingRightVal: '10px',
         },
         borderRadius: '5px',
-        compStyle: 'styleFour',
+        compStyle: 'styleOne',
         titleList:[{
           title: '标题标1'
         },{
           title: '标题标2'
         },{
           title: '标题标3'
-        }]
+        }],
+        maxGroupCount: 3,
+        maxContentCount: 3,
       }
     }
   },
