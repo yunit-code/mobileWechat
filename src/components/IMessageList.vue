@@ -30,26 +30,26 @@
       </div>
       <div v-else class="box-top2 d-flex just-b align-c">
         <div class="box-top2-left d-flex flex-1">
-          <div v-for="(item, index) in propData.titleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.title}}</div>
+          <div v-for="(item, index) in titleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.title}}</div>
         </div>
       </div>
       <ul class="box-list" v-if="propData.compStyle === 'styleFour' || propData.compStyle === 'styleOne'">
-        <li class="d-flex align-c" v-for="item in 3" :key="item" @click="handleClick('clickMoreFunction', item)">
+        <li class="d-flex align-c" v-for="(item, index) in messageList" :key="index" @click="handleClick('clickMoreFunction', item)">
           <span class="box-list-style-square" v-if="propData.compStyle === 'styleFour'"></span>
           <span class="box-list-style-square1" v-else></span>
-          <span class="box-list-content">1231123123sdfa撒发射点发射点法发打法师打222222222222222</span>
-          <span class="box-list-time" v-if="propData.compStyle !== 'styleOne'">2022-05-09</span>
+          <span class="box-list-content">{{item.content}}</span>
+          <span class="box-list-time" v-if="propData.compStyle !== 'styleOne'">{{item.createTime}}</span>
           </li>
       </ul>
       <ul class="box-list2" v-if="propData.compStyle === 'styleTwo' || propData.compStyle === 'styleThree'">
-        <li class="d-flex" v-for="item in 3" :key="item" @click="handleClick('clickMoreFunction', item)">
+        <li class="d-flex" v-for="(item, index) in messageList" :key="index" @click="handleClick('clickMoreFunction', item)">
           <img src="../assets/red-three.png" :class="propData.compStyle === 'styleTwo' ? 'box-list2-left-img' : 'box-list2-left-img2'" alt="">
           <div style="overflow:hidden">
             <div class="box-list2-title" :class="propData.compStyle === 'styleTwo' ? 'box-list2-title' : 'box-list2-title2'">
-              士大夫萨芬萨芬撒旦撒旦发法国电视企鹅请问齐威王嗡嗡嗡嗡嗡嗡嗡嗡嗡嗡嗡嗡公司哇强强强强强强强强强强
+              {{item.content}}
             </div>
             <div class="box-list2-title-bottom">
-              2022-05-09
+              {{item.createTime}}
             </div>
           </div>
         </li>
@@ -92,6 +92,18 @@ export default {
       },{
         title: '标题标3'
       }],
+      messageList: [{
+        content: '这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，',
+        createTime: '2022-05-09'
+      },
+      {
+        content: '这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，',
+        createTime: '2022-05-09'
+      },
+      {
+        content: '这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，',
+        createTime: '2022-05-09'
+      }]
     }
   },
   props: {
