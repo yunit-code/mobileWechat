@@ -1,6 +1,6 @@
 {
     "classId": "idm.componet.console.applicationshortcut",
-    "comName": "应用中心",
+    "comName": "应用中心快捷方式",
     "className": "IApplicationShortcut",
     "comType": "common",
     "comLangue": "vue",
@@ -52,21 +52,31 @@
                 },
                 {
                     "type": "table",
-                    "text": "角标配置",
-                    "bindKey": "numberConfig",
+                    "text": "应用配置",
+                    "bindKey": "applicationList",
                     "tabText": "菜单[index]",
                     "children": [
                         {
-                            "type": "input",
+                            "type": "treeSelect",
                             "layoutType": "inline",
-                            "text": "应用名称",
-                            "bindKey": "name",
+                            "text": "选择应用",
+                            "bindKey": "selectApplication",
+                            "dataSourceUrl": "",
                             "default": ""
+                        },
+                        {
+                            "type": "switch",
+                            "layoutType": "inline",
+                            "text": "显示角标",
+                            "desc":"设置应用待办角标是否显示",
+                            "bindKey": "showTodoNumber",
+                            "default": false
                         },
                         {
                             "type": "input",
                             "layoutType": "inline",
                             "text": "接口地址",
+                            "desc":"应用角标接口地址",
                             "bindKey": "url",
                             "default": ""
                         }
@@ -299,30 +309,6 @@
                     "layoutType": "block",
                     "text": "文字",
                     "bindKey": "font"
-                }
-            ]
-        },
-        {
-            "type": "group",
-            "text": "高级",
-            "desc": "点击？查看高级设置用法指南",
-            "children": [
-
-                {
-                    "type": "actionSelect",
-                    "layoutType": "block",
-                    "text": "点击[新建组件]时动作",
-                    "bindKey": "clickNewModuleFunction",
-                    "desc": "点击新建组件的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
-                    "multiple": true
-                },
-                {
-                    "type": "actionSelect",
-                    "layoutType": "block",
-                    "text": "点击[新建页面]时动作",
-                    "bindKey": "clickNewPageFunction",
-                    "desc": "点击新建页面的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
-                    "multiple": true
                 }
             ]
         }
