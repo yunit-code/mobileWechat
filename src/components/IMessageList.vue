@@ -188,6 +188,9 @@ export default {
                 styleObject["padding-left"]=`${element.paddingLeftVal}`;
               }
               break;
+            case "borderRadius":
+              styleObject["border-radius"]=element;
+              break;
           }
         }
       }

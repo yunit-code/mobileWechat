@@ -438,7 +438,6 @@ export default {
 .box{
   padding: 10px;
   background-color: #fff;
-  border-radius: 5px;
   overflow: hidden;
   &-title{
     font-size: 18px;

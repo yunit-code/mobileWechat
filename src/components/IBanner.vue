@@ -555,6 +555,7 @@ li {
 .slider-img{
   border-radius: 8px;
   overflow: hidden;
+  object-fit: cover;
 }
 .swiper-pagination{
   left: 34% !important;
