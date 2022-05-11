@@ -1,5 +1,5 @@
 {
-    "classId": "idm.componet.mobileWechat.ischedule",
+    "classId": "idm.componet.mobileWechat.schedule",
     "comName": "日程提醒组件",
     "className": "ISchedule",
     "comType": "common",
