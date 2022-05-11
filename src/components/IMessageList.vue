@@ -82,16 +82,16 @@ export default {
         },
         borderRadius: '5px',
         compStyle: 'styleOne',
-        titleList:[{
-          title: '标题标1'
-        },{
-          title: '标题标2'
-        },{
-          title: '标题标3'
-        }],
         maxGroupCount: 3,
         maxContentCount: 3,
-      }
+      },
+      titleList:[{
+        title: '标题标1'
+      },{
+        title: '标题标2'
+      },{
+        title: '标题标3'
+      }],
     }
   },
   props: {

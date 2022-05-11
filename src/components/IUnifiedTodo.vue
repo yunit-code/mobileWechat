@@ -18,15 +18,15 @@
       </div>
       <van-icon class="box-title-more" name="ellipsis" @click="handleClick('clickMoreFunction')" />
     </div>
-    <div class="box-sub" v-for="(item, index) in propData.list" :key="index" @click="handleClick('clickToDoItemFunction',item)">
+    <div class="box-sub" v-for="(item, index) in list" :key="index" @click="handleClick('clickToDoItemFunction',item)">
       <div class="box-sub-title" :class="{'box-sub-no-read': true}">
         {{item.title}}
       </div>
       <div class="box-sub-intr">
-        <div class="d-flex align-c"><svg-icon iconClass="duihao" class="box-sub-icon"></svg-icon> <span>已读</span> </div>
+        <div class="d-flex align-c"><svg-icon iconClass="duihao" class="box-sub-icon"></svg-icon> <span>{{item.status}}</span> </div>
         <div class="d-flex align-c">
-          <svg-icon iconClass="person" class="box-sub-icon"></svg-icon> <span>文档处</span> </div>
-        <div class="d-flex align-c"><svg-icon iconClass="time" class="box-sub-icon"></svg-icon> <span>2022-05-09 09:00</span></div>
+          <svg-icon iconClass="person" class="box-sub-icon"></svg-icon> <span>{{item.from}}</span> </div>
+        <div class="d-flex align-c"><svg-icon iconClass="time" class="box-sub-icon"></svg-icon> <span>{{item.createTime}}</span></div>
       </div>
     </div>
   </div>
@@ -36,10 +36,19 @@
 import { Icon } from 'vant';
 import 'vant/lib/icon/style';
 const list = [{
+  status: '已读',
+  from: '文档处',
+  createTime: '2022-05-09 09:00',
   title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
 },{
+  status: '已读',
+  from: '文档处',
+  createTime: '2022-05-09 09:00',
   title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
 },{
+  status: '已读',
+  from: '文档处',
+  createTime: '2022-05-09 09:00',
   title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
 }]
 export default {
@@ -57,8 +66,8 @@ export default {
         borderRadius: '5px',
         bgColor: '#fff',
         maxCount: '3', // 最多显示几条
-        list
-      }
+      },
+      list
     }
   },
   props: {
