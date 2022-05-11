@@ -1,5 +1,5 @@
 {
-    "classId": "idm.componet.mobileWechat.ischedule",
+    "classId": "idm.componet.mobileWechat.schedule",
     "comName": "日程提醒组件",
     "className": "ISchedule",
     "comType": "common",
@@ -23,7 +23,7 @@
                 {
                     "type": "input",
                     "layoutType": "inline",
-                    "text": "日程接口地址",
+                    "text": "接口地址",
                     "bindKey": "componentListUrl",
                     "desc":"用于获取日程消息"
                 }

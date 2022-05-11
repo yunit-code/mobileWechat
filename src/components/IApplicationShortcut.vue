@@ -14,41 +14,39 @@
                 <van-grid :border="false" :column-num="5">
                     <van-grid-item v-for="(item,index) in application_data" :key="index">
                         <div class="idm_applicationcenter_main_list">
-                            <!-- <van-image :src="item.img" /> -->
-                            <img :src="item.img">
-                            <div class="idm_applicationcenter_main_list_name">{{ item.name }}</div>
-                            <div class="number">10</div>
+                            <img v-if="item.img" :src="item.img">
+                            <svg-icon v-else icon-class="application" />
+
+                            <div class="idm_applicationcenter_main_list_name">{{ item.name || '应用名称' }}</div>
+                            <div v-if="propData.showTodoNumber && item.showTodoNumber && item.number" class="number">{{ item.number }}</div>
                         </div>
                     </van-grid-item>
                 </van-grid>
             </div>
             <div v-else class="idm_applicationcenter_main">
                 <div class="swiper_block flex_start">
-                    <span v-for="(item,index) in application_data" key="index" class="swiper_block_list">
-                        <img :src="item.img">
-                        <div class="idm_applicationcenter_main_list_name">{{ item.name }}</div>
-                        <div class="number">10</div>
+                    <span v-for="(item,index) in application_data" :key="index" class="swiper_block_list">
+                        <img v-if="item.img" :src="item.img">
+                        <svg-icon v-else icon-class="application" />
+
+                        <div class="idm_applicationcenter_main_list_name">{{ item.name || '应用名称' }}</div>
+                        <div v-if="propData.showTodoNumber && item.showTodoNumber && item.number" class="number">{{ item.number }}</div>
                     </span>
                 </div>
-                <!-- <van-tabs>
-                    <van-tab v-for="(item,index) in application_data" :key="index">
-                        <template #title> 
-                            <div class="idm_applicationcenter_main_list">
-                                <img :src="item.img">
-                                <div class="idm_applicationcenter_main_list_name">{{ item.name }}</div>
-                                <div class="number">10</div>
-                            </div>
-                        </template>
-                    </van-tab>
-                </van-tabs> -->
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import { Grid, GridItem } from 'vant';
+import 'vant/lib/grid/style';
 export default {
     name: 'IApplicationShortcut',
+    components: {
+        [Grid.name]: Grid,
+        [GridItem.name]: GridItem,
+    },
     data() {
         return {
             moduleObject: {},
@@ -57,80 +55,45 @@ export default {
                 showRows: 2,
                 showColumn: 5,
                 showTodoNumber: false,
-                numberConfig: [],
+                applicationList: [
+                    {
+                        selectApplication: {},
+                        showTodoNumber: false,
+                        url: '',
+                    }
+                ],
             },
-            application_data_copy: [
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '公文管理',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '待办文件',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '待阅文件',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '已办文件',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '我的收藏',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '公文管理',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '待办文件',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '待阅文件',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '已办文件',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '我的收藏',
-                    number: 1
-                }
-            ],
             application_data: [],
         }
     },
     props: {
     },
+    watch: {
+        'propData.isSlide': function(value,old) {
+            if ( !value ) {
+                this.changeLines()
+            }
+        },
+        'propData.showRows': function(value,old) {
+            this.changeLines()
+        },
+        'propData.applicationList': {
+            handler(value) {
+                if ( this.propData.applicationList && this.propData.applicationList.length ) {
+                    this.application_data = JSON.parse(JSON.stringify(this.propData.applicationList))
+                }
+                this.changeLines()
+            },
+            deep: true
+        },
+    },
     created() {
         this.moduleObject = this.$root.moduleObject
-        // console.log(this.moduleObject)
+        if ( this.propData.applicationList && this.propData.applicationList.length ) {
+            this.application_data = JSON.parse(JSON.stringify(this.propData.applicationList))
+        }
         this.convertAttrToStyleObject();
-        this.application_data = JSON.parse(JSON.stringify(this.application_data_copy))
+        this.changeLines()
     },
     mounted() {
         //赋值给window提供跨页面调用
@@ -142,10 +105,14 @@ export default {
     destroyed() { },
     methods: {
         changeLines() {
-            if ( this.application_data > this.propData.showRows * this.propData.showColumn ) {
-                this.application_data = this.application_data_copy.splice(0,this.propData.showRows * this.propData.showColumn)
+            if ( this.propData.isSlide ) {
+                return
+            }
+            if ( this.application_data && (this.application_data.length > this.propData.showRows * this.propData.showColumn) ) {
+                this.application_data.splice(0,this.propData.showRows * this.propData.showColumn)
             }
         },
+
         /** * 提供父级组件调用的刷新prop数据组件 */
         propDataWatchHandle(propData) {
             this.propData = propData.compositeAttr || {};
@@ -465,7 +432,6 @@ export default {
 </script>
 <style lang="scss">
 .idm_applicationshortcut {
-    background: white;
     border-radius: 10px;
     .idm_applicationcenter_title{
         padding: 10px 10px 0 10px;
@@ -479,7 +445,7 @@ export default {
         .idm_applicationcenter_main_list{
             position: relative;
             text-align: center;
-            img{
+            img,svg{
                 width: 40px;
                 height: 40px;
                 margin: 0 auto 2.5px auto;
@@ -519,7 +485,7 @@ export default {
                 position: relative;
                 text-align: center;
                 flex-shrink: 0;
-                img{
+                img,svg{
                     width: 40px;
                     height: 40px;
                     margin: 0 auto 2.5px auto;

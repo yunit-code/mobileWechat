@@ -11,20 +11,25 @@
         <!-- {{propData.fontContent}} -->
         <div class="idm_applicationcenter">
             <div class="idm_applicationcenter_title flex_between">
-                <div class="idm_applicationcenter_title_left">
+                <div class="idm_applicationcenter_title_left flex_start">
                     <div class="idm_applicationcenter_title_left_text">{{ propData.title || '应用中心' }}</div>
-                    <div class="idm_applicationcenter_title_left_icon"></div>
+                    <div class="idm_applicationcenter_title_left_icon">
+                        <svg-icon icon-class="application-icon" />
+                    </div>
                 </div>
-                <div @click="toApplicationManage" v-if="propData.showConfig" class="idm_applicationcenter_title_right">更多</div>
+                <div @click="toApplicationManage" v-if="propData.showConfig" class="idm_applicationcenter_title_right">
+                    <svg-icon icon-class="more" />
+                </div>
             </div>
             <div class="idm_applicationcenter_main">
                 <van-grid :border="false" :column-num="propData.showColumn">
                     <van-grid-item v-for="(item,index) in application_data" :key="index">
                         <div @click="toApplication(item)" class="idm_applicationcenter_main_list">
-                            <!-- <van-image :src="item.img" /> -->
-                            <img :src="item.img">
-                            <div class="idm_applicationcenter_main_list_name">{{ item.name }}</div>
-                            <div v-if="propData.showTodoNumber" class="number">10</div>
+                            <img v-if="item.img" :src="item.img">
+                            <svg-icon v-else icon-class="application" />
+
+                            <div class="idm_applicationcenter_main_list_name">{{ item.name || '应用名称' }}</div>
+                            <div v-if="propData.showTodoNumber && item.showTodoNumber && item.number" class="number">{{ item.number }}</div>
                         </div>
                     </van-grid-item>
                 </van-grid>
@@ -34,8 +39,14 @@
 </template>
 
 <script>
+import { Grid, GridItem } from 'vant';
+import 'vant/lib/grid/style';
 export default {
     name: 'IApplicationCenter',
+    components: {
+        [Grid.name]: Grid,
+        [GridItem.name]: GridItem,
+    },
     data() {
         return {
             moduleObject: {},
@@ -43,72 +54,16 @@ export default {
                 title: '应用中心',
                 showRows: 1,
                 showColumn: 5,
-                showConfig: false,
+                showConfig: true,
                 showTodoNumber: false,
-                numberConfig: [],
+                applicationList: [
+                    {
+                        selectApplication: {},
+                        showTodoNumber: false,
+                        url: '',
+                    }
+                ],
             },
-            application_data_copy: [
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '公文管理',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '待办文件',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '待阅文件',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '已办文件',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '我的收藏',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '公文管理',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '待办文件',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '待阅文件',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '已办文件',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '我的收藏',
-                    number: 1
-                }
-            ],
             application_data: [],
         }
     },
@@ -118,15 +73,22 @@ export default {
         'propData.showRows': function(value,old) {
             this.changeLines()
         },
-        'propData.numberConfig': function(value,old) {
-            this.getApplicationData(value)
-        }
+        'propData.applicationList': {
+            handler(value) {
+                if ( this.propData.applicationList && this.propData.applicationList.length ) {
+                    this.application_data = JSON.parse(JSON.stringify(this.propData.applicationList))
+                }
+                this.changeLines()
+            },
+            deep: true
+        },
     },
     created() {
         this.moduleObject = this.$root.moduleObject
-        console.log(this.moduleObject)
+        if ( this.propData.applicationList && this.propData.applicationList.length ) {
+            this.application_data = JSON.parse(JSON.stringify(this.propData.applicationList))
+        }
         this.convertAttrToStyleObject();
-        this.application_data = JSON.parse(JSON.stringify(this.application_data_copy))
         this.changeLines()
     },
     mounted() {
@@ -138,9 +100,6 @@ export default {
     },
     destroyed() { },
     methods: {
-        getApplicationData(value) {
-            console.log('角标配置',value)
-        },
         toApplication(item) {
             console.log('item',item)
         },
@@ -158,13 +117,14 @@ export default {
             })
         },
         changeLines() {
-            if ( this.application_data.length > this.propData.showRows * this.propData.showColumn ) {
-                this.application_data = this.application_data_copy.splice(0,this.propData.showRows * this.propData.showColumn)
+            if ( this.application_data && (this.application_data.length > this.propData.showRows * this.propData.showColumn) ) {
+                this.application_data.splice(0,this.propData.showRows * this.propData.showColumn)
             }
         },
 
         /** * 提供父级组件调用的刷新prop数据组件 */
         propDataWatchHandle(propData) {
+            console.log('propData更新',propData)
             this.propData = propData.compositeAttr || {};
             this.convertAttrToStyleObject();
         },
@@ -484,28 +444,36 @@ export default {
 }
 </script>
 <style lang="scss">
+.van-grid-item__content{
+    padding: 14px 8px;
+}
 .idm_applicationcenter {
-    background: white;
     border-radius: 10px;
     .idm_applicationcenter_title{
         padding: 10px 10px 10px 10px;
         .idm_applicationcenter_title_left_text{
+            margin-right: 5px;
+            font-family: PingFangSC-Medium;
             font-size: 16px;
             color: #333333;
             line-height: 22px;
+        }
+        .idm_applicationcenter_title_right{
+            font-size: 16px;
         }
     }
     .idm_applicationcenter_main{
         .idm_applicationcenter_main_list{
             position: relative;
             text-align: center;
-            img{
+            img,svg{
                 width: 40px;
                 height: 40px;
                 margin: 0 auto 2.5px auto;
             }
             .idm_applicationcenter_main_list_name{
                 font-size: 12px;
+                font-family: PingFangSC-Regular;
                 color: #333333;
                 text-align: center;
             }

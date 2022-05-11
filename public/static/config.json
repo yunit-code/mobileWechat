@@ -1,5 +1,5 @@
 {
-    "version": "1.0.3",
+    "version": "1.0.5",
     "lasttime": "2021-04-05 00:36:27",
     "author": "申龙",
     "className": "mobileWechat",
@@ -59,14 +59,14 @@
             "comLangue": "vue"
         },
         {
-            "classId": "idm.componet.mobileWechat.isort",
+            "classId": "idm.componet.mobileWechat.sort",
             "comName": "排序组件",
             "className": "ISort",
             "comType": "common",
             "comLangue": "vue"
         },
         {
-            "classId": "idm.componet.mobileWechat.ischedule",
+            "classId": "idm.componet.mobileWechat.schedule",
             "comName": "日程提醒组件",
             "className": "ISchedule",
             "comType": "common",
@@ -78,8 +78,13 @@
             "className": "IPublicAccounts",
             "comType": "common",
             "comLangue": "vue"
-        },
-        {
+        },{
+            "classId": "idm.componet.mobileWechat.banner",
+            "comName": "广告轮播",
+            "className": "IBanner",
+            "comType": "common",
+            "comLangue": "vue"
+        },{
             "classId": "idm.componet.mobileWechat.top",
             "comName": "头部组件",
             "className": "ITop",

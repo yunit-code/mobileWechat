@@ -42,6 +42,14 @@
                     "bindKey": "box"
                 },
                 {
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "背景色",
+                    "bindKey": "bgColor",
+                    "placeholder": "请选择颜色",
+                    "default": {}
+                },
+                {
                     "type": "inlineGroup",
                     "text": "宽高",
                     "children": [
@@ -61,7 +69,7 @@
                             "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
                             "bindKey": "height",
                             "width": "60px",
-                            "default": "auto"
+                            "default": "240px"
                         }
                     ]
                 },
@@ -90,6 +98,20 @@
                         }
                     ],
                     "default": "styleFour"
+                },
+                {
+                    "type": "slider",
+                    "layoutType": "block",
+                    "text": "分组最多显示几条",
+                    "bindKey": "maxGroupCount",
+                    "default": "3"
+                },
+                {
+                    "type": "slider",
+                    "layoutType": "block",
+                    "text": "内容最多显示几条",
+                    "bindKey": "maxContentCount",
+                    "default": "3"
                 }
             ]
         },
@@ -101,8 +123,16 @@
                 {
                     "type": "actionSelect",
                     "layoutType": "block",
-                    "text": "点击时动作",
-                    "bindKey": "clickFunction",
+                    "text": "点击更多时动作",
+                    "bindKey": "clickMoreFunction",
+                    "desc": "点击的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
+                    "multiple": true
+                },
+                {
+                    "type": "actionSelect",
+                    "layoutType": "block",
+                    "text": "点击单个消息时动作",
+                    "bindKey": "clickMessageItemFunction",
                     "desc": "点击的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
                     "multiple": true
                 },

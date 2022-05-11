@@ -1,5 +1,5 @@
 {
-    "classId": "idm.componet.mobileWechat.isort",
+    "classId": "idm.componet.mobileWechat.sort",
     "comName": "排序组件",
     "className": "ISort",
     "comType": "common",
@@ -23,10 +23,26 @@
                 {
                     "type": "input",
                     "layoutType": "inline",
+                    "text": "页面个性化接口地址",
+                    "bindKey": "userCustomizationUrl",
+                    "desc":"用于获取当前页面一级组件列表(页面个性化接口地址)",
+                    "default": "/ctrl/idm/api/fetchUserCustomization?pageid=@[url('pageid')]"
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
                     "text": "组件列表接口地址",
                     "bindKey": "componentListUrl",
                     "desc":"用于获取当前页面一级组件列表,pageid为当前页面id,默认自动获取",
-                    "default": "/ctrl/idm/api/fetchPageSettingData?pageid=@[url('pageid')]"
+                    "default": "/ctrl/idm/api/fetchPageSettingData?pageid=@[url('pageid')]&version=&savetype="
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "页面个性化保存地址",
+                    "bindKey": "saveUserCustomizationUrl",
+                    "desc":"用于获取当前页面一级组件列表,pageid为当前页面id,默认自动获取",
+                    "default": "/ctrl/idm/api/saveUserCustomizationUrl"
                 },
                 {
                     "type": "input",

@@ -38,7 +38,7 @@
                 </div>
                  <div class="idm_applicationcenter_main">
                     <van-tabs>
-                        <van-tab v-for="(item,index) in application_data" :title="item.type">
+                        <van-tab v-for="(item,index) in application_data" :key="index" :title="item.type">
                             <van-grid :border="false" :column-num="5">
                                 <van-grid-item v-for="(item,index) in item.data" :key="index">
                                     <div class="idm_applicationcenter_main_list">
@@ -65,8 +65,22 @@
 </template>
 
 <script>
+import { Grid,GridItem,Tab,Tabs,Icon,Button } from 'vant';
+
+import 'vant/lib/grid/style';
+import 'vant/lib/tabs/style';
+import 'vant/lib/icon/style';
+import 'vant/lib/button/style';
 export default {
     name: 'IApplicationManage',
+    components: {
+        [Grid.name]: Grid,
+        [GridItem.name]: GridItem,
+        [Tab.name]: Tab,
+        [Tabs.name]: Tabs,
+        [Icon.name]: Icon,
+        [Button.name]: Button,
+    },
     data() {
         return {
             moduleObject: {},

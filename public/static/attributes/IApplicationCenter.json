@@ -58,30 +58,56 @@
                     "default": 2
                 },
                 {
-                    "type": "treeSelect",
-                    "layoutType": "inline",
-                    "text": "初始应用",
-                    "bindKey": "selectApplication",
-                    "dataSourceUrl": "",
-                    "default": []
-                },
-                {
                     "type": "table",
-                    "text": "角标配置",
-                    "bindKey": "numberConfig",
+                    "text": "应用配置",
+                    "bindKey": "applicationList",
                     "tabText": "菜单[index]",
                     "children": [
                         {
-                            "type": "input",
+                            "type": "treeSelect",
                             "layoutType": "inline",
-                            "text": "应用名称",
-                            "bindKey": "name",
-                            "default": ""
+                            "text": "选择应用",
+                            "bindKey": "selectApplication",
+                            "dictionary": [
+                                {
+                                    "title": "Node1",
+                                    "value": "0-0",
+                                    "key": "0-0",
+                                    "children": [
+                                        {
+                                            "value": "0-0-1",
+                                            "key": "0-0-1",
+                                            "title": "Child Node1",
+                                            "disabled": true
+                                        },
+                                        {
+                                            "title": "Child Node2",
+                                            "value": "0-0-2",
+                                            "key": "0-0-2"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "title": "Node2",
+                                    "value": "0-1",
+                                    "key": "0-1"
+                                }
+                            ],
+                            "default": []
+                        },
+                        {
+                            "type": "switch",
+                            "layoutType": "inline",
+                            "text": "显示角标",
+                            "desc":"设置应用待办角标是否显示",
+                            "bindKey": "showTodoNumber",
+                            "default": false
                         },
                         {
                             "type": "input",
                             "layoutType": "inline",
                             "text": "接口地址",
+                            "desc":"应用角标接口地址",
                             "bindKey": "url",
                             "default": ""
                         }
@@ -314,71 +340,6 @@
                     "layoutType": "block",
                     "text": "文字",
                     "bindKey": "font"
-                }
-            ]
-        },
-        {
-            "type": "group",
-            "text": "数据源",
-            "desc": "设置应用请求数据源方式及其他信息",
-            "children": [
-                {
-                    "type": "select",
-                    "layoutType": "inline",
-                    "text": "数据来源",
-                    "bindKey": "dataSourceType",
-                    "dictionary": [
-                        {
-                            "label": "自定义接口",
-                            "value": "customInterface"
-                        },
-                        {
-                            "label": "页面统一接口",
-                            "value": "pageCommonInterface"
-                        },
-                        {
-                            "label": "自定义函数",
-                            "value": "customFunction"
-                        }
-                    ],
-                    "default": "customInterface"
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "接口地址",
-                    "bindKey": "customInterfaceUrl",
-                    "desc":"用于获取数据源的接口地址，请按照统一标准的返回格式返回数组格式的数据，格式如下：{\"code\":\"200\",\"data\":[{...},...],...}",
-                    "display":"@[dataSourceType=='customInterface']"
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "结果集名",
-                    "bindKey": "dataName",
-                    "desc": "页面接口设定的结果集名称，位置为：页面设置》高级设置》页面接口",
-                    "default": "",
-                    "placeholder": "示例：resultData",
-                    "display":"@[dataSourceType=='pageCommonInterface']"
-                },
-                {
-                    "type": "textarea",
-                    "layoutType": "inline",
-                    "text": "显示字段",
-                    "bindKey": "dataFiled",
-                    "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData且它的值为{data:{filedName:[{}]}}，则这里应该填写data.filedName",
-                    "default": "",
-                    "placeholder": "示例：data.filedName 或者 [0].data[0].filedName",
-                    "display":"@[dataSourceType=='pageCommonInterface']"
-                },
-                {
-                    "type": "actionSelect",
-                    "layoutType": "block",
-                    "text": "自定义函数",
-                    "bindKey": "customFunction",
-                    "desc": "获取选项数据源的时候会调用此方法，返回数据格式如下：[{}]",
-                    "display": "@[dataSourceType=='customFunction']",
-                    "multiple": false
                 }
             ]
         },
