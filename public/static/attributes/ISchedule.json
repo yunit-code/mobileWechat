@@ -23,7 +23,7 @@
                 {
                     "type": "input",
                     "layoutType": "inline",
-                    "text": "日程接口地址",
+                    "text": "接口地址",
                     "bindKey": "componentListUrl",
                     "desc":"用于获取日程消息"
                 }

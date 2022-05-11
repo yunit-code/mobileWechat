@@ -55,11 +55,11 @@
         </div>
         <div class="i-schedule-content-note">
           <div class="i-schedule-content-note-left">
-            <p>9:00</p>
+            <p class="active">9:00</p>
             <p>11:00</p>
           </div>
           <div class="i-schedule-content-note-right">
-            <div class="schedule-item active">
+            <div class="schedule-item">
               <div class="schedule-item-name">部门小组早例会</div>
               <div class="schedule-item-addr">A12会议室</div>
               <div class="schedule-item-time">9:00-9:30</div>
@@ -507,22 +507,11 @@ export default {
       padding-top: 14px;
 
       .i-schedule-content-note-left {
-        width: 20vw;
+        min-width: 20vw;
 
         p {
-          height: 100px;
-        }
-      }
-
-      .i-schedule-content-note-right {
-        flex: 1;
-        border-left: 1px solid #eee;
-
-
-        .schedule-item {
           position: relative;
           height: 100px;
-          padding: 0 10px 10px;
 
           &.active::before {
             content: "";
@@ -532,8 +521,40 @@ export default {
             background-color: #4d7eff;
             position: absolute;
             top: 0;
-            left: 0;
-            transform: translateX(-50%);
+            right: 0;
+            transform: translateX(50%);
+          }
+        }
+      }
+
+      .i-schedule-content-note-right {
+        flex: 1;
+        border-left: 1px solid #eee;
+        padding-left: 14px;
+        overflow:hidden;
+
+        .schedule-item {
+          position: relative;
+          height: 100px;
+          padding: 0 10px 10px;
+          
+          
+
+          &>div {
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+          }
+
+          .schedule-item-name {
+            color: #000;
+            padding-bottom: 8px;
+          }
+          .schedule-item-addr {
+            color: #666;
+          }
+          .schedule-item-time {
+            color: #aaa;
           }
         }
       }
