@@ -23,7 +23,7 @@
             </div>
             <div class="idm_applicationcenter_main">
                 <van-grid :border="false" :column-num="propData.showColumn">
-                    <van-grid-item v-for="(item,index) in propData.applicationList" :key="index">
+                    <van-grid-item v-for="(item,index) in application_data" :key="index">
                         <div @click="toApplication(item)" class="idm_applicationcenter_main_list">
                             <img v-if="item.img" :src="item.img">
                             <svg-icon v-else icon-class="application" />
@@ -64,14 +64,6 @@ export default {
                     }
                 ],
             },
-            application_data_copy: [
-                {
-                    key: '1',
-                    img: '',
-                    name: '公文管理',
-                    number: 1
-                },
-            ],
             application_data: [],
         }
     },
@@ -80,13 +72,23 @@ export default {
     watch: {
         'propData.showRows': function(value,old) {
             this.changeLines()
-        }
+        },
+        'propData.applicationList': {
+            handler(value) {
+                if ( this.propData.applicationList && this.propData.applicationList.length ) {
+                    this.application_data = JSON.parse(JSON.stringify(this.propData.applicationList))
+                }
+                this.changeLines()
+            },
+            deep: true
+        },
     },
     created() {
         this.moduleObject = this.$root.moduleObject
-        console.log(this.moduleObject)
+        if ( this.propData.applicationList && this.propData.applicationList.length ) {
+            this.application_data = JSON.parse(JSON.stringify(this.propData.applicationList))
+        }
         this.convertAttrToStyleObject();
-        this.application_data = JSON.parse(JSON.stringify(this.application_data_copy))
         this.changeLines()
     },
     mounted() {
@@ -98,9 +100,6 @@ export default {
     },
     destroyed() { },
     methods: {
-        getApplicationData(value) {
-            console.log('角标配置',value)
-        },
         toApplication(item) {
             console.log('item',item)
         },
@@ -118,13 +117,14 @@ export default {
             })
         },
         changeLines() {
-            if ( this.application_data.length > this.propData.showRows * this.propData.showColumn ) {
-                this.application_data = this.application_data_copy.splice(0,this.propData.showRows * this.propData.showColumn)
+            if ( this.application_data && (this.application_data.length > this.propData.showRows * this.propData.showColumn) ) {
+                this.application_data.splice(0,this.propData.showRows * this.propData.showColumn)
             }
         },
 
         /** * 提供父级组件调用的刷新prop数据组件 */
         propDataWatchHandle(propData) {
+            console.log('propData更新',propData)
             this.propData = propData.compositeAttr || {};
             this.convertAttrToStyleObject();
         },
@@ -448,7 +448,6 @@ export default {
     padding: 14px 8px;
 }
 .idm_applicationcenter {
-    background: white;
     border-radius: 10px;
     .idm_applicationcenter_title{
         padding: 10px 10px 10px 10px;
