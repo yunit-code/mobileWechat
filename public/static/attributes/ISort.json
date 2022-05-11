@@ -42,7 +42,7 @@
                     "text": "页面个性化保存地址",
                     "bindKey": "saveUserCustomizationUrl",
                     "desc":"用于获取当前页面一级组件列表,pageid为当前页面id,默认自动获取",
-                    "default": "/ctrl/idm/api/saveUserCustomizationUrl?pageid=@[url('pageid')]"
+                    "default": "/ctrl/idm/api/saveUserCustomizationUrl"
                 },
                 {
                     "type": "input",

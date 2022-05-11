@@ -33,9 +33,7 @@
             </span>
             <span @click="visibleClick(item)">
               <svg-icon
-                :icon-class="
-                  !item.hidden ? 'isort-visible' : 'isort-invisible'
-                "
+                :icon-class="!item.hidden ? 'isort-visible' : 'isort-invisible'"
               />
             </span>
           </div>
@@ -57,49 +55,49 @@ export default {
       moduleObject: {},
       propData: this.$root.propData.compositeAttr || {},
       listData: [],
-      pageInfo:{},
-      pageId:"",
-      pageVersion:""
+      pageInfo: {},
+      pageId: "",
+      pageVersion: "",
     };
   },
   props: {},
   created() {
     this.moduleObject = this.$root.moduleObject;
     this.convertAttrToStyleObject();
-    console.log(this.moduleObject,this.moduleObject.env,"当前模式")
-    // if (this.moduleObject.env == "develop") {
-    //   //开发模式下给例子数据
-    // this.listData = [
-    //   {
-    //     comId: "1",
-    //     comName: "广告轮播",
-    //     hidden:false,
-    //   },
-    //   {
-    //     comId: "2",
-    //     comName: "统一待办",
-    //     hidden:false,
-    //   },
-    //   {
-    //     comId: "3",
-    //     comName: "待办列表",
-    //     hidden:false,
-    //   },
-    //   {
-    //     comId: "4",
-    //     comName: "应用中心",
-    //     hidden:false,
-    //   },
-    //   {
-    //     comId: "5",
-    //     comName: "信息列表",
-    //     hidden:false,
-    //   },
-    // ];
-    // } else {
-
-    // }
-    this.requestUserCustomization()
+    
+    if (!this.moduleObject.env || this.moduleObject.env === "develop") {
+      //开发模式下给例子数据
+      this.listData = [
+        {
+          comId: "1",
+          comName: "广告轮播",
+          hidden: false,
+        },
+        {
+          comId: "2",
+          comName: "统一待办",
+          hidden: false,
+        },
+        {
+          comId: "3",
+          comName: "待办列表",
+          hidden: false,
+        },
+        {
+          comId: "4",
+          comName: "应用中心",
+          hidden: false,
+        },
+        {
+          comId: "5",
+          comName: "信息列表",
+          hidden: false,
+        },
+      ];
+    }
+    if(this.moduleObject.env ===  "production"){
+      this.requestUserCustomization()
+    }
   },
   mounted() {},
   destroyed() {},
@@ -124,9 +122,11 @@ export default {
         .done((res) => {
           if (res.code === "200") {
             const list =
-              res.data.page && res.data.page.layout && res.data.page.layout.children;
+              res.data.page &&
+              res.data.page.layout &&
+              res.data.page.layout.children;
             if (list && list.length > 0) {
-              this.dealRes(res,list)
+              this.dealRes(res, list);
             } else {
               this.requestDefaultCustomization();
             }
@@ -149,7 +149,7 @@ export default {
           if (res.code === "200") {
             const list =
               res.data.page && res.data.page.layout && res.data.page.children;
-            this.dealRes(res,list)
+            this.dealRes(res, list);
           } else {
             this.failRequest(url);
           }
@@ -161,18 +161,18 @@ export default {
     /**
      * 处理返回列表数据
      */
-    dealRes(res,list){
+    dealRes(res, list) {
       // 保存页面信息
-      this.pageId = res.data.id
-      this.pageVersion = res.data.pageBaseInfo.version
+      this.pageId = res.data.id;
+      this.pageVersion = res.data.pageBaseInfo.version;
       this.pageInfo = {
         comName: res.data.page.layout.comName,
         id: res.data.page.layout.id,
-      }
+      };
       // 添加隐藏数据
-      list.forEach(item => {
-        if(item.hidden===undefined) item.hidden = false 
-      })
+      list.forEach((item) => {
+        if (item.hidden === undefined) item.hidden = false;
+      });
       // 保存列表信息
       this.listData = list;
     },
@@ -180,7 +180,7 @@ export default {
      * 拖拽结束
      */
     dragEnd() {
-      const {id,comName} = this.pageInfo
+      const { id, comName } = this.pageInfo;
       const customData = {
         id,
         comName,
@@ -193,7 +193,7 @@ export default {
           customData: JSON.stringify(customData),
         })
         .done((res) => {
-          if(res !== '200'){
+          if (res !== "200") {
             this.failRequest(this.propData.saveUserCustomizationUrl);
           }
         })
@@ -384,7 +384,7 @@ export default {
      * 	是否可见
      */
     visibleClick(item) {
-      item.hidden = !item.hidden
+      item.hidden = !item.hidden;
     },
   },
 };
