@@ -78,6 +78,13 @@
             "className": "IPublicAccounts",
             "comType": "common",
             "comLangue": "vue"
+        },
+        {
+            "classId": "idm.componet.mobileWechat.top",
+            "comName": "头部组件",
+            "className": "ITop",
+            "comType": "common",
+            "comLangue": "vue"
         }
     ]
 }

@@ -1,7 +1,7 @@
 {
-    "classId": "idm.componet.mobileWechat.publicaccounts",
-    "comName": "公共账号",
-    "className": "IPublicAccounts",
+    "classId": "idm.componet.mobileWechat.top",
+    "comName": "头部信息",
+    "className": "ITop",
     "comType": "common",
     "comLangue": "vue",
     "compositeAttr": [
@@ -21,10 +21,42 @@
             "desc": "提供设置组件能达到展示效果的基本属性设置信息",
             "children": [
                 {
+                    "type": "switch",
+                    "layoutType": "inline",
+                    "text": "用户信息",
+                    "bindKey": "userInfo",
+                    "desc":"设置是否显示用户信息",
+                    "default": true
+                },
+                {
+                    "type": "switch",
+                    "layoutType": "inline",
+                    "text": "天气定位",
+                    "bindKey": "weather",
+                    "desc":"设置是否显示天气信息",
+                    "default": true
+                },
+                {
+                    "type": "switch",
+                    "layoutType": "inline",
+                    "text": "设置",
+                    "bindKey": "set",
+                    "desc":"设置是否显示设置图标",
+                    "default": true
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "跳转Url",
+                    "bindKey": "setUrl",
+                    "desc":"点击设置图标跳转页面",
+                    "display": "@[set]"
+                },
+                {
                     "type": "uploadImage",
                     "layoutType": "inline",
-                    "text": "图标",
-                    "bindKey": "accountUrl",
+                    "text": "自定义头部背景",
+                    "bindKey": "headerBgUrl",
                     "placeholder": "可输入图片地址或直接上传",
                     "ctrlAttrObject": {
                         "width": "",

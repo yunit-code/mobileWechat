@@ -15,60 +15,60 @@
       idm-ctrl-id：组件的id，这个必须不能为空
       idm-container-index  组件的内部容器索引，不重复唯一且不变，必选
     -->
-    <div class="com-box">
-      <div class="com-inner-box">
-        <div class="com-title" draggable="true">{{propData.comTitle}}
-          <span class="title-after"></span>
-          <span class="title-after"></span>
-          <span class="title-after"></span>
+     <div class="top-bg" :style="{backgroundImage: 'url('+ propData.headerBgUrl + ')', backgroundColor: !propData.headerBgUrl && '#1978f5'}" v-proportion="0.36">
+        <div class="top-set">
+          <svg-icon v-show="propData.set" @click.native="goUrl" icon-class="isort-set" class="svg"/>
         </div>
-        <ul class="summary-box">
-          <li v-for="(v,i) in propData.summaryConfigList && propData.summaryConfigList.slice(0, propData.maxNumber)" :key="i" class="summary-item"
-          style="width: 50%">
-            <div class="summary-bg" :style="{backgroundImage: 'url('+ v.bgUrl + ')', backgroundColor: !v.bgUrl && '#f3a2a3'}" v-proportion="0.5">
-              <div style="marginBottom: 5px">{{v.name}}</div>
-              <div>{{v.sumNum}}</div>
+        <div class="top-content">
+          <div class="user-info" v-if="propData.userInfo">
+            <img v-if="userInfo.logo" class="default-logo" :src="userInfo.logo" alt="">
+            <span v-else class="default-logo"></span>
+            <div>
+              <div>{{userInfo.name}}</div>
+              <div>{{userInfo.city}}</div>
+            </div>      
+          </div>
+          <div class="weather-info" v-if="propData.weather">
+            <div>
+              <img v-if="weatherInfo.logo" :src="weatherInfo.logo" alt="">
+              {{weatherInfo.temperature | temperature}}
             </div>
-          </li>
-        </ul>
+            <div>{{weatherInfo.city}}</div>
+          </div>
+        </div>
       </div>
-    </div>
-    
   </div>
 </template>
 
 <script>
 export default {
-  name: 'IDataSummary',
+  name: 'ITop',
   data(){
     return {
       moduleObject:{},
+      userInfo: {
+        name: 'test',
+        city: '广东市'
+      },
+      weatherInfo: {
+        temperature: '32.7',
+        city: '广东市'
+      },
       propData:this.$root.propData.compositeAttr||{
-        comTitle: '数据汇总',
-        maxNumber: 4,
-        summaryConfigList:[
-          {
-            name: '省政府领导分工',
-            sumNum: 10,
-            bgUrl: '',
-          },
-          {
-            name: 'test1',
-            sumNum: 10,
-            bgUrl: '',
-          },
-          {
-            name: 'test2',
-            sumNum: 10,
-            bgUrl: '',
-          },
-          {
-            name: 'test3',
-            sumNum: 10,
-            bgUrl: '',
-          },
-        ]
+        userInfo:true,
+        weather: true,
+        set: true,
+        setUrl: 'https://www.baidu.com/',
+        headerBgUrl: '',
       }
+    }
+  },
+  filters: {
+    temperature(value) {
+      if (value) {
+        return (value + '°C')
+      }
+      return value
     }
   },
   props: {
@@ -87,7 +87,9 @@ export default {
   },
   destroyed() {},
   methods:{
-    onSelect(action) {
+    // 设置图标跳转
+    goUrl() {
+      this.propData.setUrl && window.open(this.propData.setUrl)
     },
     /**
      * 提供父级组件调用的刷新prop数据组件
@@ -362,61 +364,42 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  ul, li{
-    padding:0;
-    margin:0;
-    list-style-type:none;
-  }
-  .com-inner-box{
-    background: #fff;
-    border-radius: 10px;
-    padding: 10px;
-  }
-  .com-box{
-    background: #eef2fa;
-    padding: 10px;
-    .com-title{
-      color: #333;
-      font-size: 24px;
-      vertical-align: middle;
-      margin-bottom: 10px;
-      .title-after{
-        display: inline-block;
-        width: 8px;
-        height: 18px;
-        background: #245399;
-        border-radius: 10px 0 10px 0;
-        margin-right: 2px;
-        &:nth-child(2){
-          opacity: 0.6;
-        }
-        &:nth-child(3){
-          opacity: 0.2;
-        }
+  .top-bg{
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+    color: #fff;
+    padding: 10px 10px 20px 10px;
+    display: flex;
+    flex-direction: column;
+    .top-set{
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      .svg{
+        font-size: 44px;
       }
     }
-  }
-  .summary-box{
-    display: flex;
-    margin: 0 -5px;
-    flex-wrap: wrap;
-    .summary-item{
-      font-size: 15px;
-      padding: 0 5px;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-    .summary-bg{
-      border-radius: 6px;
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      background-position: center;
+    .top-content{
+      flex: 1;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-start;
-      color: #fff;
-      padding-left: 5px;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 18px;
+      margin: 5px;
+      line-height: 1.5;
+      .user-info{
+        display: flex;
+        align-items: center;
+      }
+      .default-logo{
+        width: 36px;
+        height: 36px;
+        margin-right: 10px;
+        border-radius: 50%;
+        background: #ccc;
+        display: inline-block;
+      }
     }
   }
 </style>

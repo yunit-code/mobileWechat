@@ -55,9 +55,11 @@
                             "type": "inputNumber",
                             "layoutType": "inline",
                             "text": "数量",
-                            "bindKey": "num",
+                            "bindKey": "sumNum",
                             "desc":"",
-                            "default":0
+                            "default":0,
+                            "maxLength": 9999999,
+                            "minLength": 0
                         },
                         {
                             "type": "uploadImage",

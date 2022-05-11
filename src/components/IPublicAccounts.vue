@@ -24,8 +24,8 @@
         @select="onSelect"
       >
         <template #reference>
-          <img v-if="propData.accountUrl" :src="propData.accountUrl" alt="">
-          <span v-else :style="{background: !propData.accountUrl && '#ccc'}" :class="!propData.accountUrl && 'accout-icon'"></span>
+          <img v-if="propData.accountUrl && propData.accountList" :src="propData.accountUrl" alt="">
+          <span v-if="!propData.accountUrl && propData.accountList" :style="{background: !propData.accountUrl && '#ccc'}" :class="!propData.accountUrl && 'accout-icon'"></span>
         </template>
       </van-popover>
     </div>
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { Popover } from 'vant';
+import { Popover, Picker } from 'vant';
 export default {
   name: 'IPublicAccounts',
   data(){
@@ -54,10 +54,11 @@ export default {
         accountUrl: '',
         accountList:[
           {
-            text: 'test',
+            text: 'testtesttesttest',
+            className: 'chose'
           },
           {
-            text: 'test1',
+            text: '测试公共账号账号',
           },
         ]
       }
@@ -70,7 +71,6 @@ export default {
     this.convertAttrToStyleObject();
   },
   mounted() {
-    
     //赋值给window提供跨页面调用
     this.$nextTick(function(params) {
       this.moduleObject && this.moduleObject.packageid
@@ -149,7 +149,12 @@ export default {
       this.flags = false;
     },
     // 点击发送消息
-    onSelect(action) {
+    onSelect(action,index) {
+      console.log(action,index)
+      this.propData.accountList.forEach((v) => {
+        v.className = ''
+      })
+      this.$set(this.propData.accountList[index], 'className', 'chose')
       const obj = {
         type: 'linkageReload',
         message: '',
@@ -445,4 +450,16 @@ export default {
     width: 20px;
     height: 20px;
   }
+  
+</style>
+<style lang="scss">
+  .van-popup{
+    .chose{
+      color: #000;
+      font-size: 18px;
+    }
+    .van-popover__action-text{
+      word-break: break-word;
+    }
+  } 
 </style>
