@@ -9,15 +9,14 @@
    :id="moduleObject.id" 
    :idm-ctrl-id="moduleObject.id" 
    :title="propData.htmlTitle" 
-   v-show="propData.defaultStatus!='hidden'" 
-   @click="textClickHandle">
+   v-show="propData.defaultStatus!='hidden'">
     <template v-if="propData.compStyle !== 'styleFour'">
       <div class="box-title d-flex align-c just-b">
         <div class="d-flex align-c">
           <img src="../assets/red-three.png" class="box-title-icon" alt="">
           <span>{{propData.htmlTitle}}</span>
         </div>
-        <div class="box-title-right" @click="handleClickMore">
+        <div class="box-title-right" @click="handleClick('clickMoreFunction')">
           更多 <van-icon name="arrow" />
         </div>
       </div>
@@ -27,7 +26,7 @@
         <div class="box-top-left flex-1">
           <span v-for="(item, index) in propData.titleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.title}}</span>
         </div>
-        <van-icon class="box-top-more" name="ellipsis" @click="handleClickMore" />
+        <van-icon class="box-top-more" name="ellipsis" @click="handleClick('clickMoreFunction')" />
       </div>
       <div v-else class="box-top2 d-flex just-b align-c">
         <div class="box-top2-left d-flex flex-1">
@@ -35,14 +34,15 @@
         </div>
       </div>
       <ul class="box-list" v-if="propData.compStyle === 'styleFour' || propData.compStyle === 'styleOne'">
-        <li class="d-flex align-c" v-for="item in 3" :key="item" @click="handleItemClick(item)">
-          <span class="box-list-style-square"></span>
+        <li class="d-flex align-c" v-for="item in 3" :key="item" @click="handleClick('clickMoreFunction', item)">
+          <span class="box-list-style-square" v-if="propData.compStyle === 'styleFour'"></span>
+          <span class="box-list-style-square1" v-else></span>
           <span class="box-list-content">1231123123sdfa撒发射点发射点法发打法师打222222222222222</span>
           <span class="box-list-time" v-if="propData.compStyle !== 'styleOne'">2022-05-09</span>
           </li>
       </ul>
       <ul class="box-list2" v-if="propData.compStyle === 'styleTwo' || propData.compStyle === 'styleThree'">
-        <li class="d-flex" v-for="item in 3" :key="item" @click="handleItemClick(item)">
+        <li class="d-flex" v-for="item in 3" :key="item" @click="handleClick('clickMoreFunction', item)">
           <img src="../assets/red-three.png" :class="propData.compStyle === 'styleTwo' ? 'box-list2-left-img' : 'box-list2-left-img2'" alt="">
           <div style="overflow:hidden">
             <div class="box-list2-title" :class="propData.compStyle === 'styleTwo' ? 'box-list2-title' : 'box-list2-title2'">
@@ -81,7 +81,7 @@ export default {
           paddingRightVal: '10px',
         },
         borderRadius: '5px',
-        compStyle: 'styleThree',
+        compStyle: 'styleFour',
         titleList:[{
           title: '标题标1'
         },{
@@ -113,10 +113,6 @@ export default {
       console.log(index)
       this.defaultIndex = index
     },
-    // 点击列
-    handleItemClick(){},
-    // 更多
-    handleClickMore(){},
     /**
      * 提供父级组件调用的刷新prop数据组件
      */
@@ -280,8 +276,7 @@ export default {
     /**
      * 文本点击事件
      */
-    textClickHandle(){
-      let that = this;
+    handleClick(type, item = {}){
       if(this.moduleObject.env=="develop"){
         //开发模式下不执行此事件
         return;
@@ -295,7 +290,7 @@ export default {
        * {name:"",param:{}}
        * ]
        */
-      var clickFunction = this.propData.clickFunction;
+      var clickFunction = this.propData[type];
       clickFunction&&clickFunction.forEach(item=>{
         window[item.name]&&window[item.name].call(this,{
           urlData:urlObject,
@@ -385,7 +380,7 @@ export default {
   border-radius: 5px;
   overflow: hidden;
   &-title{
-    padding: 2vw 0;
+    padding: 10px 0;
     font-size: 18px;
     font-weight: 600;
      &-icon{
@@ -448,8 +443,7 @@ export default {
       }
     }
     &-more{
-      width: 5vw;
-      height: 1vw;
+      font-size: 23px;
     }
   }
   &-list{
@@ -463,8 +457,15 @@ export default {
       }
     }
     &-style-square{
-      width: 1.2vw;
-      height: 1vw;
+      width: 6px;
+      height: 4px;
+      background-color: #000;
+      transform: rotate(45deg);
+      margin: 0 5px 0 0;
+    }
+    &-style-square1{
+      width: 4px;
+      height: 4px;
       background-color: #000;
       transform: rotate(45deg);
       margin: 0 5px 0 0;

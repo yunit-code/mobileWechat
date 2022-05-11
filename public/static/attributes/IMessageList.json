@@ -101,8 +101,16 @@
                 {
                     "type": "actionSelect",
                     "layoutType": "block",
-                    "text": "点击时动作",
-                    "bindKey": "clickFunction",
+                    "text": "点击更多时动作",
+                    "bindKey": "clickMoreFunction",
+                    "desc": "点击的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
+                    "multiple": true
+                },
+                {
+                    "type": "actionSelect",
+                    "layoutType": "block",
+                    "text": "点击单个消息时动作",
+                    "bindKey": "clickMessageItemFunction",
                     "desc": "点击的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
                     "multiple": true
                 },

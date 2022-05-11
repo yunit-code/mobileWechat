@@ -11,7 +11,6 @@
     :idm-ctrl-id="moduleObject.id"
     :title="propData.htmlTitle"
     v-show="propData.defaultStatus != 'hidden'"
-    @click="textClickHandle"
     class="box"
   >
     <div class="box-swiper">
@@ -21,7 +20,7 @@
             class="swiper-slide box-swiper-item-container"
             v-for="(item, index) in propData.list"
             :key="index"
-            @click="handleClickSwiperItem(item)"
+            @click="handleClick('clickBannerItemFunction', item)"
           >
             <img :src="item.img" class="slider-img" alt="" />
             <span class="box-swiper-text">{{item.title}}</span>
@@ -82,9 +81,6 @@ export default {
   },
   destroyed() {},
   methods: {
-    handleClickSwiperItem(item){
-      console.log(item)
-    },
     initSwiper() {
       var mySwiper = new Swiper(".box-swiper-container", {
         autoplay:2000,
@@ -399,7 +395,7 @@ export default {
     /**
      * 文本点击事件
      */
-    textClickHandle() {
+    handleClick(type, item = {}) {
       let that = this;
       if (this.moduleObject.env == "develop") {
         //开发模式下不执行此事件
@@ -417,7 +413,7 @@ export default {
        * {name:"",param:{}}
        * ]
        */
-      var clickFunction = this.propData.clickFunction;
+      var clickFunction = this.propData[type];
       clickFunction &&
         clickFunction.forEach((item) => {
           window[item.name] &&

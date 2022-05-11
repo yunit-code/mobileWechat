@@ -9,17 +9,16 @@
    :id="moduleObject.id" 
    :idm-ctrl-id="moduleObject.id" 
    :title="propData.htmlTitle" 
-   v-show="propData.defaultStatus!='hidden'" 
-   @click="textClickHandle"
+   v-show="propData.defaultStatus!='hidden'"
    class="box">
     <div class="box-title d-flex align-c just-b">
       <div class="d-flex align-c">
         <span>{{propData.htmlTitle}}</span>
         <img src="../assets/red-three.png" class="box-title-icon" alt="">
       </div>
-      <van-icon class="box-title-more" name="ellipsis" @click="handleClickMore" />
+      <van-icon class="box-title-more" name="ellipsis" @click="handleClick('clickMoreFunction')" />
     </div>
-    <div class="box-sub" v-for="(item, index) in propData.list" :key="index" @click="handleClickItem(item)">
+    <div class="box-sub" v-for="(item, index) in propData.list" :key="index" @click="handleClick('clickToDoItemFunction',item)">
       <div class="box-sub-title" :class="{'box-sub-no-read': true}">
         {{item.title}}
       </div>
@@ -36,6 +35,13 @@
 <script>
 import { Icon } from 'vant';
 import 'vant/lib/icon/style';
+const list = [{
+  title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
+},{
+  title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
+},{
+  title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
+}]
 export default {
   name: 'IUnifiedTodo',
   components: {
@@ -50,13 +56,7 @@ export default {
         height: 'auto',
         borderRadius: '5px',
         bgColor: '#fff',
-        list:[{
-          title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
-        },{
-          title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
-        },{
-          title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
-        }]
+        list
       }
     }
   },
@@ -77,6 +77,14 @@ export default {
   destroyed() {},
   methods:{
     handleClickItem(itemObject){
+      let that = this;
+      if(this.moduleObject.env=="develop"){
+        //开发模式下不执行此事件
+        return;
+      }
+      //获取所有的URL参数、页面ID（pageId）、以及所有组件的返回值（用范围值去调用IDM提供的方法取出所有的组件值）
+      let urlObject = window.IDM.url.queryObject(),
+      pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
       var customFunction = this.propData.customFunction;
       console.log(customFunction)
             customFunction &&
@@ -86,11 +94,14 @@ export default {
                     window[item.name].call(this, {
                     customParam: item.param,
                     _this: this,
-                    itemObject
+                    urlData:urlObject,
+                    pageId,
                     });
                 });
     },
-    handleClickMore() {},
+    handleClickMore() {
+
+    },
     /**
      * 提供父级组件调用的刷新prop数据组件
      */
@@ -269,7 +280,7 @@ export default {
             // that.propData.fontContent = ;
           })
           .catch(function (error) {
-            
+            that.$set(that.propData,"list",that.getExpressData("resultData",that.propData.dataFiled, list))
           });
           break;
         case "pageCommonInterface":
@@ -325,11 +336,7 @@ export default {
       
       return _defaultVal;
     },
-    /**
-     * 文本点击事件
-     */
-    textClickHandle(){
-      let that = this;
+    handleClick(type, item = {}){
       if(this.moduleObject.env=="develop"){
         //开发模式下不执行此事件
         return;
@@ -337,13 +344,7 @@ export default {
       //获取所有的URL参数、页面ID（pageId）、以及所有组件的返回值（用范围值去调用IDM提供的方法取出所有的组件值）
       let urlObject = window.IDM.url.queryObject(),
       pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
-      //自定义函数
-      /**
-       * [
-       * {name:"",param:{}}
-       * ]
-       */
-      var clickFunction = this.propData.clickFunction;
+      var clickFunction = this.propData[type];
       clickFunction&&clickFunction.forEach(item=>{
         window[item.name]&&window[item.name].call(this,{
           urlData:urlObject,
