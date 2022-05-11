@@ -34,8 +34,13 @@
 </template>
 
 <script>
+import { Icon } from 'vant';
+import 'vant/lib/icon/style';
 export default {
   name: 'IUnifiedTodo',
+  components: {
+    [Icon.name]: Icon
+  },
   data(){
     return {
       moduleObject:{},
@@ -71,8 +76,19 @@ export default {
   },
   destroyed() {},
   methods:{
-    handleClickItem(item){
-      console.log(item)
+    handleClickItem(itemObject){
+      var customFunction = this.propData.customFunction;
+      console.log(customFunction)
+            customFunction &&
+                customFunction.forEach((item) => {
+                  console.log(window[item.name])
+                window[item.name] &&
+                    window[item.name].call(this, {
+                    customParam: item.param,
+                    _this: this,
+                    itemObject
+                    });
+                });
     },
     handleClickMore() {},
     /**

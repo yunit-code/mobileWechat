@@ -59,8 +59,13 @@
 </template>
 
 <script>
+import { Icon } from 'vant';
+import 'vant/lib/icon/style';
 export default {
   name: 'IMessageList',
+  components: {
+    [Icon.name]: Icon
+  },
   data(){
     return {
       moduleObject:{},
