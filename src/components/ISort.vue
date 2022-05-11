@@ -16,6 +16,7 @@
         handle=".i-sort-item-handle"
         v-model="listData"
         animation="200"
+        @end="dragEnd"
       >
         <div
           class="i-sort-item"
@@ -33,7 +34,7 @@
             <span @click="visibleClick(item)">
               <svg-icon
                 :icon-class="
-                  item.visible === '1' ? 'isort-visible' : 'isort-invisible'
+                  !item.hidden ? 'isort-visible' : 'isort-invisible'
                 "
               />
             </span>
@@ -56,46 +57,49 @@ export default {
       moduleObject: {},
       propData: this.$root.propData.compositeAttr || {},
       listData: [],
+      pageInfo:{},
+      pageId:"",
+      pageVersion:""
     };
   },
   props: {},
   created() {
     this.moduleObject = this.$root.moduleObject;
     this.convertAttrToStyleObject();
-    // console.log(this.moduleObject.env,"开发模式")
+    console.log(this.moduleObject,this.moduleObject.env,"当前模式")
     // if (this.moduleObject.env == "develop") {
     //   //开发模式下给例子数据
-    //   this.listData = [
-    //     {
-    //       comId: "1",
-    //       comName: "广告轮播",
-    //       visible: "1",
-    //     },
-    //     {
-    //       comId: "2",
-    //       comName: "统一待办",
-    //       visible: "1",
-    //     },
-    //     {
-    //       comId: "3",
-    //       comName: "待办列表",
-    //       visible: "1",
-    //     },
-    //     {
-    //       comId: "4",
-    //       comName: "应用中心",
-    //       visible: "1",
-    //     },
-    //     {
-    //       comId: "5",
-    //       comName: "信息列表",
-    //       visible: "1",
-    //     },
-    //   ];
+    // this.listData = [
+    //   {
+    //     comId: "1",
+    //     comName: "广告轮播",
+    //     hidden:false,
+    //   },
+    //   {
+    //     comId: "2",
+    //     comName: "统一待办",
+    //     hidden:false,
+    //   },
+    //   {
+    //     comId: "3",
+    //     comName: "待办列表",
+    //     hidden:false,
+    //   },
+    //   {
+    //     comId: "4",
+    //     comName: "应用中心",
+    //     hidden:false,
+    //   },
+    //   {
+    //     comId: "5",
+    //     comName: "信息列表",
+    //     hidden:false,
+    //   },
+    // ];
     // } else {
 
-      
     // }
+    this.requestUserCustomization()
   },
   mounted() {},
   destroyed() {},
@@ -103,13 +107,13 @@ export default {
     /**
      * 请求失败
      */
-    failRequest(url){
-      console.log(url+"请求失败") 
+    failRequest(url) {
+      console.log(url + "请求失败");
     },
     /**
      * 取用户定制化数据
      */
-    requestUserCustomization(){
+    requestUserCustomization() {
       const url = IDM.express.replace(
         this.propData.userCustomizationUrl,
         {},
@@ -118,45 +122,84 @@ export default {
       IDM.http
         .get(url)
         .done((res) => {
-          if(res.code === '200'){
-            const list = res.data.page && res.data.page.layout && res.data.page.children
-            if(list&& list.length > 0){
-              this.listData = list
-            }else{
-              this.requestDefaultCustomization()
+          if (res.code === "200") {
+            const list =
+              res.data.page && res.data.page.layout && res.data.page.layout.children;
+            if (list && list.length > 0) {
+              this.dealRes(res,list)
+            } else {
+              this.requestDefaultCustomization();
             }
-          }else{
-            this.failRequest(url)
+          } else {
+            this.failRequest(url);
           }
         })
         .error((response) => {
-          this.failRequest(url)
-        })
-        .always((res) => {});
+          this.failRequest(url);
+        });
     },
     /**
      * 取页面默认数据
      */
-    requestDefaultCustomization(){
-      const url = IDM.express.replace(
-        this.propData.componentListUrl,
-        {},
-        true
-      );
+    requestDefaultCustomization() {
+      const url = IDM.express.replace(this.propData.componentListUrl, {}, true);
       IDM.http
         .get(url)
         .done((res) => {
-          if(res.code === '200'){
-            const list = res.data.page && res.data.page.layout && res.data.page.children
-            this.listData = (list && list.lenght>0) ?list : []
-          }else{
-            this.failRequest(url)
+          if (res.code === "200") {
+            const list =
+              res.data.page && res.data.page.layout && res.data.page.children;
+            this.dealRes(res,list)
+          } else {
+            this.failRequest(url);
           }
         })
         .error((response) => {
-          this.failRequest(url)
+          this.failRequest(url);
+        });
+    },
+    /**
+     * 处理返回列表数据
+     */
+    dealRes(res,list){
+      // 保存页面信息
+      this.pageId = res.data.id
+      this.pageVersion = res.data.pageBaseInfo.version
+      this.pageInfo = {
+        comName: res.data.page.layout.comName,
+        id: res.data.page.layout.id,
+      }
+      // 添加隐藏数据
+      list.forEach(item => {
+        if(item.hidden===undefined) item.hidden = false 
+      })
+      // 保存列表信息
+      this.listData = list;
+    },
+    /**
+     * 拖拽结束
+     */
+    dragEnd() {
+      const {id,comName} = this.pageInfo
+      const customData = {
+        id,
+        comName,
+        children: this.listData,
+      };
+      IDM.http
+        .post(this.propData.saveUserCustomizationUrl, {
+          pageid: this.pageId,
+          version: this.pageVersion,
+          customData: JSON.stringify(customData),
         })
-        .always((res) => {});
+        .done((res) => {
+          if(res !== '200'){
+            this.failRequest(this.propData.saveUserCustomizationUrl);
+          }
+        })
+        .error((response) => {
+          this.failRequest(this.propData.saveUserCustomizationUrl);
+        });
     },
     /**
      * 提供父级组件调用的刷新prop数据组件
@@ -341,7 +384,7 @@ export default {
      * 	是否可见
      */
     visibleClick(item) {
-      item.visible = item.visible === "1" ? "0" : "1";
+      item.hidden = !item.hidden
     },
   },
 };
