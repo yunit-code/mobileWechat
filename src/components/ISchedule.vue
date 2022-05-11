@@ -15,10 +15,7 @@
       <div class="i-schedule-header">
         <div class="i-schedule-header-main">
           <div class="i-schedule-header-tit">
-            <div class="header-tit-icon">
-              <svg-icon icon-class="isort-drag" />
-            </div>
-            <div class="header-tit-txt">日程提醒</div>
+            日程提醒
           </div>
           <div class="i-schedule-header-date">{{ nowDate }}</div>
         </div>
@@ -397,7 +394,7 @@ export default {
   list-style: none;
 }
 .i-schedule-outer {
-  width: 100%;
+  width: auto;
   box-sizing: border-box;
   padding: 14px 10px;
   font-family: PingFangSC-Regular;
@@ -413,11 +410,8 @@ export default {
     .i-schedule-header-main {
       display: flex;
       .i-schedule-header-tit {
-        display: flex;
-        .header-tit-txt {
-          font-weight: 700;
-          margin-left: 6px;
-        }
+        font-weight: 700;
+        margin-left: 6px;
       }
       .i-schedule-header-date {
         margin-left: 10px;

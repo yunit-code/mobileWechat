@@ -23,34 +23,125 @@
                 {
                     "type": "input",
                     "layoutType": "inline",
-                    "text": "页面个性化接口地址",
-                    "bindKey": "userCustomizationUrl",
-                    "desc":"用于获取当前页面一级组件列表(页面个性化接口地址)",
-                    "default": "/ctrl/idm/api/fetchUserCustomization?pageid=@[url('pageid')]"
+                    "text": "页面ID",
+                    "bindKey": "pageid",
+                    "desc":"当前页面的唯一值",
+                    "default": "pageid"
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "text": "个性化列表数据源",
+            "desc": "设置个性化列表数据源方式及其他信息",
+            "children": [
+                {
+                    "type": "select",
+                    "layoutType": "inline",
+                    "text": "数据来源",
+                    "bindKey": "dataSourceType",
+                    "dictionary": [
+                        {
+                            "label": "自定义接口",
+                            "value": "customInterface"
+                        },
+                        {
+                            "label": "页面统一接口",
+                            "value": "pageCommonInterface"
+                        },
+                        {
+                            "label": "自定义函数",
+                            "value": "customFunction"
+                        }
+                    ],
+                    "default": "customInterface"
                 },
                 {
                     "type": "input",
                     "layoutType": "inline",
-                    "text": "组件列表接口地址",
-                    "bindKey": "componentListUrl",
-                    "desc":"用于获取当前页面一级组件列表,pageid为当前页面id,默认自动获取",
-                    "default": "/ctrl/idm/api/fetchPageSettingData?pageid=@[url('pageid')]&version=&savetype="
+                    "text": "接口地址",
+                    "bindKey": "customInterfaceUrl",
+                    "desc":"用于获取数据源的接口地址，请按照统一标准的返回格式返回数组格式的数据，格式如下：{\"code\":\"200\",\"data\":[{...},...],...}",
+                    "display":"@[dataSourceType=='customInterface']"
+                },{
+                    "type": "radio",
+                    "layoutType": "inline",
+                    "text": "请求方式",
+                    "bindKey": "requestType",
+                    "dictionary": [
+                        {
+                            "label": "POST",
+                            "value": "post"
+                        },
+                        {
+                            "label": "GET",
+                            "value": "get"
+                        }
+                    ],
+                    "default":"get",
+                    "display":"@[dataSourceType=='customInterface']"
                 },
                 {
-                    "type": "input",
+                    "type": "select",
                     "layoutType": "inline",
-                    "text": "页面个性化保存地址",
-                    "bindKey": "saveUserCustomizationUrl",
-                    "desc":"用于获取当前页面一级组件列表,pageid为当前页面id,默认自动获取",
-                    "default": "/ctrl/idm/api/saveUserCustomizationUrl"
+                    "text": "请求类型",
+                    "bindKey": "requestContentType",
+                    "desc":"请求接口的数据类型，请根据后端需求进行选择",
+                    "dictionary": [
+                        {
+                            "label": "默认",
+                            "value": ""
+                        },
+                        {
+                            "label": "JSON",
+                            "value": "application/json;charset=UTF-8"
+                        },
+                        {
+                            "label": "FormData",
+                            "value": "multipart/form-data"
+                        }
+                    ],
+                    "default": "",
+                    "display": "@[dataSourceType=='customInterface'&&requestType=='post']"
                 },
                 {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "保存接口地址",
-                    "bindKey": "saveUrl",
-                    "desc":"用于保存拖拽结果",
-                    "default": ""
+                    "type": "actionSelect",
+                    "layoutType": "block",
+                    "text": "请求参数自定义函数",
+                    "bindKey": "requestParamFun",
+                    "desc": "请求接口时会调用这里设置的函数返回自定义的参数，返回格式为Object对象，例如：{param1:'',param2:''}",
+                    "display": "@[dataSourceType=='customInterface']",
+                    "multiple": false
+                },
+                {
+                    "type": "table",
+                    "text": "接收其他组件联动参数",
+                    "bindKey": "linkageParamList",
+                    "tabText": "参数[index]",
+                    "display": "@[dataSourceType=='customInterface']",
+                    "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "表单标识",
+                            "bindKey": "msgKey",
+                            "default": ""
+                        },{
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "参数别名",
+                            "bindKey": "paramKey",
+                            "default": ""
+                        },
+                        {
+                            "type": "actionSelect",
+                            "layoutType": "block",
+                            "text": "参数处理函数",
+                            "bindKey": "paramFun",
+                            "desc": "收到其他组件联动参数后会根据表单标识调用这里设置的函数返回自定义的参数内容，返回格式为字符串或对象，例如：{text:'',value:''}或者直接字符串",
+                            "multiple": false
+                        }
+                    ]
                 }
             ]
         },
@@ -288,70 +379,28 @@
             "desc": "点击？查看高级设置用法指南",
             "children": [
                 {
-                    "type": "actionSelect",
-                    "layoutType": "block",
-                    "text": "点击时动作",
-                    "bindKey": "clickFunction",
-                    "desc": "点击的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
-                    "multiple": true
-                },
-                {
-                    "type": "select",
+                    "type": "input",
                     "layoutType": "inline",
-                    "text": "动态内容",
-                    "bindKey": "dataSourceType",
-                    "desc": "通过这些方式去动态获取结果值显示成文本内容",
-                    "dictionary": [
-                        {
-                            "label": "自定义接口",
-                            "value": "customInterface"
-                        },
-                        {
-                            "label": "页面统一接口",
-                            "value": "pageCommonInterface"
-                        },
-                        {
-                            "label": "自定义函数",
-                            "value": "customFunction"
-                        }
-                    ],
-                    "default": "customInterface"
+                    "text": "个性列表",
+                    "bindKey": "userCustomizationUrl",
+                    "desc":"获取当前页面用户个性化一级组件列表,pageid为当前页面id",
+                    "default": "/ctrl/idm/api/fetchUserCustomization"
                 },
                 {
                     "type": "input",
                     "layoutType": "inline",
-                    "text": "接口地址",
-                    "bindKey": "customInterfaceUrl",
-                    "desc": "用于获取数据源的接口地址，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}",
-                    "display": "@[dataSourceType=='customInterface']"
+                    "text": "默认列表",
+                    "bindKey": "componentListUrl",
+                    "desc":"获取当前页面默认一级组件列表,pageid为当前页面id",
+                    "default": "/ctrl/idm/api/fetchPageSettingData"
                 },
                 {
                     "type": "input",
                     "layoutType": "inline",
-                    "text": "结果集名",
-                    "bindKey": "dataName",
-                    "desc": "页面接口设定的结果集名称，位置为：页面设置》高级设置》页面接口",
-                    "default": "",
-                    "placeholder": "示例：resultData",
-                    "display": "@[dataSourceType=='pageCommonInterface']"
-                },
-                {
-                    "type": "textarea",
-                    "layoutType": "inline",
-                    "text": "显示字段",
-                    "bindKey": "dataFiled",
-                    "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData（自定义接口忽略）且它的值为{data:{filedName:[{\"text\":\"\",\"value\":\"\",\"check\":true}]}}，则这里应该填写data.filedName",
-                    "default": "",
-                    "placeholder": "示例：data.filedName 或者 [0].data[0].filedName",
-                    "display": "@[dataSourceType!='customFunction']"
-                },
-                {
-                    "type": "actionSelect",
-                    "layoutType": "block",
-                    "text": "自定义函数",
-                    "bindKey": "customFunction",
-                    "desc": "获取动态文本内容、自定义接口回调、页面统一接口回调的时候会调用此方法，返回数据格式为字符串，接收参数：{...自定义,interfaceData:自定义接口或页面统一接口的返回结果,expressData:表达式替换后的结果}",
-                    "multiple": false
+                    "text": "保存接口",
+                    "bindKey": "saveUserCustomizationUrl",
+                    "desc":"用于获取当前页面一级组件列表,pageid为当前页面id,默认自动获取",
+                    "default": "/ctrl/idm/api/saveUserCustomizationUrl"
                 }
             ]
         }

@@ -64,7 +64,7 @@ export default {
   created() {
     this.moduleObject = this.$root.moduleObject;
     this.convertAttrToStyleObject();
-    
+
     if (!this.moduleObject.env || this.moduleObject.env === "develop") {
       //开发模式下给例子数据
       this.listData = [
@@ -112,11 +112,10 @@ export default {
      * 取用户定制化数据
      */
     requestUserCustomization() {
-      const url = IDM.express.replace(
-        this.propData.userCustomizationUrl,
-        {},
-        true
-      );
+      const temp = this.propData.userCustomizationUrl;
+      const pageid = IDM.url.queryObject(window.location.href)[this.propData.pageid];
+      const url = temp.indexOf("?") === -1 ?`${temp}?pageid=${pageid}&version=&savetype=`:`${temp}&pageid=${pageid}&version=&savetype=`
+      // const url = temp.indexOf("?") === -1 ?`${temp}?pageid=${pageid}`:`${temp}&pageid=${pageid}`
       IDM.http
         .get(url)
         .done((res) => {
@@ -142,7 +141,9 @@ export default {
      * 取页面默认数据
      */
     requestDefaultCustomization() {
-      const url = IDM.express.replace(this.propData.componentListUrl, {}, true);
+      const temp = this.propData.componentListUrl;
+      const pageid = IDM.url.queryObject(window.location.href)[this.propData.pageId];
+      const url = temp.indexOf("?") === -1 ?`${temp}?pageid=${pageid}`:`${temp}&pageid=${pageid}`
       IDM.http
         .get(url)
         .done((res) => {
@@ -391,7 +392,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .i-sort-outer {
-  width: 100%;
+  width: auto;
   box-sizing: border-box;
   padding: 14px 10px;
 

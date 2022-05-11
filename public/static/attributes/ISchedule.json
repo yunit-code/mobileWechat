@@ -26,6 +26,12 @@
                     "text": "接口地址",
                     "bindKey": "componentListUrl",
                     "desc":"用于获取日程消息"
+                },
+                {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "标题",
+                    "bindKey": "title"
                 }
             ]
         },
