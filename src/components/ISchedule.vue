@@ -78,7 +78,7 @@
 
 <script>
 import Swiper from "swiper";
-import "swiper/dist/css/swiper.min.css";
+// import "swiper/dist/css/swiper.min.css";
 
 export default {
   name: "ISchedule",
