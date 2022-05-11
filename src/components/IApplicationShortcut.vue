@@ -13,7 +13,7 @@
             <div v-if="!propData.isSlide" class="idm_applicationcenter_main">
                 <van-grid :border="false" :column-num="5">
                     <van-grid-item v-for="(item,index) in application_data" :key="index">
-                        <div class="idm_applicationcenter_main_list">
+                        <div @click="toApplication(item)" class="idm_applicationcenter_main_list">
                             <img v-if="item.img" :src="item.img">
                             <svg-icon v-else icon-class="application" />
 
@@ -25,7 +25,7 @@
             </div>
             <div v-else class="idm_applicationcenter_main">
                 <div class="swiper_block flex_start">
-                    <span v-for="(item,index) in application_data" :key="index" class="swiper_block_list">
+                    <span @click="toApplication(item)" v-for="(item,index) in application_data" :key="index" class="swiper_block_list">
                         <img v-if="item.img" :src="item.img">
                         <svg-icon v-else icon-class="application" />
 
@@ -109,7 +109,13 @@ export default {
                 return
             }
             if ( this.application_data && (this.application_data.length > this.propData.showRows * this.propData.showColumn) ) {
-                this.application_data.splice(0,this.propData.showRows * this.propData.showColumn)
+                this.application_data.splice(this.propData.showRows * this.propData.showColumn)
+            }
+        },
+        toApplication(item) {
+            console.log('item',item)
+            if ( this.moduleObject.env == 'production' && item.appUrl ) {
+                window.location.href = item.appUrl;
             }
         },
 
@@ -281,11 +287,8 @@ export default {
                 case "customInterface":
                     this.propData.customInterfaceUrl && window.IDM.http.get(this.propData.customInterfaceUrl, params)
                         .then((res) => {
-                            //res.data
-                            that.$set(that.propData, "fontContent", that.getExpressData("resultData", that.propData.dataFiled, res.data));
-                            // that.propData.fontContent = ;
-                        })
-                        .catch(function (error) {
+                            that.$set(that.propData, "applicationList", that.getExpressData("resultData", that.propData.dataFiled, res.data));
+                        }).catch(function (error) {
 
                         });
                     break;
@@ -298,8 +301,9 @@ export default {
                         try {
                             resValue = window[this.propData.customFunction[0].name] && window[this.propData.customFunction[0].name].call(this, { ...params, ...this.propData.customFunction[0].param, moduleObject: this.moduleObject });
                         } catch (error) {
+
                         }
-                        that.propData.fontContent = resValue;
+                        that.$set(that.propData, "applicationList", resValue);
                     }
                     break;
             }
@@ -342,40 +346,7 @@ export default {
 
             return _defaultVal;
         },
-        /**
-         * 文本点击事件
-         */
-        textClickHandle() {
-            let that = this;
-            if (this.moduleObject.env == "develop") {
-                //开发模式下不执行此事件
-                return;
-            }
-            //获取所有的URL参数、页面ID（pageId）、以及所有组件的返回值（用范围值去调用IDM提供的方法取出所有的组件值）
-            let urlObject = window.IDM.url.queryObject(),
-                pageId = window.IDM.broadcast && window.IDM.broadcast.pageModule ? window.IDM.broadcast.pageModule.id : "";
-            //自定义函数
-            /**
-             * [
-             * {name:"",param:{}}
-             * ]
-             */
-            var clickFunction = this.propData.clickFunction;
-            clickFunction && clickFunction.forEach(item => {
-                window[item.name] && window[item.name].call(this, {
-                    urlData: urlObject,
-                    pageId,
-                    customParam: item.param,
-                    _this: this
-                });
-            })
-        },
-        showThisModuleHandle() {
-            this.propData.defaultStatus = "default";
-        },
-        hideThisModuleHandle() {
-            this.propData.defaultStatus = "hidden";
-        },
+        
         /**
          * 组件通信：接收消息的方法
          * @param {
@@ -393,6 +364,12 @@ export default {
             } else if (object.type && object.type == "linkageHideModule") {
                 this.hideThisModuleHandle();
             }
+        },
+        showThisModuleHandle() {
+            this.propData.defaultStatus = "default";
+        },
+        hideThisModuleHandle() {
+            this.propData.defaultStatus = "hidden";
         },
         /**
          * 组件通信：发送消息的方法
@@ -423,18 +400,20 @@ export default {
             }
             //这里使用的是子表，所以要循环匹配所有子表的属性然后再去设置修改默认值
             if (object.key == this.propData.dataName) {
-                // this.propData.fontContent = this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data);
-                this.$set(this.propData, "fontContent", this.getExpressData(this.propData.dataName, this.propData.dataFiled, object.data));
+                this.$set(this.propData, "applicationList", this.getExpressData(this.propData.dataName, this.propData.dataFiled, object.data));
             }
         }
     }
 }
 </script>
 <style lang="scss">
+.van-grid-item__content{
+    padding: 7px 8px;
+}
 .idm_applicationshortcut {
     border-radius: 10px;
     .idm_applicationcenter_title{
-        padding: 10px 10px 0 10px;
+        padding: 10px 10px 7px 10px;
         .idm_applicationcenter_title_left_text{
             font-size: 16px;
             color: #333333;

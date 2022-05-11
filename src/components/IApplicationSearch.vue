@@ -14,7 +14,7 @@
                 <van-search v-model="search_text" show-action placeholder="请输入搜索关键词" @search="onSearch" @cancel="onCancel" />
             </div>
             <div class="idm_iapplicationsearch_main">
-                <div v-for="(item,index) in my_application_data" key="index" class="list flex_between">
+                <div v-for="(item,index) in application_data" :key="index" class="list flex_between">
                     <div class="list_left flex_start">
                         <img :src="item.img" />
                         <span>{{ item.name }}</span>
@@ -44,7 +44,7 @@ export default {
 
             },
             search_text: '',
-            my_application_data: [
+            application_data: [
                 {
                     key: '1',
                     img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
@@ -88,7 +88,6 @@ export default {
                     isHaveAdd: false,
                 },
             ],
-            application_data: [],
         }
     },
     props: {
@@ -107,6 +106,32 @@ export default {
     },
     destroyed() { },
     methods: {
+        add() {
+            let urlObject = window.IDM.url.queryObject();
+            let pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
+            var clickNewFunction = this.propData.clickAddFunction;
+            clickNewFunction.forEach(item=>{
+                window[item.name]&&window[item.name].call(this,{
+                    urlData:urlObject,
+                    pageId,
+                    customParam:item.param,
+                    _this:this
+                });
+            })
+        },
+        cancel() {
+            let urlObject = window.IDM.url.queryObject();
+            let pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
+            var clickNewFunction = this.propData.clickCancelFunction;
+            clickNewFunction.forEach(item=>{
+                window[item.name]&&window[item.name].call(this,{
+                    urlData:urlObject,
+                    pageId,
+                    customParam:item.param,
+                    _this:this
+                });
+            })
+        },
         onSearch() {
 
         },

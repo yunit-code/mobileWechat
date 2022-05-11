@@ -17,72 +17,6 @@
         },
         {
             "type": "group",
-            "text": "基本属性",
-            "desc": "提供设置组件能达到展示效果的基本属性设置信息",
-            "children": [
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "标题",
-                    "bindKey": "title",
-                    "default": "应用中心"
-                },
-                {
-                    "type": "switch",
-                    "layoutType": "inline",
-                    "text": "允许用户自定义",
-                    "desc":"设置用户配置应用程序按钮是否显示",
-                    "bindKey": "showConfig",
-                    "default": false
-                },
-                {
-                    "type": "switch",
-                    "layoutType": "inline",
-                    "text": "显示待办角标",
-                    "desc":"设置待办角标是否显示",
-                    "bindKey": "showTodoNumber",
-                    "default": false
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "展示列数",
-                    "bindKey": "showColumn",
-                    "default": 5
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "最多展示行数",
-                    "bindKey": "showRows",
-                    "default": 2
-                },
-                {
-                    "type": "table",
-                    "text": "角标配置",
-                    "bindKey": "numberConfig",
-                    "tabText": "菜单[index]",
-                    "children": [
-                        {
-                            "type": "input",
-                            "layoutType": "inline",
-                            "text": "应用名称",
-                            "bindKey": "name",
-                            "default": ""
-                        },
-                        {
-                            "type": "input",
-                            "layoutType": "inline",
-                            "text": "接口地址",
-                            "bindKey": "url",
-                            "default": ""
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "group",
             "text": "样式设置",
             "desc": "点击？查看样式设置用法指南",
             "helpUrl": "",
@@ -311,24 +245,161 @@
         },
         {
             "type": "group",
-            "text": "高级",
-            "desc": "点击？查看高级设置用法指南",
+            "text": "我的应用数据源",
+            "desc": "点击？查看数据源设置用法指南",
             "children": [
-
+                {
+                    "type": "select",
+                    "layoutType": "inline",
+                    "text": "动态内容",
+                    "bindKey": "dataSourceTypeMy",
+                    "desc": "通过这些方式去动态获取结果值显示成应用内容",
+                    "dictionary": [
+                        {
+                            "label": "自定义接口",
+                            "value": "customInterface"
+                        },
+                        {
+                            "label": "页面统一接口",
+                            "value": "pageCommonInterface"
+                        },
+                        {
+                            "label": "自定义函数",
+                            "value": "customFunction"
+                        }
+                    ],
+                    "default": "customInterface"
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "接口地址",
+                    "bindKey": "customInterfaceUrlMy",
+                    "desc": "用于获取数据源的接口地址，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}",
+                    "display": "@[dataSourceTypeMy=='customInterface']"
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "结果集名",
+                    "bindKey": "dataNameMy",
+                    "desc": "页面接口设定的结果集名称，位置为：页面设置》高级设置》页面接口",
+                    "default": "",
+                    "placeholder": "示例：resultData",
+                    "display": "@[dataSourceTypeMy=='pageCommonInterface']"
+                },
+                {
+                    "type": "textarea",
+                    "layoutType": "inline",
+                    "text": "显示字段",
+                    "bindKey": "dataFiledMy",
+                    "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData（自定义接口忽略）且它的值为{data:{filedName:[{\"text\":\"\",\"value\":\"\",\"check\":true}]}}，则这里应该填写data.filedName",
+                    "default": "",
+                    "placeholder": "示例：data.filedName 或者 [0].data[0].filedName",
+                    "display": "@[dataSourceTypeMy!='customFunction']"
+                },
                 {
                     "type": "actionSelect",
                     "layoutType": "block",
-                    "text": "点击[新建组件]时动作",
-                    "bindKey": "clickNewModuleFunction",
-                    "desc": "点击新建组件的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
+                    "text": "自定义函数",
+                    "bindKey": "customFunctionMy",
+                    "desc": "获取动态文本内容、自定义接口回调、页面统一接口回调的时候会调用此方法，返回数据格式为字符串，接收参数：{...自定义,interfaceData:自定义接口或页面统一接口的返回结果,expressData:表达式替换后的结果}",
+                    "multiple": false
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "text": "全部应用数据源",
+            "desc": "点击？查看数据源设置用法指南",
+            "children": [
+                {
+                    "type": "select",
+                    "layoutType": "inline",
+                    "text": "动态内容",
+                    "bindKey": "dataSourceTypeAll",
+                    "desc": "通过这些方式去动态获取结果值显示成应用内容",
+                    "dictionary": [
+                        {
+                            "label": "自定义接口",
+                            "value": "customInterface"
+                        },
+                        {
+                            "label": "页面统一接口",
+                            "value": "pageCommonInterface"
+                        },
+                        {
+                            "label": "自定义函数",
+                            "value": "customFunction"
+                        }
+                    ],
+                    "default": "customInterface"
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "接口地址",
+                    "bindKey": "customInterfaceUrlAll",
+                    "desc": "用于获取数据源的接口地址，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}",
+                    "display": "@[dataSourceTypeAll=='customInterface']"
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "结果集名",
+                    "bindKey": "dataNameAll",
+                    "desc": "页面接口设定的结果集名称，位置为：页面设置》高级设置》页面接口",
+                    "default": "",
+                    "placeholder": "示例：resultData",
+                    "display": "@[dataSourceTypeAll=='pageCommonInterface']"
+                },
+                {
+                    "type": "textarea",
+                    "layoutType": "inline",
+                    "text": "显示字段",
+                    "bindKey": "dataFiledAll",
+                    "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData（自定义接口忽略）且它的值为{data:{filedName:[{\"text\":\"\",\"value\":\"\",\"check\":true}]}}，则这里应该填写data.filedName",
+                    "default": "",
+                    "placeholder": "示例：data.filedName 或者 [0].data[0].filedName",
+                    "display": "@[dataSourceTypeAll!='customFunction']"
+                },
+                {
+                    "type": "actionSelect",
+                    "layoutType": "block",
+                    "text": "自定义函数",
+                    "bindKey": "customFunctionAll",
+                    "desc": "获取动态文本内容、自定义接口回调、页面统一接口回调的时候会调用此方法，返回数据格式为字符串，接收参数：{...自定义,interfaceData:自定义接口或页面统一接口的返回结果,expressData:表达式替换后的结果}",
+                    "multiple": false
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "text": "高级",
+            "desc": "点击？查看高级设置用法指南",
+            "children": [
+                {
+                    "type": "actionSelect",
+                    "layoutType": "block",
+                    "text": "点击[搜索]时动作",
+                    "bindKey": "clickSearchFunction",
+                    "desc": "点击搜索的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
                     "multiple": true
                 },
                 {
                     "type": "actionSelect",
                     "layoutType": "block",
-                    "text": "点击[新建页面]时动作",
-                    "bindKey": "clickNewPageFunction",
-                    "desc": "点击新建页面的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
+                    "text": "点击[完成]时动作",
+                    "bindKey": "clickSaveFunction",
+                    "desc": "点击完成的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
+                    "multiple": true
+                },
+                {
+                    "type": "actionSelect",
+                    "layoutType": "block",
+                    "text": "点击[取消]时动作",
+                    "bindKey": "clickCancelFunction",
+                    "desc": "点击取消的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
                     "multiple": true
                 }
             ]

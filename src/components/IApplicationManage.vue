@@ -15,7 +15,7 @@
                     <div class="idm_applicationcenter_title_left">
                         <div class="idm_applicationcenter_title_left_text">我的应用</div>
                     </div>
-                    <div class="idm_applicationcenter_title_right">管理</div>
+                    <div @click="manageApplication" class="idm_applicationcenter_title_right">管理</div>
                 </div>
                 <div class="idm_applicationcenter_main">
                     <van-grid :border="false" :column-num="5">
@@ -23,7 +23,7 @@
                             <div @click="deleteApplication(item,index)" class="idm_applicationcenter_main_list">
                                 <img :src="item.img">
                                 <div class="idm_applicationcenter_main_list_name">{{ item.name }}</div>
-                                <van-icon class="icon" name="minus" color="#fff" />
+                                <van-icon v-if="is_edit" class="icon" name="minus" color="#fff" />
                             </div>
                         </van-grid-item>
                     </van-grid>
@@ -44,8 +44,10 @@
                                     <div class="idm_applicationcenter_main_list">
                                         <img :src="item.img">
                                         <div class="idm_applicationcenter_main_list_name">{{ item.name }}</div>
-                                        <van-icon v-if="isHaveInMyApplication(item)" class="icon icon_disabled" name="plus" color="#fff" />
-                                        <van-icon @click="addApplication(item)" v-else class="icon" name="plus" color="#fff" />
+                                        <div v-if="is_edit">
+                                            <van-icon v-if="isHaveInMyApplication(item)" class="icon icon_disabled" name="plus" color="#fff" />
+                                            <van-icon @click="addApplication(item)" v-else class="icon" name="plus" color="#fff" />
+                                        </div>
                                     </div>
                                 </van-grid-item>
                             </van-grid>
@@ -54,10 +56,10 @@
                 </div>
             </div>
             <div class="idm_applicationmanage_footer flex_between">
-                <van-button class="button" block type="default">取消</van-button>
-                <van-button class="button" block type="info">完成</van-button>
+                <van-button @click="cancel" class="button" block type="default">取消</van-button>
+                <van-button @save="save" class="button" block type="info">完成</van-button>
             </div>
-            <div class="idm_applicationmanage_search">
+            <div @click="search" class="idm_applicationmanage_search">
                 <van-icon name="search" color="#fff"/>
             </div>
         </div>
@@ -88,6 +90,7 @@ export default {
                 showRows: 2,
                 showColumn: 5,
             },
+            is_edit: false,
             my_application_data: [
                 {
                     key: '1',
@@ -126,7 +129,7 @@ export default {
                     number: 1
                 },
             ],
-            application_data_copy: [
+            application_data: [
                 {
                     type: '公文',
                     data: [
@@ -268,16 +271,13 @@ export default {
                 
                 
             ],
-            application_data: [],
         }
     },
     props: {
     },
     created() {
         this.moduleObject = this.$root.moduleObject
-        // console.log(this.moduleObject)
         this.convertAttrToStyleObject();
-        this.application_data = JSON.parse(JSON.stringify(this.application_data_copy))
     },
     mounted() {
         //赋值给window提供跨页面调用
@@ -288,6 +288,50 @@ export default {
     },
     destroyed() { },
     methods: {
+        search() {
+            this.is_edit = false;
+            let urlObject = window.IDM.url.queryObject();
+            let pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
+            var clickNewFunction = this.propData.clickSearchFunction;
+            clickNewFunction.forEach(item=>{
+                window[item.name]&&window[item.name].call(this,{
+                    urlData:urlObject,
+                    pageId,
+                    customParam:item.param,
+                    _this:this
+                });
+            })
+        },
+        cancel() {
+            this.is_edit = false;
+            let urlObject = window.IDM.url.queryObject();
+            let pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
+            var clickNewFunction = this.propData.clickCancelFunction;
+            clickNewFunction.forEach(item=>{
+                window[item.name]&&window[item.name].call(this,{
+                    urlData:urlObject,
+                    pageId,
+                    customParam:item.param,
+                    _this:this
+                });
+            })
+        },
+        save() {
+            let urlObject = window.IDM.url.queryObject();
+            let pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
+            var clickNewFunction = this.propData.clickSaveFunction;
+            clickNewFunction.forEach(item=>{
+                window[item.name]&&window[item.name].call(this,{
+                    urlData:urlObject,
+                    pageId,
+                    customParam:item.param,
+                    _this:this
+                });
+            })
+        },
+        manageApplication() {
+            this.is_edit = true;
+        },
         deleteApplication(item,index) {
             this.my_application_data.splice(index,1)
         },
@@ -473,15 +517,12 @@ export default {
             let that = this;
             //所有地址的url参数转换
             var params = that.commonParam();
-            switch (this.propData.dataSourceType) {
+            switch (this.propData.dataSourceTypeMy) {
                 case "customInterface":
-                    this.propData.customInterfaceUrl && window.IDM.http.get(this.propData.customInterfaceUrl, params)
+                    this.propData.customInterfaceUrlMy && window.IDM.http.get(this.propData.customInterfaceUrlMy, params)
                         .then((res) => {
-                            //res.data
-                            that.$set(that.propData, "fontContent", that.getExpressData("resultData", that.propData.dataFiled, res.data));
-                            // that.propData.fontContent = ;
-                        })
-                        .catch(function (error) {
+                            this.my_application_data = that.getExpressData("resultData", that.propData.dataFiledMy, res.data)
+                        }).catch(function (error) {
 
                         });
                     break;
@@ -489,13 +530,38 @@ export default {
                     //使用通用接口直接跳过，在setContextValue执行
                     break;
                 case "customFunction":
-                    if (this.propData.customFunction && this.propData.customFunction.length > 0) {
+                    if (this.propData.customFunctionMy && this.propData.customFunctionMy.length > 0) {
                         var resValue = "";
                         try {
-                            resValue = window[this.propData.customFunction[0].name] && window[this.propData.customFunction[0].name].call(this, { ...params, ...this.propData.customFunction[0].param, moduleObject: this.moduleObject });
+                            resValue = window[this.propData.customFunctionMy[0].name] && window[this.propData.customFunctionMy[0].name].call(this, { ...params, ...this.propData.customFunctionMy[0].param, moduleObject: this.moduleObject });
                         } catch (error) {
+
                         }
-                        that.propData.fontContent = resValue;
+                        that.my_application_data = resValue;
+                    }
+                    break;
+            }
+            switch (this.propData.dataSourceTypeAll) {
+                case "customInterface":
+                    this.propData.customInterfaceUrlAll && window.IDM.http.get(this.propData.customInterfaceUrlAll, params)
+                        .then((res) => {
+                            this.application_data = that.getExpressData("resultData", that.propData.dataFiledAll, res.data)
+                        }).catch(function (error) {
+
+                        });
+                    break;
+                case "pageCommonInterface":
+                    //使用通用接口直接跳过，在setContextValue执行
+                    break;
+                case "customFunction":
+                    if (this.propData.customFunctionAll && this.propData.customFunctionAll.length > 0) {
+                        var resValue = "";
+                        try {
+                            resValue = window[this.propData.customFunctionAll[0].name] && window[this.propData.customFunctionAll[0].name].call(this, { ...params, ...this.propData.customFunctionAll[0].param, moduleObject: this.moduleObject });
+                        } catch (error) {
+
+                        }
+                        that.application_data = resValue;
                     }
                     break;
             }
@@ -538,40 +604,8 @@ export default {
 
             return _defaultVal;
         },
-        /**
-         * 文本点击事件
-         */
-        textClickHandle() {
-            let that = this;
-            if (this.moduleObject.env == "develop") {
-                //开发模式下不执行此事件
-                return;
-            }
-            //获取所有的URL参数、页面ID（pageId）、以及所有组件的返回值（用范围值去调用IDM提供的方法取出所有的组件值）
-            let urlObject = window.IDM.url.queryObject(),
-                pageId = window.IDM.broadcast && window.IDM.broadcast.pageModule ? window.IDM.broadcast.pageModule.id : "";
-            //自定义函数
-            /**
-             * [
-             * {name:"",param:{}}
-             * ]
-             */
-            var clickFunction = this.propData.clickFunction;
-            clickFunction && clickFunction.forEach(item => {
-                window[item.name] && window[item.name].call(this, {
-                    urlData: urlObject,
-                    pageId,
-                    customParam: item.param,
-                    _this: this
-                });
-            })
-        },
-        showThisModuleHandle() {
-            this.propData.defaultStatus = "default";
-        },
-        hideThisModuleHandle() {
-            this.propData.defaultStatus = "hidden";
-        },
+       
+        
         /**
          * 组件通信：接收消息的方法
          * @param {
@@ -589,6 +623,12 @@ export default {
             } else if (object.type && object.type == "linkageHideModule") {
                 this.hideThisModuleHandle();
             }
+        },
+        showThisModuleHandle() {
+            this.propData.defaultStatus = "default";
+        },
+        hideThisModuleHandle() {
+            this.propData.defaultStatus = "hidden";
         },
         /**
          * 组件通信：发送消息的方法
@@ -618,9 +658,11 @@ export default {
                 return;
             }
             //这里使用的是子表，所以要循环匹配所有子表的属性然后再去设置修改默认值
-            if (object.key == this.propData.dataName) {
-                // this.propData.fontContent = this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data);
-                this.$set(this.propData, "fontContent", this.getExpressData(this.propData.dataName, this.propData.dataFiled, object.data));
+            if (object.key == this.propData.dataNameMy) {
+                this.my_application_data = this.getExpressData(this.propData.dataNameMy, this.propData.dataFiledMy, object.data)
+            }
+            if (object.key == this.propData.dataNameAll) {
+                this.application_data = this.getExpressData(this.propData.dataNameAll, this.propData.dataFiledAll, object.data)
             }
         }
     }
@@ -628,53 +670,57 @@ export default {
 </script>
 <style lang="scss">
 .idm_applicationmanage {
-    background: gainsboro;
     border-radius: 10px;
-    .idm_applicationcenter_title{
-        padding: 10px 10px 10px 10px;
-        .idm_applicationcenter_title_left_text{
-            font-size: 16px;
-            color: #333333;
-            line-height: 22px;
-        }
-    }
-    .idm_applicationcenter_main{
-        background: white;
-        .idm_applicationcenter_main_list{
-            position: relative;
-            text-align: center;
-            img{
-                width: 40px;
-                height: 40px;
-                margin: 0 auto 2.5px auto;
-            }
-            .idm_applicationcenter_main_list_name{
-                font-size: 12px;
+    .idm_applicationmanage_block{
+        margin-bottom: 5px;
+        .idm_applicationcenter_title{
+            padding: 10px 10px 10px 10px;
+            .idm_applicationcenter_title_left_text{
+                font-family: PingFangSC-Medium;
+                font-size: 16px;
                 color: #333333;
-                text-align: center;
+                line-height: 22px;
             }
-            .icon{
-                width: 15px;
-                height: 15px;
-                line-height: 15px;
-                position: absolute;
-                top: -7px;
-                right: -7px;
+        }
+        .idm_applicationcenter_main{
+            background: white;
+            .idm_applicationcenter_main_list{
+                position: relative;
                 text-align: center;
-                font-size: 12px;
-                color: white;
-                background: #E81B1B;
-                border-radius: 50%;
-            }
-            .icon_disabled{
-                background: #999;
+                img{
+                    width: 40px;
+                    height: 40px;
+                    margin: 0 auto 2.5px auto;
+                }
+                .idm_applicationcenter_main_list_name{
+                    font-size: 12px;
+                    color: #333333;
+                    text-align: center;
+                }
+                .icon{
+                    width: 15px;
+                    height: 15px;
+                    line-height: 15px;
+                    position: absolute;
+                    top: -7px;
+                    right: -7px;
+                    text-align: center;
+                    font-size: 12px;
+                    color: white;
+                    background: #E81B1B;
+                    border-radius: 50%;
+                }
+                .icon_disabled{
+                    background: #999;
+                }
             }
         }
     }
+    
     .idm_applicationmanage_footer{
         width: 100%;
         position: fixed;
-        bottom: 100px;
+        bottom: 80px;
         padding: 0 20px;
         background: white;
         .button:nth-child(1){
