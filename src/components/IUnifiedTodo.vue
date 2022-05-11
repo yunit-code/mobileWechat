@@ -13,7 +13,7 @@
    class="box">
     <div class="box-title d-flex align-c just-b">
       <div class="d-flex align-c">
-        <span>{{propData.htmlTitle}}</span>
+        <span :style="titleFontStyleObj">{{propData.htmlTitle}}</span>
         <img src="../assets/red-three.png" class="box-title-icon" alt="">
       </div>
       <van-icon class="box-title-more" name="ellipsis" @click="handleClick('clickMoreFunction')" />
@@ -64,10 +64,26 @@ export default {
         width: '100%',
         height: 'auto',
         borderRadius: '5px',
+        titleFontStyle: {
+          fontColors: {
+            colors: {
+              hex: '#333'
+            }
+          }
+        },
         bgColor: '#fff',
         maxCount: '3', // 最多显示几条
       },
       list
+    }
+  },
+  computed: {
+    titleFontStyleObj(){
+      return {
+        ...this.propData.titleFontStyle,
+        color: this.propData.titleFontStyle.fontColors.hex,
+        fontSize: this.propData.titleFontStyle.fontSize + this.propData.titleFontStyle.fontSizeUnit
+      }
     }
   },
   props: {
@@ -230,18 +246,6 @@ export default {
               styleObject["border-top-right-radius"]=element.radius.rightTop.radius+element.radius.rightTop.radiusUnit;
               styleObject["border-bottom-left-radius"]=element.radius.leftBottom.radius+element.radius.leftBottom.radiusUnit;
               styleObject["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
-              break;
-            case "font":
-              styleObject["font-family"]=element.fontFamily;
-              if(element.fontColors.hex8){
-                styleObject["color"]=element.fontColors.hex8;
-              }
-              styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
-              styleObject["font-style"]=element.fontStyle;
-              styleObject["font-size"]=element.fontSize+element.fontSizeUnit;
-              styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
-              styleObject["text-align"]=element.fontTextAlign;
-              styleObject["text-decoration"]=element.fontDecoration;
               break;
             case "borderRadius":
               styleObject["border-radius"]=element;
@@ -436,11 +440,10 @@ export default {
   justify-content: space-between;
 }
 .box{
-  padding: 10px;
   background-color: #fff;
   overflow: hidden;
   &-title{
-    font-size: 18px;
+    font: inherit;
     font-weight: 600;
     &-icon{
       width: 18px;

@@ -39,7 +39,17 @@
                     "type": "box",
                     "layoutType": "block",
                     "text": "内外边距",
-                    "bindKey": "box"
+                    "bindKey": "box",
+                    "default": {
+                        "marginTopVal": "",
+                        "marginRightVal": "",
+                        "marginBottomVal": "",
+                        "marginLeftVal": "",
+                        "paddingTopVal": "10px",
+                        "paddingRightVal": "10px",
+                        "paddingBottomVal": "10px",
+                        "paddingLeftVal": "10px"
+                    }
                 },
                 {
                     "type": "colorPicker",
@@ -48,6 +58,20 @@
                     "bindKey": "bgColor",
                     "placeholder": "请选择颜色",
                     "default": {}
+                },
+                {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "标题字体设置",
+                    "bindKey": "titleFontStyle",
+                    "default": {
+                        "fontColors": {
+                            "hex": "#333333"
+                        },
+                        "fontSize": 16,
+                        "fontSizeUnit": "px",
+                        "fontWeight": "800"
+                    }
                 },
                 {
                     "type": "inlineGroup",

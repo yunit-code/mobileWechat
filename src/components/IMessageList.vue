@@ -14,7 +14,7 @@
       <div class="box-title d-flex align-c just-b">
         <div class="d-flex align-c">
           <img src="../assets/red-three.png" class="box-title-icon" alt="">
-          <span>{{propData.htmlTitle}}</span>
+          <span :style="titleFontStyleObj">{{propData.htmlTitle}}</span>
         </div>
         <div class="box-title-right" @click="handleClick('clickMoreFunction')">
           更多 <van-icon name="arrow" />
@@ -23,8 +23,8 @@
     </template>
     <div class="box" :style="{width: propData.width, height: propData.height}">
       <div v-if="propData.compStyle === 'styleFour'" class="box-top d-flex just-b align-c">
-        <div class="box-top-left flex-1">
-          <span v-for="(item, index) in propData.titleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.title}}</span>
+        <div class="box-top-left flex-1" :style="titleFontStyleObj">
+          <span v-for="(item, index) in titleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.title}}</span>
         </div>
         <van-icon class="box-top-more" name="ellipsis" @click="handleClick('clickMoreFunction')" />
       </div>
@@ -75,13 +75,20 @@ export default {
         width: '100%',
         height: 'auto',
         bgColor: {hex8: '#eee'},
+        titleFontStyle: {
+          fontColors: {
+            colors: {
+              hex: '#333'
+            }
+          }
+        },
         box: {
           paddingBottomVal: '10px',
           paddingLeftVal: '10px',
           paddingRightVal: '10px',
         },
         borderRadius: '5px',
-        compStyle: 'styleOne',
+        compStyle: 'styleFour',
         maxGroupCount: 3,
         maxContentCount: 3,
       },
@@ -104,6 +111,15 @@ export default {
         content: '这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，',
         createTime: '2022-05-09'
       }]
+    }
+  },
+  computed: {
+    titleFontStyleObj(){
+      return {
+        ...this.propData.titleFontStyle,
+        color: this.propData.titleFontStyle.fontColors.hex,
+        fontSize: this.propData.titleFontStyle.fontSize + this.propData.titleFontStyle.fontSizeUnit
+      }
     }
   },
   props: {
@@ -392,14 +408,11 @@ export default {
   flex: 1;
 }
 .box{
-  padding: 10px;
   background-color: #fff;
-  border-radius: 5px;
   overflow: hidden;
   &-title{
     padding: 10px 0;
-    font-size: 18px;
-    font-weight: 600;
+    font: inherit;
      &-icon{
       width: 18px;
       height: 18px;
@@ -412,12 +425,11 @@ export default {
     }
   }
   &-top{
-    font-size: 20px;
+    font: inherit;
     margin: 0 0 10px 0;
     &-left{
       overflow: hidden;
       >span{
-        color: #999;
         border-right: 1px solid #ccc;
         padding: 0 15px;
         &:first-child{
@@ -467,8 +479,8 @@ export default {
     padding: 0;
     list-style: none;
     > li{
-      font-size: 18px;
-      margin: 0 0 10px 0;
+      font-size: 16px;
+      margin: 0 0 8px 0;
       &:last-child{
         margin:  0;
       }
