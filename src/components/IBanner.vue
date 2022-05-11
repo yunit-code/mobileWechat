@@ -20,6 +20,7 @@
             class="swiper-slide box-swiper-item-container"
             v-for="(item, index) in propData.list"
             :key="index"
+            :style="{height: propData.height}"
             @click="handleClick('clickBannerItemFunction', item)"
           >
             <img :src="item.img" class="slider-img" alt="" />
@@ -34,7 +35,7 @@
 
 <script>
 import Swiper from "swiper";
-import "swiper/dist/css/swiper.min.css";
+import "swiper/css/swiper.min.css";
 export default {
   name: "IBanner",
   data() {
@@ -44,7 +45,7 @@ export default {
       propData: this.$root.propData.compositeAttr || {
         htmlTitle: "广告轮播",
         width: "100%",
-        height: "200px",
+        height: "40vw",
         list: [
           {
             img: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp7.itc.cn%2Fimages01%2F20200903%2F9f80293e09644046a408f8be7359d4ff.jpeg&refer=http%3A%2F%2Fp7.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654761049&t=b2726a52f403b5d4dcca968820d55109",
@@ -97,7 +98,7 @@ export default {
         centeredSlides:true,
         coverflowEffect:{
           rotate:0,
-          stretch: -25,
+          stretch: '-7%',
           depth:100,
           modifier:1,
           slideShadows: false,
