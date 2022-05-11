@@ -137,6 +137,7 @@ export default {
          */
         convertAttrToStyleObject() {
             var styleObject = {};
+            var styleObjectTitle = {};
             if (this.propData.bgSize && this.propData.bgSize == "custom") {
                 styleObject["background-size"] = (this.propData.bgSizeWidth ? this.propData.bgSizeWidth.inputVal + this.propData.bgSizeWidth.selectVal : "auto") + " " + (this.propData.bgSizeHeight ? this.propData.bgSizeHeight.inputVal + this.propData.bgSizeHeight.selectVal : "auto")
             } else if (this.propData.bgSize) {
@@ -256,10 +257,23 @@ export default {
                             styleObject["text-align"] = element.fontTextAlign;
                             styleObject["text-decoration"] = element.fontDecoration;
                             break;
+                        case "titleFont":
+                            styleObjectTitle["font-family"] = element.fontFamily;
+                            if (element.fontColors.hex8) {
+                                styleObjectTitle["color"] = element.fontColors.hex8;
+                            }
+                            styleObjectTitle["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
+                            styleObjectTitle["font-style"] = element.fontStyle;
+                            styleObjectTitle["font-size"] = element.fontSize + element.fontSizeUnit;
+                            styleObjectTitle["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
+                            styleObjectTitle["text-align"] = element.fontTextAlign;
+                            styleObjectTitle["text-decoration"] = element.fontDecoration;
+                            break;
                     }
                 }
             }
             window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_text", styleObjectTitle);
             this.initData();
         },
         /**

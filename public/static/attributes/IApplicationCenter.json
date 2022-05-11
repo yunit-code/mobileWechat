@@ -29,7 +29,7 @@
                 },
                 {
                     "type": "switch",
-                    "layoutType": "inline",
+                    "layoutType": "block",
                     "text": "允许用户自定义",
                     "desc":"设置用户配置应用程序按钮是否显示",
                     "bindKey": "showConfig",
@@ -37,7 +37,7 @@
                 },
                 {
                     "type": "switch",
-                    "layoutType": "inline",
+                    "layoutType": "block",
                     "text": "显示待办角标",
                     "desc":"设置待办角标是否显示",
                     "bindKey": "showTodoNumber",
@@ -52,7 +52,7 @@
                 },
                 {
                     "type": "inputNumber",
-                    "layoutType": "inline",
+                    "layoutType": "block",
                     "text": "最多展示行数",
                     "bindKey": "showRows",
                     "default": 2
@@ -112,6 +112,20 @@
                             "default": ""
                         }
                     ]
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "text": "标题样式设置",
+            "desc": "点击？查看样式设置用法指南",
+            "helpUrl": "",
+            "children": [
+                {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "文字",
+                    "bindKey": "titleFont"
                 }
             ]
         },

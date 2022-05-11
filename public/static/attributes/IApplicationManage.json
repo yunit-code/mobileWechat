@@ -17,6 +17,20 @@
         },
         {
             "type": "group",
+            "text": "标题样式设置",
+            "desc": "点击？查看样式设置用法指南",
+            "helpUrl": "",
+            "children": [
+                {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "文字",
+                    "bindKey": "titleFont"
+                }
+            ]
+        },
+        {
+            "type": "group",
             "text": "样式设置",
             "desc": "点击？查看样式设置用法指南",
             "helpUrl": "",
