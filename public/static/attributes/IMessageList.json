@@ -66,6 +66,38 @@
                     "text": "内容最多显示几条(0不限制)",
                     "bindKey": "maxContentCount",
                     "default": "3"
+                },
+                {
+                    "type": "table",
+                    "layoutType": "inline",
+                    "text": "信息分类配置",
+                    "bindKey": "messageTitleList",
+                    "tabText": "标题",
+                    "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "名称",
+                            "bindKey": "messageSortTitle",
+                            "default":"标题",
+                            "placeholder":"请输入名称"
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "列表接口",
+                            "bindKey": "listInterface",
+                            "default": "/ctrl"
+                        },
+                        {
+                            "type": "textarea",
+                            "layoutType": "inline",
+                            "text": "显示字段",
+                            "bindKey": "dataFiled",
+                            "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData（自定义接口忽略）且它的值为{data:{filedName:[{\"text\":\"\",\"value\":\"\",\"check\":true}]}}，则这里应该填写data.filedName",
+                            "placeholder": "示例：data.filedName 或者 [0].data[0].filedName"
+                        }
+                    ]
                 }
             ]
         },
@@ -184,40 +216,6 @@
                     "bindKey": "clickMessageItemFunction",
                     "desc": "点击的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
                     "multiple": true
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "标题接口",
-                    "bindKey": "titleInterfaceUrl",
-                    "desc": "通过接口获取标题内容",
-                    "default": "/ctrl/"
-                },
-                {
-                    "type": "textarea",
-                    "layoutType": "inline",
-                    "text": "标题字段",
-                    "bindKey": "titleFiled",
-                    "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData（自定义接口忽略）且它的值为{data:{filedName:[{\"text\":\"\",\"value\":\"\",\"check\":true}]}}，则这里应该填写data.filedName",
-                    "default": "",
-                    "placeholder": "示例：data.filedName 或者 [0].data[0].filedName"
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "列表接口",
-                    "bindKey": "listInterfaceUrl",
-                    "desc": "通过接口获取标题内容",
-                    "default": "/ctrl/"
-                },
-                {
-                    "type": "textarea",
-                    "layoutType": "inline",
-                    "text": "列表字段",
-                    "bindKey": "listFiled",
-                    "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData（自定义接口忽略）且它的值为{data:{filedName:[{\"text\":\"\",\"value\":\"\",\"check\":true}]}}，则这里应该填写data.filedName",
-                    "default": "",
-                    "placeholder": "示例：data.filedName 或者 [0].data[0].filedName"
                 }
             ]
         }

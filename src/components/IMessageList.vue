@@ -24,13 +24,13 @@
     <div class="box" :style="{width: propData.width, height: propData.height}">
       <div v-if="propData.compStyle === 'styleFour'" class="box-top d-flex just-b align-c">
         <div class="box-top-left flex-1" :style="titleFontStyleObj">
-          <span v-for="(item, index) in titleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.title}}</span>
+          <span v-for="(item, index) in propData.messageTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.messageSortTitle}}</span>
         </div>
         <van-icon class="box-top-more" name="ellipsis" @click="handleClick('clickMoreFunction')" />
       </div>
       <div v-else class="box-top2 d-flex just-b align-c">
         <div class="box-top2-left d-flex flex-1">
-          <div v-for="(item, index) in titleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.title}}</div>
+          <div v-for="(item, index) in propData.messageTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.messageSortTitle}}</div>
         </div>
       </div>
       <ul class="box-list" v-if="propData.compStyle === 'styleFour' || propData.compStyle === 'styleOne'">
@@ -87,14 +87,10 @@ export default {
         compStyle: 'styleFour',
         maxGroupCount: 3,
         maxContentCount: 3,
+        messageTitleList: [{
+          messageSortTitle: '标题'
+        }]
       },
-      titleList:[{
-        title: '标题标1'
-      },{
-        title: '标题标2'
-      },{
-        title: '标题标3'
-      }],
       messageList: [{
         content: '这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，',
         createTime: '2022-05-09'
