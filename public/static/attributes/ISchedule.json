@@ -26,13 +26,6 @@
                     "text": "标题",
                     "bindKey": "title",
                     "default": "日程提醒"
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "接口地址",
-                    "bindKey": "componentListUrl",
-                    "desc":"用于获取日程消息"
                 }
             ]
         },
@@ -653,15 +646,37 @@
                             "type": "colorPicker",
                             "layoutType": "inline",
                             "text": "图标颜色",
-                            "bindKey": "titleColor"
+                            "bindKey": "titleIconColor"
                         },
                         {
                             "type": "inputNumber",
                             "layoutType": "inline",
                             "text": "图标大小",
-                            "bindKey": "titleSize"
+                            "bindKey": "titleIconSize",
+                            "default": "14"
                         }
                     ]
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "text": "高级",
+            "desc": "点击？查看高级设置用法指南",
+            "children": [
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "接口地址",
+                    "bindKey": "customInterfaceUrl",
+                    "desc": "用于获取数据源的接口地址，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}"
+                },
+                {
+                    "type": "treeSelect",
+                    "layoutType": "inline",
+                    "text": "数据源",
+                    "bindKey": "dataSource",
+                    "dataSourceUrl":""
                 }
             ]
         }

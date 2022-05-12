@@ -148,7 +148,7 @@ export default {
      */
     requestDefaultCustomization() {
       const temp = this.propData.componentListUrl;
-      const pageid = IDM.url.queryObject(window.location.href)[this.propData.pageId];
+      const pageid = IDM.url.queryObject(window.location.href)[this.propData.pageid];
       const url = temp.indexOf("?") === -1 ?`${temp}?pageid=${pageid}`:`${temp}&pageid=${pageid}`
       IDM.http
         .get(url)
