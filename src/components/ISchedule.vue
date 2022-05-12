@@ -141,13 +141,37 @@ export default {
       } else if (this.propData.bgSize) {
         styleObject["background-size"] = this.propData.bgSize;
       }
+      if (this.propData.innerBgSize && this.propData.innerBgSize == "custom") {
+        innerCardStyleObject["background-size"] =
+          (this.propData.innerBgSizeWidth
+            ? this.propData.innerBgSizeWidth.inputVal +
+              this.propData.innerBgSizeWidth.selectVal
+            : "auto") +
+          " " +
+          (this.propData.innerBgSizeHeight
+            ? this.propData.innerBgSizeHeight.inputVal +
+              this.propData.innerBgSizeHeight.selectVal
+            : "auto");
+      } else if (this.propData.innerBgSize) {
+        innerCardStyleObject["background-size"] = this.propData.innerBgSize;
+      }
+
       if (this.propData.positionX && this.propData.positionX.inputVal) {
         styleObject["background-position-x"] =
           this.propData.positionX.inputVal + this.propData.positionX.selectVal;
       }
+      if (this.propData.innerPositionX && this.propData.innerPositionX.inputVal) {
+        innerCardStyleObject["background-position-x"] =
+          this.propData.innerPositionX.inputVal + this.propData.innerPositionX.selectVal;
+      }
+
       if (this.propData.positionY && this.propData.positionY.inputVal) {
         styleObject["background-position-y"] =
           this.propData.positionY.inputVal + this.propData.positionY.selectVal;
+      }
+      if (this.propData.innerPositionY && this.propData.innerPositionY.inputVal) {
+        innerCardStyleObject["background-position-y"] =
+          this.propData.innerPositionY.inputVal + this.propData.innerPositionY.selectVal;
       }
       for (const key in this.propData) {
         
