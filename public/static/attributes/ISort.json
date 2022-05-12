@@ -27,121 +27,14 @@
                     "bindKey": "pageid",
                     "desc":"当前页面的唯一值",
                     "default": "pageid"
-                }
-            ]
-        },
-        {
-            "type": "group",
-            "text": "个性化列表数据源",
-            "desc": "设置个性化列表数据源方式及其他信息",
-            "children": [
-                {
-                    "type": "select",
-                    "layoutType": "inline",
-                    "text": "数据来源",
-                    "bindKey": "dataSourceType",
-                    "dictionary": [
-                        {
-                            "label": "自定义接口",
-                            "value": "customInterface"
-                        },
-                        {
-                            "label": "页面统一接口",
-                            "value": "pageCommonInterface"
-                        },
-                        {
-                            "label": "自定义函数",
-                            "value": "customFunction"
-                        }
-                    ],
-                    "default": "customInterface"
                 },
                 {
-                    "type": "input",
+                    "type": "textarea",
                     "layoutType": "inline",
-                    "text": "接口地址",
-                    "bindKey": "customInterfaceUrl",
-                    "desc":"用于获取数据源的接口地址，请按照统一标准的返回格式返回数组格式的数据，格式如下：{\"code\":\"200\",\"data\":[{...},...],...}",
-                    "display":"@[dataSourceType=='customInterface']"
-                },{
-                    "type": "radio",
-                    "layoutType": "inline",
-                    "text": "请求方式",
-                    "bindKey": "requestType",
-                    "dictionary": [
-                        {
-                            "label": "POST",
-                            "value": "post"
-                        },
-                        {
-                            "label": "GET",
-                            "value": "get"
-                        }
-                    ],
-                    "default":"get",
-                    "display":"@[dataSourceType=='customInterface']"
-                },
-                {
-                    "type": "select",
-                    "layoutType": "inline",
-                    "text": "请求类型",
-                    "bindKey": "requestContentType",
-                    "desc":"请求接口的数据类型，请根据后端需求进行选择",
-                    "dictionary": [
-                        {
-                            "label": "默认",
-                            "value": ""
-                        },
-                        {
-                            "label": "JSON",
-                            "value": "application/json;charset=UTF-8"
-                        },
-                        {
-                            "label": "FormData",
-                            "value": "multipart/form-data"
-                        }
-                    ],
-                    "default": "",
-                    "display": "@[dataSourceType=='customInterface'&&requestType=='post']"
-                },
-                {
-                    "type": "actionSelect",
-                    "layoutType": "block",
-                    "text": "请求参数自定义函数",
-                    "bindKey": "requestParamFun",
-                    "desc": "请求接口时会调用这里设置的函数返回自定义的参数，返回格式为Object对象，例如：{param1:'',param2:''}",
-                    "display": "@[dataSourceType=='customInterface']",
-                    "multiple": false
-                },
-                {
-                    "type": "table",
-                    "text": "接收其他组件联动参数",
-                    "bindKey": "linkageParamList",
-                    "tabText": "参数[index]",
-                    "display": "@[dataSourceType=='customInterface']",
-                    "children": [
-                        {
-                            "type": "input",
-                            "layoutType": "inline",
-                            "text": "表单标识",
-                            "bindKey": "msgKey",
-                            "default": ""
-                        },{
-                            "type": "input",
-                            "layoutType": "inline",
-                            "text": "参数别名",
-                            "bindKey": "paramKey",
-                            "default": ""
-                        },
-                        {
-                            "type": "actionSelect",
-                            "layoutType": "block",
-                            "text": "参数处理函数",
-                            "bindKey": "paramFun",
-                            "desc": "收到其他组件联动参数后会根据表单标识调用这里设置的函数返回自定义的参数内容，返回格式为字符串或对象，例如：{text:'',value:''}或者直接字符串",
-                            "multiple": false
-                        }
-                    ]
+                    "text": "提示信息",
+                    "bindKey": "tipText",
+                    "desc":"提示信息",
+                    "default": "你可以通过拖拽对功能组件进行排序，点击置顶图表快速置顶重要组件，点击隐藏图标隐藏当前组件。"
                 }
             ]
         },
@@ -168,7 +61,7 @@
                             "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
                             "bindKey": "width",
                             "width": "60px",
-                            "default": "100%"
+                            "default": "auto"
                         },
                         {
                             "type": "input",
@@ -370,6 +263,20 @@
                     "layoutType": "block",
                     "text": "文字",
                     "bindKey": "font"
+                },
+                {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "提示信息文字",
+                    "bindKey": "tipFont"
+                },
+                {
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "提示信息背景色",
+                    "bindKey": "tipBgColor",
+                    "placeholder": "请选择颜色",
+                    "default": {}
                 }
             ]
         },

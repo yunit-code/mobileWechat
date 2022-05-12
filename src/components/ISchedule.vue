@@ -10,62 +10,67 @@
     :id="moduleObject.id"
     :idm-ctrl-id="moduleObject.id"
     :title="propData.htmlTitle"
+    class="i-schedule-outer"
   >
-    <div class="i-schedule-outer">
-      <div class="i-schedule-header">
-        <div class="i-schedule-header-main">
-          <div class="i-schedule-header-tit">
-            日程提醒
-          </div>
-          <div class="i-schedule-header-date">{{ nowDate }}</div>
+    <div class="i-schedule-header">
+      <div class="i-schedule-header-main">
+        <div class="i-schedule-header-tit">
+          {{ propData.title || '日程提醒' }}
+          <svg
+            class="idm_filed_svg_icon"
+            aria-hidden="true"
+          >
+            <use :xlink:href="`#${propData.titleIcon && propData.titleIcon[0]}`"></use>
+          </svg>
         </div>
-        <div class="i-schedule-header-more">更多></div>
+        <div class="i-schedule-header-date">{{ nowDate }}</div>
       </div>
-      <div class="i-schedule-content">
-        <div class="i-schedule-content-calendar swiper-container">
-          <div class="swiper-wrapper">
-            <ul
-              class="swiper-slide"
-              v-for="(item, i) in currentList"
-              :key="`week-${i}`"
-              ref="ul"
+      <div class="i-schedule-header-more">更多></div>
+    </div>
+    <div class="i-schedule-content">
+      <div class="i-schedule-content-calendar swiper-container">
+        <div class="swiper-wrapper">
+          <ul
+            class="swiper-slide"
+            v-for="(item, i) in currentList"
+            :key="`week-${i}`"
+            ref="ul"
+          >
+            <li
+              v-for="(k, j) in item"
+              @click="setCurrent(j, k.sendDate)"
+              :key="`date-${j}`"
+              :class="{ holiday: k.week === '六' || k.week === '日' }"
             >
-              <li
-                v-for="(k, j) in item"
-                @click="setCurrent(j, k.sendDate)"
-                :key="`date-${j}`"
-                :class="{ holiday: k.week === '六' || k.week === '日' }"
-              >
-                <p>{{ k.week }}</p>
-                <svg-icon
-                  v-if="k.now"
-                  class="today"
-                  :class="{ active: currentClassStatus(i, j) }"
-                  icon-class="ischedule-today"
-                />
-                <span v-else class="date-num" :class="{ active: currentClassStatus(i, j) }">{{
-                  k.showDate
-                }}</span>
-              </li>
-            </ul>
-          </div>
+              <p>{{ k.week }}</p>
+              <svg-icon
+                v-if="k.now"
+                class="today"
+                :class="{ active: currentClassStatus(i, j) }"
+                icon-class="ischedule-today"
+              />
+              <span v-else class="date-num" :class="{ active: currentClassStatus(i, j) }">{{
+                k.showDate
+              }}</span>
+            </li>
+          </ul>
         </div>
-        <div class="i-schedule-content-note">
-          <div class="i-schedule-content-note-left">
-            <p class="active">9:00</p>
-            <p>11:00</p>
+      </div>
+      <div class="i-schedule-content-note">
+        <div class="i-schedule-content-note-left">
+          <p class="active">9:00</p>
+          <p>11:00</p>
+        </div>
+        <div class="i-schedule-content-note-right">
+          <div class="schedule-item">
+            <div class="schedule-item-name">部门小组早例会</div>
+            <div class="schedule-item-addr">A12会议室</div>
+            <div class="schedule-item-time">9:00-9:30</div>
           </div>
-          <div class="i-schedule-content-note-right">
-            <div class="schedule-item">
-              <div class="schedule-item-name">部门小组早例会</div>
-              <div class="schedule-item-addr">A12会议室</div>
-              <div class="schedule-item-time">9:00-9:30</div>
-            </div>
-            <div class="schedule-item">
-              <div class="schedule-item-name">参加信息中心季度总结会</div>
-              <div class="schedule-item-addr">2楼大会议室</div>
-              <div class="schedule-item-time">10:00-12:00</div>
-            </div>
+          <div class="schedule-item">
+            <div class="schedule-item-name">参加信息中心季度总结会</div>
+            <div class="schedule-item-addr">2楼大会议室</div>
+            <div class="schedule-item-time">10:00-12:00</div>
           </div>
         </div>
       </div>
@@ -92,6 +97,7 @@ export default {
   },
   props: {},
   created() {
+    
     this.moduleObject = this.$root.moduleObject;
     this.convertAttrToStyleObject();
 
@@ -118,6 +124,9 @@ export default {
      */
     convertAttrToStyleObject() {
       var styleObject = {};
+      var titleStyleObject = {};
+      var innerCardStyleObject = {};
+      var iconStyleObject = {};
       if (this.propData.bgSize && this.propData.bgSize == "custom") {
         styleObject["background-size"] =
           (this.propData.bgSizeWidth
@@ -141,8 +150,10 @@ export default {
           this.propData.positionY.inputVal + this.propData.positionY.selectVal;
       }
       for (const key in this.propData) {
+        
         if (this.propData.hasOwnProperty.call(this.propData, key)) {
           const element = this.propData[key];
+          console.log(key,"key",element)
           if (!element && element !== false && element != 0) {
             continue;
           }
@@ -154,6 +165,11 @@ export default {
             case "bgColor":
               if (element && element.hex8) {
                 styleObject["background-color"] = element.hex8;
+              }
+              break;
+            case "innerBgColor":
+              if (element && element.hex8) {
+                innerCardStyleObject["background-color"] = element.hex8;
               }
               break;
             case "box":
@@ -182,26 +198,73 @@ export default {
                 styleObject["padding-left"] = `${element.paddingLeftVal}`;
               }
               break;
+            case "innerBox":
+              if (element.marginTopVal) {
+                innerCardStyleObject["margin-top"] = `${element.marginTopVal}`;
+              }
+              if (element.marginRightVal) {
+                innerCardStyleObject["margin-right"] = `${element.marginRightVal}`;
+              }
+              if (element.marginBottomVal) {
+                innerCardStyleObject["margin-bottom"] = `${element.marginBottomVal}`;
+              }
+              if (element.marginLeftVal) {
+                innerCardStyleObject["margin-left"] = `${element.marginLeftVal}`;
+              }
+              if (element.paddingTopVal) {
+                innerCardStyleObject["padding-top"] = `${element.paddingTopVal}`;
+              }
+              if (element.paddingRightVal) {
+                innerCardStyleObject["padding-right"] = `${element.paddingRightVal}`;
+              }
+              if (element.paddingBottomVal) {
+                innerCardStyleObject["padding-bottom"] = `${element.paddingBottomVal}`;
+              }
+              if (element.paddingLeftVal) {
+                innerCardStyleObject["padding-left"] = `${element.paddingLeftVal}`;
+              }
+              break;
             case "bgImgUrl":
               styleObject[
                 "background-image"
               ] = `url(${window.IDM.url.getWebPath(element)})`;
               break;
+            case "innerBgImgUrl":
+              innerCardStyleObject[
+                "background-image"
+              ] = `url(${window.IDM.url.getWebPath(element)})`;
+              break;
             case "positionX":
               //背景横向偏移
-
+              styleObject["background-position-x"] = element;
+              break;
+            case "innerPositionX":
+              //背景横向偏移
+              innerCardStyleObject["background-position-x"] = element;
               break;
             case "positionY":
               //背景纵向偏移
-
+              styleObject["background-position-y"] = element;
+              break;
+            case "innerPositionY":
+              //背景纵向偏移
+              innerCardStyleObject["background-position-y"] = element;
               break;
             case "bgRepeat":
               //平铺模式
               styleObject["background-repeat"] = element;
               break;
+            case "innerBgRepeat":
+              //平铺模式
+              innerCardStyleObject["background-repeat"] = element;
+              break;
             case "bgAttachment":
               //背景模式
               styleObject["background-attachment"] = element;
+              break;
+            case "innerBgAttachment":
+              //背景模式
+              innerCardStyleObject["background-attachment"] = element;
               break;
             case "border":
               if (element.border.top.width > 0) {
@@ -255,6 +318,58 @@ export default {
                 element.radius.rightBottom.radius +
                 element.radius.rightBottom.radiusUnit;
               break;
+            case "innerBorder":
+              if (element.border.top.width > 0) {
+                innerCardStyleObject["border-top-width"] =
+                  element.border.top.width + element.border.top.widthUnit;
+                innerCardStyleObject["border-top-style"] = element.border.top.style;
+                if (element.border.top.colors.hex8) {
+                  innerCardStyleObject["border-top-color"] =
+                    element.border.top.colors.hex8;
+                }
+              }
+              if (element.border.right.width > 0) {
+                innerCardStyleObject["border-right-width"] =
+                  element.border.right.width + element.border.right.widthUnit;
+                innerCardStyleObject["border-right-style"] = element.border.right.style;
+                if (element.border.right.colors.hex8) {
+                  innerCardStyleObject["border-right-color"] =
+                    element.border.right.colors.hex8;
+                }
+              }
+              if (element.border.bottom.width > 0) {
+                innerCardStyleObject["border-bottom-width"] =
+                  element.border.bottom.width + element.border.bottom.widthUnit;
+                innerCardStyleObject["border-bottom-style"] =
+                  element.border.bottom.style;
+                if (element.border.bottom.colors.hex8) {
+                  innerCardStyleObject["border-bottom-color"] =
+                    element.border.bottom.colors.hex8;
+                }
+              }
+              if (element.border.left.width > 0) {
+                innerCardStyleObject["border-left-width"] =
+                  element.border.left.width + element.border.left.widthUnit;
+                innerCardStyleObject["border-left-style"] = element.border.left.style;
+                if (element.border.left.colors.hex8) {
+                  innerCardStyleObject["border-left-color"] =
+                    element.border.left.colors.hex8;
+                }
+              }
+
+              innerCardStyleObject["border-top-left-radius"] =
+                element.radius.leftTop.radius +
+                element.radius.leftTop.radiusUnit;
+              innerCardStyleObject["border-top-right-radius"] =
+                element.radius.rightTop.radius +
+                element.radius.rightTop.radiusUnit;
+              innerCardStyleObject["border-bottom-left-radius"] =
+                element.radius.leftBottom.radius +
+                element.radius.leftBottom.radiusUnit;
+              innerCardStyleObject["border-bottom-right-radius"] =
+                element.radius.rightBottom.radius +
+                element.radius.rightBottom.radiusUnit;
+              break;
             case "font":
               styleObject["font-family"] = element.fontFamily;
               if (element.fontColors.hex8) {
@@ -273,10 +388,39 @@ export default {
               styleObject["text-align"] = element.fontTextAlign;
               styleObject["text-decoration"] = element.fontDecoration;
               break;
+            case "titleFont":
+              titleStyleObject["font-family"] = element.fontFamily;
+              if (element.fontColors.hex8) {
+                titleStyleObject["color"] = element.fontColors.hex8;
+              }
+              titleStyleObject["font-weight"] =
+                element.fontWeight && element.fontWeight.split(" ")[0];
+              titleStyleObject["font-style"] = element.fontStyle;
+              titleStyleObject["font-size"] =
+                element.fontSize + element.fontSizeUnit;
+              titleStyleObject["line-height"] =
+                element.fontLineHeight +
+                (element.fontLineHeightUnit == "-"
+                  ? ""
+                  : element.fontLineHeightUnit);
+              titleStyleObject["text-align"] = element.fontTextAlign;
+              titleStyleObject["text-decoration"] = element.fontDecoration;
+              break;
+            case "titleColor":
+              iconStyleObject["color"] = element.titleColor;
+              break
+            case "titleSize":
+              iconStyleObject["font-size"] = element.titleSize;
+              break
           }
         }
       }
+      // if(key == "titleFont")
+      console.log(titleStyleObject,"标题")
+      console.log(innerCardStyleObject,"内层")
       window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .i-schedule-header-tit", titleStyleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .i-schedule-content", innerCardStyleObject);
       // this.initData();
     },
     /**
@@ -410,8 +554,18 @@ export default {
     .i-schedule-header-main {
       display: flex;
       .i-schedule-header-tit {
-        font-weight: 700;
+        // font-weight: 700;
         margin-left: 6px;
+
+        .idm_filed_svg_icon {
+          font-size: 14px;
+          max-height: 14px;
+          width: 14px;
+          fill: currentColor;
+          vertical-align: -0.15em;
+          // margin-right: 3px;
+          outline: none;
+        }
       }
       .i-schedule-header-date {
         margin-left: 10px;
@@ -501,7 +655,7 @@ export default {
       padding-top: 14px;
 
       .i-schedule-content-note-left {
-        min-width: 20vw;
+        flex: 4;
 
         p {
           position: relative;
@@ -522,7 +676,7 @@ export default {
       }
 
       .i-schedule-content-note-right {
-        flex: 1;
+        flex: 10;
         border-left: 1px solid #eee;
         padding-left: 14px;
         overflow:hidden;

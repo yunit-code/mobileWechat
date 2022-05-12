@@ -10,37 +10,43 @@
     :id="moduleObject.id"
     :idm-ctrl-id="moduleObject.id"
     :title="propData.htmlTitle"
+    class="i-sort-outer"
   >
-    <div class="i-sort-outer">
-      <draggable
-        handle=".i-sort-item-handle"
-        v-model="listData"
-        animation="200"
-        @end="dragEnd"
-      >
-        <div
-          class="i-sort-item"
-          v-for="(item, index) in listData"
-          :key="`sort-${index}`"
-        >
-          <div class="i-sort-item-handle">
-            <svg-icon icon-class="isort-drag" />
-          </div>
-          <div class="i-sort-item-name">{{ item.comName }}</div>
-          <div class="i-sort-item-operation">
-            <span @click="toppingClick(index)">
-              <svg-icon v-show="index !== 0" icon-class="isort-topping" />
-            </span>
-            <span @click="visibleClick(item)">
-              <svg-icon
-                :icon-class="!item.hidden ? 'isort-visible' : 'isort-invisible'"
-              />
-            </span>
-          </div>
-        </div>
-      </draggable>
-    </div>
+  <div class="i-sort-tip">
+    {{ propData.tipText || '你可以通过拖拽对功能组件进行排序，点击置顶图表快速置顶重要组件，点击隐藏图标隐藏当前组件。'}}
   </div>
+  <div class="i-sort-header">
+    已添加的组件
+  </div>
+  <draggable
+    class="i-sort-drag"
+    handle=".i-sort-item-handle"
+    v-model="listData"
+    animation="200"
+    @end="dragEnd"
+  >
+    <div
+      class="i-sort-item"
+      v-for="(item, index) in listData"
+      :key="`sort-${index}`"
+    >
+      <div class="i-sort-item-handle">
+        <svg-icon icon-class="isort-drag" />
+      </div>
+      <div class="i-sort-item-name">{{ item.comName }}</div>
+      <div class="i-sort-item-operation">
+        <span @click="toppingClick(index)">
+          <svg-icon v-show="index !== 0" icon-class="isort-topping" />
+        </span>
+        <span @click="visibleClick(item)">
+          <svg-icon
+            :icon-class="!item.hidden ? 'isort-visible' : 'isort-invisible'"
+          />
+        </span>
+      </div>
+    </div>
+  </draggable>
+</div>
 </template>
 
 <script>
@@ -214,6 +220,7 @@ export default {
      */
     convertAttrToStyleObject() {
       var styleObject = {};
+      var tipStyleObject = {};
       if (this.propData.bgSize && this.propData.bgSize == "custom") {
         styleObject["background-size"] =
           (this.propData.bgSizeWidth
@@ -250,6 +257,11 @@ export default {
             case "bgColor":
               if (element && element.hex8) {
                 styleObject["background-color"] = element.hex8;
+              }
+              break;
+            case "tipBgColor":
+              if (element && element.hex8) {
+                tipStyleObject["background-color"] = element.hex8;
               }
               break;
             case "box":
@@ -369,10 +381,29 @@ export default {
               styleObject["text-align"] = element.fontTextAlign;
               styleObject["text-decoration"] = element.fontDecoration;
               break;
+            case "tipFont":
+              tipStyleObject["font-family"] = element.fontFamily;
+              if (element.fontColors.hex8) {
+                tipStyleObject["color"] = element.fontColors.hex8;
+              }
+              tipStyleObject["font-weight"] =
+                element.fontWeight && element.fontWeight.split(" ")[0];
+              tipStyleObject["font-style"] = element.fontStyle;
+              tipStyleObject["font-size"] =
+                element.fontSize + element.fontSizeUnit;
+              tipStyleObject["line-height"] =
+                element.fontLineHeight +
+                (element.fontLineHeightUnit == "-"
+                  ? ""
+                  : element.fontLineHeightUnit);
+              tipStyleObject["text-align"] = element.fontTextAlign;
+              tipStyleObject["text-decoration"] = element.fontDecoration;
+              break;
           }
         }
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .i-sort-tip", tipStyleObject);
       // this.initData();
     },
     /**
@@ -394,7 +425,24 @@ export default {
 .i-sort-outer {
   width: auto;
   box-sizing: border-box;
-  padding: 14px 10px;
+  
+
+  .i-sort-tip {
+    background-color: rgb(231,241,253);
+    color: rgb(56, 117, 198);
+    padding: 14px;
+  }
+
+  .i-sort-header {
+    background-color: #fff;
+    padding: 14px;
+    margin-bottom: 14px;
+    color: #888;
+  }
+
+  .i-sort-drag {
+    padding: 0 14px;
+  }
 
   .i-sort-item {
     display: flex;
@@ -406,6 +454,7 @@ export default {
     margin-bottom: 14px;
     border-radius: 10px;
     background-color: #fff;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
 
     .i-sort-item-handle {
       width: 40px;
