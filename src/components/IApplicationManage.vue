@@ -54,13 +54,16 @@
                     </van-tabs>
                 </div>
             </div>
+            <div class="idm_applicationmanage_search flex_end">
+                <div @click="search" class="search_main">
+                    <van-icon name="search" color="#fff"/>
+                </div>
+            </div>
             <div class="idm_applicationmanage_footer flex_between">
                 <van-button @click="cancel" class="button" block type="default">取消</van-button>
                 <van-button @save="save" class="button" block type="info">完成</van-button>
             </div>
-            <div @click="search" class="idm_applicationmanage_search">
-                <van-icon name="search" color="#fff"/>
-            </div>
+            
         </div>
     </div>
 </template>
@@ -382,12 +385,23 @@ export default {
                     }
                     switch (key) {
                         case "width":
+                            styleObject[key] = element;
+                        case "titleWidth":
+                            styleObjectTitle[key] = element;
                         case "height":
                             styleObject[key] = element;
+                            break;
+                        case "titleHeight":
+                            styleObjectTitle[key] = element;
                             break;
                         case "bgColor":
                             if (element && element.hex8) {
                                 styleObject["background-color"] = element.hex8;
+                            }
+                            break;
+                        case "titleBgColor":
+                            if (element && element.hex8) {
+                                styleObjectTitle["background-color"] = element.hex8;
                             }
                             break;
                         case "box":
@@ -414,6 +428,32 @@ export default {
                             }
                             if (element.paddingLeftVal) {
                                 styleObject["padding-left"] = `${element.paddingLeftVal}`;
+                            }
+                            break;
+                        case "titleBox":
+                            if (element.marginTopVal) {
+                                styleObjectTitle["margin-top"] = `${element.marginTopVal}`;
+                            }
+                            if (element.marginRightVal) {
+                                styleObjectTitle["margin-right"] = `${element.marginRightVal}`;
+                            }
+                            if (element.marginBottomVal) {
+                                styleObjectTitle["margin-bottom"] = `${element.marginBottomVal}`;
+                            }
+                            if (element.marginLeftVal) {
+                                styleObjectTitle["margin-left"] = `${element.marginLeftVal}`;
+                            }
+                            if (element.paddingTopVal) {
+                                styleObjectTitle["padding-top"] = `${element.paddingTopVal}`;
+                            }
+                            if (element.paddingRightVal) {
+                                styleObjectTitle["padding-right"] = `${element.paddingRightVal}`;
+                            }
+                            if (element.paddingBottomVal) {
+                                styleObjectTitle["padding-bottom"] = `${element.paddingBottomVal}`;
+                            }
+                            if (element.paddingLeftVal) {
+                                styleObjectTitle["padding-left"] = `${element.paddingLeftVal}`;
                             }
                             break;
                         case "bgImgUrl":
@@ -733,8 +773,9 @@ export default {
     
     .idm_applicationmanage_footer{
         width: 100%;
-        position: fixed;
-        bottom: 80px;
+        // position: fixed;
+        // bottom: 80px;
+        margin-top: 40px;
         padding: 0 20px;
         background: white;
         .button:nth-child(1){
@@ -742,15 +783,19 @@ export default {
         }
     }
     .idm_applicationmanage_search{
-        width: 40px;
-        height: 40px;
-        line-height: 40px;
-        position: fixed;
-        bottom: 160px;
-        right: 20px;
-        text-align: center;
-        background: #1989fa;
-        border-radius: 50%;
+        margin-top: 100px;
+        padding-right: 20px;
+        .search_main{
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            // position: fixed;
+            // bottom: 160px;
+            // right: 20px;
+            text-align: center;
+            background: #1989fa;
+            border-radius: 50%;
+        }
     }
 }
 </style>

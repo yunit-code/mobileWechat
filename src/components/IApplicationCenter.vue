@@ -14,7 +14,10 @@
                 <div class="idm_applicationcenter_title_left flex_start">
                     <div class="idm_applicationcenter_title_left_text">{{ propData.title || '应用中心' }}</div>
                     <div class="idm_applicationcenter_title_left_icon">
-                        <svg-icon icon-class="application-icon" />
+                        <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm_filed_svg_icon" aria-hidden="true" >
+                            <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
+                        </svg>
+                        <svg-icon v-else icon-class="application-icon" />
                     </div>
                 </div>
                 <div @click="toApplicationManage" v-if="propData.showConfig" class="idm_applicationcenter_title_right">
@@ -126,6 +129,22 @@ export default {
             }
         },
 
+        getFieldSvgIconCustomFont(fobj, itemObject) {
+            let styleObject = {};
+            const isRead = this.getExpressData(
+                "data",
+                fobj.readExpression,
+                itemObject
+            );
+            const element = isRead ? fobj.readFont : fobj.defaultFont;
+            if (element) {
+                styleObject["font-size"] = element.fontSize + element.fontSizeUnit;
+                styleObject["max-height"] = element.fontSize + element.fontSizeUnit;
+                styleObject["width"] = element.fontSize + element.fontSizeUnit;
+            }
+            return styleObject;
+        },
+
         /** * 提供父级组件调用的刷新prop数据组件 */
         propDataWatchHandle(propData) {
             console.log('propData更新',propData)
@@ -138,6 +157,7 @@ export default {
         convertAttrToStyleObject() {
             var styleObject = {};
             var styleObjectTitle = {};
+            var styleObjectTitleIcon = {};
             if (this.propData.bgSize && this.propData.bgSize == "custom") {
                 styleObject["background-size"] = (this.propData.bgSizeWidth ? this.propData.bgSizeWidth.inputVal + this.propData.bgSizeWidth.selectVal : "auto") + " " + (this.propData.bgSizeHeight ? this.propData.bgSizeHeight.inputVal + this.propData.bgSizeHeight.selectVal : "auto")
             } else if (this.propData.bgSize) {
@@ -269,11 +289,19 @@ export default {
                             styleObjectTitle["text-align"] = element.fontTextAlign;
                             styleObjectTitle["text-decoration"] = element.fontDecoration;
                             break;
+                        case "titleIconFontColor":
+                            styleObjectTitleIcon["color"] = element.hex;
+                            break
+                        case "titleIconFontSize":
+                            styleObjectTitleIcon["font-size"] = element + "px";
+                            styleObjectTitleIcon["width"] = element + "px";
+                            break
                     }
                 }
             }
             window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_text", styleObjectTitle);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_icon .idm_filed_svg_icon", styleObjectTitleIcon);
             this.initData();
         },
         /**
@@ -434,6 +462,14 @@ export default {
 <style lang="scss">
 .van-grid-item__content{
     padding: 7px 8px;
+}
+.idm_filed_svg_icon {
+    font-size: 14px;
+    max-height: 14px;
+    width: 14px;
+    fill: currentColor;
+    vertical-align: -0.15em;
+    outline: none;
 }
 .idm_applicationcenter {
     border-radius: 10px;

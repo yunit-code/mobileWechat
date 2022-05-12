@@ -58,6 +58,27 @@
                     "default": 2
                 },
                 {
+                    "type": "iconSelect",
+                    "layoutType": "inline",
+                    "text": "标题图标",
+                    "bindKey": "titleIconClass",
+                    "default": ""
+                },
+                {
+                    "type": "colorPicker",
+                    "layoutType": "block",
+                    "text": "标题图标颜色",
+                    "bindKey": "titleIconFontColor",
+                    "default": ""
+                },
+                {
+                    "type": "inputNumber",
+                    "layoutType": "block",
+                    "text": "标题图标大小",
+                    "bindKey": "titleIconFontSize",
+                    "default": 14
+                },
+                {
                     "type": "table",
                     "text": "应用配置",
                     "bindKey": "applicationList",

@@ -10,7 +10,7 @@
         <!-- 组件内部容器 增加class="drag_container" 必选 idm-ctrl-id：组件的id，这个必须不能为空 idm-container-index  组件的内部容器索引，不重复唯一且不变，必选 -->
         <div class="idm_applicationshortcut">
             <div v-if="!propData.isSlide" class="idm_applicationcenter_main">
-                <van-grid :border="false" :column-num="5">
+                <van-grid :border="false" :column-num="propData.showColumn">
                     <van-grid-item v-for="(item,index) in application_data" :key="index">
                         <div @click="toApplication(item)" class="idm_applicationcenter_main_list">
                             <img v-if="item.img" :src="item.img">

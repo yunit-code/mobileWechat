@@ -37,14 +37,14 @@
                     "default": false
                 },
                 {
-                    "type": "input",
+                    "type": "inputNumber",
                     "layoutType": "inline",
                     "text": "展示列数",
                     "bindKey": "showColumn",
                     "default": 5
                 },
                 {
-                    "type": "input",
+                    "type": "inputNumber",
                     "layoutType": "block",
                     "text": "最多展示行数",
                     "bindKey": "showRows",
