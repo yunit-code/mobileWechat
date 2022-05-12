@@ -35,8 +35,9 @@
       </div>
       <ul class="box-list" v-if="propData.compStyle === 'styleFour' || propData.compStyle === 'styleOne'">
         <li class="d-flex align-c" v-for="(item, index) in messageList" :key="index" @click="handleClick('clickMoreFunction', item)">
-          <span class="box-list-style-square" v-if="propData.compStyle === 'styleFour'"></span>
-          <span class="box-list-style-square1" v-else></span>
+          <!-- <span class="box-list-style-square" v-if="propData.compStyle === 'styleFour'"></span>
+          <span class="box-list-style-square1" v-else></span> -->
+          <svg-icon iconClass="square" class="box-list-style-square"></svg-icon>
           <span class="box-list-content">{{item.content}}</span>
           <span class="box-list-time" v-if="propData.compStyle !== 'styleOne'">{{item.createTime}}</span>
           </li>
@@ -513,17 +514,8 @@ export default {
       }
     }
     &-style-square{
-      width: 6px;
-      height: 4px;
-      background-color: #000;
-      transform: rotate(45deg);
-      margin: 0 5px 0 0;
-    }
-    &-style-square1{
-      width: 4px;
-      height: 4px;
-      background-color: #000;
-      transform: rotate(45deg);
+      color: #000;
+      font-size: 10px;
       margin: 0 5px 0 0;
     }
     &-content{
