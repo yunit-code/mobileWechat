@@ -70,14 +70,14 @@
                 {
                     "type": "colorPicker",
                     "layoutType": "inline",
-                    "text": "标题图标颜色",
+                    "text": "图标颜色",
                     "bindKey": "titleIconFontColor",
                     "default": ""
                 },
                 {
                     "type": "inputNumber",
                     "layoutType": "inline",
-                    "text": "标题图标大小",
+                    "text": "图标大小",
                     "bindKey": "titleIconFontSize",
                     "default": 18
                 },
