@@ -521,53 +521,51 @@ export default {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
   }
-}
-
-
-li {
-  display: inline-block;
-  float: left;
-  img {
-    width: 100%;
-    height: 100%;
+  
+  li {
+    display: inline-block;
+    float: left;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .swiper-slide {
+    -webkit-transition: transform .5s;
+    -moz-transition: transform .5s;
+    -ms-transition: transform .5s;
+    -o-transition: transform .5s;
+    -webkit-transform: scale(1);
+    transform: scale(0.9);
+    position: relative;
+  }
+  .swiper-slide-active,
+  .swiper-slide-duplicate-active {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  .slider-img{
+    border-radius: 8px;
+    overflow: hidden;
+    object-fit: cover;
+  }
+  .swiper-pagination{
+    left: 34% !important;
+    bottom: 5px !important;
+  }
+  .my-bullet{
+    width: 6px;
+    height: 6px;
+    display: inline-block;
+    border-radius: 0;
+    transform: rotate(45deg);
+    background-color: #fff;
+    margin: 0 3px;
+  }
+  .my-bullet-active{
+    background-color: #1D335E ;
   }
 }
-.swiper-slide {
-  -webkit-transition: transform .5s;
-  -moz-transition: transform .5s;
-  -ms-transition: transform .5s;
-  -o-transition: transform .5s;
-  -webkit-transform: scale(1);
-  transform: scale(0.9);
-  position: relative;
-}
-.swiper-slide-active,
-.swiper-slide-duplicate-active {
-  -webkit-transform: scale(1);
-  transform: scale(1);
-}
-.slider-img{
-  border-radius: 8px;
-  overflow: hidden;
-  object-fit: cover;
-}
-.swiper-pagination{
-  left: 34% !important;
-  bottom: 5px !important;
-}
-</style>
-<style>
 
-.my-bullet{
-  width: 6px;
-  height: 6px;
-  display: inline-block;
-  border-radius: 0;
-  transform: rotate(45deg);
-  background-color: #fff;
-  margin: 0 3px;
-}
-.my-bullet-active{
-  background-color: #1D335E ;
-}
+
 </style>
