@@ -20,7 +20,7 @@
             class="idm_filed_svg_icon"
             aria-hidden="true"
           >
-            <use :xlink:href="`#${propData.titleIcon && propData.titleIcon[0]}`"></use>
+            <use :xlink:href="`#${(propData.titleIcon && propData.titleIcon[0])}`"></use>
           </svg>
         </div>
         <div class="i-schedule-header-date">{{ nowDate }}</div>

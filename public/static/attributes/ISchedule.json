@@ -631,22 +631,30 @@
                     "bindKey": "font"
                 },
                 {
-                    "type": "iconSelect",
-                    "layoutType": "block",
-                    "text": "自定义图标",
-                    "bindKey": "titleIcon"
-                },
-                {
-                    "type": "colorPicker",
-                    "layoutType": "inline",
-                    "text": "自定义图标颜色",
-                    "bindKey": "titleColor"
-                },
-                {
-                    "type": "inputNumber",
-                    "layoutType": "inline",
-                    "text": "自定义图标大小",
-                    "bindKey": "titleSize"
+                    "type": "group",
+                    "text": "自定义图标样式",
+                    "desc": "点击？查看样式设置用法指南",
+                    "helpUrl": "",
+                    "children": [
+                        {
+                            "type": "iconSelect",
+                            "layoutType": "inline",
+                            "text": "自定义图标",
+                            "bindKey": "titleIcon"
+                        },
+                        {
+                            "type": "colorPicker",
+                            "layoutType": "inline",
+                            "text": "图标颜色",
+                            "bindKey": "titleColor"
+                        },
+                        {
+                            "type": "inputNumber",
+                            "layoutType": "inline",
+                            "text": "图标大小",
+                            "bindKey": "titleSize"
+                        }
+                    ]
                 }
             ]
         },
