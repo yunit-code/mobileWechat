@@ -8,7 +8,6 @@
     <div idm-ctrl="idm_module" :id="moduleObject.id" :idm-ctrl-id="moduleObject.id"
         :title="propData.htmlTitle ? propData.fontContent : ''" v-show="propData.defaultStatus != 'hidden'">
         <!-- 组件内部容器 增加class="drag_container" 必选 idm-ctrl-id：组件的id，这个必须不能为空 idm-container-index  组件的内部容器索引，不重复唯一且不变，必选 -->
-        <!-- {{propData.fontContent}} -->
         <div class="idm_applicationmanage">
             <div class="idm_applicationmanage_block">
                 <div class="idm_applicationcenter_title flex_between">
@@ -684,6 +683,7 @@ export default {
 </script>
 <style lang="scss">
 .idm_applicationmanage {
+    width: auto;
     border-radius: 10px;
     .idm_applicationmanage_block{
         margin-bottom: 5px;

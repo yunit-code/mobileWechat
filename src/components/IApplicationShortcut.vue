@@ -8,7 +8,6 @@
     <div idm-ctrl="idm_module" :id="moduleObject.id" :idm-ctrl-id="moduleObject.id"
         :title="propData.htmlTitle ? propData.fontContent : ''" v-show="propData.defaultStatus != 'hidden'">
         <!-- 组件内部容器 增加class="drag_container" 必选 idm-ctrl-id：组件的id，这个必须不能为空 idm-container-index  组件的内部容器索引，不重复唯一且不变，必选 -->
-        <!-- {{propData.fontContent}} -->
         <div class="idm_applicationshortcut">
             <div v-if="!propData.isSlide" class="idm_applicationcenter_main">
                 <van-grid :border="false" :column-num="5">
@@ -51,8 +50,8 @@ export default {
         return {
             moduleObject: {},
             propData: this.$root.propData.compositeAttr || {
-                isSlide: true,
-                showRows: 2,
+                isSlide: false,
+                showRows: 1,
                 showColumn: 5,
                 showTodoNumber: false,
                 applicationList: [
@@ -411,6 +410,7 @@ export default {
     padding: 7px 8px;
 }
 .idm_applicationshortcut {
+    width: auto;
     border-radius: 10px;
     .idm_applicationcenter_title{
         padding: 10px 10px 7px 10px;
@@ -450,7 +450,7 @@ export default {
             }
         }
         .swiper_block{
-            width: 100%;
+            width: auto;
             overflow: auto;
             flex-shrink: 0;
             flex-wrap: nowrap;

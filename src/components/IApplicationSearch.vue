@@ -11,12 +11,15 @@
         <!-- {{propData.fontContent}} -->
         <div class="idm_iapplicationsearch">
             <div class="search_box">
-                <van-search v-model="search_text" show-action placeholder="请输入搜索关键词" @search="onSearch" @cancel="onCancel" />
+                <van-sticky>
+                    <van-search v-model="search_text" show-action placeholder="请输入搜索关键词" @search="onSearch" @cancel="onCancel" />
+                </van-sticky>
             </div>
             <div class="idm_iapplicationsearch_main">
                 <div v-for="(item,index) in application_data" :key="index" class="list flex_between">
                     <div class="list_left flex_start">
-                        <img :src="item.img" />
+                        <img v-if="item.img" :src="item.img">
+                        <svg-icon v-else icon-class="application" />
                         <span>{{ item.name }}</span>
                     </div>
                     <div class="list_right">
@@ -30,8 +33,9 @@
 </template>
 
 <script>
-import { Search } from 'vant';
+import { Search,Sticky  } from 'vant';
 import 'vant/lib/search/style';
+import 'vant/lib/sticky/style';
 export default {
     name: 'IApplicationSearch',
     components: {
@@ -47,46 +51,11 @@ export default {
             application_data: [
                 {
                     key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
+                    img: '',
                     name: '待阅文件',
                     number: 1,
                     isHaveAdd: true,
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '已办文件',
-                    number: 1,
-                    isHaveAdd: false,
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '我的收藏',
-                    number: 1,
-                    isHaveAdd: false,
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '公文管理',
-                    number: 1,
-                    isHaveAdd: false,
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '待办文件',
-                    number: 1,
-                    isHaveAdd: false,
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '待阅文件',
-                    number: 1,
-                    isHaveAdd: false,
-                },
+                }
             ],
         }
     },
@@ -458,19 +427,19 @@ export default {
 </script>
 <style lang="scss">
 .idm_iapplicationsearch {
+    width: auto;
+    max-height: 100vh;
+    position: relative;
     .search_box{
-        position: fixed;
-        top: 0;
-        width: 100%;
-        background: white;
+        
     }
     .idm_iapplicationsearch_main{
-        padding: 64px 10px 20px 10px;
+        padding: 0px 10px 20px 10px;
         .list{
             height: 45px;
             border-bottom: 1px solid ghostwhite;
             .list_left{
-                img{
+                img,svg{
                     width: 25px;
                     height: 25px;
                     margin-right: 5px;

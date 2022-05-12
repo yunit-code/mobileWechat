@@ -22,7 +22,7 @@
             "children": [
                 {
                     "type": "switch",
-                    "layoutType": "inline",
+                    "layoutType": "block",
                     "text": "是否可左右滑动",
                     "desc":"设置用户是否可以左右滑动应用",
                     "bindKey": "isSlide",
@@ -30,7 +30,7 @@
                 },
                 {
                     "type": "switch",
-                    "layoutType": "inline",
+                    "layoutType": "block",
                     "text": "显示待办角标",
                     "desc":"设置待办角标是否显示",
                     "bindKey": "showTodoNumber",
@@ -45,7 +45,7 @@
                 },
                 {
                     "type": "input",
-                    "layoutType": "inline",
+                    "layoutType": "block",
                     "text": "最多展示行数",
                     "bindKey": "showRows",
                     "default": 2
@@ -107,7 +107,7 @@
                             "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
                             "bindKey": "width",
                             "width": "60px",
-                            "default": "100%"
+                            "default": "auto"
                         },
                         {
                             "type": "input",
