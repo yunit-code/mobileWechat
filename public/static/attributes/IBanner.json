@@ -26,6 +26,13 @@
                     "text": "标题",
                     "bindKey": "htmlTitle",
                     "default": "广告轮播"
+                },
+                {
+                    "type": "inputNumber",
+                    "layoutType": "inline",
+                    "text": "显示数量",
+                    "bindKey": "limit",
+                    "default": 5
                 }
             ]
         },
@@ -78,14 +85,6 @@
             "desc": "点击？查看高级设置用法指南",
             "children": [
                 {
-                    "type": "actionSelect",
-                    "layoutType": "block",
-                    "text": "点击轮播时动作",
-                    "bindKey": "clickBannerItemFunction",
-                    "desc": "点击的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
-                    "multiple": true
-                },
-                {
                     "type": "input",
                     "layoutType": "inline",
                     "text": "标题接口",
@@ -100,8 +99,7 @@
                     "bindKey": "dataFiled",
                     "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData（自定义接口忽略）且它的值为{data:{filedName:[{\"text\":\"\",\"value\":\"\",\"check\":true}]}}，则这里应该填写data.filedName",
                     "default": "",
-                    "placeholder": "示例：data.filedName 或者 [0].data[0].filedName",
-                    "display": "@[dataSourceType!='customFunction']"
+                    "placeholder": "示例：data.filedName 或者 [0].data[0].filedName"
                 }
             ]
         }

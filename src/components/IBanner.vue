@@ -18,11 +18,11 @@
         <ul class="swiper-wrapper">
           <li
             class="swiper-slide idm-banner-box-swiper-item-container banner-item-container"
-            v-for="(item, index) in list"
+            v-for="(item, index) in propData.list && propData.list.value"
             :key="index"
-            @click="handleClick('clickBannerItemFunction', item)"
+            @click="handleClick(item)"
           >
-            <img :src="item.img"  class="slider-img" alt="" />
+            <img :src="item.image"  class="slider-img" alt="" />
             <span class="idm-banner-box-swiper-text">{{item.title}}</span>
           </li>
         </ul>
@@ -35,6 +35,33 @@
 <script>
 import Swiper from "swiper";
 import "swiper/css/swiper.min.css";
+const data = {
+  value: [{
+    jumpUrl: '/dreamweb/',
+    image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp7.itc.cn%2Fimages01%2F20200903%2F9f80293e09644046a408f8be7359d4ff.jpeg&refer=http%3A%2F%2Fp7.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654761049&t=b2726a52f403b5d4dcca968820d55109",
+    title:
+      "标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，",
+  },
+  {
+    jumpUrl: '/dreamweb/',
+    image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp6.itc.cn%2Fimages01%2F20201012%2F19ebfe9ad37b4e29bac785eb0146d02e.jpeg&refer=http%3A%2F%2Fp6.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654761049&t=5100670fe8877ffd3ad76e0f0f7bb6a0",
+    title:
+      "标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，",
+  },
+  {
+    jumpUrl: '/dreamweb/',
+    image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp1.itc.cn%2Fq_70%2Fimages03%2F20210129%2Fcb5a1f799b364202beed7f122e87bf8a.png&refer=http%3A%2F%2Fp1.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654761049&t=8a20f26c2574d17e04376728ba796324",
+    title:
+      "标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，",
+  },
+  {
+    jumpUrl: '/dreamweb/',
+    image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp6.itc.cn%2Fimages01%2F20201012%2F19ebfe9ad37b4e29bac785eb0146d02e.jpeg&refer=http%3A%2F%2Fp6.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654761049&t=5100670fe8877ffd3ad76e0f0f7bb6a0",
+    title:
+      "标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，",
+  }],
+  moreUrl: "更多跳转地址"
+}
 export default {
   name: "IBanner",
   data() {
@@ -45,33 +72,13 @@ export default {
         htmlTitle: "广告轮播",
         width: "100%",
         height: "240px",
+        limit: 5,
         imgBorderRadius: {
           inputVal: 8,
           selectVal: "px"
-        }
+        },
+        list: data
       },
-      list: [
-        {
-          img: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp7.itc.cn%2Fimages01%2F20200903%2F9f80293e09644046a408f8be7359d4ff.jpeg&refer=http%3A%2F%2Fp7.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654761049&t=b2726a52f403b5d4dcca968820d55109",
-          title:
-            "标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，",
-        },
-        {
-          img: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp6.itc.cn%2Fimages01%2F20201012%2F19ebfe9ad37b4e29bac785eb0146d02e.jpeg&refer=http%3A%2F%2Fp6.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654761049&t=5100670fe8877ffd3ad76e0f0f7bb6a0",
-          title:
-            "标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，",
-        },
-        {
-          img: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp1.itc.cn%2Fq_70%2Fimages03%2F20210129%2Fcb5a1f799b364202beed7f122e87bf8a.png&refer=http%3A%2F%2Fp1.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654761049&t=8a20f26c2574d17e04376728ba796324",
-          title:
-            "标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，",
-        },
-        {
-          img: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp6.itc.cn%2Fimages01%2F20201012%2F19ebfe9ad37b4e29bac785eb0146d02e.jpeg&refer=http%3A%2F%2Fp6.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654761049&t=5100670fe8877ffd3ad76e0f0f7bb6a0",
-          title:
-            "标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，",
-        },
-      ],
       mySwiper: null
     };
   },
@@ -118,6 +125,7 @@ export default {
           modifier: 1,
           slideShadows: false,
         },
+        observer: true, //修改swiper自己或子元素时，自动初始化swiper，主要是这两行
         onInit: function (swiper) {
           //回调函数，初始化后执行。
           swiper.slides[2].className = "swiper-slide swiper-slide-active"; //第一次打开不要动画
@@ -334,21 +342,32 @@ export default {
       var params = that.commonParam();
       this.propData.bannerInterfaceUrl &&
       window.IDM.http
-        .get(this.propData.bannerInterfaceUrl, params)
+        .get(this.propData.bannerInterfaceUrl, {
+          ...params,
+          start: 0,
+          limit: this.propData.limit
+        })
         .then((res) => {
           //res.data
           that.$set(
             that.propData,
             "list",
-            that.getExpressData(
-              "resultData",
-              that.propData.dataFiled,
-              res.data
-            )
+            res.data
           );
-          // that.propData.fontContent = ;
         })
-        .catch(function (error) {});
+        .catch(function (error) {
+          let res = {
+            code: 200,
+            type: "success",
+            message: "操作成功",
+            data
+        }
+          that.$set(
+            that.propData,
+            "list",
+            res.data
+          );
+        });
     },
     /**
      * 通用的获取表达式匹配后的结果
@@ -393,35 +412,12 @@ export default {
     /**
      * 文本点击事件
      */
-    handleClick(type, item = {}) {
-      let that = this;
-      if (this.moduleObject.env == "develop") {
-        //开发模式下不执行此事件
-        return;
+    handleClick(item) {
+      if(this.moduleObject.env === 'develop') {
+        return
       }
-      //获取所有的URL参数、页面ID（pageId）、以及所有组件的返回值（用范围值去调用IDM提供的方法取出所有的组件值）
-      let urlObject = window.IDM.url.queryObject(),
-        pageId =
-          window.IDM.broadcast && window.IDM.broadcast.pageModule
-            ? window.IDM.broadcast.pageModule.id
-            : "";
-      //自定义函数
-      /**
-       * [
-       * {name:"",param:{}}
-       * ]
-       */
-      var clickFunction = this.propData[type];
-      clickFunction &&
-        clickFunction.forEach((item) => {
-          window[item.name] &&
-            window[item.name].call(this, {
-              urlData: urlObject,
-              pageId,
-              customParam: item.param,
-              _this: this,
-            });
-        });
+      const url = IDM.url.getWebPath(item.jumpUrl)
+      window.open(url)
     },
     showThisModuleHandle() {
       this.propData.defaultStatus = "default";
