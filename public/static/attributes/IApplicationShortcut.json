@@ -22,17 +22,17 @@
             "children": [
                 {
                     "type": "switch",
-                    "layoutType": "block",
-                    "text": "是否可左右滑动",
-                    "desc":"设置用户是否可以左右滑动应用",
+                    "layoutType": "inline",
+                    "text": "左右滑动",
+                    "desc":"设置是否使用左右可滑动模式，如果开启了左右滑动模式则只会在一行内显示图标",
                     "bindKey": "isSlide",
                     "default": false
                 },
                 {
                     "type": "switch",
-                    "layoutType": "block",
-                    "text": "显示待办角标",
-                    "desc":"设置待办角标是否显示",
+                    "layoutType": "inline",
+                    "text": "显示角标",
+                    "desc":"设置是否显示角标提示，如果配置了角标服务接口且有数量的时候会显示红色背景的数量角标",
                     "bindKey": "showTodoNumber",
                     "default": false
                 },
@@ -41,20 +41,22 @@
                     "layoutType": "inline",
                     "text": "展示列数",
                     "bindKey": "showColumn",
-                    "default": 5
+                    "default": 5,
+                    "display": "@[!isSlide]"
                 },
                 {
                     "type": "inputNumber",
-                    "layoutType": "block",
-                    "text": "最多展示行数",
+                    "layoutType": "inline",
+                    "text": "最多行数",
                     "bindKey": "showRows",
-                    "default": 2
+                    "default": 2,
+                    "display": "@[!isSlide]"
                 },
                 {
                     "type": "table",
                     "text": "应用配置",
                     "bindKey": "applicationList",
-                    "tabText": "菜单[index]",
+                    "tabText": "应用[index]",
                     "children": [
                         {
                             "type": "treeSelect",
@@ -62,6 +64,20 @@
                             "text": "选择应用",
                             "bindKey": "selectApplication",
                             "dataSourceUrl": "",
+                            "default": ""
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "应用名称",
+                            "bindKey": "applicationName",
+                            "default": ""
+                        },
+                        {
+                            "type": "uploadImage",
+                            "layoutType": "inline",
+                            "text": "应用图标",
+                            "bindKey": "applicationIconUrl",
                             "default": ""
                         },
                         {
@@ -78,7 +94,8 @@
                             "text": "接口地址",
                             "desc":"应用角标接口地址",
                             "bindKey": "url",
-                            "default": ""
+                            "default": "",
+                            "display": "@[showTodoNumber]"
                         }
                     ]
                 }

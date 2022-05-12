@@ -26,12 +26,12 @@
             </div>
             <div class="idm_applicationcenter_main">
                 <van-grid :border="false" :column-num="propData.showColumn">
-                    <van-grid-item v-for="(item,index) in application_data" :key="index">
+                    <van-grid-item v-for="(item,index) in application_data" :key="item.key">
                         <div @click="toApplication(item)" class="idm_applicationcenter_main_list">
-                            <img v-if="item.img" :src="item.img">
+                            <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
                             <svg-icon v-else icon-class="application" />
 
-                            <div class="idm_applicationcenter_main_list_name">{{ item.name || '应用名称' }}</div>
+                            <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
                             <div v-if="propData.showTodoNumber && item.showTodoNumber && item.number" class="number">{{ item.number }}</div>
                         </div>
                     </van-grid-item>
@@ -56,14 +56,15 @@ export default {
             propData: this.$root.propData.compositeAttr || {
                 title: '应用中心',
                 showRows: 1,
-                showColumn: 5,
+                showColumn: 4,
                 showConfig: true,
                 showTodoNumber: false,
                 applicationList: [
                     {
                         selectApplication: {},
                         showTodoNumber: false,
-                        url: '',
+                        interface_url: '',
+                        todoNumber: 0,
                     }
                 ],
             },
@@ -93,6 +94,7 @@ export default {
         }
         this.convertAttrToStyleObject();
         this.changeLines()
+        this.getApplicationMarkNumber()
         console.log('设置测试',this.propData)
     },
     mounted() {
@@ -104,6 +106,24 @@ export default {
     },
     destroyed() { },
     methods: {
+        getApplicationName(item) {
+            if ( item.applicationName ) {
+                return item.applicationName
+            } else if ( item.selectApplication && item.selectApplication.title ) {
+                return item.selectApplication.title
+            } else {
+                return '应用名称'
+            }
+        },
+        getApplicationImgUrl(item) {
+            if ( item.applicationIconUrl ) {
+                return window.IDM.url.getWebPath(item.applicationIconUrl)
+            } else if ( item.selectApplication && item.selectApplication.imageUrl ) {
+                return item.selectApplication.imageUrl
+            } else {
+
+            }
+        },
         toApplication(item) {
             console.log('item',item)
             if ( this.moduleObject.env == 'production' && item.appUrl ) {
@@ -128,21 +148,23 @@ export default {
                 this.application_data.splice(this.propData.showRows * this.propData.showColumn)
             }
         },
-
-        getFieldSvgIconCustomFont(fobj, itemObject) {
-            let styleObject = {};
-            const isRead = this.getExpressData(
-                "data",
-                fobj.readExpression,
-                itemObject
-            );
-            const element = isRead ? fobj.readFont : fobj.defaultFont;
-            if (element) {
-                styleObject["font-size"] = element.fontSize + element.fontSizeUnit;
-                styleObject["max-height"] = element.fontSize + element.fontSizeUnit;
-                styleObject["width"] = element.fontSize + element.fontSizeUnit;
+        getApplicationMarkNumber() {
+            for( let i = 0,maxi = this.application_data.length;i < maxi;i++ ) {
+                if ( this.application_data[i].interface_url && this.application_data[i].showTodoNumber ) {
+                    this.getApplicationMarkNumberSubmit(this.application_data[i])
+                }
             }
-            return styleObject;
+        },
+        getApplicationMarkNumberSubmit(item) {
+            let params = {
+                key: item.key
+            }
+            item.interface_url && window.IDM.http.get(item.interface_url, params)
+                .then((res) => {
+                    that.$set(item, "todoNumber", res.data);
+                }).catch(function (error) {
+
+                });
         },
 
         /** * 提供父级组件调用的刷新prop数据组件 */
@@ -295,6 +317,7 @@ export default {
                         case "titleIconFontSize":
                             styleObjectTitleIcon["font-size"] = element + "px";
                             styleObjectTitleIcon["width"] = element + "px";
+                            styleObjectTitleIcon["height"] = element + "px";
                             break
                     }
                 }
@@ -465,8 +488,8 @@ export default {
 }
 .idm_filed_svg_icon {
     font-size: 14px;
-    max-height: 14px;
     width: 14px;
+    height: 14px;
     fill: currentColor;
     vertical-align: -0.15em;
     outline: none;

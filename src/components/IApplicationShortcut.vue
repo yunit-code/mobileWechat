@@ -13,10 +13,10 @@
                 <van-grid :border="false" :column-num="propData.showColumn">
                     <van-grid-item v-for="(item,index) in application_data" :key="index">
                         <div @click="toApplication(item)" class="idm_applicationcenter_main_list">
-                            <img v-if="item.img" :src="item.img">
+                            <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
                             <svg-icon v-else icon-class="application" />
 
-                            <div class="idm_applicationcenter_main_list_name">{{ item.name || '应用名称' }}</div>
+                            <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
                             <div v-if="propData.showTodoNumber && item.showTodoNumber && item.number" class="number">{{ item.number }}</div>
                         </div>
                     </van-grid-item>
@@ -25,10 +25,10 @@
             <div v-else class="idm_applicationcenter_main">
                 <div class="swiper_block flex_start">
                     <span @click="toApplication(item)" v-for="(item,index) in application_data" :key="index" class="swiper_block_list">
-                        <img v-if="item.img" :src="item.img">
+                        <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
                         <svg-icon v-else icon-class="application" />
 
-                        <div class="idm_applicationcenter_main_list_name">{{ item.name || '应用名称' }}</div>
+                        <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
                         <div v-if="propData.showTodoNumber && item.showTodoNumber && item.number" class="number">{{ item.number }}</div>
                     </span>
                 </div>
@@ -103,6 +103,24 @@ export default {
     },
     destroyed() { },
     methods: {
+        getApplicationName(item) {
+            if ( item.applicationName ) {
+                return item.applicationName
+            } else if ( item.selectApplication && item.selectApplication.title ) {
+                return item.selectApplication.title
+            } else {
+                return '应用名称'
+            }
+        },
+        getApplicationImgUrl(item) {
+            if ( item.applicationIconUrl ) {
+                return window.IDM.url.getWebPath(item.applicationIconUrl)
+            } else if ( item.selectApplication && item.selectApplication.imageUrl ) {
+                return item.selectApplication.imageUrl
+            } else {
+
+            }
+        },
         changeLines() {
             if ( this.propData.isSlide ) {
                 return
