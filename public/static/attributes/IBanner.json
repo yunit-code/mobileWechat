@@ -36,19 +36,6 @@
             "helpUrl": "",
             "children": [
                 {
-                    "type": "box",
-                    "layoutType": "block",
-                    "text": "内外边距",
-                    "bindKey": "box"
-                },
-                {
-                    "type": "input",
-                    "layoutType": "block",
-                    "text": "图片圆角",
-                    "bindKey": "imgBorderRadius",
-                    "default": "8px"
-                },
-                {
                     "type": "inlineGroup",
                     "text": "宽高",
                     "children": [
@@ -59,7 +46,8 @@
                             "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
                             "bindKey": "width",
                             "width": "60px",
-                            "default": "100%"
+                            "default": "100%",
+                            "display": "false"
                         },
                         {
                             "type": "input",
@@ -71,6 +59,19 @@
                             "default": "auto"
                         }
                     ]
+                },
+                {
+                    "type": "box",
+                    "layoutType": "block",
+                    "text": "内外边距",
+                    "bindKey": "box"
+                },
+                {
+                    "type": "input",
+                    "layoutType": "block",
+                    "text": "图片圆角",
+                    "bindKey": "imgBorderRadius",
+                    "default": "8px"
                 }
             ]
         },
@@ -91,7 +92,7 @@
                     "type": "input",
                     "layoutType": "inline",
                     "text": "标题接口",
-                    "bindKey": "bannerApi",
+                    "bindKey": "bannerInterfaceUrl",
                     "desc": "通过接口获取轮播内容",
                     "default": "/ctrl/"
                 },

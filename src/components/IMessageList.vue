@@ -59,6 +59,7 @@
 </template>
 
 <script>
+//titleInterfaceUrl, listInterfaceUrl
 import { Icon } from 'vant';
 import 'vant/lib/icon/style';
 export default {
@@ -74,7 +75,7 @@ export default {
         htmlTitle:"信息列表",
         width: '100%',
         height: 'auto',
-        bgColor: {hex8: '#eee'},
+        bgColor: {hex8: ''},
         titleFontStyle: {
           fontColors: {
             colors: {
@@ -82,12 +83,6 @@ export default {
             }
           }
         },
-        box: {
-          paddingBottomVal: '10px',
-          paddingLeftVal: '10px',
-          paddingRightVal: '10px',
-        },
-        borderRadius: '5px',
         compStyle: 'styleFour',
         maxGroupCount: 3,
         maxContentCount: 3,
@@ -204,8 +199,40 @@ export default {
                 styleObject["padding-left"]=`${element.paddingLeftVal}`;
               }
               break;
-            case "borderRadius":
-              styleObject["border-radius"]=element;
+            case "border":
+              if(element.border.top.width>0){
+                styleObject["border-top-width"]=element.border.top.width+element.border.top.widthUnit;
+                styleObject["border-top-style"]=element.border.top.style;
+                if(element.border.top.colors.hex8){
+                  styleObject["border-top-color"]=element.border.top.colors.hex8;
+                }
+              }
+              if(element.border.right.width>0){
+                styleObject["border-right-width"]=element.border.right.width+element.border.right.widthUnit;
+                styleObject["border-right-style"]=element.border.right.style;
+                if(element.border.right.colors.hex8){
+                  styleObject["border-right-color"]=element.border.right.colors.hex8;
+                }
+              }
+              if(element.border.bottom.width>0){
+                styleObject["border-bottom-width"]=element.border.bottom.width+element.border.bottom.widthUnit;
+                styleObject["border-bottom-style"]=element.border.bottom.style;
+                if(element.border.bottom.colors.hex8){
+                  styleObject["border-bottom-color"]=element.border.bottom.colors.hex8;
+                }
+              }
+              if(element.border.left.width>0){
+                styleObject["border-left-width"]=element.border.left.width+element.border.left.widthUnit;
+                styleObject["border-left-style"]=element.border.left.style;
+                if(element.border.left.colors.hex8){
+                  styleObject["border-left-color"]=element.border.left.colors.hex8;
+                }
+              }
+              
+              styleObject["border-top-left-radius"]=element.radius.leftTop.radius+element.radius.leftTop.radiusUnit;
+              styleObject["border-top-right-radius"]=element.radius.rightTop.radius+element.radius.rightTop.radiusUnit;
+              styleObject["border-bottom-left-radius"]=element.radius.leftBottom.radius+element.radius.leftBottom.radiusUnit;
+              styleObject["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
               break;
           }
         }

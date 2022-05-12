@@ -26,38 +26,6 @@
                     "text": "标题",
                     "bindKey": "htmlTitle",
                     "default": "信息列表"
-                }
-            ]
-        },
-        {
-            "type": "group",
-            "text": "样式设置",
-            "desc": "点击？查看样式设置用法指南",
-            "helpUrl": "",
-            "children": [
-                {
-                    "type": "box",
-                    "layoutType": "block",
-                    "text": "内外边距",
-                    "bindKey": "box",
-                    "default": {
-                        "marginTopVal": "",
-                        "marginRightVal": "",
-                        "marginBottomVal": "",
-                        "marginLeftVal": "",
-                        "paddingTopVal": "10px",
-                        "paddingRightVal": "10px",
-                        "paddingBottomVal": "10px",
-                        "paddingLeftVal": "10px"
-                    }
-                },
-                {
-                    "type": "colorPicker",
-                    "layoutType": "inline",
-                    "text": "背景色",
-                    "bindKey": "bgColor",
-                    "placeholder": "请选择颜色",
-                    "default": {}
                 },
                 {
                     "type": "select",
@@ -86,9 +54,31 @@
                     "default": "styleFour"
                 },
                 {
+                    "type": "slider",
+                    "layoutType": "block",
+                    "text": "分组最多显示几条(0不限制)",
+                    "bindKey": "maxGroupCount",
+                    "default": "3"
+                },
+                {
+                    "type": "slider",
+                    "layoutType": "block",
+                    "text": "内容最多显示几条(0不限制)",
+                    "bindKey": "maxContentCount",
+                    "default": "3"
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "text": "样式设置",
+            "desc": "点击？查看样式设置用法指南",
+            "helpUrl": "",
+            "children": [
+                {
                     "type": "font",
                     "layoutType": "block",
-                    "text": "标题字体设置",
+                    "text": "标题字体样式设置",
                     "bindKey": "titleFontStyle",
                     "default": {
                         "fontColors": {
@@ -97,6 +87,14 @@
                         "fontSize": 16,
                         "fontSizeUnit": "px"
                     }
+                },
+                {
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "背景色",
+                    "bindKey": "bgColor",
+                    "placeholder": "请选择颜色",
+                    "default": {}
                 },
                 {
                     "type": "inlineGroup",
@@ -123,25 +121,46 @@
                     ]
                 },
                 {
-                    "type": "input",
+                    "type": "box",
                     "layoutType": "block",
-                    "text": "外边框圆角",
-                    "bindKey": "borderRadius",
-                    "default": "5px"
+                    "text": "内外边距",
+                    "bindKey": "box",
+                    "default": {
+                        "marginTopVal": "",
+                        "marginRightVal": "",
+                        "marginBottomVal": "",
+                        "marginLeftVal": "",
+                        "paddingTopVal": "10px",
+                        "paddingRightVal": "10px",
+                        "paddingBottomVal": "10px",
+                        "paddingLeftVal": "10px"
+                    }
                 },
                 {
-                    "type": "slider",
+                    "type": "border",
                     "layoutType": "block",
-                    "text": "分组最多显示几条(0不限制)",
-                    "bindKey": "maxGroupCount",
-                    "default": "3"
-                },
-                {
-                    "type": "slider",
-                    "layoutType": "block",
-                    "text": "内容最多显示几条(0不限制)",
-                    "bindKey": "maxContentCount",
-                    "default": "3"
+                    "text": "边框",
+                    "bindKey": "border",
+                    "default": {
+                        "radius": {
+                            "leftTop": {
+                                "radius": 8,
+                                "radiusUnit": "px"
+                            },
+                            "rightTop": {
+                                "radius": 8,
+                                "radiusUnit": "px"
+                            },
+                            "leftBottom": {
+                                "radius": 8,
+                                "radiusUnit": "px"
+                            },
+                            "rightBottom": {
+                                "radius": 8,
+                                "radiusUnit": "px"
+                            }
+                        }
+                    }
                 }
             ]
         },
@@ -170,7 +189,7 @@
                     "type": "input",
                     "layoutType": "inline",
                     "text": "标题接口",
-                    "bindKey": "titleApi",
+                    "bindKey": "titleInterfaceUrl",
                     "desc": "通过接口获取标题内容",
                     "default": "/ctrl/"
                 },
@@ -187,7 +206,7 @@
                     "type": "input",
                     "layoutType": "inline",
                     "text": "列表接口",
-                    "bindKey": "listApi",
+                    "bindKey": "listInterfaceUrl",
                     "desc": "通过接口获取标题内容",
                     "default": "/ctrl/"
                 },

@@ -310,48 +310,23 @@ export default {
       let that = this;
       //所有地址的url参数转换
       var params = that.commonParam();
-      switch (this.propData.dataSourceType) {
-        case "customInterface":
-          this.propData.customInterfaceUrl &&
-            window.IDM.http
-              .get(this.propData.customInterfaceUrl, params)
-              .then((res) => {
-                //res.data
-                that.$set(
-                  that.propData,
-                  "list",
-                  that.getExpressData(
-                    "resultData",
-                    that.propData.dataFiled,
-                    res.data
-                  )
-                );
-                // that.propData.fontContent = ;
-              })
-              .catch(function (error) {});
-          break;
-        case "pageCommonInterface":
-          //使用通用接口直接跳过，在setContextValue执行
-          break;
-        case "customFunction":
-          if (
-            this.propData.customFunction &&
-            this.propData.customFunction.length > 0
-          ) {
-            var resValue = "";
-            try {
-              resValue =
-                window[this.propData.customFunction[0].name] &&
-                window[this.propData.customFunction[0].name].call(this, {
-                  ...params,
-                  ...this.propData.customFunction[0].param,
-                  moduleObject: this.moduleObject,
-                });
-            } catch (error) {}
-            that.propData.list = resValue;
-          }
-          break;
-      }
+      this.propData.bannerInterfaceUrl &&
+      window.IDM.http
+        .get(this.propData.bannerInterfaceUrl, params)
+        .then((res) => {
+          //res.data
+          that.$set(
+            that.propData,
+            "list",
+            that.getExpressData(
+              "resultData",
+              that.propData.dataFiled,
+              res.data
+            )
+          );
+          // that.propData.fontContent = ;
+        })
+        .catch(function (error) {});
     },
     /**
      * 通用的获取表达式匹配后的结果
