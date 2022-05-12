@@ -14,7 +14,10 @@
     <div class="idm-unifie-todo-box-title d-flex align-c just-b">
       <div class="d-flex align-c">
         <span :style="titleFontStyleObj">{{propData.htmlTitle}}</span>
-        <img src="../assets/red-three.png" class="idm-unifie-todo-box-title-icon" alt="">
+        <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm-unifie-todo-box-title-icon" aria-hidden="true" >
+          <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
+        </svg>
+        <svg-icon v-else icon-class="threeLine" className="idm-unifie-todo-box-title-icon"></svg-icon>
       </div>
       <van-icon class="idm-unifie-todo-box-title-more" name="ellipsis" @click="handleClick('clickMoreFunction')" />
     </div>
@@ -140,6 +143,7 @@ export default {
      */
     convertAttrToStyleObject(){
       var styleObject = {};
+      let styleObjectTitleIcon = {}
       if(this.propData.bgSize&&this.propData.bgSize=="custom"){
         styleObject["background-size"]=(this.propData.bgSizeWidth?this.propData.bgSizeWidth.inputVal+this.propData.bgSizeWidth.selectVal:"auto")+" "+(this.propData.bgSizeHeight?this.propData.bgSizeHeight.inputVal+this.propData.bgSizeHeight.selectVal:"auto")
       }else if(this.propData.bgSize){
@@ -246,10 +250,18 @@ export default {
               styleObject["border-bottom-left-radius"]=element.radius.leftBottom.radius+element.radius.leftBottom.radiusUnit;
               styleObject["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
               break;
+            case "titleIconFontColor":
+                styleObjectTitleIcon["color"] = element.hex;
+                break
+            case "titleIconFontSize":
+                styleObjectTitleIcon["font-size"] = element + "px";
+                styleObjectTitleIcon["width"] = element + "px";
+                break
           }
         }
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id,styleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-title .idm-unifie-todo-box-title-icon", styleObjectTitleIcon);
       this.initData();
     },
     /**
@@ -467,8 +479,12 @@ export default {
       border-bottom: 0
     }
     &-icon{
-      width: 15px;
-      margin: 0 5px 0 0;
+      font-size: 14px;
+      max-height: 14px;
+      width: 14px;
+      fill: currentColor;
+      vertical-align: -0.15em;
+      outline: none;
     }
   }
 }

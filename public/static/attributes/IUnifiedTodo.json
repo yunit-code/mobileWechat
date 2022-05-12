@@ -33,6 +33,27 @@
                     "text": "最多显示几条待办",
                     "bindKey": "maxCount",
                     "default": "3"
+                },
+                {
+                    "type": "iconSelect",
+                    "layoutType": "inline",
+                    "text": "标题图标",
+                    "bindKey": "titleIconClass",
+                    "default": ""
+                },
+                {
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "标题图标颜色",
+                    "bindKey": "titleIconFontColor",
+                    "default": ""
+                },
+                {
+                    "type": "inputNumber",
+                    "layoutType": "inline",
+                    "text": "标题图标大小",
+                    "bindKey": "titleIconFontSize",
+                    "default": 18
                 }
             ]
         },
