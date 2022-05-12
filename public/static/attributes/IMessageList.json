@@ -60,19 +60,6 @@
                     "default": {}
                 },
                 {
-                    "type": "font",
-                    "layoutType": "block",
-                    "text": "标题字体设置",
-                    "bindKey": "titleFontStyle",
-                    "default": {
-                        "fontColors": {
-                            "hex": "#333333"
-                        },
-                        "fontSize": 16,
-                        "fontSizeUnit": "px"
-                    }
-                },
-                {
                     "type": "select",
                     "layoutType": "inline",
                     "text": "组件样式",
@@ -97,6 +84,19 @@
                         }
                     ],
                     "default": "styleFour"
+                },
+                {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "标题字体设置",
+                    "bindKey": "titleFontStyle",
+                    "default": {
+                        "fontColors": {
+                            "hex": "#333333"
+                        },
+                        "fontSize": 16,
+                        "fontSizeUnit": "px"
+                    }
                 },
                 {
                     "type": "inlineGroup",

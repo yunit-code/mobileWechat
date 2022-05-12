@@ -411,7 +411,7 @@ export default {
   background-color: #fff;
   overflow: hidden;
   &-title{
-    padding: 10px 0;
+    padding: 0 0 10px 0;
     font: inherit;
      &-icon{
       width: 18px;
@@ -508,7 +508,7 @@ export default {
     &-time{
       white-space: nowrap;
       color: #ccc;
-      font-size: 18px;
+      font-size: 16px;
       margin: 0 0 0 10px;
     }
   }
