@@ -20,10 +20,10 @@
             class="swiper-slide box-swiper-item-container"
             v-for="(item, index) in list"
             :key="index"
-            :style="{height: propData.height}"
+            :style="{height: propData.height, borderRadius: propData.imgBorderRadius}"
             @click="handleClick('clickBannerItemFunction', item)"
           >
-            <img :src="item.img" class="slider-img" alt="" />
+            <img :src="item.img"  class="slider-img" alt="" />
             <span class="box-swiper-text">{{item.title}}</span>
           </li>
         </ul>
@@ -510,6 +510,7 @@ export default {
     position: relative;
     top: 0;
     left: 0;
+    overflow: hidden;
   }
   &-swiper-text {
     position: absolute;
