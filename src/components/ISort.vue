@@ -425,12 +425,15 @@ export default {
 .i-sort-outer {
   width: auto;
   box-sizing: border-box;
-  
+  font-family: PingFangSC-Regular;
+  font-size: 16px;
+  color: #333333;
 
   .i-sort-tip {
     background-color: rgb(231,241,253);
     color: rgb(56, 117, 198);
     padding: 14px;
+    font-size: 14px;
   }
 
   .i-sort-header {
@@ -438,6 +441,7 @@ export default {
     padding: 14px;
     margin-bottom: 14px;
     color: #888;
+    font-size: 14px;
   }
 
   .i-sort-drag {
@@ -448,9 +452,6 @@ export default {
     display: flex;
     height: 50px;
     line-height: 50px;
-    font-family: PingFangSC-Regular;
-    font-size: 16px;
-    color: #333333;
     margin-bottom: 14px;
     border-radius: 10px;
     background-color: #fff;

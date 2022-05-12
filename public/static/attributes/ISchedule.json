@@ -26,6 +26,13 @@
                     "text": "标题",
                     "bindKey": "title",
                     "default": "日程提醒"
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "接口地址",
+                    "bindKey": "componentListUrl",
+                    "desc":"用于获取日程消息"
                 }
             ]
         },
@@ -655,20 +662,6 @@
                             "bindKey": "titleSize"
                         }
                     ]
-                }
-            ]
-        },
-        {
-            "type": "group",
-            "text": "高级",
-            "desc": "点击？查看高级设置用法指南",
-            "children": [
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "接口地址",
-                    "bindKey": "componentListUrl",
-                    "desc":"用于获取日程消息"
                 }
             ]
         }
