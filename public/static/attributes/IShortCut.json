@@ -30,9 +30,9 @@
                 {
                     "type": "slider",
                     "layoutType": "inline",
-                    "text": "一行展示",
+                    "text": "每行展示",
                     "bindKey": "maxNumber",
-                    "desc":"",
+                    "desc":"用于设置每行显示的数量，实际数量超过则会自动换行显示",
                     "default":"3"
                 },
                 {
@@ -64,7 +64,7 @@
                             "text": "背景图片",
                             "bindKey": "bgUrl",
                             "placeholder": "可输入图片地址或直接上传",
-                            "dictionary":["/p1000/idm/upload/imgname.jpg"],
+                            "dictionary":["/resource/idm/img/bg-com.png"],
                             "ctrlAttrObject": {
                                 "width": "",
                                 "height": "",
@@ -98,7 +98,7 @@
                             "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
                             "bindKey": "width",
                             "width": "60px",
-                            "default": "100%"
+                            "default": "auto"
                         },
                         {
                             "type": "input",
