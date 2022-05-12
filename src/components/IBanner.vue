@@ -17,10 +17,10 @@
       <div class="box-swiper-container">
         <ul class="swiper-wrapper">
           <li
-            class="swiper-slide box-swiper-item-container"
+            class="swiper-slide box-swiper-item-container banner-item-container"
             v-for="(item, index) in list"
             :key="index"
-            :style="{height: propData.height, borderRadius: propData.imgBorderRadius}"
+            :style="{height: propData.height, borderRadius: propData.imgBorderRadius.inputVal + propData.imgBorderRadius.selectVal}"
             @click="handleClick('clickBannerItemFunction', item)"
           >
             <img :src="item.img"  class="slider-img" alt="" />
@@ -46,6 +46,10 @@ export default {
         htmlTitle: "广告轮播",
         width: "100%",
         height: "240px",
+        imgBorderRadius: {
+          inputVal: 8,
+          selectVal: "px"
+        }
       },
       list: [
         {
@@ -70,6 +74,15 @@ export default {
         },
       ],
     };
+  },
+  watch: {
+    'propData.height': {
+      immediate: false,
+      handler(){
+        this.$forceUpdate()
+        this.initSwiper()
+      }
+    }
   },
   props: {},
   created() {
@@ -125,6 +138,7 @@ export default {
      */
     convertAttrToStyleObject() {
       var styleObject = {};
+      let imgBorderRadiusObj = {}
       if (this.propData.bgSize && this.propData.bgSize == "custom") {
         styleObject["background-size"] =
           (this.propData.bgSizeWidth
