@@ -20,12 +20,12 @@
         v-model="showPopover"
         trigger="click"
         :placement="placement"
-        :actions="propData.accountList"
+        :actions="accountList"
         @select="onSelect"
       >
         <template #reference>
-          <img v-if="propData.accountUrl && propData.accountList" :src="IDM.url.getWebPath(propData.accountUrl)" alt="">
-          <span v-if="!propData.accountUrl && propData.accountList" :style="{background: !propData.accountUrl && '#ccc'}" :class="!propData.accountUrl && 'accout-icon'"></span>
+          <img v-if="propData.accountUrl && accountList" :src="IDM.url.getWebPath(propData.accountUrl)" alt="">
+          <span v-else style="display: inline-block;white-space: nowrap;">请上传或选择图标</span>
         </template>
       </van-popover>
     </div>
@@ -34,13 +34,17 @@
 </template>
 
 <script>
-import { Popover, Picker } from 'vant';
+import { Popover } from 'vant';
+import 'vant/lib/popover/style';
 export default {
   name: 'IPublicAccounts',
+  components: {
+      [Popover.name]: Popover,
+  },
   data(){
     return {
       showPopover: false,
-      placement: 'left',
+      placement: 'bottom',
       flags: false,
       position: { x: 0, y: 0 },
       nx: "",
@@ -50,21 +54,21 @@ export default {
       xPum: "",
       yPum: "",
       moduleObject:{},
+      accountList:[
+        {
+          text: 'testtest',
+          className: 'chose'
+        },
+        {
+          text: '公共账号',
+        },
+      ],
       propData:this.$root.propData.compositeAttr||{
         accountUrl: '',
         fixed: true,
         coordinates: 'leftTop',
         offsetX: '20',
         offsetY: '20',
-        accountList:[
-          {
-            text: 'testtesttesttest',
-            className: 'chose'
-          },
-          {
-            text: '测试公共账号账号',
-          },
-        ]
       }
     }
   },
@@ -74,25 +78,25 @@ export default {
     offset() {
       if (this.propData.coordinates === 'leftTop') {
         return {
-          left: this.propData.offsetX || 0 + 'px',
-          top: this.propData.offsetY || 0+ 'px',
+          left: this.propData.offsetX + 'px',
+          top: this.propData.offsetY+ 'px',
         }
       }
       if (this.propData.coordinates === 'rigthTop') {
         return {
-          right: this.propData.offsetX || 0 + 'px',
-          top: this.propData.offsetY || 0+ 'px',
+          right: this.propData.offsetX + 'px',
+          top: this.propData.offsetY+ 'px',
         }
       }
       if (this.propData.coordinates === 'rigthBottom') {
         return {
-          right: this.propData.offsetX || 0+ 'px',
-          bottom: this.propData.offsetY || 0+ 'px',
+          right: this.propData.offsetX+ 'px',
+          bottom: this.propData.offsetY+ 'px',
         }
       }
       return {
-        left: this.propData.offsetX || 0+ 'px',
-        bottom: this.propData.offsetY || 0+ 'px',
+        left: this.propData.offsetX+ 'px',
+        bottom: this.propData.offsetY+ 'px',
       }
     }
   },
@@ -181,10 +185,10 @@ export default {
     // 点击发送消息
     onSelect(action,index) {
       console.log(action,index)
-      this.propData.accountList.forEach((v) => {
+      this.accountList.forEach((v) => {
         v.className = ''
       })
-      this.$set(this.propData.accountList[index], 'className', 'chose')
+      this.$set(this.accountList[index], 'className', 'chose')
       const obj = {
         type: 'linkageReload',
         message: '',
@@ -358,31 +362,11 @@ export default {
       let that = this;
       //所有地址的url参数转换
       var params = that.commonParam();
-      switch (this.propData.dataSourceType) {
-        case "customInterface":
-          this.propData.customInterfaceUrl&&window.IDM.http.get(this.propData.customInterfaceUrl,params)
-          .then((res) => {
-            //res.data
-            that.$set(that.propData,"accountList",res.data);
-          })
-          .catch(function (error) {
-            
-          });
-          break;
-        case "pageCommonInterface":
-          //使用通用接口直接跳过，在setContextValue执行
-          break;
-        case "customFunction":
-          if(this.propData.customFunction&&this.propData.customFunction.length>0){
-            var resValue = "";
-            try {
-              resValue = window[this.propData.customFunction[0].name]&&window[this.propData.customFunction[0].name].call(this,{...params,...this.propData.customFunction[0].param,moduleObject:this.moduleObject});
-            } catch (error) {
-            }
-            that.propData.accountList = resValue;
-          }
-          break;
-      }
+      this.propData.customInterfaceUrl&&window.IDM.http.get(this.propData.customInterfaceUrl,params)
+      .then((res) => {
+        //res.data
+        this.accountList = res.data;
+      })
     },
     /**
      * 组件通信：接收消息的方法

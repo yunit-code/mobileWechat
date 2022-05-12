@@ -15,7 +15,7 @@
       idm-ctrl-id：组件的id，这个必须不能为空
       idm-container-index  组件的内部容器索引，不重复唯一且不变，必选
     -->
-     <div class="top-bg" :style="{backgroundImage: 'url('+ propData.headerBgUrl + ')', backgroundColor: !propData.headerBgUrl && '#1978f5'}" v-proportion="0.36">
+     <div class="top-bg" v-proportion="0.36">
         <div class="top-set">
           <svg-icon v-show="propData.set" @click.native="goUrl" icon-class="isort-set" class="svg" :style="{fontSize: propData.iconSize + 'px'}"/>
         </div>
@@ -257,32 +257,27 @@ export default {
     initData(){
       let that = this;
       //所有地址的url参数转换
-      var params = that.commonParam();
-      switch (this.propData.dataSourceType) {
-        case "customInterface":
-          this.propData.customInterfaceUrl&&window.IDM.http.get(this.propData.customInterfaceUrl,params)
-          .then((res) => {
-            //res.data
-            that.$set(that.propData,"summaryConfigList",res.data);
-          })
-          .catch(function (error) {
-            
-          });
-          break;
-        case "pageCommonInterface":
-          //使用通用接口直接跳过，在setContextValue执行
-          break;
-        case "customFunction":
-          if(this.propData.customFunction&&this.propData.customFunction.length>0){
-            var resValue = "";
-            try {
-              resValue = window[this.propData.customFunction[0].name]&&window[this.propData.customFunction[0].name].call(this,{...params,...this.propData.customFunction[0].param,moduleObject:this.moduleObject});
-            } catch (error) {
-            }
-            that.propData.summaryConfigList = resValue;
-          }
-          break;
+      // var params = that.commonParam();
+      var params = {
+        id: this.propData.selectApplication
       }
+      this.propData.selectApplication&&this.propData.userInfoInterface&&window.IDM.http.get(this.propData.userInfoInterface,params)
+      .then((res) => {
+        //res.data
+        this.userInfo = res.data;
+      })
+      .catch(function (error) {
+        
+      });
+      this.propData.weatherInterface&&window.IDM.http.get(this.propData.weatherInterface)
+        .then((res) => {
+          //res.data
+          this.weatherInfo = res.data;
+        })
+        .catch(function (error) {
+          
+        });
+
     },
     /**
      * 组件通信：接收消息的方法

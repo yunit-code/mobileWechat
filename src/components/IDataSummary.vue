@@ -22,7 +22,7 @@
       <ul class="summary-box">
         <li v-for="(v,i) in propData.summaryConfigList && propData.summaryConfigList.slice(0, propData.maxNumber)" :key="i" class="summary-item"
         style="width: 50%">
-          <div class="summary-bg" :style="{backgroundImage: v.bgUrl ? 'url('+IDM.url.getWebPath(v.bgUrl)+')' : 'url('+bg+')'}" v-proportion="0.5">
+          <div class="summary-bg" :style="{backgroundImage: 'url('+IDM.url.getWebPath(v.bgUrl)+')'}" v-proportion="0.5">
             <div style="marginBottom: 5px">{{v.name}}</div>
             <div>{{v.sumNum}}</div>
           </div>
@@ -253,32 +253,23 @@ export default {
     initData(){
       let that = this;
       //所有地址的url参数转换
-      var params = that.commonParam();
-      switch (this.propData.dataSourceType) {
-        case "customInterface":
-          this.propData.customInterfaceUrl&&window.IDM.http.get(this.propData.customInterfaceUrl,params)
-          .then((res) => {
-            //res.data
-            that.$set(that.propData,"summaryConfigList",res.data);
-          })
-          .catch(function (error) {
-            
-          });
-          break;
-        case "pageCommonInterface":
-          //使用通用接口直接跳过，在setContextValue执行
-          break;
-        case "customFunction":
-          if(this.propData.customFunction&&this.propData.customFunction.length>0){
-            var resValue = "";
-            try {
-              resValue = window[this.propData.customFunction[0].name]&&window[this.propData.customFunction[0].name].call(this,{...params,...this.propData.customFunction[0].param,moduleObject:this.moduleObject});
-            } catch (error) {
-            }
-            that.propData.summaryConfigList = resValue;
-          }
-          break;
+      // var params = that.commonParam();
+      var params = {
+        id: this.propData.selectApplication
       }
+      this.propData.selectApplication&&this.propData.customInterfaceUrl&&window.IDM.http.get(this.propData.customInterfaceUrl, params)
+      .then((res) => {
+        //res.data
+        that.$set(that.propData,"summaryConfigList",res.data);
+      })
+      // if(this.propData.customFunction&&this.propData.customFunction.length>0){
+      //   let resValue = "";
+      //   try {
+      //     resValue = window[this.propData.customFunction[0].name]&&window[this.propData.customFunction[0].name].call(this,{...params,...this.propData.customFunction[0].param,moduleObject:this.moduleObject});
+      //   } catch (error) {
+      //   }
+      //   that.propData.summaryConfigList = resValue;
+      // }
     },
     /**
      * 组件通信：接收消息的方法

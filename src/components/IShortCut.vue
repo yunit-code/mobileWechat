@@ -22,7 +22,7 @@
       <ul class="short-box">
         <li v-for="(v,i) in propData.shortConfigList" :key="i" class="short-item"
         :style="{width: `${100/propData.maxNumber}%`}">
-          <div class="short-bg" :style="{backgroundImage: v.bgUrl ? 'url('+IDM.url.getWebPath(v.bgUrl)+')' : 'url('+bg+')'}" v-proportion="0.4" @click="goUrl(v)">
+          <div class="short-bg" :style="{backgroundImage: 'url('+IDM.url.getWebPath(v.bgUrl)+')'}" v-proportion="0.4" @click="goUrl(v)">
             <span>{{v.name}}</span>
           </div>
         </li>
