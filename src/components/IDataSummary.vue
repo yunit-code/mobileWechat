@@ -8,7 +8,7 @@
   <div idm-ctrl="idm_module"
    :id="moduleObject.id" 
    :idm-ctrl-id="moduleObject.id" 
-   @click="shortClickHandle">
+   >
     <!--
       组件内部容器
       增加class="drag_container" 必选
@@ -16,31 +16,31 @@
       idm-container-index  组件的内部容器索引，不重复唯一且不变，必选
     -->
     <div class="com-box">
-      <div class="com-inner-box">
-        <div class="com-title" draggable="true">{{propData.comTitle}}
-        <img src="@/assets/red-three.png" alt="" style="margin-left: 5px;height: 16px">
-        </div>
-        <ul class="summary-box">
-          <li v-for="(v,i) in propData.summaryConfigList && propData.summaryConfigList.slice(0, propData.maxNumber)" :key="i" class="summary-item"
-          style="width: 50%">
-            <div class="summary-bg" :style="{backgroundImage: 'url('+ v.bgUrl + ')', backgroundColor: !v.bgUrl && '#f3a2a3'}" v-proportion="0.5">
-              <div style="marginBottom: 5px">{{v.name}}</div>
-              <div>{{v.sumNum}}</div>
-            </div>
-          </li>
-        </ul>
+      <div class="com-title" draggable="true">{{propData.comTitle}}
+      <img src="@/assets/red-three.png" alt="" style="margin-left: 5px;height: 16px">
       </div>
+      <ul class="summary-box">
+        <li v-for="(v,i) in propData.summaryConfigList && propData.summaryConfigList.slice(0, propData.maxNumber)" :key="i" class="summary-item"
+        style="width: 50%">
+          <div class="summary-bg" :style="{backgroundImage: v.bgUrl ? 'url('+IDM.url.getWebPath(v.bgUrl)+')' : 'url('+bg+')'}" v-proportion="0.5">
+            <div style="marginBottom: 5px">{{v.name}}</div>
+            <div>{{v.sumNum}}</div>
+          </div>
+        </li>
+      </ul>
     </div>
     
   </div>
 </template>
 
 <script>
+import bg from '@/assets/bg-default.png'
 export default {
   name: 'IDataSummary',
   data(){
     return {
       moduleObject:{},
+      bg,
       propData:this.$root.propData.compositeAttr||{
         comTitle: '数据汇总',
         maxNumber: 4,
@@ -74,8 +74,6 @@ export default {
   created() {
     this.moduleObject = this.$root.moduleObject
     this.convertAttrToStyleObject();
-    this.convertAttrToInnerBoxStyle();
-    this.convertAttrToBoxStyle();
   },
   mounted() {
     //赋值给window提供跨页面调用
@@ -93,8 +91,6 @@ export default {
     propDataWatchHandle(propData){
       this.propData = propData.compositeAttr||{};
       this.convertAttrToStyleObject();
-      this.convertAttrToInnerBoxStyle();
-      this.convertAttrToBoxStyle();
     },
     /**
      * 把属性转换成样式对象
@@ -112,6 +108,9 @@ export default {
       if(this.propData.positionY&&this.propData.positionY.inputVal){
         styleObject["background-position-y"]=this.propData.positionY.inputVal+this.propData.positionY.selectVal;
       }
+      styleObject["font-size"] = '16px';
+      styleObject["font-weight"]=800;
+      styleObject["color"]='#333333';
       for (const key in this.propData) {
         if (this.propData.hasOwnProperty.call(this.propData, key)) {
           const element = this.propData[key];
@@ -227,154 +226,6 @@ export default {
       this.initData();
     },
     /**
-     * 把属性转换成样式对象
-     */
-    convertAttrToInnerBoxStyle(){
-      var styleObject = {};
-      styleObject["padding-top"]= '10px';
-      styleObject["padding-right"]='10px';
-      styleObject["padding-bottom"]='10px';
-      styleObject["padding-left"]='10px';
-      styleObject["font-size"] = '16px';
-      styleObject["font-weight"]=800;
-      styleObject["color"]='#cccccc';
-      styleObject["border-top-left-radius"]='10px';
-      styleObject["border-top-right-radius"]='10px';
-      styleObject["border-bottom-left-radius"]='10px';
-      styleObject["border-bottom-right-radius"]='10px';
-      for (const key in this.propData) {
-        if (this.propData.hasOwnProperty.call(this.propData, key)) {
-          const element = this.propData[key];
-          if(!element&&element!==false&&element!=0){
-            continue;
-          }
-          switch (key) {
-            case "comInnerBox":
-              if(element.marginTopVal){
-                styleObject["margin-top"]=`${element.marginTopVal}`;
-              }
-              if(element.marginRightVal){
-                styleObject["margin-right"]=`${element.marginRightVal}`;
-              }
-              if(element.marginBottomVal){
-                styleObject["margin-bottom"]=`${element.marginBottomVal}`;
-              }
-              if(element.marginLeftVal){
-                styleObject["margin-left"]=`${element.marginLeftVal}`;
-              }
-              if(element.paddingTopVal){
-                styleObject["padding-top"]=`${element.paddingTopVal}`;
-              }
-              if(element.paddingRightVal){
-                styleObject["padding-right"]=`${element.paddingRightVal}`;
-              }
-              if(element.paddingBottomVal){
-                styleObject["padding-bottom"]=`${element.paddingBottomVal}`;
-              }
-              if(element.paddingLeftVal){
-                styleObject["padding-left"]=`${element.paddingLeftVal}`;
-              }
-              break;
-            case "comBorder":
-              if(element.border.top.width>0){
-                styleObject["border-top-width"]=element.border.top.width+element.border.top.widthUnit;
-                styleObject["border-top-style"]=element.border.top.style;
-                if(element.border.top.colors.hex8){
-                  styleObject["border-top-color"]=element.border.top.colors.hex8;
-                }
-              }
-              if(element.border.right.width>0){
-                styleObject["border-right-width"]=element.border.right.width+element.border.right.widthUnit;
-                styleObject["border-right-style"]=element.border.right.style;
-                if(element.border.right.colors.hex8){
-                  styleObject["border-right-color"]=element.border.right.colors.hex8;
-                }
-              }
-              if(element.border.bottom.width>0){
-                styleObject["border-bottom-width"]=element.border.bottom.width+element.border.bottom.widthUnit;
-                styleObject["border-bottom-style"]=element.border.bottom.style;
-                if(element.border.bottom.colors.hex8){
-                  styleObject["border-bottom-color"]=element.border.bottom.colors.hex8;
-                }
-              }
-              if(element.border.left.width>0){
-                styleObject["border-left-width"]=element.border.left.width+element.border.left.widthUnit;
-                styleObject["border-left-style"]=element.border.left.style;
-                if(element.border.left.colors.hex8){
-                  styleObject["border-left-color"]=element.border.left.colors.hex8;
-                }
-              }
-              
-              styleObject["border-top-left-radius"]=element.radius.leftTop.radius+element.radius.leftTop.radiusUnit;
-              styleObject["border-top-right-radius"]=element.radius.rightTop.radius+element.radius.rightTop.radiusUnit;
-              styleObject["border-bottom-left-radius"]=element.radius.leftBottom.radius+element.radius.leftBottom.radiusUnit;
-              styleObject["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
-              break;
-            case "titleFont":
-              styleObject["font-family"]=element.fontFamily;
-              if(element.fontColors.hex8){
-                styleObject["color"]=element.fontColors.hex8;
-              }
-              styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
-              styleObject["font-style"]=element.fontStyle;
-              styleObject["font-size"]=element.fontSize+element.fontSizeUnit;
-              styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
-              styleObject["text-align"]=element.fontTextAlign;
-              styleObject["text-decoration"]=element.fontDecoration;
-              break;
-          }
-        }
-      }
-      window.IDM.setStyleToPageHead(this.moduleObject.id+" .com-box .com-inner-box",styleObject);
-    },
-    /**
-     * 把属性转换成样式对象
-     */
-    convertAttrToBoxStyle(){
-      var styleObject = {};
-      styleObject["padding-top"]= '10px';
-      styleObject["padding-right"]='10px';
-      styleObject["padding-bottom"]='10px';
-      styleObject["padding-left"]='10px';
-      for (const key in this.propData) {
-        if (this.propData.hasOwnProperty.call(this.propData, key)) {
-          const element = this.propData[key];
-          if(!element&&element!==false&&element!=0){
-            continue;
-          }
-          switch (key) {
-            case "comBox":
-              if(element.marginTopVal){
-                styleObject["margin-top"]=`${element.marginTopVal}`;
-              }
-              if(element.marginRightVal){
-                styleObject["margin-right"]=`${element.marginRightVal}`;
-              }
-              if(element.marginBottomVal){
-                styleObject["margin-bottom"]=`${element.marginBottomVal}`;
-              }
-              if(element.marginLeftVal){
-                styleObject["margin-left"]=`${element.marginLeftVal}`;
-              }
-              if(element.paddingTopVal){
-                styleObject["padding-top"]=`${element.paddingTopVal}`;
-              }
-              if(element.paddingRightVal){
-                styleObject["padding-right"]=`${element.paddingRightVal}`;
-              }
-              if(element.paddingBottomVal){
-                styleObject["padding-bottom"]=`${element.paddingBottomVal}`;
-              }
-              if(element.paddingLeftVal){
-                styleObject["padding-left"]=`${element.paddingLeftVal}`;
-              }
-              break;
-          }
-        }
-      }
-      window.IDM.setStyleToPageHead(this.moduleObject.id+" .com-box",styleObject);
-    },
-    /**
      * 通用的url参数对象
      * 所有地址的url参数转换
      */
@@ -428,34 +279,6 @@ export default {
           }
           break;
       }
-    },
-    /**
-     * 文本点击事件
-     */
-    shortClickHandle(){
-      let that = this;
-      if(this.moduleObject.env=="develop"){
-        //开发模式下不执行此事件
-        return;
-      }
-      //获取所有的URL参数、页面ID（pageId）、以及所有组件的返回值（用范围值去调用IDM提供的方法取出所有的组件值）
-      let urlObject = window.IDM.url.queryObject(),
-      pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
-      //自定义函数
-      /**
-       * [
-       * {name:"",param:{}}
-       * ]
-       */
-      var clickFunction = this.propData.clickFunction;
-      clickFunction&&clickFunction.forEach(item=>{
-        window[item.name]&&window[item.name].call(this,{
-          urlData:urlObject,
-          pageId,
-          customParam:item.param,
-          _this:this
-        });
-      })
     },
     /**
      * 组件通信：接收消息的方法
@@ -515,13 +338,7 @@ export default {
     margin:0;
     list-style-type:none;
   }
-  .com-inner-box{
-    background: #fff;
-    border-radius: 10px;
-    padding: 10px;
-  }
   .com-box{
-    background: #eef2fa;
     .com-title{
       display: flex;
       align-items: center;

@@ -53,6 +53,15 @@
                     "display": "@[set]"
                 },
                 {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "图标大小",
+                    "bindKey": "iconSize",
+                    "desc":"图标大小",
+                    "display": "@[set]",
+                    "default": "30"
+                },
+                {
                     "type": "uploadImage",
                     "layoutType": "block",
                     "text": "自定义头部背景",
@@ -299,14 +308,6 @@
             "text": "高级",
             "desc": "点击？查看高级设置用法指南",
             "children": [
-                {
-                    "type": "actionSelect",
-                    "layoutType": "block",
-                    "text": "点击时动作",
-                    "bindKey": "clickFunction",
-                    "desc": "点击的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
-                    "multiple": true
-                },
                 {
                     "type": "select",
                     "layoutType": "inline",

@@ -8,7 +8,7 @@
   <div idm-ctrl="idm_module"
    :id="moduleObject.id" 
    :idm-ctrl-id="moduleObject.id" 
-   @click="shortClickHandle">
+   >
     <!--
       组件内部容器
       增加class="drag_container" 必选
@@ -17,7 +17,7 @@
     -->
      <div class="top-bg" :style="{backgroundImage: 'url('+ propData.headerBgUrl + ')', backgroundColor: !propData.headerBgUrl && '#1978f5'}" v-proportion="0.36">
         <div class="top-set">
-          <svg-icon v-show="propData.set" @click.native="goUrl" icon-class="isort-set" class="svg"/>
+          <svg-icon v-show="propData.set" @click.native="goUrl" icon-class="isort-set" class="svg" :style="{fontSize: propData.iconSize + 'px'}"/>
         </div>
         <div class="top-content">
           <div class="user-info" v-if="propData.userInfo">
@@ -58,6 +58,7 @@ export default {
         userInfo:true,
         weather: true,
         set: true,
+        iconSize: '30',
         setUrl: 'https://www.baidu.com/',
         headerBgUrl: '',
       }
@@ -284,34 +285,6 @@ export default {
       }
     },
     /**
-     * 文本点击事件
-     */
-    shortClickHandle(){
-      let that = this;
-      if(this.moduleObject.env=="develop"){
-        //开发模式下不执行此事件
-        return;
-      }
-      //获取所有的URL参数、页面ID（pageId）、以及所有组件的返回值（用范围值去调用IDM提供的方法取出所有的组件值）
-      let urlObject = window.IDM.url.queryObject(),
-      pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
-      //自定义函数
-      /**
-       * [
-       * {name:"",param:{}}
-       * ]
-       */
-      var clickFunction = this.propData.clickFunction;
-      clickFunction&&clickFunction.forEach(item=>{
-        window[item.name]&&window[item.name].call(this,{
-          urlData:urlObject,
-          pageId,
-          customParam:item.param,
-          _this:this
-        });
-      })
-    },
-    /**
      * 组件通信：接收消息的方法
      * @param {
      *  type:"发送消息的时候定义的类型，这里可以自己用来要具体做什么，统一规定的type：linkageResult（组件联动传结果值）、linkageDemand（组件联动传需求值）、linkageReload（联动组件重新加载）
@@ -376,9 +349,6 @@ export default {
       display: flex;
       justify-content: end;
       align-items: center;
-      .svg{
-        font-size: 44px;
-      }
     }
     .top-content{
       flex: 1;

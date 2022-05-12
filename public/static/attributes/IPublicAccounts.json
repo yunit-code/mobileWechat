@@ -31,6 +31,56 @@
                         "height": "",
                         "cropper": true
                     }
+                },
+                {
+                    "type": "switch",
+                    "layoutType": "inline",
+                    "text": "固定位置",
+                    "bindKey": "fixed",
+                    "desc":"设置是否固定位置",
+                    "default": false
+                },
+                {
+                    "type": "select",
+                    "layoutType": "inline",
+                    "text": "放置坐标",
+                    "bindKey": "coordinates",
+                    "desc":"放置坐标",
+                    "dictionary": [
+                        {
+                            "label": "左上角",
+                            "value": "leftTop"
+                        },
+                        {
+                            "label": "右上角",
+                            "value": "rightTop"
+                        },
+                        {
+                            "label": "右下角",
+                            "value": "rightBottom"
+                        },
+                        {
+                            "label": "左下角",
+                            "value": "leftBottom"
+                        }
+                    ],
+                    "default": "rightBottom"
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "偏移（X）",
+                    "desc":"偏移（X）",
+                    "bindKey": "offsetX",
+                    "default": "20"
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "偏移（Y）",
+                    "desc":"偏移（Y）",
+                    "bindKey": "offsetY",
+                    "default": "20"
                 }
             ]
         },

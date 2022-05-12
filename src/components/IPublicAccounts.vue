@@ -8,14 +8,14 @@
   <div idm-ctrl="idm_module"
    :id="moduleObject.id" 
    :idm-ctrl-id="moduleObject.id" 
-   @click="shortClickHandle">
+   >
     <!--
       组件内部容器
       增加class="drag_container" 必选
       idm-ctrl-id：组件的id，这个必须不能为空
       idm-container-index  组件的内部容器索引，不重复唯一且不变，必选
     -->
-    <div class="drag-bar-wrapper" @touchstart="down"  @touchmove="move"  @touchend="end">
+    <div class="drag-bar-wrapper" @touchstart="down"  @touchmove="move"  @touchend="end" :style="{position:propData.fixed && 'fixed',...offset}">
       <van-popover
         v-model="showPopover"
         trigger="click"
@@ -24,7 +24,7 @@
         @select="onSelect"
       >
         <template #reference>
-          <img v-if="propData.accountUrl && propData.accountList" :src="propData.accountUrl" alt="">
+          <img v-if="propData.accountUrl && propData.accountList" :src="IDM.url.getWebPath(propData.accountUrl)" alt="">
           <span v-if="!propData.accountUrl && propData.accountList" :style="{background: !propData.accountUrl && '#ccc'}" :class="!propData.accountUrl && 'accout-icon'"></span>
         </template>
       </van-popover>
@@ -52,6 +52,10 @@ export default {
       moduleObject:{},
       propData:this.$root.propData.compositeAttr||{
         accountUrl: '',
+        fixed: true,
+        coordinates: 'leftTop',
+        offsetX: '20',
+        offsetY: '20',
         accountList:[
           {
             text: 'testtesttesttest',
@@ -65,6 +69,32 @@ export default {
     }
   },
   props: {
+  },
+  computed:{
+    offset() {
+      if (this.propData.coordinates === 'leftTop') {
+        return {
+          left: this.propData.offsetX || 0 + 'px',
+          top: this.propData.offsetY || 0+ 'px',
+        }
+      }
+      if (this.propData.coordinates === 'rigthTop') {
+        return {
+          right: this.propData.offsetX || 0 + 'px',
+          top: this.propData.offsetY || 0+ 'px',
+        }
+      }
+      if (this.propData.coordinates === 'rigthBottom') {
+        return {
+          right: this.propData.offsetX || 0+ 'px',
+          bottom: this.propData.offsetY || 0+ 'px',
+        }
+      }
+      return {
+        left: this.propData.offsetX || 0+ 'px',
+        bottom: this.propData.offsetY || 0+ 'px',
+      }
+    }
   },
   created() {
     this.moduleObject = this.$root.moduleObject
@@ -355,34 +385,6 @@ export default {
       }
     },
     /**
-     * 文本点击事件
-     */
-    shortClickHandle(){
-      let that = this;
-      if(this.moduleObject.env=="develop"){
-        //开发模式下不执行此事件
-        return;
-      }
-      //获取所有的URL参数、页面ID（pageId）、以及所有组件的返回值（用范围值去调用IDM提供的方法取出所有的组件值）
-      let urlObject = window.IDM.url.queryObject(),
-      pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
-      //自定义函数
-      /**
-       * [
-       * {name:"",param:{}}
-       * ]
-       */
-      var clickFunction = this.propData.clickFunction;
-      clickFunction&&clickFunction.forEach(item=>{
-        window[item.name]&&window[item.name].call(this,{
-          urlData:urlObject,
-          pageId,
-          customParam:item.param,
-          _this:this
-        });
-      })
-    },
-    /**
      * 组件通信：接收消息的方法
      * @param {
      *  type:"发送消息的时候定义的类型，这里可以自己用来要具体做什么，统一规定的type：linkageResult（组件联动传结果值）、linkageDemand（组件联动传需求值）、linkageReload（联动组件重新加载）
@@ -438,10 +440,7 @@ export default {
   .drag-bar-wrapper{
     width: 20px;
     height: 20px;
-    position: fixed;
     z-index: 2;
-    right: 20px;
-    bottom: 30vh;
   }
 
   .accout-icon{
