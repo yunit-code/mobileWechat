@@ -9,47 +9,49 @@
    :id="moduleObject.id" 
    :idm-ctrl-id="moduleObject.id" 
    :title="propData.htmlTitle" 
-   v-show="propData.defaultStatus!='hidden'">
+   v-show="propData.defaultStatus!='hidden'"
+   class="idm-message-list-parent-box"
+   >
     <template v-if="propData.compStyle !== 'styleFour'">
-      <div class="box-title d-flex align-c just-b">
+      <div class="idm-message-list-box-title d-flex align-c just-b">
         <div class="d-flex align-c">
-          <img src="../assets/red-three.png" class="box-title-icon" alt="">
+          <img src="../assets/red-three.png" class="idm-message-list-box-title-icon" alt="">
           <span :style="titleFontStyleObj">{{propData.htmlTitle}}</span>
         </div>
-        <div class="box-title-right" @click="handleClick('clickMoreFunction')">
+        <div class="idm-message-list-box-title-right" @click="handleClick('clickMoreFunction')">
           更多 <van-icon name="arrow" />
         </div>
       </div>
     </template>
-    <div class="box" :style="{width: propData.width, height: propData.height}">
-      <div v-if="propData.compStyle === 'styleFour'" class="box-top d-flex just-b align-c">
-        <div class="box-top-left flex-1" :style="titleFontStyleObj">
-          <span v-for="(item, index) in propData.messageTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.messageSortTitle}}</span>
+    <div class="idm-message-list-box" :style="{width: propData.width, height: propData.height}">
+      <div v-if="propData.compStyle === 'styleFour'" class="idm-message-list-box-top d-flex just-b align-c">
+        <div class="idm-message-list-box-top-left flex-1" :style="titleFontStyleObj">
+          <span v-for="(item, index) in propData.messageTitleList" :key="index" :class="{active: defaultIndex === index}" v-show="item.isShow" @click="handleTitleClick(item,index)">{{item.messageSortTitle}}</span>
         </div>
-        <van-icon class="box-top-more" name="ellipsis" @click="handleClick('clickMoreFunction')" />
+        <van-icon class="idm-message-list-box-top-more" name="ellipsis" @click="handleClick('clickMoreFunction')" />
       </div>
-      <div v-else class="box-top2 d-flex just-b align-c">
-        <div class="box-top2-left d-flex flex-1">
-          <div v-for="(item, index) in propData.messageTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.messageSortTitle}}</div>
+      <div v-else class="idm-message-list-box-top2 d-flex just-b align-c">
+        <div class="idm-message-list-box-top2-left d-flex flex-1">
+          <div v-for="(item, index) in propData.messageTitleList" :key="index" :class="{active: defaultIndex === index}" v-show="item.isShow" @click="handleTitleClick(item,index)">{{item.messageSortTitle}}</div>
         </div>
       </div>
-      <ul class="box-list" v-if="propData.compStyle === 'styleFour' || propData.compStyle === 'styleOne'">
+      <ul class="idm-message-list-box-list" v-if="propData.compStyle === 'styleFour' || propData.compStyle === 'styleOne'">
         <li class="d-flex align-c" v-for="(item, index) in messageList" :key="index" @click="handleClick('clickMoreFunction', item)">
-          <!-- <span class="box-list-style-square" v-if="propData.compStyle === 'styleFour'"></span>
-          <span class="box-list-style-square1" v-else></span> -->
-          <svg-icon iconClass="square" class="box-list-style-square"></svg-icon>
-          <span class="box-list-content">{{item.content}}</span>
-          <span class="box-list-time" v-if="propData.compStyle !== 'styleOne'">{{item.createTime}}</span>
+          <!-- <span class="idm-message-list-box-list-style-square" v-if="propData.compStyle === 'styleFour'"></span>
+          <span class="idm-message-list-box-list-style-square1" v-else></span> -->
+          <svg-icon iconClass="square" class="idm-message-list-box-list-style-square"></svg-icon>
+          <span class="idm-message-list-box-list-content">{{item.content}}</span>
+          <span class="idm-message-list-box-list-time" v-if="propData.compStyle !== 'styleOne'">{{item.createTime}}</span>
           </li>
       </ul>
-      <ul class="box-list2" v-if="propData.compStyle === 'styleTwo' || propData.compStyle === 'styleThree'">
+      <ul class="idm-message-list-box-list2" v-if="propData.compStyle === 'styleTwo' || propData.compStyle === 'styleThree'">
         <li class="d-flex" v-for="(item, index) in messageList" :key="index" @click="handleClick('clickMoreFunction', item)">
-          <img src="../assets/red-three.png" :class="propData.compStyle === 'styleTwo' ? 'box-list2-left-img' : 'box-list2-left-img2'" alt="">
+          <img src="../assets/red-three.png" :class="propData.compStyle === 'styleTwo' ? 'idm-message-list-box-list2-left-img' : 'idm-message-list-box-list2-left-img2'" alt="">
           <div style="overflow:hidden">
-            <div class="box-list2-title" :class="propData.compStyle === 'styleTwo' ? 'box-list2-title' : 'box-list2-title2'">
+            <div class="idm-message-list-box-list2-title" :class="propData.compStyle === 'styleTwo' ? 'idm-message-list-box-list2-title' : 'idm-message-list-box-list2-title2'">
               {{item.content}}
             </div>
-            <div class="box-list2-title-bottom">
+            <div class="idm-message-list-box-list2-title-bottom">
               {{item.createTime}}
             </div>
           </div>
@@ -88,7 +90,8 @@ export default {
         maxGroupCount: 3,
         maxContentCount: 3,
         messageTitleList: [{
-          messageSortTitle: '标题'
+          messageSortTitle: '显示名称',
+          isShow: true
         }]
       },
       messageList: [{
@@ -431,154 +434,157 @@ export default {
 .flex-1{
   flex: 1;
 }
-.box{
-  background-color: #fff;
-  overflow: hidden;
-  &-title{
-    padding: 0 0 10px 0;
-    font: inherit;
-     &-icon{
-      width: 18px;
-      height: 18px;
-      margin: 0 7px 0 0;
-    }
-    &-right{
-      font-weight: 400;
-      color: #aaa;
-      font-size: 16px;
-    }
-  }
-  &-top{
-    font: inherit;
-    margin: 0 0 10px 0;
-    &-left{
-      overflow: hidden;
-      >span{
-        border-right: 1px solid #ccc;
-        padding: 0 15px;
-        &:first-child{
-          padding: 0 15px 0 0;
-        }
-        &:last-child{
-          padding: 0 0 0 15px;
-          border: 0;
-        }
-      }
-      .active{
-        color: #000;
-        font-weight: 500;
-      }
-    }
-    &-more{
-      font-size: 23px;
-    }
-  }
-  &-top2{
-    margin: 0 0 10px 0;
-    font-size: 15px;
-    &-left{
-      overflow: hidden;
-      >div{
-        background-color: #eee;
-        border-radius: 20px;
-        overflow: hidden;
-        margin: 0 4px;
-        color: #000;
-        padding: 2px 15px;
-        &:last-child{
-          
-        }
-      }
-      .active{
-        background-color: #fff;
-        color: rgb(61, 140, 243);
-        font-weight: 500;
-      }
-    }
-    &-more{
-      font-size: 23px;
-    }
-  }
-  &-list{
-    padding: 0;
-    list-style: none;
-    > li{
-      font-size: 16px;
-      margin: 0 0 8px 0;
-      &:last-child{
-        margin:  0;
-      }
-    }
-    &-style-square{
-      color: #000;
-      font-size: 10px;
-      margin: 0 5px 0 0;
-    }
-    &-content{
-      overflow: hidden;
-      text-overflow: ellipsis;
-      width: 100%;
-      white-space: nowrap;
-    }
-    &-time{
-      white-space: nowrap;
-      color: #ccc;
-      font-size: 16px;
-      margin: 0 0 0 10px;
-    }
-  }
-  &-list2{
-    padding: 0;
-    list-style: none;
-    > li{
-      
-      width: 100%;
-      margin: 0 0 10px 0;
-      &:last-child{
-        margin:  0;
-      }
-    }
-    &-left-img{
-      width: 80px;
-      height: 70px;
-      margin:0 10px 0 0;
-    }
-    &-left-img2{
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      margin:0 10px 0 0;
-    }
+.idm-message-list-parent-box{
+  .idm-message-list-box{
+    background-color: #fff;
+    overflow: hidden;
     &-title{
-      width: 100%;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      display:-webkit-box;
-      -webkit-box-orient:vertical;
-      -webkit-line-clamp:2;
+      padding: 0 0 10px 0;
+      font: inherit;
+      &-icon{
+        width: 18px;
+        height: 18px;
+        margin: 0 7px 0 0;
+      }
+      &-right{
+        font-weight: 400;
+        color: #aaa;
+        font-size: 16px;
+      }
+    }
+    &-top{
+      font: inherit;
+      margin: 0 0 10px 0;
+      &-left{
+        overflow: hidden;
+        >span{
+          border-right: 1px solid #ccc;
+          padding: 0 15px;
+          &:first-child{
+            padding: 0 15px 0 0;
+          }
+          &:last-child{
+            padding: 0 0 0 15px;
+            border: 0;
+          }
+        }
+        .active{
+          color: #000;
+          font-weight: 500;
+        }
+      }
+      &-more{
+        font-size: 23px;
+      }
+    }
+    &-top2{
+      margin: 0 0 10px 0;
       font-size: 15px;
-      font-weight: 600;
+      &-left{
+        overflow: hidden;
+        >div{
+          background-color: #eee;
+          border-radius: 20px;
+          overflow: hidden;
+          margin: 0 4px;
+          color: #000;
+          padding: 2px 15px;
+          &:last-child{
+            
+          }
+        }
+        .active{
+          background-color: #fff;
+          color: rgb(61, 140, 243);
+          font-weight: 500;
+        }
+      }
+      &-more{
+        font-size: 23px;
+      }
     }
-    &-title2{
-      width: 100%;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      display:-webkit-box;
-      -webkit-box-orient:vertical;
-      -webkit-line-clamp:1;
-      font-size: 15px;
-      font-weight: 600;
+    &-list{
+      padding: 0;
+      list-style: none;
+      > li{
+        font-size: 16px;
+        margin: 0 0 8px 0;
+        &:last-child{
+          margin:  0;
+        }
+      }
+      &-style-square{
+        color: #000;
+        font-size: 10px;
+        margin: 0 5px 0 0;
+      }
+      &-content{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        white-space: nowrap;
+      }
+      &-time{
+        white-space: nowrap;
+        color: #ccc;
+        font-size: 16px;
+        margin: 0 0 0 10px;
+      }
     }
-    &-title-bottom{
-      margin: 10px 0 0 0;
-      color: #ccc;
-      font-size: 14px;
-    }
-    &-title-bottom2{
-      margin: 10px 0 0 0;
-      color: #ccc;
-      font-size: 3.7vw;
+    &-list2{
+      padding: 0;
+      list-style: none;
+      > li{
+        
+        width: 100%;
+        margin: 0 0 10px 0;
+        &:last-child{
+          margin:  0;
+        }
+      }
+      &-left-img{
+        width: 80px;
+        height: 70px;
+        margin:0 10px 0 0;
+      }
+      &-left-img2{
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        margin:0 10px 0 0;
+      }
+      &-title{
+        width: 100%;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        display:-webkit-box;
+        -webkit-box-orient:vertical;
+        -webkit-line-clamp:2;
+        font-size: 15px;
+        font-weight: 600;
+      }
+      &-title2{
+        width: 100%;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        display:-webkit-box;
+        -webkit-box-orient:vertical;
+        -webkit-line-clamp:1;
+        font-size: 15px;
+        font-weight: 600;
+      }
+      &-title-bottom{
+        margin: 10px 0 0 0;
+        color: #ccc;
+        font-size: 14px;
+      }
+      &-title-bottom2{
+        margin: 10px 0 0 0;
+        color: #ccc;
+        font-size: 3.7vw;
+      }
     }
   }
 }
+
 </style>

@@ -10,23 +10,23 @@
    :idm-ctrl-id="moduleObject.id" 
    :title="propData.htmlTitle" 
    v-show="propData.defaultStatus!='hidden'"
-   class="box">
-    <div class="box-title d-flex align-c just-b">
+   class="idm-unifie-todo-box">
+    <div class="idm-unifie-todo-box-title d-flex align-c just-b">
       <div class="d-flex align-c">
         <span :style="titleFontStyleObj">{{propData.htmlTitle}}</span>
-        <img src="../assets/red-three.png" class="box-title-icon" alt="">
+        <img src="../assets/red-three.png" class="idm-unifie-todo-box-title-icon" alt="">
       </div>
-      <van-icon class="box-title-more" name="ellipsis" @click="handleClick('clickMoreFunction')" />
+      <van-icon class="idm-unifie-todo-box-title-more" name="ellipsis" @click="handleClick('clickMoreFunction')" />
     </div>
-    <div class="box-sub" v-for="(item, index) in list" :key="index" @click="handleClick('clickToDoItemFunction',item)">
-      <div class="box-sub-title" :class="{'box-sub-no-read': true}">
+    <div class="idm-unifie-todo-box-sub" v-for="(item, index) in list" :key="index" @click="handleClick('clickToDoItemFunction',item)">
+      <div class="idm-unifie-todo-box-sub-title" :class="{'idm-unifie-todo-box-sub-no-read': true}">
         {{item.title}}
       </div>
-      <div class="box-sub-intr">
-        <div class="d-flex align-c"><svg-icon iconClass="duihao" class="box-sub-icon"></svg-icon> <span>{{item.status}}</span> </div>
+      <div class="idm-unifie-todo-box-sub-intr">
+        <div class="d-flex align-c"><svg-icon iconClass="duihao" class="idm-unifie-todo-box-sub-icon"></svg-icon> <span>{{item.status}}</span> </div>
         <div class="d-flex align-c">
-          <svg-icon iconClass="person" class="box-sub-icon"></svg-icon> <span>{{item.from}}</span> </div>
-        <div class="d-flex align-c"><svg-icon iconClass="time" class="box-sub-icon"></svg-icon> <span>{{item.createTime}}</span></div>
+          <svg-icon iconClass="person" class="idm-unifie-todo-box-sub-icon"></svg-icon> <span>{{item.from}}</span> </div>
+        <div class="d-flex align-c"><svg-icon iconClass="time" class="idm-unifie-todo-box-sub-icon"></svg-icon> <span>{{item.createTime}}</span></div>
       </div>
     </div>
   </div>
@@ -408,7 +408,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .d-flex{
   display: flex;
 }
@@ -418,7 +418,7 @@ export default {
 .just-b{
   justify-content: space-between;
 }
-.box{
+.idm-unifie-todo-box{
   background-color: #fff;
   overflow: hidden;
   &-title{

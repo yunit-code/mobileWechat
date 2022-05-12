@@ -56,13 +56,6 @@
                 {
                     "type": "slider",
                     "layoutType": "block",
-                    "text": "分组最多显示几条(0不限制)",
-                    "bindKey": "maxGroupCount",
-                    "default": "3"
-                },
-                {
-                    "type": "slider",
-                    "layoutType": "block",
                     "text": "内容最多显示几条(0不限制)",
                     "bindKey": "maxContentCount",
                     "default": "3"
@@ -70,32 +63,33 @@
                 {
                     "type": "table",
                     "layoutType": "inline",
-                    "text": "信息分类配置",
+                    "text": "页签配置",
                     "bindKey": "messageTitleList",
-                    "tabText": "标题",
+                    "tabText": "页签[index]",
                     "children": [
                         {
                             "type": "input",
                             "layoutType": "inline",
-                            "text": "名称",
+                            "text": "显示名称",
                             "bindKey": "messageSortTitle",
-                            "default":"标题",
+                            "default":"显示名称",
                             "placeholder":"请输入名称"
                         },
                         {
                             "type": "input",
                             "layoutType": "inline",
-                            "text": "列表接口",
+                            "text": "页签标识",
                             "bindKey": "listInterface",
-                            "default": "/ctrl"
+                            "default": ""
                         },
                         {
-                            "type": "textarea",
+                            "type": "switch",
                             "layoutType": "inline",
-                            "text": "显示字段",
-                            "bindKey": "dataFiled",
+                            "text": "默认显示",
+                            "bindKey": "isShow",
                             "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData（自定义接口忽略）且它的值为{data:{filedName:[{\"text\":\"\",\"value\":\"\",\"check\":true}]}}，则这里应该填写data.filedName",
-                            "placeholder": "示例：data.filedName 或者 [0].data[0].filedName"
+                            "placeholder": "示例：data.filedName 或者 [0].data[0].filedName",
+                            "default": "true"
                         }
                     ]
                 }
@@ -172,27 +166,7 @@
                     "type": "border",
                     "layoutType": "block",
                     "text": "边框",
-                    "bindKey": "border",
-                    "default": {
-                        "radius": {
-                            "leftTop": {
-                                "radius": 8,
-                                "radiusUnit": "px"
-                            },
-                            "rightTop": {
-                                "radius": 8,
-                                "radiusUnit": "px"
-                            },
-                            "leftBottom": {
-                                "radius": 8,
-                                "radiusUnit": "px"
-                            },
-                            "rightBottom": {
-                                "radius": 8,
-                                "radiusUnit": "px"
-                            }
-                        }
-                    }
+                    "bindKey": "border"
                 }
             ]
         },
