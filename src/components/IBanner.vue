@@ -20,7 +20,6 @@
             class="swiper-slide idm-banner-box-swiper-item-container banner-item-container"
             v-for="(item, index) in list"
             :key="index"
-            :style="{height: propData.height, borderRadius: propData.imgBorderRadius.inputVal + propData.imgBorderRadius.selectVal}"
             @click="handleClick('clickBannerItemFunction', item)"
           >
             <img :src="item.img"  class="slider-img" alt="" />
@@ -73,6 +72,7 @@ export default {
             "标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，",
         },
       ],
+      mySwiper: null
     };
   },
   watch: {
@@ -80,7 +80,9 @@ export default {
       immediate: false,
       handler(){
         this.$forceUpdate()
-        this.initSwiper()
+        setTimeout(()=>{
+          this.initSwiper()
+        })
       }
     }
   },
@@ -96,24 +98,24 @@ export default {
   destroyed() {},
   methods: {
     initSwiper() {
-      var mySwiper = new Swiper(".idm-banner-box-swiper-container", {
-        autoplay:2000,
-        speed:500,
-        loop:true,
-        loopedSlides:5,
-        slidesPerView:'auto',
-        effect:'coverflow',
-        pagination:{
+      this.mySwiper = new Swiper(".idm-banner-box-swiper-container", {
+        autoplay: 2000,
+        speed: 500,
+        loop: true,
+        loopedSlides: 5,
+        slidesPerView: 'auto',
+        effect: 'coverflow',
+        pagination: {
           el: '.swiper-pagination',
           bulletClass : 'my-bullet',
           bulletActiveClass: 'my-bullet-active',
         },
-        centeredSlides:true,
-        coverflowEffect:{
-          rotate:0,
+        centeredSlides: true,
+        coverflowEffect: {
+          rotate: 0,
           stretch: '-7%',
-          depth:100,
-          modifier:1,
+          depth: 100,
+          modifier: 1,
           slideShadows: false,
         },
         onInit: function (swiper) {
@@ -138,7 +140,7 @@ export default {
      */
     convertAttrToStyleObject() {
       var styleObject = {};
-      let imgBorderRadiusObj = {}
+      let bannerItemStyleObj = {}
       if (this.propData.bgSize && this.propData.bgSize == "custom") {
         styleObject["background-size"] =
           (this.propData.bgSizeWidth
@@ -169,8 +171,11 @@ export default {
           }
           switch (key) {
             case "width":
+              styleObject[key] = element;
+              break;
             case "height":
               styleObject[key] = element;
+              bannerItemStyleObj[key] = element
               break;
             case "box":
               if (element.marginTopVal) {
@@ -289,10 +294,13 @@ export default {
               styleObject["text-align"] = element.fontTextAlign;
               styleObject["text-decoration"] = element.fontDecoration;
               break;
+            case 'imgBorderRadius':
+              bannerItemStyleObj['border-radius'] = element.inputVal + element.selectVal
           }
         }
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + ' .idm-banner-box-swiper-item-container', bannerItemStyleObj);
       this.initData();
     },
     /**
@@ -484,15 +492,16 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .idm-banner-box {
+  padding: 0;
   &-swiper-container {
     position: relative;
     width: 100%;
     height: 100%;
     overflow: hidden;
   }
-  &-swiper-item-container {
+  & &-swiper-item-container {
     width: 90%;
     height: 100%;
     margin: 0 auto;
@@ -522,7 +531,6 @@ export default {
 li {
   display: inline-block;
   float: left;
-  height: 200px;
   img {
     width: 100%;
     height: 100%;

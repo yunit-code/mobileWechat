@@ -56,7 +56,7 @@
                             "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
                             "bindKey": "height",
                             "width": "60px",
-                            "default": "auto"
+                            "default": "240px"
                         }
                     ]
                 },
