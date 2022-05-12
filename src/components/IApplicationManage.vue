@@ -61,7 +61,7 @@
             </div>
             <div class="idm_applicationmanage_footer flex_between">
                 <van-button @click="cancel" class="button" block type="default">取消</van-button>
-                <van-button @save="save" class="button" block type="info">完成</van-button>
+                <van-button @save="save" class="button" block type="info">保存</van-button>
             </div>
             
         </div>
