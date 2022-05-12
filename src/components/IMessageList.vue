@@ -26,13 +26,13 @@
     <div class="idm-message-list-box" :style="{width: propData.width, height: propData.height}">
       <div v-if="propData.compStyle === 'styleFour'" class="idm-message-list-box-top d-flex just-b align-c">
         <div class="idm-message-list-box-top-left flex-1" :style="titleFontStyleObj">
-          <span v-for="(item, index) in propData.messageTitleList" :key="index" :class="{active: defaultIndex === index}" v-show="item.isShow" @click="handleTitleClick(item,index)">{{item.messageSortTitle}}</span>
+          <span v-for="(item, index) in showTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.messageSortTitle}}</span>
         </div>
         <van-icon class="idm-message-list-box-top-more" name="ellipsis" @click="handleClick('clickMoreFunction')" />
       </div>
       <div v-else class="idm-message-list-box-top2 d-flex just-b align-c">
         <div class="idm-message-list-box-top2-left d-flex flex-1">
-          <div v-for="(item, index) in propData.messageTitleList" :key="index" :class="{active: defaultIndex === index}" v-show="item.isShow" @click="handleTitleClick(item,index)">{{item.messageSortTitle}}</div>
+          <div v-for="(item, index) in showTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.messageSortTitle}}</div>
         </div>
       </div>
       <ul class="idm-message-list-box-list" v-if="propData.compStyle === 'styleFour' || propData.compStyle === 'styleOne'">
@@ -73,6 +73,7 @@ export default {
   data(){
     return {
       moduleObject:{},
+      activeIndex: 0,
       defaultIndex: 0,
       propData:this.$root.propData.compositeAttr||{
         htmlTitle:"信息列表",
@@ -89,10 +90,7 @@ export default {
         compStyle: 'styleFour',
         maxGroupCount: 3,
         maxContentCount: 3,
-        messageTitleList: [{
-          messageSortTitle: '显示名称',
-          isShow: true
-        }]
+        messageTitleList: []
       },
       messageList: [{
         content: '这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，',
@@ -115,9 +113,14 @@ export default {
         color: this.propData.titleFontStyle.fontColors.hex,
         fontSize: this.propData.titleFontStyle.fontSize + this.propData.titleFontStyle.fontSizeUnit
       }
+    },
+    showTitleList(){
+      const list = this.propData.messageTitleList.filter(el => el.isShow === true)
+      if(list.length === 0) {
+        return [{messageSortTitle: '页签名称'}]
+      }
+      return list
     }
-  },
-  props: {
   },
   created() {
     this.moduleObject = this.$root.moduleObject

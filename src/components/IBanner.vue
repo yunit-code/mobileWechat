@@ -11,20 +11,20 @@
     :idm-ctrl-id="moduleObject.id"
     :title="propData.htmlTitle"
     v-show="propData.defaultStatus != 'hidden'"
-    class="box"
+    class="idm-banner-box"
   >
-    <div class="box-swiper">
-      <div class="box-swiper-container">
+    <div class="idm-banner-box-swiper">
+      <div class="idm-banner-box-swiper-container">
         <ul class="swiper-wrapper">
           <li
-            class="swiper-slide box-swiper-item-container banner-item-container"
+            class="swiper-slide idm-banner-box-swiper-item-container banner-item-container"
             v-for="(item, index) in list"
             :key="index"
             :style="{height: propData.height, borderRadius: propData.imgBorderRadius.inputVal + propData.imgBorderRadius.selectVal}"
             @click="handleClick('clickBannerItemFunction', item)"
           >
             <img :src="item.img"  class="slider-img" alt="" />
-            <span class="box-swiper-text">{{item.title}}</span>
+            <span class="idm-banner-box-swiper-text">{{item.title}}</span>
           </li>
         </ul>
         <div class="swiper-pagination"></div>
@@ -96,7 +96,7 @@ export default {
   destroyed() {},
   methods: {
     initSwiper() {
-      var mySwiper = new Swiper(".box-swiper-container", {
+      var mySwiper = new Swiper(".idm-banner-box-swiper-container", {
         autoplay:2000,
         speed:500,
         loop:true,
@@ -485,7 +485,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.box {
+.idm-banner-box {
   &-swiper-container {
     position: relative;
     width: 100%;
