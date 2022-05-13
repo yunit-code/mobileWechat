@@ -9,7 +9,7 @@ vue
 ## 组件类型（comType）
 common
 ## 所在代码包版本
-workbench@1.0.0
+mobilewechat@1.0.0
 ## 组件属性
 ### 唯一标识【ctrlId】
 ### 基本属性

@@ -164,14 +164,35 @@ export default {
       if(this.moduleObject.env === 'develop') {
         return
       }
-      const url = IDM.url.getWebPath(item.jumpUrl)
-      window.open(url, this.propData.jumpStyle || '_self')
+      var clickMessageItemFunction = this.propData.clickMessageItemFunction;
+      if (clickMessageItemFunction) {
+        //获取所有的URL参数、页面ID（pageId）、以及所有组件的返回值（用范围值去调用IDM提供的方法取出所有的组件值）
+        let urlObject = window.IDM.url.queryObject(),
+        pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
+        clickMessageItemFunction.forEach((item) => {
+        console.log(window[item.name])
+        window[item.name] &&
+            window[item.name].call(this, {
+            customParam: item.param,
+            _this: this,
+            urlData:urlObject,
+            pageId,
+            });
+        });
+      }else{
+        const url = IDM.url.getWebPath(item.jumpUrl)
+        window.open(url, this.propData.jumpStyle || '_self')
+      }
     },
     handleClickMore(){
       if(this.moduleObject.env === 'develop') {
         return
       }
-      const url = IDM.url.getWebPath('')
+      //默认接口地址
+      let url =  ''
+      if(this.propData.moreListLink) {
+        url = IDM.url.getWebPath(this.propData.moreListLink)
+      }
       window.open(url, this.propData.jumpStyle || '_self')
     },
     // 顶部tabs点击

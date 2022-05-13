@@ -65,7 +65,7 @@
                 {
                     "type": "select",
                     "layoutType": "inline",
-                    "text": "链接跳转方式",
+                    "text": "跳转方式",
                     "bindKey": "jumpStyle",
                     "desc": "设置组件显示风格",
                     "dictionary": [
@@ -172,20 +172,11 @@
                     "multiple": true
                 },
                 {
-                    "type": "textarea",
-                    "layoutType": "inline",
-                    "text": "显示字段",
-                    "bindKey": "dataFiled",
-                    "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData（自定义接口忽略）且它的值为{data:{filedName:[{\"text\":\"\",\"value\":\"\",\"check\":true}]}}，则这里应该填写data.filedName",
-                    "default": "",
-                    "placeholder": "示例：data.filedName 或者 [0].data[0].filedName"
-                },
-                {
                     "type": "input",
                     "layoutType": "inline",
-                    "text": "更多地址",
+                    "text": "更多链接",
                     "bindKey": "moreListLink",
-                    "desc": "用于获取数据源的接口地址，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}"
+                    "desc": "此设置用于点击更多时候跳转链接，如果设置了链接地址则内置的根据数据跳转链接则失效"
                 }
             ]
         }
