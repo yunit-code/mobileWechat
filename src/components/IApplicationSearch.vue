@@ -18,13 +18,13 @@
             <div class="idm_iapplicationsearch_main">
                 <div v-for="(item,index) in application_data" :key="index" class="list flex_between">
                     <div class="list_left flex_start">
-                        <img v-if="item.img" :src="item.img">
+                        <img v-if="item.imageUrl" :src="item.imageUrl">
                         <svg-icon v-else icon-class="application" />
-                        <span>{{ item.name }}</span>
+                        <span>{{ item.title || '应用' }}</span>
                     </div>
                     <div class="list_right">
-                        <span v-if="item.isHaveAdd" class="add_disabled">已添加</span>
-                        <span v-else class="add">添加</span>
+                        <span v-if="item.is_favorite == '1'" class="add_disabled">已添加</span>
+                        <span @click="add" v-else class="add">添加</span>
                     </div>
                 </div>
             </div>
@@ -33,13 +33,15 @@
 </template>
 
 <script>
-import { Search,Sticky  } from 'vant';
+import { Search,Sticky,Toast  } from 'vant';
 import 'vant/lib/search/style';
 import 'vant/lib/sticky/style';
+import 'vant/lib/toast/style';
 export default {
     name: 'IApplicationSearch',
     components: {
-        [Search.name]: Search
+        [Search.name]: Search,
+        [Toast.name]: Toast
     },
     data() {
         return {
@@ -48,13 +50,9 @@ export default {
 
             },
             search_text: '',
-            application_data: [
+            application_data: [ 
                 {
-                    key: '1',
-                    img: '',
-                    name: '待阅文件',
-                    number: 1,
-                    isHaveAdd: true,
+
                 }
             ],
         }
@@ -63,7 +61,6 @@ export default {
     },
     created() {
         this.moduleObject = this.$root.moduleObject
-        // console.log(this.moduleObject)
         this.convertAttrToStyleObject();
     },
     mounted() {
@@ -75,17 +72,30 @@ export default {
     },
     destroyed() { },
     methods: {
-        add() {
-            let urlObject = window.IDM.url.queryObject();
-            let pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
-            var clickNewFunction = this.propData.clickAddFunction;
-            clickNewFunction.forEach(item=>{
-                window[item.name]&&window[item.name].call(this,{
-                    urlData:urlObject,
-                    pageId,
-                    customParam:item.param,
-                    _this:this
-                });
+        getApplicationList() {
+            if ( this.moduleObject.env == 'develop' || !this.propData.getAllApplicationUrl ) {
+                return
+            }
+            window.IDM.http.post(this.propData.getAllApplicationUrl,{
+                appName: this.search_text
+            }).then(result=>{
+                if(result && result.data && result.data.type == 'success'){
+                    this.application_data = res.data.data
+                }
+            })
+        },
+        add(item,index) {
+            if ( this.moduleObject.env == 'develop' || !this.propData.addApplicationUrl ) {
+                return
+            }
+            let url = this.propData.addApplicationUrl + '?type=1&appId=' + item.value
+            window.IDM.http.post(this.propData.addApplicationUrl,{
+
+            }).then(result=>{
+                if(result && result.data && result.data.type == 'success'){
+                    this.$set(item,'is_favorite','1')
+                    Toast.success('添加应用成功');
+                }
             })
         },
         cancel() {
@@ -102,10 +112,11 @@ export default {
             })
         },
         onSearch() {
-
+            this.getApplicationList()
         },
         onCancel() {
-
+            this.search_text = '';
+            this.getApplicationList()
         },
         
         /** * 提供父级组件调用的刷新prop数据组件 */
@@ -241,130 +252,14 @@ export default {
                 }
             }
             window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
-            this.initData();
+            this.reload();
         },
-        /**
-         * 通用的url参数对象
-         * 所有地址的url参数转换
-         */
-        commonParam() {
-            let urlObject = IDM.url.queryObject();
-            var params = {
-                pageId:
-                    window.IDM.broadcast && window.IDM.broadcast.pageModule
-                        ? window.IDM.broadcast.pageModule.id
-                        : "",
-                urlData: JSON.stringify(urlObject),
-            };
-            return params;
-        },
-        /**
-         * 重新加载
-         */
+        
+        /** * 重新加载 */
         reload() {
-            //请求数据源
-            this.initData();
+            this.getApplicationList();
         },
-        /**
-         * 加载动态数据
-         */
-        initData() {
-            let that = this;
-            //所有地址的url参数转换
-            var params = that.commonParam();
-            switch (this.propData.dataSourceType) {
-                case "customInterface":
-                    this.propData.customInterfaceUrl && window.IDM.http.get(this.propData.customInterfaceUrl, params)
-                        .then((res) => {
-                            //res.data
-                            that.$set(that.propData, "fontContent", that.getExpressData("resultData", that.propData.dataFiled, res.data));
-                            // that.propData.fontContent = ;
-                        })
-                        .catch(function (error) {
-
-                        });
-                    break;
-                case "pageCommonInterface":
-                    //使用通用接口直接跳过，在setContextValue执行
-                    break;
-                case "customFunction":
-                    if (this.propData.customFunction && this.propData.customFunction.length > 0) {
-                        var resValue = "";
-                        try {
-                            resValue = window[this.propData.customFunction[0].name] && window[this.propData.customFunction[0].name].call(this, { ...params, ...this.propData.customFunction[0].param, moduleObject: this.moduleObject });
-                        } catch (error) {
-                        }
-                        that.propData.fontContent = resValue;
-                    }
-                    break;
-            }
-        },
-        /**
-         * 通用的获取表达式匹配后的结果
-         */
-        getExpressData(dataName, dataFiled, resultData) {
-            //给defaultValue设置dataFiled的值
-            var _defaultVal = undefined;
-            if (dataFiled) {
-                var filedExp = dataFiled;
-                filedExp =
-                    dataName +
-                    (filedExp.startsWiths("[") ? "" : ".") +
-                    filedExp;
-                var dataObject = { IDM: window.IDM };
-                dataObject[dataName] = resultData;
-                _defaultVal = window.IDM.express.replace.call(
-                    this,
-                    "@[" + filedExp + "]",
-                    dataObject
-                );
-            }
-            //对结果进行再次函数自定义
-            if (this.propData.customFunction && this.propData.customFunction.length > 0) {
-                var params = this.commonParam();
-                var resValue = "";
-                try {
-                    resValue = window[this.propData.customFunction[0].name] && window[this.propData.customFunction[0].name].call(this, {
-                        ...params,
-                        ...this.propData.customFunction[0].param,
-                        moduleObject: this.moduleObject,
-                        expressData: _defaultVal, interfaceData: resultData
-                    });
-                } catch (error) {
-                }
-                _defaultVal = resValue;
-            }
-
-            return _defaultVal;
-        },
-        /**
-         * 文本点击事件
-         */
-        textClickHandle() {
-            let that = this;
-            if (this.moduleObject.env == "develop") {
-                //开发模式下不执行此事件
-                return;
-            }
-            //获取所有的URL参数、页面ID（pageId）、以及所有组件的返回值（用范围值去调用IDM提供的方法取出所有的组件值）
-            let urlObject = window.IDM.url.queryObject(),
-                pageId = window.IDM.broadcast && window.IDM.broadcast.pageModule ? window.IDM.broadcast.pageModule.id : "";
-            //自定义函数
-            /**
-             * [
-             * {name:"",param:{}}
-             * ]
-             */
-            var clickFunction = this.propData.clickFunction;
-            clickFunction && clickFunction.forEach(item => {
-                window[item.name] && window[item.name].call(this, {
-                    urlData: urlObject,
-                    pageId,
-                    customParam: item.param,
-                    _this: this
-                });
-            })
-        },
+        
         showThisModuleHandle() {
             this.propData.defaultStatus = "default";
         },
@@ -413,14 +308,6 @@ export default {
          */
         setContextValue(object) {
             console.log("统一接口设置的值", object);
-            if (object.type != "pageCommonInterface") {
-                return;
-            }
-            //这里使用的是子表，所以要循环匹配所有子表的属性然后再去设置修改默认值
-            if (object.key == this.propData.dataName) {
-                // this.propData.fontContent = this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data);
-                this.$set(this.propData, "fontContent", this.getExpressData(this.propData.dataName, this.propData.dataFiled, object.data));
-            }
         }
     }
 }

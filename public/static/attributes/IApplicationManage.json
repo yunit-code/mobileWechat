@@ -314,7 +314,7 @@
                     "text": "我的应用",
                     "desc": "用于获取用户设置的我的应用数据的接口地址",
                     "bindKey": "getMyApplicationUrl",
-                    "default": ""
+                    "default": "/ctrl/tencentApp/queryMyFavorite"
                 },
                 {
                     "type": "input",
@@ -322,7 +322,7 @@
                     "text": "全部应用",
                     "desc": "用于获取用户所有有权限的应用数据的接口地址",
                     "bindKey": "getAllApplicationUrl",
-                    "default": ""
+                    "default": "/ctrl/tencentApp/queryAppGroupByGrant"
                 },
                 {
                     "type": "input",
@@ -330,7 +330,7 @@
                     "text": "保存接口",
                     "desc": "用户保存所设置的我的应用数据的接口地址",
                     "bindKey": "saveMyApplicationUrl",
-                    "default": ""
+                    "default": "/ctrl/tencentApp/batchSetFavoriteApp"
                 },
                 {
                     "type": "input",

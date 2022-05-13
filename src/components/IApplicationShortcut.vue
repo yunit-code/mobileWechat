@@ -17,7 +17,7 @@
                             <svg-icon v-else icon-class="application" />
 
                             <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
-                            <div v-if="propData.showTodoNumber && item.showTodoNumber && item.number" class="number">{{ item.number }}</div>
+                            <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
                         </div>
                     </van-grid-item>
                 </van-grid>
@@ -29,7 +29,7 @@
                         <svg-icon v-else icon-class="application" />
 
                         <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
-                        <div v-if="propData.showTodoNumber && item.showTodoNumber && item.number" class="number">{{ item.number }}</div>
+                        <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
                     </span>
                 </div>
             </div>
@@ -58,11 +58,12 @@ export default {
                     {
                         selectApplication: {},
                         showTodoNumber: false,
-                        url: '',
+                        todoNumber: 0,
                     }
                 ],
             },
             application_data: [],
+            have_power_application_data_ids: [],//用户有权限的app
         }
     },
     props: {
@@ -88,11 +89,9 @@ export default {
     },
     created() {
         this.moduleObject = this.$root.moduleObject
-        if ( this.propData.applicationList && this.propData.applicationList.length ) {
-            this.application_data = JSON.parse(JSON.stringify(this.propData.applicationList))
-        }
+        
+        this.getHavePowerApplication()
         this.convertAttrToStyleObject();
-        this.changeLines()
     },
     mounted() {
         //赋值给window提供跨页面调用
@@ -103,6 +102,55 @@ export default {
     },
     destroyed() { },
     methods: {
+        getHavePowerApplication() {
+            let user_info = window.IDM.user.getCurrentUserInfo()
+            let apps = []
+            let have_power_application_data_ids = [];
+            if ( user_info && user_info.appGrant && user_info.appGrant.length ) {
+                apps = user_info.appGrant
+            }
+            apps.forEach((item) => {
+                have_power_application_data_ids.push(item.value)
+            })
+            this.have_power_application_data_ids = have_power_application_data_ids;
+        },
+        initApplicationData() {
+            if ( this.propData.applicationList && this.propData.applicationList.length ) {
+                let applicationList = JSON.parse(JSON.stringify(this.propData.applicationList))
+                let application_data = [];
+                for( let i = 0,maxi = applicationList.length;i < maxi;i++ ) {
+                    if ( this.moduleObject.env == 'develop' ) {
+                        application_data.push(applicationList[i])
+                    } else {
+                        if ( applicationList[i].selectApplication && applicationList[i].selectApplication.value && this.have_power_application_data_ids.indexOf(applicationList[i].selectApplication.value) != -1 ) {
+                            application_data.push(applicationList[i])
+                        }
+                    }
+                }
+                this.application_data = JSON.parse(JSON.stringify(application_data))
+            }
+            this.changeLines()
+            this.getApplicationMarkNumber()
+        },
+        getApplicationMarkNumber() {
+            for( let i = 0,maxi = this.application_data.length;i < maxi;i++ ) {
+                if ( this.propData.showTodoNumber && this.application_data[i].showTodoNumber &&  this.application_data[i].selectApplication && this.application_data[i].selectApplication.sourceId ) {
+                    this.getApplicationMarkNumberSubmit(i,this.application_data[i].selectApplication.sourceId)
+                }
+            }
+        },
+        getApplicationMarkNumberSubmit(index,sourceId) {
+            if ( this.moduleObject.env == 'develop' ) {
+                return
+            }
+            window.IDM.http.post('ctrl/dataSource/getDatas',{
+                id: sourceId
+            }).then(result=>{
+                if(result&&result.data&&result.data.type == 'success' && result.data.data && result.data.data.type == 'success' && result.data.data.data){
+                    this.$set(this.application_data[index], "todoNumber", result.data.data.data.count);
+                }
+            })
+        },
         getApplicationName(item) {
             if ( item.applicationName ) {
                 return item.applicationName
@@ -269,7 +317,7 @@ export default {
                 }
             }
             window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
-            this.initData();
+            this.reload();
         },
         /**
          * 通用的url参数对象
@@ -291,40 +339,9 @@ export default {
          */
         reload() {
             //请求数据源
-            this.initData();
+            this.initApplicationData();
         },
-        /**
-         * 加载动态数据
-         */
-        initData() {
-            let that = this;
-            //所有地址的url参数转换
-            var params = that.commonParam();
-            switch (this.propData.dataSourceType) {
-                case "customInterface":
-                    this.propData.customInterfaceUrl && window.IDM.http.get(this.propData.customInterfaceUrl, params)
-                        .then((res) => {
-                            that.$set(that.propData, "applicationList", that.getExpressData("resultData", that.propData.dataFiled, res.data));
-                        }).catch(function (error) {
-
-                        });
-                    break;
-                case "pageCommonInterface":
-                    //使用通用接口直接跳过，在setContextValue执行
-                    break;
-                case "customFunction":
-                    if (this.propData.customFunction && this.propData.customFunction.length > 0) {
-                        var resValue = "";
-                        try {
-                            resValue = window[this.propData.customFunction[0].name] && window[this.propData.customFunction[0].name].call(this, { ...params, ...this.propData.customFunction[0].param, moduleObject: this.moduleObject });
-                        } catch (error) {
-
-                        }
-                        that.$set(that.propData, "applicationList", resValue);
-                    }
-                    break;
-            }
-        },
+        
         /**
          * 通用的获取表达式匹配后的结果
          */
@@ -416,9 +433,9 @@ export default {
                 return;
             }
             //这里使用的是子表，所以要循环匹配所有子表的属性然后再去设置修改默认值
-            if (object.key == this.propData.dataName) {
-                this.$set(this.propData, "applicationList", this.getExpressData(this.propData.dataName, this.propData.dataFiled, object.data));
-            }
+            // if (object.key == this.propData.dataName) {
+            //     this.$set(this.propData, "applicationList", this.getExpressData(this.propData.dataName, this.propData.dataFiled, object.data));
+            // }
         }
     }
 }
