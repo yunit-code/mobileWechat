@@ -15,7 +15,7 @@
   >
     <div class="idm-banner-box-swiper">
       <div class="idm-banner-box-swiper-container">
-        <ul class="swiper-wrapper">
+        <ul v-if="propData.list && propData.list.value.length > 0" class="swiper-wrapper">
           <li
             class="swiper-slide idm-banner-box-swiper-item-container banner-item-container"
             v-for="(item, index) in propData.list && propData.list.value"
