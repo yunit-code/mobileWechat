@@ -26,7 +26,7 @@
             <span class="idm-banner-box-swiper-text">{{item.title}}</span>
           </li>
         </ul>
-        <div class="swiper-pagination"></div>
+        <div class="idm-banner-swiper-pagination"></div>
       </div>
     </div>
   </div>
@@ -88,18 +88,18 @@ export default {
     // console.log(this.moduleObject)
     this.convertAttrToStyleObject();
   },
-  watch: {
-    'propData.height': {
-      immediate: false,
-      handler(){
-        this.mySwiper.destroy()
-        this.$forceUpdate()
-        setTimeout(()=>{
-          this.initSwiper()
-        })
-      }
-    }
-  },
+  // watch: {
+  //   'propData.height': {
+  //     immediate: false,
+  //     handler(){
+  //       this.mySwiper.destroy()
+  //       this.$forceUpdate()
+  //       setTimeout(()=>{
+  //         this.initSwiper()
+  //       })
+  //     }
+  //   }
+  // },
   mounted() {
     this.initSwiper();
   },
@@ -114,7 +114,7 @@ export default {
         slidesPerView: 'auto',
         effect: 'coverflow',
         pagination: {
-          el: '.swiper-pagination',
+          el: '.idm-banner-swiper-pagination',
           bulletClass : 'idm-banner-my-bullet',
           bulletActiveClass: 'idm-banner-my-bullet-active',
         },
@@ -128,7 +128,15 @@ export default {
         },
         observer: true, //修改swiper自己或子元素时，自动初始化swiper，主要是这两行
         observeParents: true,
-        observeSlideChildren: true
+        observeSlideChildren: true,
+        on: {
+          observerUpdate: function(){
+            console.log('监测到Swiper 更新了');
+          },
+          paginationUpdate: function(){
+            console.log('分页器更新了')
+          },
+        }
       });
     },
     /**
@@ -548,9 +556,11 @@ export default {
   overflow: hidden;
   object-fit: cover;
 }
-.swiper-pagination{
-  left: 34% !important;
+.idm-banner-swiper-pagination{
+  position: absolute;
+  left: 82% !important;
   bottom: 5px !important;
+  z-index: 9;
 }
 .idm-banner-my-bullet{
   width: 6px;
