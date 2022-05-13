@@ -78,8 +78,7 @@ export default {
           selectVal: "px"
         },
       },
-      list: data,
-      mySwiper: null
+      list: data
     };
   },
   props: {},
@@ -109,38 +108,40 @@ export default {
   destroyed() {},
   methods: {
     initSwiper() {
-      this.mySwiper = new Swiper('#'+this.moduleObject.id + " .idm-banner-box-swiper-container", {
-        autoplay: 2000,
-        speed: 500,
-        loop: true,
-        loopedSlides: 100,
-        slidesPerView: 'auto',
-        effect: 'coverflow',
-        pagination: {
-          el: '.idm-banner-swiper-pagination',
-          bulletClass : 'idm-banner-my-bullet',
-          bulletActiveClass: 'idm-banner-my-bullet-active',
-        },
-        centeredSlides: true,
-        coverflowEffect: {
-          rotate: 0,
-          stretch: '-7%',
-          depth: 100,
-          modifier: 1,
-          slideShadows: false,
-        },
-        observer: true, //修改swiper自己或子元素时，自动初始化swiper，主要是这两行
-        observeParents: true,
-        observeSlideChildren: true,
-        on: {
-          observerUpdate: function(){
-            console.log('监测到Swiper 更新了');
+      this.$nextTick(()=> {
+        new Swiper('#'+this.moduleObject.id + " .idm-banner-box-swiper-container", {
+          autoplay: 2000,
+          speed: 500,
+          loop: true,
+          loopedSlides: 100,
+          slidesPerView: 'auto',
+          effect: 'coverflow',
+          pagination: {
+            el: '.idm-banner-swiper-pagination',
+            bulletClass : 'idm-banner-my-bullet',
+            bulletActiveClass: 'idm-banner-my-bullet-active',
           },
-          paginationUpdate: function(){
-            console.log('分页器更新了')
+          centeredSlides: true,
+          coverflowEffect: {
+            rotate: 0,
+            stretch: '-7%',
+            depth: 100,
+            modifier: 1,
+            slideShadows: false,
           },
-        }
-      });
+          observer: true, //修改swiper自己或子元素时，自动初始化swiper，主要是这两行
+          observeParents: true,
+          observeSlideChildren: true,
+          on: {
+            observerUpdate: function(){
+              console.log('监测到Swiper 更新了');
+            },
+            paginationUpdate: function(){
+              console.log('分页器更新了')
+            },
+          }
+        });
+      })
     },
     /**
      * 提供父级组件调用的刷新prop数据组件
@@ -366,9 +367,7 @@ export default {
         .then((res) => {
           //res.data
           this.list = res.data
-          this.$nextTick(()=> {
-            this.initSwiper()
-          })
+          this.initSwiper()
         })
         .catch((error) => {
           let res = {
@@ -378,9 +377,7 @@ export default {
             data
           }
         this.list = res.data
-        this.$nextTick(()=> {
-          this.initSwiper()
-        })
+        this.initSwiper()
       })
     },
     /**

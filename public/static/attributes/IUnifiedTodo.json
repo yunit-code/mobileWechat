@@ -56,13 +56,6 @@
                     "default": 18
                 },
                 {
-                    "type": "switch",
-                    "layoutType": "inline",
-                    "text": "显示更多",
-                    "bindKey": "showMore",
-                    "default": "true"
-                },
-                {
                     "type": "select",
                     "layoutType": "inline",
                     "text": "跳转方式",
@@ -177,6 +170,13 @@
                     "bindKey": "clickToDoItemFunction",
                     "desc": "此设置用于点击时候执行自定义函数逻辑，如果设置了此函数则内置的根据数据跳转链接则失效",
                     "multiple": true
+                },
+                {
+                    "type": "switch",
+                    "layoutType": "inline",
+                    "text": "显示更多",
+                    "bindKey": "showMore",
+                    "default": "true"
                 },
                 {
                     "type": "input",

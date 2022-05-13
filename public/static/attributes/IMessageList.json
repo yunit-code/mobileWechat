@@ -30,6 +30,24 @@
                 {
                     "type": "select",
                     "layoutType": "inline",
+                    "text": "跳转方式",
+                    "bindKey": "jumpStyle",
+                    "desc": "设置组件点击链接跳转方式",
+                    "dictionary": [
+                        {
+                            "label": "当前页跳转",
+                            "value": "_self"
+                        },
+                        {
+                            "label": "新窗口打开",
+                            "value": "_blank"
+                        }
+                    ],
+                    "default": "_self"
+                },
+                {
+                    "type": "select",
+                    "layoutType": "inline",
                     "text": "组件样式",
                     "bindKey": "compStyle",
                     "desc": "设置组件显示风格",
@@ -53,31 +71,7 @@
                     ],
                     "default": "styleFour"
                 },
-                {
-                    "type": "select",
-                    "layoutType": "inline",
-                    "text": "跳转方式",
-                    "bindKey": "jumpStyle",
-                    "desc": "设置组件点击链接跳转方式",
-                    "dictionary": [
-                        {
-                            "label": "当前页跳转",
-                            "value": "_self"
-                        },
-                        {
-                            "label": "新窗口打开",
-                            "value": "_blank"
-                        }
-                    ],
-                    "default": "_self"
-                },
-                {
-                    "type": "slider",
-                    "layoutType": "block",
-                    "text": "内容最多显示几条",
-                    "bindKey": "limit",
-                    "default": "3"
-                },
+                
                 {
                     "type": "iconSelect",
                     "layoutType": "inline",
@@ -134,6 +128,13 @@
                             "default": false
                         }
                     ]
+                },
+                {
+                    "type": "slider",
+                    "layoutType": "block",
+                    "text": "内容最多显示几条",
+                    "bindKey": "limit",
+                    "default": "3"
                 }
             ]
         },
@@ -162,7 +163,15 @@
                     "layoutType": "block",
                     "text": "选中页签字体样式设置",
                     "bindKey": "titleFontStyleActive",
-                    "display": "@[compStyle === 'styleFour']"
+                    "display": "@[compStyle === 'styleFour']",
+                    "default": {
+                        "fontColors": {
+                            "hex": "#000"
+                        },
+                        "fontSize": 16,
+                        "fontWeight": "500",
+                        "fontSizeUnit": "px"
+                    }
                 },
                 {
                     "type": "colorPicker",
@@ -239,6 +248,13 @@
                     "bindKey": "clickMessageItemFunction",
                     "desc": "此设置用于点击时候执行自定义函数逻辑，如果设置了此函数则内置的根据数据跳转链接则失效",
                     "multiple": true
+                },
+                {
+                    "type": "switch",
+                    "layoutType": "inline",
+                    "text": "显示更多",
+                    "bindKey": "showMore",
+                    "default": "true"
                 },
                 {
                     "type": "input",

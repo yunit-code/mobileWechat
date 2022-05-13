@@ -21,7 +21,7 @@
           </svg>
           <svg-icon v-else icon-class="threeLine" className="idm-message-list-box-title-icon"></svg-icon>
         </div>
-        <div class="idm-message-list-box-title-right" @click="handleClickMore">
+        <div class="idm-message-list-box-title-right" v-if="propData.showMore" @click="handleClickMore">
           更多 <van-icon name="arrow" />
         </div>
       </div>
@@ -31,7 +31,7 @@
         <div class="idm-message-list-box-top-left flex-1 idm-message-list-box-title-font-fourStyle">
           <span v-for="(item, index) in showTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.messageSortTitle}}</span>
         </div>
-        <van-icon class="idm-message-list-box-top-more" name="ellipsis" @click="handleClickMore" />
+        <van-icon v-if="propData.showMore" class="idm-message-list-box-top-more" name="ellipsis" @click="handleClickMore" />
       </div>
       <div v-else class="idm-message-list-box-top2 d-flex just-b align-c">
         <div class="idm-message-list-box-top2-left d-flex flex-1">
@@ -547,7 +547,14 @@ export default {
       font: inherit;
       margin: 0 0 10px 0;
       &-left{
+        white-space: nowrap;
         overflow: hidden;
+        overflow-x: auto;
+        scrollbar-width: none; /* firefox */
+        -ms-overflow-style: none; /* IE 10+ */
+        &::-webkit-scrollbar {
+          display: none; 
+        }
         >span{
           border-right: 1px solid #ccc;
           padding: 0 15px;
@@ -572,7 +579,14 @@ export default {
       margin: 0 0 10px 0;
       font-size: 15px;
       &-left{
+        white-space: nowrap;
         overflow: hidden;
+        overflow-x: auto;
+        scrollbar-width: none; /* firefox */
+        -ms-overflow-style: none; /* IE 10+ */
+        &::-webkit-scrollbar {
+          display: none; 
+        }
         >div{
           background-color: #eee;
           border-radius: 20px;
