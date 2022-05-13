@@ -88,7 +88,7 @@
                             "bindKey": "dataFiled",
                             "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData且它的值为{data:{filedName:'1000'}}，则这里应该填写data.filedName",
                             "default": "",
-                            "placeholder": "示例：data.filedName 或者 [0].data[0].filedName"
+                            "placeholder": "示例：data[0].name, data[0].sumNum"
                         },
                         {
                             "type": "uploadImage",
@@ -357,7 +357,7 @@
                     "layoutType": "inline",
                     "text": "数据源",
                     "bindKey": "selectApplication",
-                    "dataSourceUrl": "",
+                    "dataSourceUrl": "/ctrl/dataSource/getDataSourceList",
                     "default": []
                 },
                 {

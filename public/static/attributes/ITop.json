@@ -321,7 +321,7 @@
                     "layoutType": "inline",
                     "text": "数据源",
                     "bindKey": "selectApplication",
-                    "dataSourceUrl": "",
+                    "dataSourceUrl": "/ctrl/dataSource/getDataSourceList",
                     "default": []
                 },
                 {
