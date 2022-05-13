@@ -15,19 +15,27 @@
     <div class="i-schedule-header">
       <div class="i-schedule-header-main">
         <div class="i-schedule-header-tit">
-          {{ propData.title || '日程提醒' }}
+          {{ propData.title || "日程提醒" }}
           <svg
-            v-if="propData.titleIcon && propData.titleIcon.length>0"
+            v-if="propData.titleIcon && propData.titleIcon.length > 0"
             class="idm_filed_svg_icon"
             aria-hidden="true"
           >
-            <use :xlink:href="`#${(propData.titleIcon && propData.titleIcon[0])}`"></use>
+            <use
+              :xlink:href="`#${propData.titleIcon && propData.titleIcon[0]}`"
+            ></use>
           </svg>
           <svg-icon v-else icon-class="application-icon" />
         </div>
         <div class="i-schedule-header-date">{{ nowDate }}</div>
       </div>
-      <div class="i-schedule-header-more">更多></div>
+      <div
+        class="i-schedule-header-more"
+        v-if="propData.moreBtn === undefined ? true : propData.moreBtn "
+        @click="moreClick"
+      >
+        更多>
+      </div>
     </div>
     <div class="i-schedule-content">
       <div class="i-schedule-content-calendar swiper-container">
@@ -51,30 +59,60 @@
                 :class="{ active: currentClassStatus(i, j) }"
                 icon-class="ischedule-today"
               />
-              <span v-else class="date-num" :class="{ active: currentClassStatus(i, j) }">{{
-                k.showDate
-              }}</span>
+              <span
+                v-else
+                class="date-num"
+                :class="{ active: currentClassStatus(i, j) }"
+                >{{ k.showDate }}</span
+              >
             </li>
           </ul>
         </div>
       </div>
       <div class="i-schedule-content-note">
-        <div class="i-schedule-content-note-left">
-          <p class="active">9:00</p>
-          <p>11:00</p>
-        </div>
-        <div class="i-schedule-content-note-right">
-          <div class="schedule-item">
-            <div class="schedule-item-name">部门小组早例会</div>
-            <div class="schedule-item-addr">A12会议室</div>
-            <div class="schedule-item-time">9:00-9:30</div>
-          </div>
-          <div class="schedule-item">
-            <div class="schedule-item-name">参加信息中心季度总结会</div>
-            <div class="schedule-item-addr">2楼大会议室</div>
-            <div class="schedule-item-time">10:00-12:00</div>
-          </div>
-        </div>
+        <a-tabs v-model="nowDate">
+          <a-tab-pane
+            :tab="item.realDate"
+            v-for="item in scheduleList"
+            :key="item.sendDate"
+          >
+            <div class="i-schedule-content-note-inner">
+              <div class="i-schedule-content-note-left">
+                <p
+                  v-for="(time, i) in item.schedule"
+                  :key="`time-${i}`"
+                  :class="{'active':isTimeRange(time.timeRange)}"
+                >
+                  {{ time.startTime.split(" ")[1]}}
+                </p>
+              </div>
+              <div class="i-schedule-content-note-right">
+                <div
+                  class="schedule-item"
+                  v-for="(desc, i) in item.schedule"
+                  :key="`desc-${i}`"
+                  @click="detailClick(desc.jumpUrl)"
+                >
+                  <div class="schedule-item-name">{{ desc.title }}</div>
+                  <div class="schedule-item-addr">{{ desc.address }}</div>
+                  <div class="schedule-item-time">{{ desc.timeRange }}</div>
+                </div>
+              </div>
+            </div>
+            <div
+              v-if="
+                !item.schedule || (item.schedule && item.schedule.length == 0)
+              "
+              style="text-align: center; width: 100%"
+            >
+              <a-empty
+                :image="simpleImage"
+                :image-style="{ margin: '10px auto' }"
+                :description="propData.emptyDescription || '暂无日程'"
+              />
+            </div>
+          </a-tab-pane>
+        </a-tabs>
       </div>
     </div>
   </div>
@@ -83,37 +121,153 @@
 <script>
 import Swiper from "swiper";
 import "swiper/css/swiper.min.css";
-
+import { Empty } from "ant-design-vue";
 export default {
   name: "ISchedule",
-  components: {},
   data() {
     return {
       moduleObject: {},
       propData: this.$root.propData.compositeAttr || {},
+      simpleImage: Empty.PRESENTED_IMAGE_SIMPLE,
       listData: [],
-      nowDate: this.setNowDate(new Date()),
+      nowDate: this.setNowDate(new Date(), "年月日"),
       currentIndex: new Date().getDay() - 1,
       currentList: [],
+      scheduleList: [],
     };
   },
   props: {},
   created() {
-    
     this.moduleObject = this.$root.moduleObject;
     this.convertAttrToStyleObject();
 
     this.init();
-    // if (this.moduleObject.env == "develop") {
-    //开发模式下给例子数据
-    this.listData = [];
-    // }
   },
   mounted() {
     this.initSwiper();
   },
   destroyed() {},
   methods: {
+    /**
+     * 初始化数据
+     */
+    initData() {
+      if (!this.moduleObject.env || this.moduleObject.env == "develop") {
+        const today = this.setNowDate(new Date());
+        const mock = {
+          value: [
+            {
+              date: today,
+              schedule: [
+                {
+                  startTime: today + " 09:00",
+                  timeRange: "09:00-09:30",
+                  address: "第一会议室",
+                  title: "XXX会议",
+                  jumpUrl: "打开详情地址",
+                },
+              ],
+            },
+          ],
+          moreUrl: "更多跳转地址",
+        };
+        this.dealRes(mock);
+      } else if (this.moduleObject.env === "production") {
+        this.requsetList();
+      }
+    },
+    /**
+     * 请求数据
+     */
+    requsetList() {
+      let url = this.propData.customInterfaceUrl;
+      if (!url) {
+        return;
+      }
+      const startDate = this.currentList[0][0].realDate;
+      const endDate =
+        this.currentList[2][this.currentList[2].length - 1].realDate;
+      const sub = url.indexOf("?") === -1 ? "?" : "&";
+      url = `${url}${sub}startDate=${startDate}&endDate=${endDate}`;
+      IDM.http
+        .get(url)
+        .done((res) => {
+          if (res.code === "200") {
+            this.dealRes(res);
+          } else {
+            this.failRequest(url);
+          }
+        })
+        .error((response) => {
+          this.failRequest(url);
+        });
+    },
+    /**
+     * 处理返回结果
+     */
+    dealRes(res) {
+      // 更多按钮地址
+      if (res.moreUrl) {
+        this.propData.moreUrl = this.propData.moreUrl
+          ? this.propData.moreUrl
+          : res.moreUrl;
+      }
+      // 日程列表
+      const scheduleList = [];
+      if (res.value.length > 0) {
+        this.currentList.forEach((week) => {
+          week.forEach((date) => {
+            scheduleList.push(date);
+            res.value.forEach((item) => {
+              if (item.date === date.realDate) {
+                date.schedule = item.schedule;
+              }
+            });
+          });
+        });
+      }
+      this.scheduleList = scheduleList;
+      console.log(scheduleList, "日程列表");
+    },
+    /**
+     * 请求失败
+     */
+    failRequest(url) {
+      console.log(url + "请求失败");
+    },
+    /**
+     * 日程详情
+     */
+    detailClick(url) {
+      window.open(url, "_self");
+    },
+    /**
+     * 时间范围
+     */
+    isTimeRange(range) {
+      const beginTime = range.split("-")[0]
+      const endTime = range.split("-")[1]
+      var strb = beginTime.split (":");
+      if (strb.length != 2) {
+          return false;
+      }
+
+      var stre = endTime.split (":");
+      if (stre.length != 2) {
+          return false;
+      }
+
+      var b = new Date ();
+      var e = new Date ();
+      var n = new Date ();
+
+      b.setHours (strb[0]);
+      b.setMinutes (strb[1]);
+      e.setHours (stre[0]);
+      e.setMinutes (stre[1]);
+
+      return n.getTime () - b.getTime () > 0 && n.getTime () - e.getTime () < 0
+    },
     /**
      * 提供父级组件调用的刷新prop数据组件
      */
@@ -162,24 +316,30 @@ export default {
         styleObject["background-position-x"] =
           this.propData.positionX.inputVal + this.propData.positionX.selectVal;
       }
-      if (this.propData.innerPositionX && this.propData.innerPositionX.inputVal) {
+      if (
+        this.propData.innerPositionX &&
+        this.propData.innerPositionX.inputVal
+      ) {
         innerCardStyleObject["background-position-x"] =
-          this.propData.innerPositionX.inputVal + this.propData.innerPositionX.selectVal;
+          this.propData.innerPositionX.inputVal +
+          this.propData.innerPositionX.selectVal;
       }
 
       if (this.propData.positionY && this.propData.positionY.inputVal) {
         styleObject["background-position-y"] =
           this.propData.positionY.inputVal + this.propData.positionY.selectVal;
       }
-      if (this.propData.innerPositionY && this.propData.innerPositionY.inputVal) {
+      if (
+        this.propData.innerPositionY &&
+        this.propData.innerPositionY.inputVal
+      ) {
         innerCardStyleObject["background-position-y"] =
-          this.propData.innerPositionY.inputVal + this.propData.innerPositionY.selectVal;
+          this.propData.innerPositionY.inputVal +
+          this.propData.innerPositionY.selectVal;
       }
       for (const key in this.propData) {
-        
         if (this.propData.hasOwnProperty.call(this.propData, key)) {
           const element = this.propData[key];
-          console.log(key,"key",element)
           if (!element && element !== false && element != 0) {
             continue;
           }
@@ -229,25 +389,39 @@ export default {
                 innerCardStyleObject["margin-top"] = `${element.marginTopVal}`;
               }
               if (element.marginRightVal) {
-                innerCardStyleObject["margin-right"] = `${element.marginRightVal}`;
+                innerCardStyleObject[
+                  "margin-right"
+                ] = `${element.marginRightVal}`;
               }
               if (element.marginBottomVal) {
-                innerCardStyleObject["margin-bottom"] = `${element.marginBottomVal}`;
+                innerCardStyleObject[
+                  "margin-bottom"
+                ] = `${element.marginBottomVal}`;
               }
               if (element.marginLeftVal) {
-                innerCardStyleObject["margin-left"] = `${element.marginLeftVal}`;
+                innerCardStyleObject[
+                  "margin-left"
+                ] = `${element.marginLeftVal}`;
               }
               if (element.paddingTopVal) {
-                innerCardStyleObject["padding-top"] = `${element.paddingTopVal}`;
+                innerCardStyleObject[
+                  "padding-top"
+                ] = `${element.paddingTopVal}`;
               }
               if (element.paddingRightVal) {
-                innerCardStyleObject["padding-right"] = `${element.paddingRightVal}`;
+                innerCardStyleObject[
+                  "padding-right"
+                ] = `${element.paddingRightVal}`;
               }
               if (element.paddingBottomVal) {
-                innerCardStyleObject["padding-bottom"] = `${element.paddingBottomVal}`;
+                innerCardStyleObject[
+                  "padding-bottom"
+                ] = `${element.paddingBottomVal}`;
               }
               if (element.paddingLeftVal) {
-                innerCardStyleObject["padding-left"] = `${element.paddingLeftVal}`;
+                innerCardStyleObject[
+                  "padding-left"
+                ] = `${element.paddingLeftVal}`;
               }
               break;
             case "bgImgUrl":
@@ -348,7 +522,8 @@ export default {
               if (element.border.top.width > 0) {
                 innerCardStyleObject["border-top-width"] =
                   element.border.top.width + element.border.top.widthUnit;
-                innerCardStyleObject["border-top-style"] = element.border.top.style;
+                innerCardStyleObject["border-top-style"] =
+                  element.border.top.style;
                 if (element.border.top.colors.hex8) {
                   innerCardStyleObject["border-top-color"] =
                     element.border.top.colors.hex8;
@@ -357,7 +532,8 @@ export default {
               if (element.border.right.width > 0) {
                 innerCardStyleObject["border-right-width"] =
                   element.border.right.width + element.border.right.widthUnit;
-                innerCardStyleObject["border-right-style"] = element.border.right.style;
+                innerCardStyleObject["border-right-style"] =
+                  element.border.right.style;
                 if (element.border.right.colors.hex8) {
                   innerCardStyleObject["border-right-color"] =
                     element.border.right.colors.hex8;
@@ -376,7 +552,8 @@ export default {
               if (element.border.left.width > 0) {
                 innerCardStyleObject["border-left-width"] =
                   element.border.left.width + element.border.left.widthUnit;
-                innerCardStyleObject["border-left-style"] = element.border.left.style;
+                innerCardStyleObject["border-left-style"] =
+                  element.border.left.style;
                 if (element.border.left.colors.hex8) {
                   innerCardStyleObject["border-left-color"] =
                     element.border.left.colors.hex8;
@@ -434,32 +611,47 @@ export default {
               break;
             case "titleIconColor":
               iconStyleObject["color"] = element.hex8;
-              break
+              break;
             case "titleIconSize":
-              iconStyleObject["font-size"] = element+"px";
-              iconStyleObject["width"] = element+"px";
-              iconStyleObject["height"] = element+"px";
-              break
+              iconStyleObject["font-size"] = element + "px";
+              iconStyleObject["width"] = element + "px";
+              iconStyleObject["height"] = element + "px";
+              break;
           }
         }
       }
       // if(key == "titleFont")
-      console.log(titleStyleObject,"标题")
-      console.log(innerCardStyleObject,"内层")
       window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .i-schedule-header-tit", titleStyleObject);
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .i-schedule-content", innerCardStyleObject);
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_filed_svg_icon", iconStyleObject);
+      window.IDM.setStyleToPageHead(
+        this.moduleObject.id + " .i-schedule-header-tit",
+        titleStyleObject
+      );
+      window.IDM.setStyleToPageHead(
+        this.moduleObject.id + " .i-schedule-content",
+        innerCardStyleObject
+      );
+      window.IDM.setStyleToPageHead(
+        this.moduleObject.id + " .idm_filed_svg_icon",
+        iconStyleObject
+      );
       // this.initData();
     },
     /**
      * 格式化当前时间
      */
-    setNowDate(nowDate) {
+    setNowDate(nowDate, sub = "-") {
       let year = nowDate.getFullYear();
       let month = nowDate.getMonth() + 1;
       let date = nowDate.getDate();
-      return `${year}年${month}月${date}日`;
+      let str = "";
+      if (sub === "年月日") {
+        str = `${year}年${month}月${date}日`;
+      } else {
+        str = `${year}${sub}${month > 9 ? month : "0" + month}${sub}${
+          date > 9 ? date : "0" + date
+        }`;
+      }
+      return str;
     },
     /**
      * 初始化
@@ -469,6 +661,7 @@ export default {
       let pre = this.setDate(this.addDate(this.currentFirstDate, -7));
       let next = this.setDate(this.addDate(this.currentFirstDate, 14));
       this.currentList = [pre, now, next];
+      this.initData();
     },
     /**
      * 初始化滑块
@@ -487,6 +680,7 @@ export default {
               this.currentIndex = 0;
               this.nowDate = this.currentList[1][0].sendDate;
             }, 20);
+            this.initData();
           },
           slideNextTransitionStart: () => {},
           slideNextTransitionEnd: () => {
@@ -499,6 +693,7 @@ export default {
               this.currentIndex = 6;
               this.nowDate = this.currentList[1][6].sendDate;
             }, 20);
+            this.initData();
           },
         },
       });
@@ -541,6 +736,9 @@ export default {
         showDate: date,
         listDate: `${month}月${date}日 ${week}`,
         sendDate: `${year}年${month}月${date}日`,
+        realDate: `${year}-${month > 9 ? month : "0" + month}-${
+          date > 9 ? date : "0" + date
+        }`,
         now: nowDate.toLocaleDateString() === new Date().toLocaleDateString(),
       };
     },
@@ -557,15 +755,16 @@ export default {
     currentClassStatus(i, j) {
       return i === 1 && j === this.currentIndex;
     },
+    /**
+     * 更多按钮跳转
+     */
+    moreClick() {
+      window.open(this.propData.moreUrl, "_self");
+    },
   },
 };
 </script>
 <style scoped lang="scss">
-* {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
 .i-schedule-outer {
   width: auto;
   box-sizing: border-box;
@@ -573,6 +772,12 @@ export default {
   font-family: PingFangSC-Regular;
   font-size: 14px;
   color: #333333;
+  ul,
+  li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
 
   .i-schedule-header {
     display: flex;
@@ -588,11 +793,9 @@ export default {
 
         .idm_filed_svg_icon {
           font-size: 14px;
-          max-height: 14px;
           width: 14px;
           fill: currentColor;
           vertical-align: -0.15em;
-          // margin-right: 3px;
           outline: none;
         }
       }
@@ -679,59 +882,64 @@ export default {
 
     .i-schedule-content-note {
       border-top: 1px solid #eee;
-      display: flex;
-      min-height: 20vh;
       padding-top: 14px;
+      min-height: 20vh;
 
-      .i-schedule-content-note-left {
-        flex: 4;
-
-        p {
-          position: relative;
-          height: 100px;
-
-          &.active::before {
-            content: "";
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background-color: #4d7eff;
-            position: absolute;
-            top: 0;
-            right: 0;
-            transform: translateX(50%);
-          }
-        }
+      ::v-deep .ant-tabs-bar {
+        display: none;
       }
 
-      .i-schedule-content-note-right {
-        flex: 10;
-        border-left: 1px solid #eee;
-        padding-left: 14px;
-        overflow:hidden;
+      .i-schedule-content-note-inner {
+        display: flex;
 
-        .schedule-item {
-          position: relative;
-          height: 100px;
-          padding: 0 10px 10px;
-          
-          
+        .i-schedule-content-note-left {
+          flex: 4;
 
-          &>div {
-            white-space:nowrap;
-            overflow:hidden;
-            text-overflow:ellipsis;
-          }
+          p {
+            position: relative;
+            height: 100px;
 
-          .schedule-item-name {
-            color: #000;
-            padding-bottom: 8px;
+            &.active::before {
+              content: "";
+              width: 5px;
+              height: 5px;
+              border-radius: 50%;
+              background-color: #4d7eff;
+              position: absolute;
+              top: 0;
+              right: 0;
+              transform: translateX(50%);
+            }
           }
-          .schedule-item-addr {
-            color: #666;
-          }
-          .schedule-item-time {
-            color: #aaa;
+        }
+
+        .i-schedule-content-note-right {
+          flex: 10;
+          border-left: 1px solid #eee;
+          padding-left: 14px;
+          overflow: hidden;
+
+          .schedule-item {
+            position: relative;
+            height: 100px;
+            padding: 0 10px 10px;
+
+            & > div {
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            .schedule-item-name {
+              color: #000;
+              padding-bottom: 8px;
+            }
+            .schedule-item-addr {
+              color: #666;
+            }
+            .schedule-item-time {
+              color: #aaa;
+            }
           }
         }
       }

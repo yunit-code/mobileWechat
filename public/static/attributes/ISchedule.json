@@ -24,8 +24,34 @@
                     "type": "input",
                     "layoutType": "inline",
                     "text": "标题",
+                    "desc": "组件标题",
                     "bindKey": "title",
                     "default": "日程提醒"
+                },
+                {
+                    "type": "textarea",
+                    "layoutType": "inline",
+                    "text": "为空描述",
+                    "bindKey": "emptyDescription",
+                    "desc": "日程为空的时候描述文字提示",
+                    "default": "暂无日程",
+                    "placeholder": "示例：暂无日程"
+                },
+                {
+                    "type": "switch",
+                    "layoutType": "inline",
+                    "text": "更多按钮",
+                    "desc":"是否显示更多按钮更多按钮",
+                    "bindKey": "moreBtn",
+                    "default": "true"
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "更多地址",
+                    "desc":"更多按钮跳转地址",
+                    "bindKey": "moreUrl",
+                    "display": "@[moreBtn]"
                 }
             ]
         },
@@ -614,6 +640,7 @@
                     "type": "font",
                     "layoutType": "block",
                     "text": "标题文字",
+                    "desc": "标题文字样式设置",
                     "bindKey": "titleFont",
                     "default": {
                         "fontWeight": "800",
@@ -628,6 +655,7 @@
                     "type": "font",
                     "layoutType": "block",
                     "text": "文字",
+                    "desc": "全局文字样式设置",
                     "bindKey": "font"
                 },
                 {

@@ -33,7 +33,7 @@
       <div class="i-sort-item-handle">
         <svg-icon icon-class="isort-drag" />
       </div>
-      <div class="i-sort-item-name">{{ item.comName }}</div>
+      <div class="i-sort-item-name">{{ item.asName }}</div>
       <div class="i-sort-item-operation">
         <span @click="toppingClick(index)">
           <svg-icon v-show="index !== 0" icon-class="isort-topping" />
@@ -76,33 +76,32 @@ export default {
       this.listData = [
         {
           comId: "1",
-          comName: "广告轮播",
+          asName: "广告轮播",
           hidden: false,
         },
         {
           comId: "2",
-          comName: "统一待办",
+          asName: "统一待办",
           hidden: false,
         },
         {
           comId: "3",
-          comName: "待办列表",
+          asName: "待办列表",
           hidden: false,
         },
         {
           comId: "4",
-          comName: "应用中心",
+          asName: "应用中心",
           hidden: false,
         },
         {
           comId: "5",
-          comName: "信息列表",
+          asName: "信息列表",
           hidden: false,
         },
       ];
-    }
-    if(this.moduleObject.env ===  "production"){
-      this.requestUserCustomization()
+    }else if(this.moduleObject.env ===  "production"){
+      this.requestDefaultCustomization()
     }
   },
   mounted() {},
@@ -117,23 +116,19 @@ export default {
     /**
      * 取用户定制化数据
      */
-    requestUserCustomization() {
+    requestUserCustomization(defaultList) {
       const temp = this.propData.userCustomizationUrl;
       const pageid = IDM.url.queryObject(window.location.href)[this.propData.pageid];
-      const url = temp.indexOf("?") === -1 ?`${temp}?pageid=${pageid}&version=&savetype=`:`${temp}&pageid=${pageid}&version=&savetype=`
-      // const url = temp.indexOf("?") === -1 ?`${temp}?pageid=${pageid}`:`${temp}&pageid=${pageid}`
+      const url = temp.indexOf("?") === -1 ?`${temp}?pageid=${pageid}&version=${this.pageVersion}`:`${temp}&pageid=${pageid}&version=${this.pageVersion}`
       IDM.http
         .get(url)
         .done((res) => {
-          if (res.code === "200") {
-            const list =
-              res.data.page &&
-              res.data.page.layout &&
-              res.data.page.layout.children;
+          if (res.code === "200" && res.data) {
+            const list = JSON.parse(res.data.customData).children
             if (list && list.length > 0) {
-              this.dealRes(res, list);
+              this.dealRes(list);
             } else {
-              this.requestDefaultCustomization();
+              this.dealRes(defaultList)
             }
           } else {
             this.failRequest(url);
@@ -149,14 +144,21 @@ export default {
     requestDefaultCustomization() {
       const temp = this.propData.componentListUrl;
       const pageid = IDM.url.queryObject(window.location.href)[this.propData.pageid];
-      const url = temp.indexOf("?") === -1 ?`${temp}?pageid=${pageid}`:`${temp}&pageid=${pageid}`
+      const url = temp.indexOf("?") === -1 ?`${temp}?pageid=${pageid}&version=&savetype=`:`${temp}&pageid=${pageid}&version=&savetype=`
       IDM.http
         .get(url)
         .done((res) => {
-          if (res.code === "200") {
-            const list =
-              res.data.page && res.data.page.layout && res.data.page.children;
-            this.dealRes(res, list);
+          if (res.code === "200" && res.data) {
+            // 保存页面信息
+            this.pageInfo = {
+              comName: res.data.page.layout.comName,
+              id: res.data.page.layout.id,
+            };
+            this.pageVersion = res.data.pageBaseInfo.version;
+            this.pageId = res.data.id;
+
+            const list = res.data.page.children;
+            this.requestUserCustomization(list);
           } else {
             this.failRequest(url);
           }
@@ -168,17 +170,11 @@ export default {
     /**
      * 处理返回列表数据
      */
-    dealRes(res, list) {
-      // 保存页面信息
-      this.pageId = res.data.id;
-      this.pageVersion = res.data.pageBaseInfo.version;
-      this.pageInfo = {
-        comName: res.data.page.layout.comName,
-        id: res.data.page.layout.id,
-      };
+    dealRes(list) {
       // 添加隐藏数据
       list.forEach((item) => {
         if (item.hidden === undefined) item.hidden = false;
+        if(item.children) delete item.children
       });
       // 保存列表信息
       this.listData = list;
