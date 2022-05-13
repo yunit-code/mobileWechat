@@ -299,7 +299,14 @@ export default {
               styleObject["text-decoration"] = element.fontDecoration;
               break;
             case 'imgBorderRadius':
-              bannerItemStyleObj['border-radius'] = element.inputVal + element.selectVal
+              bannerItemStyleObj['border-radius'] = element.inputVal + element.selectVal;
+              break;
+            case "marginTop":
+              styleObject['margin-top'] = element.inputVal + element.selectVal;
+              break;
+            case "marginBottom":
+              styleObject['margin-bottom'] = element.inputVal + element.selectVal;
+              break;
           }
         }
       }
@@ -333,6 +340,9 @@ export default {
      * 加载动态数据
      */
     initData() {
+      if(this.moduleObject.env === 'develop') {
+        return
+      }
       let that = this;
       //所有地址的url参数转换
       var params = that.commonParam();
@@ -413,7 +423,7 @@ export default {
         return
       }
       const url = IDM.url.getWebPath(item.jumpUrl)
-      window.open(url)
+      window.open(url, this.propData.jumpStyle || '_self')
     },
     showThisModuleHandle() {
       this.propData.defaultStatus = "default";

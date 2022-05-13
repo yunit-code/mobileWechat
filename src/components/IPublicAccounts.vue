@@ -15,7 +15,7 @@
       idm-ctrl-id：组件的id，这个必须不能为空
       idm-container-index  组件的内部容器索引，不重复唯一且不变，必选
     -->
-    <div class="drag-bar-wrapper" @touchstart="down"  @touchmove="move"  @touchend="end" :style="{position:propData.fixed && 'fixed',...offset}">
+    <div class="drag-bar-wrapper" @touchstart="down"  @touchmove="move"  @touchend="end" :style="{position: (moduleObject.env === 'production' || !IDM.env_dev) && propData.fixed && 'fixed',...offset}">
       <van-popover
         v-model="showPopover"
         trigger="click"
@@ -82,13 +82,13 @@ export default {
           top: this.propData.offsetY+ 'px',
         }
       }
-      if (this.propData.coordinates === 'rigthTop') {
+      if (this.propData.coordinates === 'rightTop') {
         return {
           right: this.propData.offsetX + 'px',
           top: this.propData.offsetY+ 'px',
         }
       }
-      if (this.propData.coordinates === 'rigthBottom') {
+      if (this.propData.coordinates === 'rightBottom') {
         return {
           right: this.propData.offsetX+ 'px',
           bottom: this.propData.offsetY+ 'px',
@@ -422,9 +422,7 @@ export default {
 </script>
 <style lang="scss" scoped>
   .drag-bar-wrapper{
-    width: 20px;
-    height: 20px;
-    z-index: 2;
+    z-index: 99999;
   }
 
   .accout-icon{

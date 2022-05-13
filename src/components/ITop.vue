@@ -58,6 +58,7 @@ export default {
         userInfo:true,
         weather: true,
         set: true,
+        jumpType: 'new',
         iconSize: '30',
         setUrl: 'https://www.baidu.com/',
         headerBgUrl: '',
@@ -90,7 +91,10 @@ export default {
   methods:{
     // 设置图标跳转
     goUrl() {
-      this.propData.setUrl && window.open(this.propData.setUrl)
+      if (this.propData.setUrl) {
+        this.propData.jumpType === 'new' &&  window.open(this.propData.setUrl)
+        this.propData.jumpType === 'current' && (window.location.href=this.propData.setUrl)
+      }
     },
     /**
      * 提供父级组件调用的刷新prop数据组件

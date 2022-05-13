@@ -33,6 +33,24 @@
                     "text": "显示数量",
                     "bindKey": "limit",
                     "default": 5
+                },
+                {
+                    "type": "select",
+                    "layoutType": "inline",
+                    "text": "跳转方式",
+                    "bindKey": "jumpStyle",
+                    "desc": "设置组件显示风格",
+                    "dictionary": [
+                        {
+                            "label": "当前页跳转",
+                            "value": "_self"
+                        },
+                        {
+                            "label": "新窗口打开",
+                            "value": "_blank"
+                        }
+                    ],
+                    "default": "_self"
                 }
             ]
         },
@@ -45,7 +63,7 @@
                 {
                     "type": "input",
                     "layoutType": "inline",
-                    "text": "高",
+                    "text": "轮播高度",
                     "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
                     "bindKey": "height",
                     "width": "60px",
@@ -60,6 +78,26 @@
                         "inputVal": 8,
                         "selectVal": "px"
                     }
+                },
+                {
+                    "type": "inputNumberUnit",
+                    "layoutType": "inline",
+                    "text": "上外边距",
+                    "bindKey": "marginTop",
+                    "default": {
+                        "inputVal": 0,
+                        "selectVal": "px"
+                    }
+                },
+                {
+                    "type": "inputNumberUnit",
+                    "layoutType": "inline",
+                    "text": "下外边距",
+                    "bindKey": "marginBottom",
+                    "default": {
+                        "inputVal": 0,
+                        "selectVal": "px"
+                    }
                 }
             ]
         },
@@ -71,7 +109,7 @@
                 {
                     "type": "input",
                     "layoutType": "inline",
-                    "text": "标题接口",
+                    "text": "数据接口",
                     "bindKey": "bannerInterfaceUrl",
                     "desc": "通过接口获取轮播内容",
                     "default": "/ctrl/"

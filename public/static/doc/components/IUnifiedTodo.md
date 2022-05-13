@@ -1,5 +1,5 @@
 # 文本
-这里用来描述组件的具体作用说明，描述内容建议简明扼要。
+统一待办组件
 ## 组件类名（className）
 IUnifiedTodo
 ## 组件类ID（classId）
@@ -9,7 +9,7 @@ vue
 ## 组件类型（comType）
 common
 ## 所在代码包版本
-workbench@1.0.0
+mobilewechat@1.0.0
 ## 组件属性
 ### 唯一标识【ctrlId】
 ### 基本属性

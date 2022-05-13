@@ -25,12 +25,7 @@
                     "layoutType": "inline",
                     "text": "图标",
                     "bindKey": "accountUrl",
-                    "placeholder": "可输入图片地址或直接上传",
-                    "ctrlAttrObject": {
-                        "width": "",
-                        "height": "",
-                        "cropper": true
-                    }
+                    "placeholder": "可输入图片地址或直接上传"
                 },
                 {
                     "type": "switch",
@@ -67,20 +62,20 @@
                     "default": "leftTop"
                 },
                 {
-                    "type": "input",
+                    "type": "inputNumber",
                     "layoutType": "inline",
                     "text": "偏移(X)",
                     "desc":"偏移(X)",
                     "bindKey": "offsetX",
-                    "default": "20"
+                    "default": 20
                 },
                 {
-                    "type": "input",
+                    "type": "inputNumber",
                     "layoutType": "inline",
                     "text": "偏移(Y)",
                     "desc":"偏移(Y)",
                     "bindKey": "offsetY",
-                    "default": "20"
+                    "default": 20
                 }
             ]
         }

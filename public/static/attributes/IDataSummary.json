@@ -32,8 +32,31 @@
                     "layoutType": "inline",
                     "text": "最多显示",
                     "bindKey": "maxNumber",
-                    "desc":"",
-                    "default":"4"
+                    "desc":"用于设置共计显示的数量",
+                    "default": 4,
+                    "max": 20,
+                    "min": 1
+                },
+                {
+                    "type": "iconSelect",
+                    "layoutType": "inline",
+                    "text": "标题图标",
+                    "bindKey": "titleIconClass",
+                    "default": ""
+                },
+                {
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "图标颜色",
+                    "bindKey": "titleIconFontColor",
+                    "default": ""
+                },
+                {
+                    "type": "inputNumber",
+                    "layoutType": "inline",
+                    "text": "图标大小",
+                    "bindKey": "titleIconFontSize",
+                    "default": 14
                 },
                 {
                     "type": "table",
@@ -307,8 +330,20 @@
                 {
                     "type": "font",
                     "layoutType": "block",
-                    "text": "文字",
+                    "text": "标题文字",
                     "bindKey": "font"
+                },
+                {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "汇总文字",
+                    "bindKey": "sumFont"
+                },
+                {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "数字文字",
+                    "bindKey": "numFont"
                 }
             ]
         },
@@ -330,8 +365,7 @@
                     "layoutType": "inline",
                     "text": "接口地址",
                     "bindKey": "customInterfaceUrl",
-                    "desc": "用于获取数据源的接口地址，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}",
-                    "display": "@[dataSourceType=='customInterface']"
+                    "desc": "用于获取数据源的接口地址，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}"
                 }
             ]
         }
