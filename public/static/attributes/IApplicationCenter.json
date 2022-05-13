@@ -30,10 +30,19 @@
                 {
                     "type": "switch",
                     "layoutType": "inline",
+                    "text": "我的应用",
+                    "desc":"设置组件是否是我的应用模块",
+                    "bindKey": "isMyApplication",
+                    "default": false
+                },
+                {
+                    "type": "switch",
+                    "layoutType": "inline",
                     "text": "显示更多",
                     "desc":"设置用户配置应用程序按钮是否显示",
                     "bindKey": "showConfig",
-                    "default": false
+                    "default": false,
+                    "display": "@[!isMyApplication]"
                 },
                 {
                     "type": "textarea",
@@ -42,6 +51,25 @@
                     "desc":"用于设置跳转到更多应用的页面地址",
                     "bindKey": "moreApplicationUrl",
                     "default": "",
+                    "display": "@[showConfig]"
+                },
+                {
+                    "type": "select",
+                    "layoutType": "inline",
+                    "text": "跳转方式",
+                    "bindKey": "moreApplicationJumpType",
+                    "desc": "设置组件显示风格",
+                    "dictionary": [
+                        {
+                            "label": "当前页跳转",
+                            "value": "_self"
+                        },
+                        {
+                            "label": "新窗口打开",
+                            "value": "_blank"
+                        }
+                    ],
+                    "default": "_self",
                     "display": "@[showConfig]"
                 },
                 {
@@ -122,17 +150,9 @@
                             "desc":"设置应用待办角标是否显示",
                             "bindKey": "showTodoNumber",
                             "default": false
-                        },
-                        {
-                            "type": "input",
-                            "layoutType": "inline",
-                            "text": "接口地址",
-                            "desc":"应用角标接口地址",
-                            "bindKey": "url",
-                            "default": "",
-                            "display": "@[showTodoNumber]"
                         }
-                    ]
+                    ],
+                    "display": "@[!isMyApplication]"
                 }
             ]
         },
@@ -380,68 +400,19 @@
         },
         {
             "type": "group",
-            "text": "数据源",
-            "desc": "点击？查看数据源设置用法指南",
+            "text": "高级",
+            "desc": "点击？查看高级设置用法指南",
             "children": [
-                {
-                    "type": "select",
-                    "layoutType": "inline",
-                    "text": "动态内容",
-                    "bindKey": "dataSourceType",
-                    "desc": "通过这些方式去动态获取结果值显示成文本内容",
-                    "dictionary": [
-                        {
-                            "label": "自定义接口",
-                            "value": "customInterface"
-                        },
-                        {
-                            "label": "页面统一接口",
-                            "value": "pageCommonInterface"
-                        },
-                        {
-                            "label": "自定义函数",
-                            "value": "customFunction"
-                        }
-                    ],
-                    "default": "customInterface"
-                },
                 {
                     "type": "input",
                     "layoutType": "inline",
                     "text": "接口地址",
-                    "bindKey": "customInterfaceUrl",
-                    "desc": "用于获取数据源的接口地址，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}",
-                    "display": "@[dataSourceType=='customInterface']"
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "结果集名",
-                    "bindKey": "dataName",
-                    "desc": "页面接口设定的结果集名称，位置为：页面设置》高级设置》页面接口",
-                    "default": "",
-                    "placeholder": "示例：resultData",
-                    "display": "@[dataSourceType=='pageCommonInterface']"
-                },
-                {
-                    "type": "textarea",
-                    "layoutType": "inline",
-                    "text": "显示字段",
-                    "bindKey": "dataFiled",
-                    "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData（自定义接口忽略）且它的值为{data:{filedName:[{\"text\":\"\",\"value\":\"\",\"check\":true}]}}，则这里应该填写data.filedName",
-                    "default": "",
-                    "placeholder": "示例：data.filedName 或者 [0].data[0].filedName",
-                    "display": "@[dataSourceType!='customFunction']"
-                },
-                {
-                    "type": "actionSelect",
-                    "layoutType": "block",
-                    "text": "自定义函数",
-                    "bindKey": "customFunction",
-                    "desc": "获取动态文本内容、自定义接口回调、页面统一接口回调的时候会调用此方法，返回数据格式为字符串，接收参数：{...自定义,interfaceData:自定义接口或页面统一接口的返回结果,expressData:表达式替换后的结果}",
-                    "multiple": false
+                    "desc": "用于获取用户设置的我的应用数据的接口地址",
+                    "bindKey": "getMyApplicationUrl",
+                    "default": "/ctrl/tencentApp/queryMyFavorite"
                 }
-            ]
+            ],
+            "display": "@[isMyApplication]"
         }
     ]
 }

@@ -87,15 +87,6 @@
                             "desc":"设置应用待办角标是否显示",
                             "bindKey": "showTodoNumber",
                             "default": false
-                        },
-                        {
-                            "type": "input",
-                            "layoutType": "inline",
-                            "text": "接口地址",
-                            "desc":"应用角标接口地址",
-                            "bindKey": "url",
-                            "default": "",
-                            "display": "@[showTodoNumber]"
                         }
                     ]
                 }
