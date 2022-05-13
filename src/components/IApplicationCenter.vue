@@ -191,17 +191,13 @@ export default {
             }
         },
         toApplicationManage() {
-            let urlObject = window.IDM.url.queryObject();
-            let pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
-            var clickNewFunction = this.propData.toApplicationManageFunction;
-            clickNewFunction.forEach(item=>{
-                window[item.name]&&window[item.name].call(this,{
-                    urlData:urlObject,
-                    pageId,
-                    customParam:item.param,
-                    _this:this
-                });
-            })
+            if ( this.propData.moreApplicationUrl ) {
+                if ( this.propData.moreApplicationJumpType == '_self' ) {
+                    window.location.href = this.propData.moreApplicationUrl
+                } else {
+                    window.open(this.propData.moreApplicationUrl,this.propData.moreApplicationJumpType);
+                }
+            }    
         },
         changeLines() {
             if ( this.application_data && (this.application_data.length > this.propData.showRows * this.propData.showColumn) ) {

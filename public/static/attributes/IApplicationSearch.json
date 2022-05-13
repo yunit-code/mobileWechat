@@ -259,7 +259,7 @@
                 {
                     "type": "input",
                     "layoutType": "inline",
-                    "text": "添加接口",
+                    "text": "添加应用",
                     "desc": "用于添加应用的接口地址",
                     "bindKey": "addApplicationUrl",
                     "default": "/ctrl/tencentApp/setFavoriteApp"

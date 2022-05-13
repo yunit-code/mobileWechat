@@ -208,7 +208,7 @@ export default {
             let urlObject = window.IDM.url.queryObject();
             let pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
             var clickNewFunction = this.propData.clickCancelFunction;
-            clickNewFunction.forEach(item=>{
+            clickNewFunction && clickNewFunction.forEach(item=>{
                 window[item.name]&&window[item.name].call(this,{
                     urlData:urlObject,
                     pageId,
