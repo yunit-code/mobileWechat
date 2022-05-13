@@ -85,7 +85,7 @@
                     "text": "上外边距",
                     "bindKey": "marginTop",
                     "default": {
-                        "inputVal": 8,
+                        "inputVal": 0,
                         "selectVal": "px"
                     }
                 },
@@ -95,7 +95,7 @@
                     "text": "下外边距",
                     "bindKey": "marginBottom",
                     "default": {
-                        "inputVal": 8,
+                        "inputVal": 0,
                         "selectVal": "px"
                     }
                 }

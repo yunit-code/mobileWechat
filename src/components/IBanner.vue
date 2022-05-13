@@ -340,6 +340,9 @@ export default {
      * 加载动态数据
      */
     initData() {
+      if(this.moduleObject.env === 'develop') {
+        return
+      }
       let that = this;
       //所有地址的url参数转换
       var params = that.commonParam();
