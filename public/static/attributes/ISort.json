@@ -315,7 +315,7 @@
                     "text": "保存接口",
                     "bindKey": "saveUserCustomizationUrl",
                     "desc":"用于获取当前页面一级组件列表,pageid为当前页面id,默认自动获取",
-                    "default": "/ctrl/idm/api/saveUserCustomizationUrl"
+                    "default": "/ctrl/idm/api/saveUserCustomization"
                 }
             ]
         }

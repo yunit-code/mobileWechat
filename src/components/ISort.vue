@@ -123,14 +123,16 @@ export default {
       IDM.http
         .get(url)
         .done((res) => {
-          if (res.code === "200" && res.data) {
+          if (res&&res.code === "200" && res.data) {
             const list = JSON.parse(res.data.customData).children
             if (list && list.length > 0) {
               this.dealRes(list);
             } else {
               this.dealRes(defaultList)
             }
-          } else {
+          }else if(res&&res.code === "200"){
+              this.dealRes(defaultList)
+          }else {
             this.failRequest(url);
           }
         })
@@ -153,11 +155,12 @@ export default {
             this.pageInfo = {
               comName: res.data.page.layout.comName,
               id: res.data.page.layout.id,
+              packageid:res.data.page.layout.packageid,
             };
             this.pageVersion = res.data.pageBaseInfo.version;
             this.pageId = res.data.id;
 
-            const list = res.data.page.children;
+            const list = res.data.page.layout.children;
             this.requestUserCustomization(list);
           } else {
             this.failRequest(url);
@@ -183,10 +186,11 @@ export default {
      * 拖拽结束
      */
     dragEnd() {
-      const { id, comName } = this.pageInfo;
+      const { id, comName,packageid } = this.pageInfo;
       const customData = {
         id,
         comName,
+        packageid,
         children: this.listData,
       };
       IDM.http
@@ -196,7 +200,8 @@ export default {
           customData: JSON.stringify(customData),
         })
         .done((res) => {
-          if (res !== "200") {
+          res = res?res.data:{};
+          if (res.code !== "200") {
             this.failRequest(this.propData.saveUserCustomizationUrl);
           }
         })
@@ -407,12 +412,14 @@ export default {
      */
     toppingClick(index) {
       this.listData.unshift(this.listData.splice(index, 1)[0]);
+      this.dragEnd();
     },
     /**
      * 	是否可见
      */
     visibleClick(item) {
       item.hidden = !item.hidden;
+      this.dragEnd();
     },
   },
 };
