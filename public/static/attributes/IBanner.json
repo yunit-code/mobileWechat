@@ -43,29 +43,13 @@
             "helpUrl": "",
             "children": [
                 {
-                    "type": "inlineGroup",
-                    "text": "宽高",
-                    "children": [
-                        {
-                            "type": "input",
-                            "layoutType": "block",
-                            "text": "宽",
-                            "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
-                            "bindKey": "width",
-                            "width": "60px",
-                            "default": "100%",
-                            "display": "false"
-                        },
-                        {
-                            "type": "input",
-                            "layoutType": "inline",
-                            "text": "高",
-                            "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
-                            "bindKey": "height",
-                            "width": "60px",
-                            "default": "240px"
-                        }
-                    ]
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "高",
+                    "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
+                    "bindKey": "height",
+                    "width": "60px",
+                    "default": "240px"
                 },
                 {
                     "type": "inputNumberUnit",

@@ -557,7 +557,6 @@ export default {
 }
 </style>
 <style lang="scss" scoped>
-
 li {
   display: inline-block;
   float: left;
@@ -566,5 +565,4 @@ li {
     height: 100%;
   }
 }
-
 </style>

@@ -17,11 +17,13 @@
         <div class="i-schedule-header-tit">
           {{ propData.title || '日程提醒' }}
           <svg
+            v-if="propData.titleIcon && propData.titleIcon.length>0"
             class="idm_filed_svg_icon"
             aria-hidden="true"
           >
             <use :xlink:href="`#${(propData.titleIcon && propData.titleIcon[0])}`"></use>
           </svg>
+          <svg-icon v-else icon-class="application-icon" />
         </div>
         <div class="i-schedule-header-date">{{ nowDate }}</div>
       </div>
@@ -430,11 +432,13 @@ export default {
               titleStyleObject["text-align"] = element.fontTextAlign;
               titleStyleObject["text-decoration"] = element.fontDecoration;
               break;
-            case "titleColor":
-              iconStyleObject["color"] = element.titleColor;
+            case "titleIconColor":
+              iconStyleObject["color"] = element.hex8;
               break
-            case "titleSize":
-              iconStyleObject["font-size"] = element.titleSize;
+            case "titleIconSize":
+              iconStyleObject["font-size"] = element+"px";
+              iconStyleObject["width"] = element+"px";
+              iconStyleObject["height"] = element+"px";
               break
           }
         }
@@ -445,6 +449,7 @@ export default {
       window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .i-schedule-header-tit", titleStyleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .i-schedule-content", innerCardStyleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_filed_svg_icon", iconStyleObject);
       // this.initData();
     },
     /**
