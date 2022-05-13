@@ -301,11 +301,11 @@ export default {
             case 'imgBorderRadius':
               bannerItemStyleObj['border-radius'] = element.inputVal + element.selectVal;
               break;
-            case "paddingTop":
-              styleObject['padding-top'] = element.inputVal + element.selectVal;
+            case "marginTop":
+              styleObject['margin-top'] = element.inputVal + element.selectVal;
               break;
-            case "paddingBottom":
-              styleObject['padding-bottom'] = element.inputVal + element.selectVal;
+            case "marginBottom":
+              styleObject['margin-bottom'] = element.inputVal + element.selectVal;
               break;
           }
         }

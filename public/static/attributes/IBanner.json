@@ -83,7 +83,7 @@
                     "type": "inputNumberUnit",
                     "layoutType": "inline",
                     "text": "上外边距",
-                    "bindKey": "paddingTop",
+                    "bindKey": "marginTop",
                     "default": {
                         "inputVal": 8,
                         "selectVal": "px"
@@ -93,7 +93,7 @@
                     "type": "inputNumberUnit",
                     "layoutType": "inline",
                     "text": "下外边距",
-                    "bindKey": "paddingBottom",
+                    "bindKey": "marginBottom",
                     "default": {
                         "inputVal": 8,
                         "selectVal": "px"
