@@ -82,22 +82,23 @@ export default {
       mySwiper: null
     };
   },
+  props: {},
+  created() {
+    this.moduleObject = this.$root.moduleObject;
+    // console.log(this.moduleObject)
+    this.convertAttrToStyleObject();
+  },
   watch: {
     'propData.height': {
       immediate: false,
       handler(){
+        this.mySwiper.destroy()
         this.$forceUpdate()
         setTimeout(()=>{
           this.initSwiper()
         })
       }
     }
-  },
-  props: {},
-  created() {
-    this.moduleObject = this.$root.moduleObject;
-    // console.log(this.moduleObject)
-    this.convertAttrToStyleObject();
   },
   mounted() {
     this.initSwiper();
@@ -109,7 +110,7 @@ export default {
         autoplay: 2000,
         speed: 500,
         loop: true,
-        loopedSlides: 5,
+        loopedSlides: 100,
         slidesPerView: 'auto',
         effect: 'coverflow',
         pagination: {
@@ -126,10 +127,8 @@ export default {
           slideShadows: false,
         },
         observer: true, //修改swiper自己或子元素时，自动初始化swiper，主要是这两行
-        onInit: function (swiper) {
-          //回调函数，初始化后执行。
-          swiper.slides[2].className = "swiper-slide swiper-slide-active"; //第一次打开不要动画
-        },
+        observeParents: true,
+        observeSlideChildren: true
       });
     },
     /**

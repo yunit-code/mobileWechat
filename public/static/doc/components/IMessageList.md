@@ -11,6 +11,9 @@ common
 ## 所在代码包版本
 mobilewechat@1.0.6
 ## 组件属性
+只读属性，不可修改，作为每个组件实例的一个唯一标识
+- 标识：`ctrlId`
+- 默认值：`@[packageid]`
 ### 唯一标识【ctrlId】
 ### 基本属性
 #### 标题【htmlTitle】

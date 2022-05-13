@@ -58,7 +58,7 @@
                     "layoutType": "inline",
                     "text": "跳转方式",
                     "bindKey": "jumpStyle",
-                    "desc": "设置组件链接跳转方式",
+                    "desc": "设置组件点击链接跳转方式",
                     "dictionary": [
                         {
                             "label": "当前页跳转",

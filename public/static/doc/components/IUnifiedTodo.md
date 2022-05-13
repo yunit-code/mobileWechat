@@ -9,13 +9,14 @@ vue
 ## 组件类型（comType）
 common
 ## 所在代码包版本
-mobilewechat@1.0.0
+mobilewechat@1.0.6
 ## 组件属性
 ### 唯一标识【ctrlId】
+只读属性，不可修改，作为每个组件实例的一个唯一标识
+- 标识：`ctrlId`
+- 默认值：`@[packageid]`
 ### 基本属性
-#### 文本内容【fontContent】
 #### title【htmlTitle】
-#### 默认状态【defaultStatus】
 ### 样式设置
 #### 内外边距【box】
 #### 宽高

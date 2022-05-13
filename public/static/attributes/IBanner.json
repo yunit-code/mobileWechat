@@ -31,6 +31,7 @@
                     "type": "inputNumber",
                     "layoutType": "inline",
                     "text": "显示数量",
+                    "desc": "设置显示轮播图片数量",
                     "bindKey": "limit",
                     "default": 5
                 },
@@ -39,7 +40,7 @@
                     "layoutType": "inline",
                     "text": "跳转方式",
                     "bindKey": "jumpStyle",
-                    "desc": "设置组件链接跳转方式",
+                    "desc": "设置点击轮播图片时链接跳转方式",
                     "dictionary": [
                         {
                             "label": "当前页跳转",

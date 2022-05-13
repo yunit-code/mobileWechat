@@ -24,7 +24,7 @@ mobilewechat@1.0.6
 
 #### 显示数量【limit】
 - limit: 图片显示数量限制
-- 默认值:5 (最大值，如果总数量没有达到默认值，则显示总数量，例如：设置了5，总共4个，则显示4)
+- 默认值: `5 `(最大值，如果总数量没有达到默认值，则显示总数量，例如：设置了5，总共4个，则显示4)
 
 #### 跳转方式【jumpStyle】
 > 点击事件跳转方式
@@ -33,9 +33,22 @@ mobilewechat@1.0.6
 
 ### 样式设置
 #### 轮播高度【height】
+- height: 设置轮播图片高度
+- 默认值: `240px`
+
 #### 图片圆角【imgBorderRadius】
-#### 上外边距【paddingTop】
-#### 下外边距【paddingBottom】
+- height: 设置轮播图片圆角
+- 默认值: `8px`
+
+#### 上外边距【marginTop】
+- height: 设置轮播图片上外边距
+- 默认值: `0`
+
+#### 下外边距【marginBottom】
+- height: 设置轮播图片下外边距
+- 默认值: `0`
+
 ### 高级
+#### 数据源【dataSource】
 #### 数据接口【bannerInterfaceUrl】
 #### 显示字段【dataFiled】
