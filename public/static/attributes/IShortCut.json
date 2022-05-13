@@ -33,7 +33,30 @@
                     "text": "每行展示",
                     "bindKey": "maxNumber",
                     "desc":"用于设置每行显示的数量，实际数量超过则会自动换行显示",
-                    "default":"3"
+                    "default": 3,
+                    "max":  10,
+                    "min": 1
+                },
+                {
+                    "type": "iconSelect",
+                    "layoutType": "inline",
+                    "text": "标题图标",
+                    "bindKey": "titleIconClass",
+                    "default": ""
+                },
+                {
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "图标颜色",
+                    "bindKey": "titleIconFontColor",
+                    "default": ""
+                },
+                {
+                    "type": "inputNumber",
+                    "layoutType": "inline",
+                    "text": "图标大小",
+                    "bindKey": "titleIconFontSize",
+                    "default": 14
                 },
                 {
                     "type": "table",
@@ -50,7 +73,26 @@
                             "desc":"",
                             "default":"省政府领导分工",
                             "placeholder":"请输入名称"
-                        },{
+                        },
+                        {
+                            "type": "radio",
+                            "layoutType": "inline",
+                            "text": "跳转方式",
+                            "desc":"用于设置是当页跳转还是弹出新窗口两种方式",
+                            "bindKey": "jumpType",
+                            "dictionary": [
+                                {
+                                    "label": "当前页",
+                                    "value": "current"
+                                },
+                                {
+                                    "label": "新窗口",
+                                    "value": "new"
+                                }
+                            ],
+                            "default": "current"
+                        },
+                        {
                             "type": "textarea",
                             "layoutType": "inline",
                             "text": "URL",

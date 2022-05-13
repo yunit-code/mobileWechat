@@ -45,6 +45,24 @@
                     "default": true
                 },
                 {
+                    "type": "radio",
+                    "layoutType": "inline",
+                    "text": "跳转方式",
+                    "desc":"用于设置是当页跳转还是弹出新窗口两种方式",
+                    "bindKey": "jumpType",
+                    "dictionary": [
+                        {
+                            "label": "当前页",
+                            "value": "current"
+                        },
+                        {
+                            "label": "新窗口",
+                            "value": "new"
+                        }
+                    ],
+                    "default": "current"
+                },
+                {
                     "type": "input",
                     "layoutType": "inline",
                     "text": "跳转Url",
@@ -59,7 +77,7 @@
                     "bindKey": "iconSize",
                     "desc":"图标大小",
                     "display": "@[set]",
-                    "default": "30"
+                    "default": 30
                 }
             ]
         },

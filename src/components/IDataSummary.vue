@@ -16,15 +16,21 @@
       idm-container-index  组件的内部容器索引，不重复唯一且不变，必选
     -->
     <div class="com-box">
-      <div class="com-title" draggable="true">{{propData.comTitle}}
-      <img src="@/assets/red-three.png" alt="" style="margin-left: 5px;height: 16px">
+      <div class="com-title" draggable="true">
+      <span style="margin-right: 5px">{{propData.comTitle}}</span>
+      <div class="idm_applicationcenter_title_left_icon">
+          <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm_filed_svg_icon" aria-hidden="true" >
+              <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
+          </svg>
+          <svg-icon v-else icon-class="application-icon" />
+      </div>
       </div>
       <ul class="summary-box">
         <li v-for="(v,i) in propData.summaryConfigList && propData.summaryConfigList.slice(0, propData.maxNumber)" :key="i" class="summary-item"
         style="width: 50%">
-          <div class="summary-bg" :style="{backgroundImage: 'url('+IDM.url.getWebPath(v.bgUrl)+')'}" v-proportion="0.5">
-            <div style="marginBottom: 5px">{{v.name}}</div>
-            <div>{{v.sumNum}}</div>
+          <div class="summary-bg" :style="{backgroundImage: v.bgUrl ? 'url('+IDM.url.getWebPath(v.bgUrl)+')' : 'linear-gradient(to right,#f4b0b0,#f4acac,#f18c8b)'}" v-proportion="0.5">
+            <div style="marginBottom: 5px" class="summary-name">{{v.name}}</div>
+            <div class="summary-num">{{v.sumNum}}</div>
           </div>
         </li>
       </ul>
@@ -34,13 +40,11 @@
 </template>
 
 <script>
-import bg from '@/assets/bg-default.png'
 export default {
   name: 'IDataSummary',
   data(){
     return {
       moduleObject:{},
-      bg,
       propData:this.$root.propData.compositeAttr||{
         comTitle: '数据汇总',
         maxNumber: 4,
@@ -97,6 +101,9 @@ export default {
      */
     convertAttrToStyleObject(){
       var styleObject = {};
+      var styleObjectTitleIcon = {};
+      var styleObjectSumTitle = {};
+      var styleObjectNum = {};
       if(this.propData.bgSize&&this.propData.bgSize=="custom"){
         styleObject["background-size"]=(this.propData.bgSizeWidth?this.propData.bgSizeWidth.inputVal+this.propData.bgSizeWidth.selectVal:"auto")+" "+(this.propData.bgSizeHeight?this.propData.bgSizeHeight.inputVal+this.propData.bgSizeHeight.selectVal:"auto")
       }else if(this.propData.bgSize){
@@ -111,6 +118,10 @@ export default {
       styleObject["font-size"] = '16px';
       styleObject["font-weight"]=800;
       styleObject["color"]='#333333';
+      styleObjectSumTitle["font-size"] = '15px';
+      styleObjectSumTitle["color"]='#ffffff';
+      styleObjectNum["font-size"] = '15px';
+      styleObjectNum["color"]='#ffffff';
       for (const key in this.propData) {
         if (this.propData.hasOwnProperty.call(this.propData, key)) {
           const element = this.propData[key];
@@ -219,10 +230,45 @@ export default {
               styleObject["text-align"]=element.fontTextAlign;
               styleObject["text-decoration"]=element.fontDecoration;
               break;
+            case "titleIconFontColor":
+              styleObjectTitleIcon["color"] = element.hex;
+              break
+            case "titleIconFontSize":
+              styleObjectTitleIcon["font-size"] = element + "px";
+              styleObjectTitleIcon["width"] = element + "px";
+              styleObjectTitleIcon["height"] = element + "px";
+              break
+            case "sumFont":
+              styleObjectSumTitle["font-family"]=element.fontFamily;
+              if(element.fontColors.hex8){
+                styleObjectSumTitle["color"]=element.fontColors.hex8;
+              }
+              styleObjectSumTitle["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
+              styleObjectSumTitle["font-style"]=element.fontStyle;
+              styleObjectSumTitle["font-size"]=element.fontSize+element.fontSizeUnit;
+              styleObjectSumTitle["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
+              styleObjectSumTitle["text-align"]=element.fontTextAlign;
+              styleObjectSumTitle["text-decoration"]=element.fontDecoration;
+              break;
+            case "numFont":
+              styleObjectNum["font-family"]=element.fontFamily;
+              if(element.fontColors.hex8){
+                styleObjectNum["color"]=element.fontColors.hex8;
+              }
+              styleObjectNum["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
+              styleObjectNum["font-style"]=element.fontStyle;
+              styleObjectNum["font-size"]=element.fontSize+element.fontSizeUnit;
+              styleObjectNum["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
+              styleObjectNum["text-align"]=element.fontTextAlign;
+              styleObjectNum["text-decoration"]=element.fontDecoration;
+              break;
           }
         }
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id,styleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_icon .idm_filed_svg_icon", styleObjectTitleIcon);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .summary-name", styleObjectSumTitle);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .summary-num", styleObjectNum);
       this.initData();
     },
     /**
@@ -355,7 +401,6 @@ export default {
     margin: 0 -5px;
     flex-wrap: wrap;
     .summary-item{
-      font-size: 15px;
       padding: 0 5px;
       text-align: center;
       margin-bottom: 10px;
@@ -369,7 +414,6 @@ export default {
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
-      color: #fff;
       padding-left: 5px;
     }
   }

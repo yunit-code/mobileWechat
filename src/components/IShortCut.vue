@@ -16,13 +16,19 @@
       idm-container-index  组件的内部容器索引，不重复唯一且不变，必选
     -->
     <div class="com-box">
-      <div class="com-title">{{propData.comTitle}}
-      <img src="@/assets/red-three.png" alt="" style="margin-left: 5px;height: 16px">
+      <div class="com-title">
+      <span style="margin-right: 5px">{{propData.comTitle}}</span>
+      <div class="idm_applicationcenter_title_left_icon">
+          <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm_filed_svg_icon" aria-hidden="true" >
+              <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
+          </svg>
+          <svg-icon v-else icon-class="application-icon" />
+      </div>
       </div>
       <ul class="short-box">
         <li v-for="(v,i) in propData.shortConfigList" :key="i" class="short-item"
         :style="{width: `${100/propData.maxNumber}%`}">
-          <div class="short-bg" :style="{backgroundImage: 'url('+IDM.url.getWebPath(v.bgUrl)+')'}" v-proportion="0.4" @click="goUrl(v)">
+          <div class="short-bg" :style="{backgroundImage: v.bgUrl ? 'url('+IDM.url.getWebPath(v.bgUrl)+')' : 'linear-gradient(to right,#f4b0b0,#f4acac,#f18c8b)'}" v-proportion="0.4" @click="goUrl(v)">
             <span>{{v.name}}</span>
           </div>
         </li>
@@ -33,17 +39,16 @@
 </template>
 
 <script>
-import bg from '@/assets/bg-default.png'
 export default {
   name: 'IShortCut',
   data(){
     return {
-      bg,
       moduleObject:{},
       propData:this.$root.propData.compositeAttr||{
         comTitle: '快捷方式',
         showType: 'else',
         maxNumber: 2,
+        jumpType: 'new',
         shortConfigList:[
           {
             bgUrl: '',
@@ -80,7 +85,10 @@ export default {
   methods:{
     // 快捷方式跳转
     goUrl(v) {
-      v.shotUrl && window.open(v.shotUrl)
+      if (v.shotUrl) {
+        this.propData.jumpType === 'new' &&  window.open(v.shotUrl)
+        this.propData.jumpType === 'current' && (window.location.href=v.shotUrl)
+      }
     },
     /**
      * 提供父级组件调用的刷新prop数据组件
@@ -94,6 +102,7 @@ export default {
      */
     convertAttrToStyleObject(){
       var styleObject = {};
+      var styleObjectTitleIcon = {};
       if(this.propData.bgSize&&this.propData.bgSize=="custom"){
         styleObject["background-size"]=(this.propData.bgSizeWidth?this.propData.bgSizeWidth.inputVal+this.propData.bgSizeWidth.selectVal:"auto")+" "+(this.propData.bgSizeHeight?this.propData.bgSizeHeight.inputVal+this.propData.bgSizeHeight.selectVal:"auto")
       }else if(this.propData.bgSize){
@@ -228,10 +237,19 @@ export default {
               styleObject["text-align"]=element.fontTextAlign;
               styleObject["text-decoration"]=element.fontDecoration;
               break;
+            case "titleIconFontColor":
+                styleObjectTitleIcon["color"] = element.hex;
+                break
+            case "titleIconFontSize":
+                styleObjectTitleIcon["font-size"] = element + "px";
+                styleObjectTitleIcon["width"] = element + "px";
+                styleObjectTitleIcon["height"] = element + "px";
+                break
           }
         }
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id,styleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_icon .idm_filed_svg_icon", styleObjectTitleIcon);
       this.initData();
     },
     /**
