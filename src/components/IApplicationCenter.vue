@@ -32,7 +32,7 @@
                             <svg-icon v-else icon-class="application" />
 
                             <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
-                            <div v-if="propData.showTodoNumber && item.showTodoNumber && item.number" class="number">{{ item.number }}</div>
+                            <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
                         </div>
                     </van-grid-item>
                 </van-grid>
@@ -123,8 +123,12 @@ export default {
                     let applicationList = JSON.parse(JSON.stringify(this.propData.applicationList))
                     let application_data = [];
                     for( let i = 0,maxi = applicationList.length;i < maxi;i++ ) {
-                        if ( applicationList[i].selectApplication && applicationList[i].selectApplication.value && this.have_power_application_data_ids.indexOf(applicationList[i].selectApplication.value) != -1 ) {
+                        if ( this.moduleObject.env == 'develop' ) {
                             application_data.push(applicationList[i])
+                        } else {
+                            if ( applicationList[i].selectApplication && applicationList[i].selectApplication.value && this.have_power_application_data_ids.indexOf(applicationList[i].selectApplication.value) != -1 ) {
+                                application_data.push(applicationList[i])
+                            }
                         }
                     }
                     this.application_data = JSON.parse(JSON.stringify(application_data))
@@ -137,8 +141,9 @@ export default {
             if ( this.moduleObject.env == 'develop' ) {
                 return
             }
-            if ( this.propData.isMyApplication ) {
-                this.propData.customInterfaceUrl && window.IDM.http.get(this.propData.customInterfaceUrl, params)
+            var params = this.commonParam();
+            if ( this.propData.isMyApplication && this.propData.getMyApplicationUrl ) {
+                window.IDM.http.post(this.propData.getMyApplicationUrl, params)
                     .then((res) => {
                         if ( res.data && res.data.type == 'success' ) {
                             this.makeMyApplicationData(res.data.data)
@@ -205,7 +210,7 @@ export default {
         },
         getApplicationMarkNumber() {
             for( let i = 0,maxi = this.application_data.length;i < maxi;i++ ) {
-                if ( this.application_data[i].selectApplication && this.application_data[i].selectApplication.sourceId ) {
+                if ( this.propData.showTodoNumber && this.application_data[i].showTodoNumber && this.application_data[i].selectApplication && this.application_data[i].selectApplication.sourceId ) {
                     this.getApplicationMarkNumberSubmit(i,this.application_data[i].selectApplication.sourceId)
                 }
             }
@@ -225,7 +230,6 @@ export default {
 
         /** * 提供父级组件调用的刷新prop数据组件 */
         propDataWatchHandle(propData) {
-            console.log('propData更新',propData)
             this.propData = propData.compositeAttr || {};
             this.convertAttrToStyleObject();
         },
@@ -381,6 +385,7 @@ export default {
             window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_text", styleObjectTitle);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_icon .idm_filed_svg_icon", styleObjectTitleIcon);
+            this.reload()
         },
         /**
          * 通用的url参数对象

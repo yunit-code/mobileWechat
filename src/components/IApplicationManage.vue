@@ -18,11 +18,13 @@
                 </div>
                 <div class="idm_applicationcenter_main">
                     <van-grid :border="false" :column-num="5">
-                        <van-grid-item v-for="(item,index) in my_application_data" :key="index">
-                            <div @click="deleteApplication(item,index)" class="idm_applicationcenter_main_list">
-                                <img :src="item.img">
-                                <div class="idm_applicationcenter_main_list_name">{{ item.name }}</div>
-                                <van-icon v-if="is_edit" class="icon" name="minus" color="#fff" />
+                        <van-grid-item v-for="(item,index) in my_application_data" :key="item.value">
+                            <div class="idm_applicationcenter_main_list">
+                                <img v-if="item.imageUrl" :src="item.imageUrl">
+                                <svg-icon v-else icon-class="application" />
+
+                                <div class="idm_applicationcenter_main_list_name">{{ item.name || ('应用' + index) }}</div>
+                                <van-icon @click="deleteApplication(item,index)" v-if="is_edit" class="icon" name="minus" color="#fff" />
                             </div>
                         </van-grid-item>
                     </van-grid>
@@ -37,15 +39,17 @@
                 </div>
                  <div class="idm_applicationcenter_main">
                     <van-tabs>
-                        <van-tab v-for="(item,index) in application_data" :key="index" :title="item.type">
+                        <van-tab v-for="(item,index) in application_data" :key="item.value" :title="item.title">
                             <van-grid :border="false" :column-num="5">
-                                <van-grid-item v-for="(item,index) in item.data" :key="index">
+                                <van-grid-item v-for="(item1,index1) in item.children" :key="item1.value">
                                     <div class="idm_applicationcenter_main_list">
-                                        <img :src="item.img">
-                                        <div class="idm_applicationcenter_main_list_name">{{ item.name }}</div>
+                                        <img v-if="item1.imageUrl" :src="item1.imageUrl">
+                                        <svg-icon v-else icon-class="application" />
+
+                                        <div class="idm_applicationcenter_main_list_name">{{ item1.name || ('应用' + index1) }}</div>
                                         <div v-if="is_edit">
-                                            <van-icon v-if="isHaveInMyApplication(item)" class="icon icon_disabled" name="plus" color="#fff" />
-                                            <van-icon @click="addApplication(item)" v-else class="icon" name="plus" color="#fff" />
+                                            <van-icon v-if="isHaveInMyApplication(item1)" class="icon icon_disabled" name="plus" color="#fff" />
+                                            <van-icon @click="addApplication(item1)" v-else class="icon" name="plus" color="#fff" />
                                         </div>
                                     </div>
                                 </van-grid-item>
@@ -69,12 +73,13 @@
 </template>
 
 <script>
-import { Grid,GridItem,Tab,Tabs,Icon,Button } from 'vant';
+import { Grid,GridItem,Tab,Tabs,Icon,Button,Toast } from 'vant';
 
 import 'vant/lib/grid/style';
 import 'vant/lib/tabs/style';
 import 'vant/lib/icon/style';
 import 'vant/lib/button/style';
+import 'vant/lib/toast/style';
 export default {
     name: 'IApplicationManage',
     components: {
@@ -84,6 +89,7 @@ export default {
         [Tabs.name]: Tabs,
         [Icon.name]: Icon,
         [Button.name]: Button,
+        [Toast.name]: Toast,
     },
     data() {
         return {
@@ -95,183 +101,26 @@ export default {
             is_edit: false,
             my_application_data: [
                 {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '待阅文件',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '已办文件',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '我的收藏',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '公文管理',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '待办文件',
-                    number: 1
-                },
-                {
-                    key: '1',
-                    img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                    name: '待阅文件',
-                    number: 1
-                },
+                    value: '1',
+                    imageUrl: '',
+                    title: '应用名称'
+                }
             ],
             application_data: [
                 {
-                    type: '公文',
-                    data: [
+                    title: '公文',
+                    value: '1',
+                    children: [
                         {
-                            key: '1',
-                            img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                            name: '公文管理公文管理',
-                            number: 1
-                        },
-                        {
-                            key: '1',
-                            img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                            name: '待办文件',
-                            number: 1
-                        },
-                    ]
-                },
-                {
-                    type: '省委会议',
-                    data: [
-                        {
-                            key: '1',
-                            img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                            name: '公文管理公文管理',
-                            number: 1
-                        },
-                        {
-                            key: '1',
-                            img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                            name: '待办文件',
-                            number: 1
-                        },
-                    ]
-                },
-                {
-                    type: '测试办公',
-                    data: [
-                        {
-                            key: '1',
-                            img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                            name: '公文管理公文管理',
-                            number: 1
-                        },
-                        {
-                            key: '1',
-                            img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                            name: '待办文件',
-                            number: 1
-                        },
-                    ]
-                },
-                {
-                    type: '公文1',
-                    data: [
-                        {
-                            key: '1',
-                            img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                            name: '公文管理公文管理',
-                            number: 1
-                        },
-                        {
-                            key: '1',
-                            img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                            name: '待办文件',
-                            number: 1
-                        },
-                    ]
-                },
-                {
-                    type: '公文2',
-                    data: [
-                        {
-                            key: '1',
-                            img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                            name: '公文管理公文管理',
-                            number: 1
-                        },
-                        {
-                            key: '1',
-                            img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                            name: '待办文件',
-                            number: 1
-                        },
-                    ]
-                },
-                 {
-                    type: '公文3',
-                    data: [
-                        {
-                            key: '1',
-                            img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                            name: '公文管理公文管理',
-                            number: 1
-                        },
-                        {
-                            key: '1',
-                            img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                            name: '待办文件',
-                            number: 1
-                        },
-                    ]
-                },
-                {
-                    type: '会议',
-                    data: [
-                        {
-                            key: '1',
-                            img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                            name: '待阅文件',
-                            number: 1
-                        },
-                        {
-                            key: '1',
-                            img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                            name: '已办文件',
-                            number: 1
-                        },
-                        {
-                            key: '1',
-                            img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                            name: '待阅文件',
-                            number: 1
-                        },
-                        {
-                            key: '1',
-                            img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                            name: '已办文件',
-                            number: 1
-                        },
-                        {
-                            key: '1',
-                            img: 'https://img01.yzcdn.cn/vant/apple-1.jpg',
-                            name: '我的收藏',
-                            number: 1
+                            is_favorite: "1", //是否设置我的应用 0否 1是
+                            imageUrl: "", //应用图标url
+                            appUrl: "", //应用点击url
+                            title: "公文管理", //应用名称
+                            value: "11", //应用ID
+                            key: "11" //应用ID
                         }
                     ]
-                },
-
-                
-                
+                }
             ],
         }
     },
@@ -290,38 +139,75 @@ export default {
     },
     destroyed() { },
     methods: {
-        search() {
-            this.is_edit = false;
-            let urlObject = window.IDM.url.queryObject();
-            let pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
-            var clickNewFunction = this.propData.clickSearchFunction;
-            clickNewFunction.forEach(item=>{
-                window[item.name]&&window[item.name].call(this,{
-                    urlData:urlObject,
-                    pageId,
-                    customParam:item.param,
-                    _this:this
+        getMyApplicatinData() {
+            if ( this.moduleObject.env == 'develop' ) {
+                return
+            }
+            if ( this.propData.getMyApplicationUrl ) {
+                window.IDM.http.post(this.propData.getMyApplicationUrl)
+                    .then((res) => {
+                        if ( res.data && res.data.type == 'success' ) {
+                            this.my_application_data = res.data.data
+                        }
+                    }).catch(function (error) {
+
+                    });
+            }
+        },
+        getAllApplicatinData() {
+            if ( this.moduleObject.env == 'develop' ) {
+                return
+            }
+            if ( this.propData.getAllApplicationUrl ) {
+                window.IDM.http.post(this.propData.getAllApplicationUrl)
+                    .then((res) => {
+                        if ( res.data && res.data.type == 'success' ) {
+                            this.application_data = res.data.data
+                        }
+                    }).catch(function (error) {
+
+                    });
+            }
+        },
+        save() {
+            if ( this.moduleObject.env == 'develop' ) {
+                return
+            }
+            if ( this.propData.saveMyApplicationUrl ) {
+                let appId_arr = [];
+                let appId = '';
+                this.my_application_data.forEach((item) => {
+                    appId_arr.push(item.value)
+                })
+                appId = appId_arr.join(',')
+                window.IDM.http.post(this.propData.saveMyApplicationUrl,{
+                    appId: appId
+                }).then((res) => {
+                    if ( res.data && res.data.type == 'success' ) {
+                        Toast.success('添加应用成功');
+                        this.is_edit = false;
+                    }
+                }).catch(function (error) {
+
                 });
-            })
+            }
+        },
+        search() {
+            this.save()
+            this.is_edit = false;
+            if ( this.propData.clickSearchUrl ) {
+                if ( this.propData.clickSearchJumpType == '_self' ) {
+                    window.location.href = this.propData.clickSearchUrl
+                } else {
+                    window.open(this.propData.clickSearchUrl,this.propData.clickSearchJumpType);
+                }
+            }            
         },
         cancel() {
             this.is_edit = false;
             let urlObject = window.IDM.url.queryObject();
             let pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
             var clickNewFunction = this.propData.clickCancelFunction;
-            clickNewFunction.forEach(item=>{
-                window[item.name]&&window[item.name].call(this,{
-                    urlData:urlObject,
-                    pageId,
-                    customParam:item.param,
-                    _this:this
-                });
-            })
-        },
-        save() {
-            let urlObject = window.IDM.url.queryObject();
-            let pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
-            var clickNewFunction = this.propData.clickSaveFunction;
             clickNewFunction.forEach(item=>{
                 window[item.name]&&window[item.name].call(this,{
                     urlData:urlObject,
@@ -342,7 +228,7 @@ export default {
         },
         isHaveInMyApplication(e) {
             let result = this.my_application_data.filter((item) => {
-                return item.name == e.name
+                return item.value == e.value
             })
             if ( result && result.length ) {
                 return true
@@ -350,11 +236,7 @@ export default {
                 return false
             }
         },
-        changeLines() {
-            if ( this.application_data > this.propData.showRows * this.propData.showColumn ) {
-                this.application_data = this.application_data_copy.splice(0,this.propData.showRows * this.propData.showColumn)
-            }
-        },
+       
         /** * 提供父级组件调用的刷新prop数据组件 */
         propDataWatchHandle(propData) {
             this.propData = propData.compositeAttr || {};
@@ -570,54 +452,6 @@ export default {
             let that = this;
             //所有地址的url参数转换
             var params = that.commonParam();
-            switch (this.propData.dataSourceTypeMy) {
-                case "customInterface":
-                    this.propData.customInterfaceUrlMy && window.IDM.http.get(this.propData.customInterfaceUrlMy, params)
-                        .then((res) => {
-                            this.my_application_data = that.getExpressData("resultData", that.propData.dataFiledMy, res.data)
-                        }).catch(function (error) {
-
-                        });
-                    break;
-                case "pageCommonInterface":
-                    //使用通用接口直接跳过，在setContextValue执行
-                    break;
-                case "customFunction":
-                    if (this.propData.customFunctionMy && this.propData.customFunctionMy.length > 0) {
-                        var resValue = "";
-                        try {
-                            resValue = window[this.propData.customFunctionMy[0].name] && window[this.propData.customFunctionMy[0].name].call(this, { ...params, ...this.propData.customFunctionMy[0].param, moduleObject: this.moduleObject });
-                        } catch (error) {
-
-                        }
-                        that.my_application_data = resValue;
-                    }
-                    break;
-            }
-            switch (this.propData.dataSourceTypeAll) {
-                case "customInterface":
-                    this.propData.customInterfaceUrlAll && window.IDM.http.get(this.propData.customInterfaceUrlAll, params)
-                        .then((res) => {
-                            this.application_data = that.getExpressData("resultData", that.propData.dataFiledAll, res.data)
-                        }).catch(function (error) {
-
-                        });
-                    break;
-                case "pageCommonInterface":
-                    //使用通用接口直接跳过，在setContextValue执行
-                    break;
-                case "customFunction":
-                    if (this.propData.customFunctionAll && this.propData.customFunctionAll.length > 0) {
-                        var resValue = "";
-                        try {
-                            resValue = window[this.propData.customFunctionAll[0].name] && window[this.propData.customFunctionAll[0].name].call(this, { ...params, ...this.propData.customFunctionAll[0].param, moduleObject: this.moduleObject });
-                        } catch (error) {
-
-                        }
-                        that.application_data = resValue;
-                    }
-                    break;
-            }
         },
         /**
          * 通用的获取表达式匹配后的结果
@@ -707,16 +541,6 @@ export default {
          */
         setContextValue(object) {
             console.log("统一接口设置的值", object);
-            if (object.type != "pageCommonInterface") {
-                return;
-            }
-            //这里使用的是子表，所以要循环匹配所有子表的属性然后再去设置修改默认值
-            if (object.key == this.propData.dataNameMy) {
-                this.my_application_data = this.getExpressData(this.propData.dataNameMy, this.propData.dataFiledMy, object.data)
-            }
-            if (object.key == this.propData.dataNameAll) {
-                this.application_data = this.getExpressData(this.propData.dataNameAll, this.propData.dataFiledAll, object.data)
-            }
         }
     }
 }
@@ -741,7 +565,7 @@ export default {
             .idm_applicationcenter_main_list{
                 position: relative;
                 text-align: center;
-                img{
+                img,svg{
                     width: 40px;
                     height: 40px;
                     margin: 0 auto 2.5px auto;
@@ -757,7 +581,7 @@ export default {
                     line-height: 15px;
                     position: absolute;
                     top: -7px;
-                    right: -7px;
+                    right: 0px;
                     text-align: center;
                     font-size: 12px;
                     color: white;

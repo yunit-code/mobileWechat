@@ -254,7 +254,7 @@
                     "text": "全部应用",
                     "desc": "用于获取全部应用数据的接口地址",
                     "bindKey": "getAllApplicationUrl",
-                    "default": ""
+                    "default": "/ctrl/tencentApp/queryAppByGrant"
                 },
                 {
                     "type": "input",
@@ -262,7 +262,7 @@
                     "text": "添加接口",
                     "desc": "用于添加应用的接口地址",
                     "bindKey": "addApplicationUrl",
-                    "default": ""
+                    "default": "/ctrl/tencentApp/setFavoriteApp"
                 },
                 {
                     "type": "actionSelect",
