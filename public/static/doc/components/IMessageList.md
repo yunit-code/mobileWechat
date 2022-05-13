@@ -1,15 +1,15 @@
 # 文本
-统一待办组件
+信息列表组件
 ## 组件类名（className）
-IUnifiedTodo
+IMessageList
 ## 组件类ID（classId）
-idm.componet.mobilewechat.unifiedTodo
+idm.componet.mobilewechat.messageList
 ## 组件开发语言（comLangue）
 vue
 ## 组件类型（comType）
 common
 ## 所在代码包版本
-workbench@1.0.0
+mobilewechat@1.0.6
 ## 组件属性
 ### 唯一标识【ctrlId】
 ### 基本属性

@@ -299,7 +299,14 @@ export default {
               styleObject["text-decoration"] = element.fontDecoration;
               break;
             case 'imgBorderRadius':
-              bannerItemStyleObj['border-radius'] = element.inputVal + element.selectVal
+              bannerItemStyleObj['border-radius'] = element.inputVal + element.selectVal;
+              break;
+            case "paddingTop":
+              styleObject['padding-top'] = element.inputVal + element.selectVal;
+              break;
+            case "paddingBottom":
+              styleObject['padding-bottom'] = element.inputVal + element.selectVal;
+              break;
           }
         }
       }
@@ -413,7 +420,7 @@ export default {
         return
       }
       const url = IDM.url.getWebPath(item.jumpUrl)
-      window.open(url)
+      window.open(url, this.propData.jumpStyle || '_self')
     },
     showThisModuleHandle() {
       this.propData.defaultStatus = "default";

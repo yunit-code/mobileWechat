@@ -19,9 +19,9 @@
         </svg>
         <svg-icon v-else icon-class="threeLine" className="idm-unifie-todo-box-title-icon"></svg-icon>
       </div>
-      <van-icon class="idm-unifie-todo-box-title-more" name="ellipsis" @click="handleClick('clickMoreFunction')" />
+      <van-icon v-if="propData.showMore" class="idm-unifie-todo-box-title-more" name="ellipsis" @click="handleClickMore" />
     </div>
-    <div class="idm-unifie-todo-box-sub" v-for="(item, index) in list" :key="index" @click="handleClick('clickToDoItemFunction',item)">
+    <div class="idm-unifie-todo-box-sub" v-for="(item, index) in list" :key="index" @click="handleClickItem(item)">
       <div class="idm-unifie-todo-box-sub-title" :class="{'idm-unifie-todo-box-sub-no-read': true}">
         {{item.title}}
       </div>
@@ -114,22 +114,33 @@ export default {
       //获取所有的URL参数、页面ID（pageId）、以及所有组件的返回值（用范围值去调用IDM提供的方法取出所有的组件值）
       let urlObject = window.IDM.url.queryObject(),
       pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
-      var customFunction = this.propData.customFunction;
-      console.log(customFunction)
-            customFunction &&
-                customFunction.forEach((item) => {
-                  console.log(window[item.name])
-                window[item.name] &&
-                    window[item.name].call(this, {
-                    customParam: item.param,
-                    _this: this,
-                    urlData:urlObject,
-                    pageId,
-                    });
-                });
+      
+      var clickToDoItemFunction = this.propData.clickToDoItemFunction;
+      if (clickToDoItemFunction) {
+        clickToDoItemFunction.forEach((item) => {
+        console.log(window[item.name])
+        window[item.name] &&
+            window[item.name].call(this, {
+            customParam: item.param,
+            _this: this,
+            urlData:urlObject,
+            pageId,
+            });
+        });
+      }else{
+        window.open(itemObject.jumpUrl, this.propData.jumpStyle || '_self')
+      }
     },
     handleClickMore() {
-
+      if(this.moduleObject.env === 'develop') {
+        return
+      }
+      //默认接口地址
+      let url =  ''
+      if(this.propData.moreListLink) {
+        url = IDM.url.getWebPath(this.propData.moreListLink)
+      }
+      window.open(url, this.propData.jumpStyle || '_self')
     },
     /**
      * 提供父级组件调用的刷新prop数据组件
@@ -251,17 +262,18 @@ export default {
               styleObject["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
               break;
             case "titleIconFontColor":
-                styleObjectTitleIcon["color"] = element.hex;
+                styleObjectTitleIcon["fill"] = element.hex;
                 break
             case "titleIconFontSize":
                 styleObjectTitleIcon["font-size"] = element + "px";
                 styleObjectTitleIcon["width"] = element + "px";
+                styleObjectTitleIcon["height"] = element + "px";
                 break
           }
         }
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id,styleObject);
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-title .idm-unifie-todo-box-title-icon", styleObjectTitleIcon);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-title-icon", styleObjectTitleIcon);
       this.initData();
     },
     /**

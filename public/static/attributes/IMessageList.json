@@ -54,6 +54,24 @@
                     "default": "styleFour"
                 },
                 {
+                    "type": "select",
+                    "layoutType": "inline",
+                    "text": "链接跳转方式",
+                    "bindKey": "jumpStyle",
+                    "desc": "设置组件显示风格",
+                    "dictionary": [
+                        {
+                            "label": "当前页跳转",
+                            "value": "_self"
+                        },
+                        {
+                            "label": "新窗口打开",
+                            "value": "_blank"
+                        }
+                    ],
+                    "default": "_self"
+                },
+                {
                     "type": "slider",
                     "layoutType": "block",
                     "text": "内容最多显示几条",

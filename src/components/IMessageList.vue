@@ -15,14 +15,13 @@
     <template v-if="propData.compStyle !== 'styleFour'">
       <div class="idm-message-list-box-title d-flex align-c just-b">
         <div class="d-flex align-c">
-          <!-- <img src="../assets/red-three.png" class="idm-message-list-box-title-icon" alt=""> -->
+          <span :style="titleFontStyleObj">{{propData.htmlTitle}}</span>
           <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm-message-list-box-title-icon" aria-hidden="true" >
             <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
           </svg>
           <svg-icon v-else icon-class="threeLine" className="idm-message-list-box-title-icon"></svg-icon>
-          <span :style="titleFontStyleObj">{{propData.htmlTitle}}</span>
         </div>
-        <div class="idm-message-list-box-title-right" @click="handleClick('clickMoreFunction')">
+        <div class="idm-message-list-box-title-right" @click="handleClickMore">
           更多 <van-icon name="arrow" />
         </div>
       </div>
@@ -32,7 +31,7 @@
         <div class="idm-message-list-box-top-left flex-1" :style="titleFontStyleObj">
           <span v-for="(item, index) in showTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.messageSortTitle}}</span>
         </div>
-        <van-icon class="idm-message-list-box-top-more" name="ellipsis" @click="handleClick('clickMoreFunction')" />
+        <van-icon class="idm-message-list-box-top-more" name="ellipsis" @click="handleClickMore" />
       </div>
       <div v-else class="idm-message-list-box-top2 d-flex just-b align-c">
         <div class="idm-message-list-box-top2-left d-flex flex-1">
@@ -166,7 +165,14 @@ export default {
         return
       }
       const url = IDM.url.getWebPath(item.jumpUrl)
-      window.open(url)
+      window.open(url, this.propData.jumpStyle || '_self')
+    },
+    handleClickMore(){
+      if(this.moduleObject.env === 'develop') {
+        return
+      }
+      const url = IDM.url.getWebPath('')
+      window.open(url, this.propData.jumpStyle || '_self')
     },
     // 顶部tabs点击
     handleTitleClick(item, index) {
@@ -271,11 +277,12 @@ export default {
               styleObject["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
               break;
             case "titleIconFontColor":
-                styleObjectTitleIcon["color"] = element.hex;
+                styleObjectTitleIcon["fill"] = element.hex;
                 break
             case "titleIconFontSize":
                 styleObjectTitleIcon["font-size"] = element + "px";
                 styleObjectTitleIcon["width"] = element + "px";
+                styleObjectTitleIcon["height"] = element + "px";
                 break
           }
         }
@@ -468,19 +475,17 @@ export default {
 }
 .idm-message-list-parent-box{
   .idm-message-list-box{
-    background-color: #fff;
     overflow: hidden;
     &-title{
       padding: 0 0 10px 0;
       font: inherit;
       &-icon{
         font-size: 14px;
-        max-height: 14px;
         width: 14px;
         fill: currentColor;
         vertical-align: -0.15em;
         outline: none;
-        margin: 0 7px 0 0;
+        margin: 0 0 0 8px;
       }
       &-right{
         font-weight: 400;

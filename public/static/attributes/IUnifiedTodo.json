@@ -54,6 +54,31 @@
                     "text": "图标大小",
                     "bindKey": "titleIconFontSize",
                     "default": 18
+                },
+                {
+                    "type": "switch",
+                    "layoutType": "inline",
+                    "text": "显示更多",
+                    "bindKey": "showMore",
+                    "default": "true"
+                },
+                {
+                    "type": "select",
+                    "layoutType": "inline",
+                    "text": "链接跳转方式",
+                    "bindKey": "jumpStyle",
+                    "desc": "设置组件显示风格",
+                    "dictionary": [
+                        {
+                            "label": "当前页跳转",
+                            "value": "_self"
+                        },
+                        {
+                            "label": "新窗口打开",
+                            "value": "_blank"
+                        }
+                    ],
+                    "default": "_self"
                 }
             ]
         },
@@ -143,23 +168,8 @@
                     "layoutType": "block",
                     "text": "点击待办项动作",
                     "bindKey": "clickToDoItemFunction",
-                    "desc": "点击的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
+                    "desc": "此设置用于点击时候执行自定义函数逻辑，如果设置了此函数则内置的根据数据跳转链接则失效",
                     "multiple": true
-                },
-                {
-                    "type": "actionSelect",
-                    "layoutType": "block",
-                    "text": "点击更多动作",
-                    "bindKey": "clickMoreFunction",
-                    "desc": "点击的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
-                    "multiple": true
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "接口地址",
-                    "bindKey": "interfaceUrl",
-                    "desc": "用于获取数据源的接口地址，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}"
                 },
                 {
                     "type": "textarea",
@@ -169,6 +179,13 @@
                     "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData（自定义接口忽略）且它的值为{data:{filedName:[{\"text\":\"\",\"value\":\"\",\"check\":true}]}}，则这里应该填写data.filedName",
                     "default": "",
                     "placeholder": "示例：data.filedName 或者 [0].data[0].filedName"
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "更多地址",
+                    "bindKey": "moreListLink",
+                    "desc": "用于获取数据源的接口地址，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}"
                 }
             ]
         }
