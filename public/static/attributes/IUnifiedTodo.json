@@ -23,7 +23,7 @@
                 {
                     "type": "input",
                     "layoutType": "inline",
-                    "text": "标题",
+                    "text": "标题文字",
                     "bindKey": "htmlTitle",
                     "default": "紧急代办"
                 },
@@ -67,7 +67,7 @@
                     "layoutType": "inline",
                     "text": "跳转方式",
                     "bindKey": "jumpStyle",
-                    "desc": "设置组件显示风格",
+                    "desc": "设置组件链接跳转方式",
                     "dictionary": [
                         {
                             "label": "当前页跳转",
@@ -163,6 +163,13 @@
             "text": "高级",
             "desc": "点击？查看高级设置用法指南",
             "children": [
+                {
+                    "type": "treeSelect",
+                    "layoutType": "inline",
+                    "text": "数据源",
+                    "bindKey": "dataSource",
+                    "dataSourceUrl":""
+                },
                 {
                     "type": "actionSelect",
                     "layoutType": "block",

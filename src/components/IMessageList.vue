@@ -15,7 +15,7 @@
     <template v-if="propData.compStyle !== 'styleFour'">
       <div class="idm-message-list-box-title d-flex align-c just-b">
         <div class="d-flex align-c">
-          <span :style="titleFontStyleObj">{{propData.htmlTitle}}</span>
+          <span class="idm-message-list-box-title-font">{{propData.htmlTitle}}</span>
           <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm-message-list-box-title-icon" aria-hidden="true" >
             <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
           </svg>
@@ -28,7 +28,7 @@
     </template>
     <div class="idm-message-list-box" :style="{width: propData.width, height: propData.height}">
       <div v-if="propData.compStyle === 'styleFour'" class="idm-message-list-box-top d-flex just-b align-c">
-        <div class="idm-message-list-box-top-left flex-1" :style="titleFontStyleObj">
+        <div class="idm-message-list-box-top-left flex-1 idm-message-list-box-title-font-fourStyle">
           <span v-for="(item, index) in showTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.messageSortTitle}}</span>
         </div>
         <van-icon class="idm-message-list-box-top-more" name="ellipsis" @click="handleClickMore" />
@@ -131,13 +131,6 @@ export default {
     }
   },
   computed: {
-    titleFontStyleObj(){
-      return {
-        ...this.propData.titleFontStyle,
-        color: this.propData.titleFontStyle.fontColors.hex,
-        fontSize: this.propData.titleFontStyle.fontSize + this.propData.titleFontStyle.fontSizeUnit
-      }
-    },
     showTitleList(){
       const list = this.propData.messageTitleList.filter(el => el.isShow === true)
       if(list.length === 0) {
@@ -213,6 +206,8 @@ export default {
     convertAttrToStyleObject(){
       var styleObject = {};
       let styleObjectTitleIcon = {}
+      let titleFontStyleObj = {}
+      let titleFontStyleActiveObj = {}
       if(this.propData.bgSize&&this.propData.bgSize=="custom"){
         styleObject["background-size"]=(this.propData.bgSizeWidth?this.propData.bgSizeWidth.inputVal+this.propData.bgSizeWidth.selectVal:"auto")+" "+(this.propData.bgSizeHeight?this.propData.bgSizeHeight.inputVal+this.propData.bgSizeHeight.selectVal:"auto")
       }else if(this.propData.bgSize){
@@ -305,11 +300,42 @@ export default {
                 styleObjectTitleIcon["width"] = element + "px";
                 styleObjectTitleIcon["height"] = element + "px";
                 break
-          }
+            case 'titleFontStyle':
+              titleFontStyleObj["font-family"] = element.fontFamily;
+              if (element.fontColors.hex8) {
+                  titleFontStyleObj["color"] = element.fontColors.hex8;
+              }
+              titleFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
+              titleFontStyleObj["font-style"] = element.fontStyle;
+              titleFontStyleObj["font-size"] = element.fontSize + element.fontSizeUnit;
+              titleFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
+              titleFontStyleObj["text-align"] = element.fontTextAlign;
+              titleFontStyleObj["text-decoration"] = element.fontDecoration;
+              break;
+              case 'titleFontStyleActive':
+                titleFontStyleActiveObj["font-family"] = element.fontFamily;
+                if (element.fontColors.hex8) {
+                    titleFontStyleActiveObj["color"] = element.fontColors.hex8;
+                }
+                titleFontStyleActiveObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
+                titleFontStyleActiveObj["font-style"] = element.fontStyle;
+                titleFontStyleActiveObj["font-size"] = element.fontSize + element.fontSizeUnit;
+                titleFontStyleActiveObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
+                titleFontStyleActiveObj["text-align"] = element.fontTextAlign;
+                titleFontStyleActiveObj["text-decoration"] = element.fontDecoration;
+                break;
+            }
         }
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id,styleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-title .idm-message-list-box-title-icon", styleObjectTitleIcon);
+      if(this.propData.compStyle === 'styleFour'){
+        window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-top-left", titleFontStyleObj);
+      }else{
+        window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-title-font", titleFontStyleObj);
+      }
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-top-left .active", titleFontStyleActiveObj);
+
       this.initData();
     },
     /**
@@ -514,7 +540,7 @@ export default {
       &-right{
         font-weight: 400;
         color: #aaa;
-        font-size: 16px;
+        font-size: 14px;
       }
     }
     &-top{

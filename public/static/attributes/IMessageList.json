@@ -58,7 +58,7 @@
                     "layoutType": "inline",
                     "text": "跳转方式",
                     "bindKey": "jumpStyle",
-                    "desc": "设置组件显示风格",
+                    "desc": "设置组件链接跳转方式",
                     "dictionary": [
                         {
                             "label": "当前页跳转",
@@ -148,6 +148,7 @@
                     "layoutType": "block",
                     "text": "标题字体样式设置",
                     "bindKey": "titleFontStyle",
+                    "desc": "样式四时，设置页签字体样式，其他样式设置标题字体样式",
                     "default": {
                         "fontColors": {
                             "hex": "#333333"
@@ -155,6 +156,13 @@
                         "fontSize": 16,
                         "fontSizeUnit": "px"
                     }
+                },
+                {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "选中页签字体样式设置",
+                    "bindKey": "titleFontStyleActive",
+                    "display": "@[compStyle === 'styleFour']"
                 },
                 {
                     "type": "colorPicker",
@@ -217,6 +225,13 @@
             "text": "高级",
             "desc": "点击？查看高级设置用法指南",
             "children": [
+                {
+                    "type": "treeSelect",
+                    "layoutType": "inline",
+                    "text": "数据源",
+                    "bindKey": "dataSource",
+                    "dataSourceUrl":""
+                },
                 {
                     "type": "actionSelect",
                     "layoutType": "block",
