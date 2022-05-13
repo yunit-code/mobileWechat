@@ -40,7 +40,7 @@
         </div>
       </div>
       <ul class="idm-message-list-box-list" v-if="propData.compStyle === 'styleFour' || propData.compStyle === 'styleOne'">
-        <li class="d-flex align-c" v-for="(item, index) in messageList" :key="index" @click="handleClick('clickMoreFunction', item)">
+        <li class="d-flex align-c" v-for="(item, index) in messageList" :key="index" @click="handleClickItem(item)">
           <!-- <span class="idm-message-list-box-list-style-square" v-if="propData.compStyle === 'styleFour'"></span>
           <span class="idm-message-list-box-list-style-square1" v-else></span> -->
           <svg-icon iconClass="square" class="idm-message-list-box-list-style-square"></svg-icon>
@@ -49,7 +49,7 @@
           </li>
       </ul>
       <ul class="idm-message-list-box-list2" v-if="propData.compStyle === 'styleTwo' || propData.compStyle === 'styleThree'">
-        <li class="d-flex" v-for="(item, index) in messageList" :key="index" @click="handleClick('clickMoreFunction', item)">
+        <li class="d-flex" v-for="(item, index) in messageList" :key="index" @click="handleClickItem(item)">
           <img src="../assets/red-three.png" :class="propData.compStyle === 'styleTwo' ? 'idm-message-list-box-list2-left-img' : 'idm-message-list-box-list2-left-img2'" alt="">
           <div style="overflow:hidden">
             <div class="idm-message-list-box-list2-title" :class="propData.compStyle === 'styleTwo' ? 'idm-message-list-box-list2-title' : 'idm-message-list-box-list2-title2'">
@@ -66,7 +66,28 @@
 </template>
 
 <script>
-//titleInterfaceUrl, listInterfaceUrl
+const res = {
+  code: "200",
+  type: "success",
+  message: "操作成功",
+  data: {
+    inbox:{
+      tabName:"页签一",
+      list:[{
+        title: "标题",
+        image: "图片下载地址",
+        jumpUrl: "详情打开地址",
+        time: "时间",
+        author: "作者"
+      }],
+      moreUrl: "更多跳转地址",
+      total:"99"
+    },
+    toread:{
+      tabName:"页签名称，例如待阅",
+    }
+  }
+}
 import { Icon } from 'vant';
 import 'vant/lib/icon/style';
 export default {
@@ -93,7 +114,7 @@ export default {
         },
         compStyle: 'styleFour',
         maxGroupCount: 3,
-        maxContentCount: 3,
+        limit: 3,
         messageTitleList: []
       },
       messageList: [{
@@ -140,6 +161,13 @@ export default {
   },
   destroyed() {},
   methods:{
+    handleClickItem(item){
+      if(this.moduleObject.env === 'develop') {
+        return
+      }
+      const url = IDM.url.getWebPath(item.jumpUrl)
+      window.open(url)
+    },
     // 顶部tabs点击
     handleTitleClick(item, index) {
       console.log(index)
@@ -285,31 +313,19 @@ export default {
       let that = this;
       //所有地址的url参数转换
       var params = that.commonParam();
-      switch (this.propData.dataSourceType) {
-        case "customInterface":
-          this.propData.customInterfaceUrl&&window.IDM.http.get(this.propData.customInterfaceUrl,params)
-          .then((res) => {
-            //res.data
-            that.$set(that.propData,"list",that.getExpressData("resultData",that.propData.dataFiled,res.data));
-            // that.propData.fontContent = ;
-          })
-          .catch(function (error) {
-            
-          });
-          break;
-        case "pageCommonInterface":
-          //使用通用接口直接跳过，在setContextValue执行
-          break;
-        case "customFunction":
-          if(this.propData.customFunction&&this.propData.customFunction.length>0){
-            var resValue = "";
-            try {
-              resValue = window[this.propData.customFunction[0].name]&&window[this.propData.customFunction[0].name].call(this,{...params,...this.propData.customFunction[0].param,moduleObject:this.moduleObject});
-            } catch (error) {}
-            that.propData.list = resValue;
-          }
-          break;
-      }
+      this.propData.customInterfaceUrl&&window.IDM.http.get(this.propData.customInterfaceUrl,{
+        ...params,
+        start: 0,
+        limit: this.propData.limit
+      })
+      .then((res) => {
+        //res.data
+        that.$set(that.propData,"list",res.data);
+        // that.propData.fontContent = ;
+      })
+      .catch((error) => {
+        that.$set(that.propData,"list",res.data)
+      });
     },
     /**
      * 通用的获取表达式匹配后的结果

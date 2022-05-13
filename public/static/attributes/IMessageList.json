@@ -56,8 +56,8 @@
                 {
                     "type": "slider",
                     "layoutType": "block",
-                    "text": "内容最多显示几条(0不限制)",
-                    "bindKey": "maxContentCount",
+                    "text": "内容最多显示几条",
+                    "bindKey": "limit",
                     "default": "3"
                 },
                 {

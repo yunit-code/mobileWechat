@@ -114,8 +114,8 @@ export default {
         effect: 'coverflow',
         pagination: {
           el: '.swiper-pagination',
-          bulletClass : 'my-bullet',
-          bulletActiveClass: 'my-bullet-active',
+          bulletClass : 'idm-banner-my-bullet',
+          bulletActiveClass: 'idm-banner-my-bullet-active',
         },
         centeredSlides: true,
         coverflowEffect: {
@@ -132,10 +132,6 @@ export default {
         },
       });
     },
-    handleClickItem(item) {
-      console.log(item);
-    },
-    handleClickMore() {},
     /**
      * 提供父级组件调用的刷新prop数据组件
      */
@@ -410,7 +406,7 @@ export default {
       return _defaultVal;
     },
     /**
-     * 文本点击事件
+     * 轮播点击事件
      */
     handleClick(item) {
       if(this.moduleObject.env === 'develop') {
@@ -524,14 +520,6 @@ export default {
 }
 
 
-li {
-  display: inline-block;
-  float: left;
-  img {
-    width: 100%;
-    height: 100%;
-  }
-}
 .swiper-slide {
   -webkit-transition: transform .5s;
   -moz-transition: transform .5s;
@@ -555,10 +543,7 @@ li {
   left: 34% !important;
   bottom: 5px !important;
 }
-</style>
-<style>
-
-.my-bullet{
+.idm-banner-my-bullet{
   width: 6px;
   height: 6px;
   display: inline-block;
@@ -567,7 +552,19 @@ li {
   background-color: #fff;
   margin: 0 3px;
 }
-.my-bullet-active{
+.idm-banner-my-bullet-active{
   background-color: #1D335E ;
 }
+</style>
+<style lang="scss" scoped>
+
+li {
+  display: inline-block;
+  float: left;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
 </style>
