@@ -222,6 +222,7 @@ export default {
     convertAttrToStyleObject() {
       var styleObject = {};
       var tipStyleObject = {};
+      var cardStyleObject = {};
       if (this.propData.bgSize && this.propData.bgSize == "custom") {
         styleObject["background-size"] =
           (this.propData.bgSizeWidth
@@ -364,6 +365,63 @@ export default {
                 element.radius.rightBottom.radius +
                 element.radius.rightBottom.radiusUnit;
               break;
+             case "cardBorder":
+              if (element.border.top.width > 0) {
+                cardStyleObject["border-top-width"] =
+                  element.border.top.width + element.border.top.widthUnit;
+                cardStyleObject["border-top-style"] = element.border.top.style;
+                if (element.border.top.colors.hex8) {
+                  cardStyleObject["border-top-color"] =
+                    element.border.top.colors.hex8;
+                }
+              }
+              if (element.border.right.width > 0) {
+                cardStyleObject["border-right-width"] =
+                  element.border.right.width + element.border.right.widthUnit;
+                cardStyleObject["border-right-style"] =
+                  element.border.right.style;
+                if (element.border.right.colors.hex8) {
+                  cardStyleObject["border-right-color"] =
+                    element.border.right.colors.hex8;
+                }
+              }
+              if (element.border.bottom.width > 0) {
+                cardStyleObject["border-bottom-width"] =
+                  element.border.bottom.width + element.border.bottom.widthUnit;
+                cardStyleObject["border-bottom-style"] =
+                  element.border.bottom.style;
+                if (element.border.bottom.colors.hex8) {
+                  cardStyleObject["border-bottom-color"] =
+                    element.border.bottom.colors.hex8;
+                }
+              }
+              if (element.border.left.width > 0) {
+                cardStyleObject["border-left-width"] =
+                  element.border.left.width + element.border.left.widthUnit;
+                cardStyleObject["border-left-style"] =
+                  element.border.left.style;
+                if (element.border.left.colors.hex8) {
+                  cardStyleObject["border-left-color"] =
+                    element.border.left.colors.hex8;
+                }
+              }
+
+              cardStyleObject["border-top-left-radius"] =
+                element.radius.leftTop.radius +
+                element.radius.leftTop.radiusUnit;
+              cardStyleObject["border-top-right-radius"] =
+                element.radius.rightTop.radius +
+                element.radius.rightTop.radiusUnit;
+              cardStyleObject["border-bottom-left-radius"] =
+                element.radius.leftBottom.radius +
+                element.radius.leftBottom.radiusUnit;
+              cardStyleObject["border-bottom-right-radius"] =
+                element.radius.rightBottom.radius +
+                element.radius.rightBottom.radiusUnit;
+              break;
+            case "boxShadow":
+              cardStyleObject["box-shadow"] = element;
+              break;
             case "font":
               styleObject["font-family"] = element.fontFamily;
               if (element.fontColors.hex8) {
@@ -405,6 +463,7 @@ export default {
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .i-sort-tip", tipStyleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .i-sort-item", cardStyleObject);
       // this.initData();
     },
     /**

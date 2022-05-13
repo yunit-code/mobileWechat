@@ -259,6 +259,14 @@
                     "bindKey": "border"
                 },
                 {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "卡片阴影",
+                    "desc":"填写格式如下：10px 10px 5px #888888，更多请点击查看详细填写说明",
+                    "bindKey": "boxShadow",
+                    "default":"0px 0px 3px rgba(0,0,0,0.1)"
+                },
+                {
                     "type": "font",
                     "layoutType": "block",
                     "text": "文字",
@@ -296,14 +304,6 @@
                 {
                     "type": "input",
                     "layoutType": "inline",
-                    "text": "个性列表",
-                    "bindKey": "userCustomizationUrl",
-                    "desc":"获取当前页面用户个性化一级组件列表,pageid为当前页面id",
-                    "default": "/ctrl/idm/api/fetchUserCustomization"
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
                     "text": "默认列表",
                     "bindKey": "componentListUrl",
                     "desc":"获取当前页面默认一级组件列表,pageid为当前页面id",
@@ -312,9 +312,17 @@
                 {
                     "type": "input",
                     "layoutType": "inline",
+                    "text": "个性列表",
+                    "bindKey": "userCustomizationUrl",
+                    "desc":"获取当前页面用户个性化一级组件列表,pageid为当前页面id",
+                    "default": "/ctrl/idm/api/fetchUserCustomization"
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
                     "text": "保存接口",
                     "bindKey": "saveUserCustomizationUrl",
-                    "desc":"用于获取当前页面一级组件列表,pageid为当前页面id,默认自动获取",
+                    "desc":"用户保存排序后的数据",
                     "default": "/ctrl/idm/api/saveUserCustomization"
                 }
             ]

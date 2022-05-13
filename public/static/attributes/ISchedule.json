@@ -38,10 +38,29 @@
                     "placeholder": "示例：暂无日程"
                 },
                 {
+                    "type": "select",
+                    "layoutType": "inline",
+                    "text": "详情跳转",
+                    "desc":"日程详情跳转方式",
+                    "bindKey": "detailTarget",
+                    "display": "@[moreBtn]",
+                    "dictionary":[
+                        {
+                            "label":"当前页",
+                            "value":"_self"
+                        },
+                        {
+                            "label":"新窗口",
+                            "value":"_blank"
+                        }
+                    ],
+                    "default":"_self"
+                },
+                {
                     "type": "switch",
                     "layoutType": "inline",
                     "text": "更多按钮",
-                    "desc":"是否显示更多按钮更多按钮",
+                    "desc":"是否显示更多按钮",
                     "bindKey": "moreBtn",
                     "default": "true"
                 },
@@ -52,6 +71,24 @@
                     "desc":"更多按钮跳转地址",
                     "bindKey": "moreUrl",
                     "display": "@[moreBtn]"
+                },
+                {
+                    "type": "select",
+                    "layoutType": "inline",
+                    "text": "跳转方式",
+                    "desc":"更多按钮跳转方式",
+                    "bindKey": "moreTarget",
+                    "display": "@[moreBtn]",
+                    "dictionary":[
+                        {
+                            "label":"当前页",
+                            "value":"_self"
+                        },
+                        {
+                            "label":"新窗口",
+                            "value":"_blank"
+                        }
+                    ]
                 }
             ]
         },

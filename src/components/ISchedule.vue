@@ -239,7 +239,7 @@ export default {
      * 日程详情
      */
     detailClick(url) {
-      window.open(url, "_self");
+      window.open(url, this.propData.detailTarget);
     },
     /**
      * 时间范围
@@ -759,7 +759,7 @@ export default {
      * 更多按钮跳转
      */
     moreClick() {
-      window.open(this.propData.moreUrl, "_self");
+      window.open(this.propData.moreUrl, this.propData.moreTarget);
     },
   },
 };
