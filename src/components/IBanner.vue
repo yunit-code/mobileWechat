@@ -18,7 +18,7 @@
         <ul class="swiper-wrapper">
           <li
             class="swiper-slide idm-banner-box-swiper-item-container banner-item-container"
-            v-for="(item, index) in propData.list && propData.list.value"
+            v-for="(item, index) in list.value"
             :key="index"
             @click="handleClick(item)"
           >
@@ -77,8 +77,8 @@ export default {
           inputVal: 8,
           selectVal: "px"
         },
-        list: data
       },
+      list: data,
       mySwiper: null
     };
   },
@@ -101,12 +101,15 @@ export default {
   //   }
   // },
   mounted() {
-    this.initSwiper();
+    console.log(this.moduleObject)
+    if(this.moduleObject.env === 'develop') {
+      this.initSwiper();
+    }
   },
   destroyed() {},
   methods: {
     initSwiper() {
-      this.mySwiper = new Swiper(".idm-banner-box-swiper-container", {
+      this.mySwiper = new Swiper('#'+this.moduleObject.id + " .idm-banner-box-swiper-container", {
         autoplay: 2000,
         speed: 500,
         loop: true,
@@ -362,25 +365,23 @@ export default {
         })
         .then((res) => {
           //res.data
-          that.$set(
-            that.propData,
-            "list",
-            res.data
-          );
+          this.list = res.data
+          this.$nextTick(()=> {
+            this.initSwiper()
+          })
         })
-        .catch(function (error) {
+        .catch((error) => {
           let res = {
             code: 200,
             type: "success",
             message: "操作成功",
             data
-        }
-          that.$set(
-            that.propData,
-            "list",
-            res.data
-          );
-        });
+          }
+        this.list = res.data
+        this.$nextTick(()=> {
+          this.initSwiper()
+        })
+      })
     },
     /**
      * 通用的获取表达式匹配后的结果
