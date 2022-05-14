@@ -124,7 +124,7 @@ export default {
                     if ( this.moduleObject.env == 'develop' ) {
                         application_data.push(applicationList[i])
                     } else {
-                        if ( applicationList[i].selectApplication && applicationList[i].selectApplication.value && this.have_power_application_data_ids.indexOf(applicationList[i].selectApplication.value) != -2 ) {
+                        if ( applicationList[i].selectApplication && applicationList[i].selectApplication.value && this.have_power_application_data_ids.indexOf(applicationList[i].selectApplication.value) != -1 ) {
                             application_data.push(applicationList[i])
                         }
                     }
@@ -145,13 +145,19 @@ export default {
             if ( this.moduleObject.env == 'develop' ) {
                 return
             }
-            window.IDM.http.post(base_url + '/ctrl/dataSource/getDatas',{
-                id: sourceId
-            }).then(result=>{
-                if(result&&result.data&&result.data.type == 'success' && result.data.data && result.data.data.type == 'success' && result.data.data.data){
-                    this.$set(this.application_data[index], "todoNumber", result.data.data.data.count);
-                }
-            })
+            if ( this.propData.getApplicationMarkNumberUrl ) {
+                window.IDM.http.post(base_url + '/ctrl/dataSource/getDatas',{
+                    id: sourceId
+                }).then(result=>{
+                    if ( !this.propData.dataFiled ) {
+                        if(result&&result.data&&result.data.type == 'success' && result.data.data && result.data.data.type == 'success' && result.data.data.data){
+                            this.$set(this.application_data[index], "todoNumber", result.data.data.data.count);
+                        }
+                    } else {
+                        this.$set(this.application_data[index], "todoNumber", result.data.data.data[this.propData.dataFiled]);
+                    }
+                })
+            }
         },
         getApplicationName(item) {
             if ( item.applicationName ) {

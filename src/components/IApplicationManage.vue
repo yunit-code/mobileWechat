@@ -23,7 +23,7 @@
                                 <img v-if="item.imageUrl" :src="item.imageUrl">
                                 <svg-icon v-else icon-class="application" />
 
-                                <div class="idm_applicationcenter_main_list_name">{{ item.name || ('应用' + index) }}</div>
+                                <div class="idm_applicationcenter_main_list_name">{{ item.title || ('应用' + index + 1) }}</div>
                                 <van-icon @click="deleteApplication(item,index)" v-if="is_edit" class="icon" name="minus" color="#fff" />
                             </div>
                         </van-grid-item>
@@ -46,7 +46,7 @@
                                         <img v-if="item1.imageUrl" :src="item1.imageUrl">
                                         <svg-icon v-else icon-class="application" />
 
-                                        <div class="idm_applicationcenter_main_list_name">{{ item1.name || ('应用' + index1) }}</div>
+                                        <div class="idm_applicationcenter_main_list_name">{{ item1.title || ('应用' + index1 + 1) }}</div>
                                         <div v-if="is_edit">
                                             <van-icon v-if="isHaveInMyApplication(item1)" class="icon icon_disabled" name="plus" color="#fff" />
                                             <van-icon @click="addApplication(item1)" v-else class="icon" name="plus" color="#fff" />
@@ -65,7 +65,7 @@
             </div>
             <div class="idm_applicationmanage_footer flex_between">
                 <van-button @click="cancel" class="button" block type="default">取消</van-button>
-                <van-button @save="save" class="button" block type="info">保存</van-button>
+                <van-button @click="save" class="button" block type="info">保存</van-button>
             </div>
             
         </div>
@@ -130,13 +130,10 @@ export default {
     props: {
     },
     created() {
-        console.log('created')
         this.moduleObject = this.$root.moduleObject
         this.convertAttrToStyleObject();
     },
     mounted() {
-        console.log('mounted')
-        this.initData()
         //赋值给window提供跨页面调用
         this.$nextTick(function (params) {
             //单独组件不能使用这种方式

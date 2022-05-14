@@ -22,40 +22,40 @@
           <svg-icon v-else icon-class="threeLine" className="idm-message-list-box-title-icon"></svg-icon>
         </div>
         <div class="idm-message-list-box-title-right" v-if="propData.showMore" @click="handleClickMore">
-          更多 <van-icon name="arrow" />
+          <span v-if="propData.showTotalNumber">{{messageData.total}}</span> <span v-else>更多</span> <van-icon name="arrow" />
         </div>
       </div>
     </template>
     <div class="idm-message-list-box" :style="{width: propData.width, height: propData.height}">
       <div v-if="propData.compStyle === 'styleFour'" class="idm-message-list-box-top d-flex just-b align-c">
         <div class="idm-message-list-box-top-left flex-1 idm-message-list-box-title-font-fourStyle">
-          <span v-for="(item, index) in showTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.messageSortTitle}}</span>
+          <span v-for="(item, index) in showTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.tabTitle}}</span>
         </div>
         <van-icon v-if="propData.showMore" class="idm-message-list-box-top-more" name="ellipsis" @click="handleClickMore" />
       </div>
       <div v-else class="idm-message-list-box-top2 d-flex just-b align-c">
         <div class="idm-message-list-box-top2-left d-flex flex-1">
-          <div v-for="(item, index) in showTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.messageSortTitle}}</div>
+          <div v-for="(item, index) in showTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.tabTitle}}</div>
         </div>
       </div>
       <ul class="idm-message-list-box-list" v-if="propData.compStyle === 'styleFour' || propData.compStyle === 'styleOne'">
-        <li class="d-flex align-c" v-for="(item, index) in messageList" :key="index" @click="handleClickItem(item)">
+        <li class="d-flex align-c" v-for="(item, index) in messageData.list" :key="index" @click="handleClickItem(item)">
           <!-- <span class="idm-message-list-box-list-style-square" v-if="propData.compStyle === 'styleFour'"></span>
           <span class="idm-message-list-box-list-style-square1" v-else></span> -->
           <svg-icon iconClass="square" class="idm-message-list-box-list-style-square"></svg-icon>
-          <span class="idm-message-list-box-list-content">{{item.content}}</span>
-          <span class="idm-message-list-box-list-time" v-if="propData.compStyle !== 'styleOne'">{{item.createTime}}</span>
+          <span class="idm-message-list-box-list-content">{{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}</span>
+          <span class="idm-message-list-box-list-time" v-if="propData.compStyle !== 'styleOne'">{{item.time}}</span>
           </li>
       </ul>
       <ul class="idm-message-list-box-list2" v-if="propData.compStyle === 'styleTwo' || propData.compStyle === 'styleThree'">
-        <li class="d-flex" v-for="(item, index) in messageList" :key="index" @click="handleClickItem(item)">
-          <img src="../assets/red-three.png" :class="propData.compStyle === 'styleTwo' ? 'idm-message-list-box-list2-left-img' : 'idm-message-list-box-list2-left-img2'" alt="">
+        <li class="d-flex" v-for="(item, index) in messageData.list" :key="index" @click="handleClickItem(item)">
+          <img :src="item.image" :class="propData.compStyle === 'styleTwo' ? 'idm-message-list-box-list2-left-img' : 'idm-message-list-box-list2-left-img2'" alt="">
           <div style="overflow:hidden">
             <div class="idm-message-list-box-list2-title" :class="propData.compStyle === 'styleTwo' ? 'idm-message-list-box-list2-title' : 'idm-message-list-box-list2-title2'">
-              {{item.content}}
+              {{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}
             </div>
             <div class="idm-message-list-box-list2-title-bottom">
-              {{item.createTime}}
+              {{item.time}}
             </div>
           </div>
         </li>
@@ -65,28 +65,32 @@
 </template>
 
 <script>
-const res = {
-  code: "200",
-  type: "success",
-  message: "操作成功",
-  data: {
-    inbox:{
-      tabName:"页签一",
-      list:[{
-        title: "标题",
-        image: "图片下载地址",
-        jumpUrl: "详情打开地址",
-        time: "时间",
-        author: "作者"
-      }],
-      moreUrl: "更多跳转地址",
-      total:"99"
+const messageData = {
+    list:[{
+      title: "这是一标题，这是一标题，这是一标题，这是一标题，这是一标题，这是一标题，这是一标题，",
+      image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.xntv.tv%2Fd%2Ffile%2F2018-04-26%2Ffa767ea3d7f35f9d44531daa96fd32a4.jpg&refer=http%3A%2F%2Fwww.xntv.tv&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1655102114&t=f60af982a9e9191280839e5d2a4cafd1",
+      jumpUrl: "/ctrl",
+      time: "2022-05-09",
+      author: "作者"
     },
-    toread:{
-      tabName:"页签名称，例如待阅",
-    }
+    {
+      title: "这是一标题，这是一标题，这是一标题，这是一标题，这是一标题，这是一标题，这是一标题，",
+      image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fq_70%2Cc_zoom%2Cw_640%2Fimages%2F20190329%2F3dfe53bbc72945efa027676bc250d87c.jpeg&refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1655102114&t=d03ee07e0978bf8c3483099216cdac6c",
+      jumpUrl: "/ctrl",
+      time: "2022-05-09",
+      author: "作者"
+    },
+    {
+      title: "这是一标题，这是一标题，这是一标题，这是一标题，这是一标题，这是一标题，这是一标题，",
+      image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.xntv.tv%2Fd%2Ffile%2F2018-04-26%2Ffa767ea3d7f35f9d44531daa96fd32a4.jpg&refer=http%3A%2F%2Fwww.xntv.tv&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1655102114&t=f60af982a9e9191280839e5d2a4cafd1",
+      jumpUrl: "/ctrl",
+      time: "2022-05-09",
+      author: "作者"
+    }],
+    moreUrl: "更多跳转地址",
+    total:"99"
   }
-}
+
 import { Icon } from 'vant';
 import 'vant/lib/icon/style';
 export default {
@@ -111,30 +115,20 @@ export default {
             }
           }
         },
+        dataFiled: 'title',
         compStyle: 'styleFour',
         maxGroupCount: 3,
         limit: 3,
         messageTitleList: []
       },
-      messageList: [{
-        content: '这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，',
-        createTime: '2022-05-09'
-      },
-      {
-        content: '这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，',
-        createTime: '2022-05-09'
-      },
-      {
-        content: '这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，这是一条消息，',
-        createTime: '2022-05-09'
-      }]
+      messageData
     }
   },
   computed: {
     showTitleList(){
       const list = this.propData.messageTitleList.filter(el => el.isShow === true)
       if(list.length === 0) {
-        return [{messageSortTitle: '页签名称'}]
+        return [{tabTitle: '页签名称', tabKey: ''}]
       }
       return list
     }
@@ -159,17 +153,12 @@ export default {
       }
       var clickMessageItemFunction = this.propData.clickMessageItemFunction;
       if (clickMessageItemFunction) {
-        //获取所有的URL参数、页面ID（pageId）、以及所有组件的返回值（用范围值去调用IDM提供的方法取出所有的组件值）
-        let urlObject = window.IDM.url.queryObject(),
-        pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
         clickMessageItemFunction.forEach((item) => {
         console.log(window[item.name])
         window[item.name] &&
             window[item.name].call(this, {
             customParam: item.param,
             _this: this,
-            urlData:urlObject,
-            pageId,
             });
         });
       }else{
@@ -182,16 +171,16 @@ export default {
         return
       }
       //默认接口地址
-      let url =  ''
+      let url =  this.messageData.moreUrl
       if(this.propData.moreListLink) {
-        url = IDM.url.getWebPath(this.propData.moreListLink)
+        url = this.propData.moreListLink
       }
-      window.open(url, this.propData.jumpStyle || '_self')
+      window.open(IDM.url.getWebPath(url), this.propData.jumpStyle || '_self')
     },
     // 顶部tabs点击
     handleTitleClick(item, index) {
-      console.log(index)
       this.defaultIndex = index
+      this.initData(item)
     },
     /**
      * 提供父级组件调用的刷新prop数据组件
@@ -363,7 +352,7 @@ export default {
     /**
      * 加载动态数据
      */
-    initData(){
+    initData(item = {}){
       if(this.moduleObject.env === 'develop') {
         return
       }
@@ -372,16 +361,16 @@ export default {
       var params = that.commonParam();
       this.propData.customInterfaceUrl&&window.IDM.http.get(this.propData.customInterfaceUrl,{
         ...params,
+        tabKey: item.tabKey || this.propData.messageTitleList[0] || this.propData.messageTitleList[0].tabKey,
         start: 0,
         limit: this.propData.limit
       })
       .then((res) => {
-        //res.data
-        that.$set(that.propData,"list",res.data);
+        this.messageData = res.data || messageData
         // that.propData.fontContent = ;
       })
       .catch((error) => {
-        that.$set(that.propData,"list",res.data)
+        this.messageData = messageData
       });
     },
     /**
@@ -651,12 +640,14 @@ export default {
         width: 80px;
         height: 70px;
         margin:0 10px 0 0;
+        object-fit: fill;
       }
       &-left-img2{
         width: 60px;
         height: 60px;
         border-radius: 50%;
         margin:0 10px 0 0;
+        object-fit: fill;
       }
       &-title{
         width: 100%;
