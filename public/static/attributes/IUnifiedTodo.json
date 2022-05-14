@@ -168,7 +168,24 @@
                     "layoutType": "inline",
                     "text": "数据源",
                     "bindKey": "dataSource",
-                    "dataSourceUrl":""
+                    "dataSourceUrl":"/ctrl/dataSource/getDatasourceByGroup"
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "数据接口",
+                    "bindKey": "customInterfaceUrl",
+                    "default": "/ctrl/dataSource/getDatas",
+                    "desc": "用于获取数据源的接口地址，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}"
+                },
+                {
+                    "type": "textarea",
+                    "layoutType": "inline",
+                    "text": "显示字段",
+                    "bindKey": "dataFiled",
+                    "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData（自定义接口忽略）且它的值为{data:{filedName:[{\"text\":\"\",\"value\":\"\",\"check\":true}]}}，则这里应该填写data.filedName",
+                    "default": "value",
+                    "placeholder": "示例：data.filedName 或者 [0].data[0].filedName"
                 },
                 {
                     "type": "actionSelect",

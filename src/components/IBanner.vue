@@ -341,9 +341,9 @@ export default {
       if(this.moduleObject.env === 'develop') {
         return
       }
-      this.propData.customInterfaceUrl
+      this.propData.customInterfaceUrl &&
       window.IDM.http
-        .get(window.IDM.url.getWebPath(this.propData.customInterfaceUrl), {
+        .post(window.IDM.url.getWebPath(this.propData.customInterfaceUrl), {
           id: this.propData.dataSource && this.propData.dataSource.value,
           start: 0,
           limit: this.propData.limit

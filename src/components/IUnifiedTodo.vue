@@ -21,15 +21,28 @@
       </div>
       <van-icon v-if="propData.showMore" class="idm-unifie-todo-box-title-more" name="ellipsis" @click="handleClickMore" />
     </div>
-    <div class="idm-unifie-todo-box-sub" v-for="(item, index) in list" :key="index" @click="handleClickItem(item)">
+    <div class="idm-unifie-todo-box-sub" v-for="(item, index) in todoData[propData.dataFiled || 'value']" :key="index" @click="handleClickItem(item)">
       <div class="idm-unifie-todo-box-sub-title" :class="{'idm-unifie-todo-box-sub-no-read': true}">
-        {{item.title}}
-      </div>
-      <div class="idm-unifie-todo-box-sub-intr">
-        <div class="d-flex align-c"><svg-icon iconClass="duihao" class="idm-unifie-todo-box-sub-icon"></svg-icon> <span>{{item.status}}</span> </div>
-        <div class="d-flex align-c">
-          <svg-icon iconClass="person" class="idm-unifie-todo-box-sub-icon"></svg-icon> <span>{{item.from}}</span> </div>
-        <div class="d-flex align-c"><svg-icon iconClass="time" class="idm-unifie-todo-box-sub-icon"></svg-icon> <span>{{item.createTime}}</span></div>
+        <div class="idm-unifie-todo-box-sub-title-icon" v-if="item.isHot">
+          <svg-icon icon-class="fire" ></svg-icon>
+        </div>
+        <div class="flex-1">
+          <div class="idm-unifie-todo-box-sub-content">
+            {{item.title}}
+          </div>
+          <div class="idm-unifie-todo-box-sub-intr">
+            <div class="d-flex align-c">
+              <svg-icon iconClass="duihao" class="idm-unifie-todo-box-sub-icon"></svg-icon>
+              <span>{{item.statusText}}</span> </div>
+            <div class="d-flex align-c">
+              <svg-icon iconClass="person" class="idm-unifie-todo-box-sub-icon"></svg-icon> 
+              <span>{{item.department}}</span> </div>
+            <div class="d-flex align-c">
+              <svg-icon iconClass="time" class="idm-unifie-todo-box-sub-icon"></svg-icon>
+              <span>{{item.time}}</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -38,22 +51,28 @@
 <script>
 import { Icon } from 'vant';
 import 'vant/lib/icon/style';
-const list = [{
-  status: '已读',
-  from: '文档处',
-  createTime: '2022-05-09 09:00',
-  title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
-},{
-  status: '已读',
-  from: '文档处',
-  createTime: '2022-05-09 09:00',
-  title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
-},{
-  status: '已读',
-  from: '文档处',
-  createTime: '2022-05-09 09:00',
-  title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
-}]
+const todoData = {
+  value: [{
+    isHot: true,
+    statusText: '已读',
+    department: '文档处',
+    time: '2022-05-09 09:00',
+    title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
+  },{
+    isHot: true,
+    statusText: '已读',
+    department: '文档处',
+    time: '2022-05-09 09:00',
+    title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
+  },{
+    isHot: true,
+    statusText: '已读',
+    department: '文档处',
+    time: '2022-05-09 09:00',
+    title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
+  }],
+ moreUrl: ''
+}
 export default {
   name: 'IUnifiedTodo',
   components: {
@@ -77,7 +96,7 @@ export default {
         bgColor: '#fff',
         maxCount: '3', // 最多显示几条
       },
-      list
+      todoData
     }
   },
   props: {
@@ -97,7 +116,6 @@ export default {
   destroyed() {},
   methods:{
     handleClickItem(itemObject){
-      let that = this;
       if(this.moduleObject.env=="develop"){
         //开发模式下不执行此事件
         return;
@@ -119,7 +137,7 @@ export default {
             });
         });
       }else{
-        window.open(itemObject.jumpUrl, this.propData.jumpStyle || '_self')
+        window.open(IDM.url.getWebPath(itemObject.jumpUrl), this.propData.jumpStyle || '_self')
       }
     },
     handleClickMore() {
@@ -127,11 +145,11 @@ export default {
         return
       }
       //默认接口地址
-      let url =  ''
+      let url = this.todoData.moreUrl
       if(this.propData.moreListLink) {
-        url = IDM.url.getWebPath(this.propData.moreListLink)
+        url = this.propData.moreListLink
       }
-      window.open(url, this.propData.jumpStyle || '_self')
+      window.open(IDM.url.getWebPath(url), this.propData.jumpStyle || '_self')
     },
     /**
      * 提供父级组件调用的刷新prop数据组件
@@ -309,18 +327,20 @@ export default {
       if(this.moduleObject.env === 'develop') {
         return
       }
-      let that = this;
-      //所有地址的url参数转换
-      var params = that.commonParam();
-      this.propData.interfaceUrl&&window.IDM.http.get(this.propData.interfaceUrl,params)
-      .then((res) => {
-        //res.data
-        that.$set(that.propData,"list",that.getExpressData("resultData",that.propData.dataFiled,res.data));
-        // that.propData.fontContent = ;
+      this.propData.customInterfaceUrl &&
+      window.IDM.http
+        .post(window.IDM.url.getWebPath(this.propData.customInterfaceUrl), {
+          id: this.propData.dataSource && this.propData.dataSource.value,
+          start: 0,
+          limit: this.propData.limit
+        })
+        .then((res) => {
+          //res.data
+          this.todoData = res.data || todoData
+        })
+        .catch((error) => {
+          this.todoData = todoData
       })
-      .catch(function (error) {
-        that.$set(that.propData,"list",that.getExpressData("resultData",that.propData.dataFiled, list))
-      });
     },
     /**
      * 通用的获取表达式匹配后的结果
@@ -432,14 +452,13 @@ export default {
       //这里使用的是子表，所以要循环匹配所有子表的属性然后再去设置修改默认值
       if (object.key == this.propData.dataName) {
         // this.propData.fontContent = this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data);
-        this.$set(this.propData,"list",this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data));
+        this.$set(this.propData,"todoData",this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data));
       }
     }
   }
 }
 </script>
-
-<style lang="scss">
+<style lang="scss" scoped>
 .d-flex{
   display: flex;
 }
@@ -449,6 +468,13 @@ export default {
 .just-b{
   justify-content: space-between;
 }
+.flex-1{
+  flex: 1;
+}
+</style>
+
+<style lang="scss">
+
 .idm-unifie-todo-box{
   background-color: #fff;
   overflow: hidden;
@@ -467,7 +493,14 @@ export default {
   &-sub{
     border-bottom: .6px solid #eee;
     &-title{
+      display: flex;
       margin: 8px 0 0 0;
+      &-icon{
+        font-size: 15px;
+        margin: 0 6px 0 0;
+      }
+    }
+    &-content{
       text-overflow: ellipsis;
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -488,9 +521,9 @@ export default {
     }
     &-intr{
       padding: 8px 0;
-      @extend .d-flex;
-      @extend .align-c;
-      @extend .just-b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       color: #999;
       font-size: 15px;
     }
@@ -504,6 +537,7 @@ export default {
       fill: currentColor;
       vertical-align: -0.15em;
       outline: none;
+      margin: 0 3px 0 0;
     }
   }
 }
