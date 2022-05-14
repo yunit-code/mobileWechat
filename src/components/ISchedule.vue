@@ -244,6 +244,9 @@ export default {
      * 日程详情
      */
     detailClick(url) {
+      if (this.propData.moreTarget === '_blank' && (!this.moduleObject.env || this.moduleObject.env == "develop")) { 
+        return
+      }
       window.open(url, this.propData.detailTarget);
     },
     /**
@@ -764,6 +767,9 @@ export default {
      * 更多按钮跳转
      */
     moreClick() {
+      if (this.propData.moreTarget === '_blank' && (!this.moduleObject.env || this.moduleObject.env == "develop")) { 
+        return
+      }
       window.open(this.propData.moreUrl, this.propData.moreTarget);
     },
   },
