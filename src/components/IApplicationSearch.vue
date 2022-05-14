@@ -82,7 +82,7 @@ export default {
                 appName: this.search_text
             }).then(result=>{
                 if(result && result.data && result.data.type == 'success'){
-                    this.application_data = res.data.data
+                    this.application_data = result.data.data
                 }
             })
         },
