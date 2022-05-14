@@ -124,7 +124,7 @@ export default {
                     if ( this.moduleObject.env == 'develop' ) {
                         application_data.push(applicationList[i])
                     } else {
-                        if ( applicationList[i].selectApplication && applicationList[i].selectApplication.value && this.have_power_application_data_ids.indexOf(applicationList[i].selectApplication.value) != -2 ) {
+                        if ( applicationList[i].selectApplication && applicationList[i].selectApplication.value && this.have_power_application_data_ids.indexOf(applicationList[i].selectApplication.value) != -1 ) {
                             application_data.push(applicationList[i])
                         }
                     }
