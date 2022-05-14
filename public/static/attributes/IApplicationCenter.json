@@ -400,6 +400,30 @@
         },
         {
             "type": "group",
+            "text": "数据源",
+            "desc": "点击？查看数据源用法指南",
+            "children": [
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "接口地址",
+                    "desc": "用于获取应用角标的接口地址",
+                    "bindKey": "getApplicationMarkNumberUrl",
+                    "default": "/ctrl/dataSource/getDatas"
+                },
+                {
+                    "type": "textarea",
+                    "layoutType": "inline",
+                    "text": "显示字段",
+                    "bindKey": "dataFiled",
+                    "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData（自定义接口忽略）且它的值为{data:{filedName:[{\"text\":\"\",\"value\":\"\",\"check\":true}]}}，则这里应该填写filedName",
+                    "default": "",
+                    "placeholder": "示例:filedName"
+                }
+            ]
+        },
+        {
+            "type": "group",
             "text": "高级",
             "desc": "点击？查看高级设置用法指南",
             "children": [
