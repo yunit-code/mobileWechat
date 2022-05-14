@@ -126,7 +126,7 @@
                             "layoutType": "inline",
                             "text": "选择应用",
                             "bindKey": "selectApplication",
-                            "dataSourceUrl": "http://116.236.111.158:27181/mock/11/DreamWeb/ctrl/tencentApp/getAllApps",
+                            "dataSourceUrl": "/ctrl/tencentApp/getAllApps",
                             "default": ""
                         },
                         {

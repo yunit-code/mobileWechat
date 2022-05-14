@@ -49,7 +49,7 @@ export default {
         return {
             moduleObject: {},
             propData: this.$root.propData.compositeAttr || {
-
+                getAllApplicationUrl: '/ctrl/tencentApp/queryAppByGrant'
             },
             search_text: '',
             application_data: [ 
@@ -75,9 +75,9 @@ export default {
     destroyed() { },
     methods: {
         getApplicationList() {
-            if ( this.moduleObject.env == 'develop' || !this.propData.getAllApplicationUrl ) {
-                return
-            }
+            // if ( this.moduleObject.env == 'develop' || !this.propData.getAllApplicationUrl ) {
+            //     return
+            // }
             window.IDM.http.post(base_url + this.propData.getAllApplicationUrl,{
                 appName: this.search_text
             }).then(result=>{
