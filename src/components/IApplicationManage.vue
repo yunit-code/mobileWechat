@@ -23,7 +23,7 @@
                                 <img v-if="item.imageUrl" :src="item.imageUrl">
                                 <svg-icon v-else icon-class="application" />
 
-                                <div class="idm_applicationcenter_main_list_name">{{ item.name || ('应用' + index) }}</div>
+                                <div class="idm_applicationcenter_main_list_name">{{ item.title || ('应用' + index + 1) }}</div>
                                 <van-icon @click="deleteApplication(item,index)" v-if="is_edit" class="icon" name="minus" color="#fff" />
                             </div>
                         </van-grid-item>
@@ -46,7 +46,7 @@
                                         <img v-if="item1.imageUrl" :src="item1.imageUrl">
                                         <svg-icon v-else icon-class="application" />
 
-                                        <div class="idm_applicationcenter_main_list_name">{{ item1.name || ('应用' + index1) }}</div>
+                                        <div class="idm_applicationcenter_main_list_name">{{ item1.title || ('应用' + index1 + 1) }}</div>
                                         <div v-if="is_edit">
                                             <van-icon v-if="isHaveInMyApplication(item1)" class="icon icon_disabled" name="plus" color="#fff" />
                                             <van-icon @click="addApplication(item1)" v-else class="icon" name="plus" color="#fff" />
@@ -65,7 +65,7 @@
             </div>
             <div class="idm_applicationmanage_footer flex_between">
                 <van-button @click="cancel" class="button" block type="default">取消</van-button>
-                <van-button @save="save" class="button" block type="info">保存</van-button>
+                <van-button @click="save" class="button" block type="info">保存</van-button>
             </div>
             
         </div>
@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import { base_url } from '../api/config.js'
 import { Grid,GridItem,Tab,Tabs,Icon,Button,Toast } from 'vant';
 
 import 'vant/lib/grid/style';
@@ -97,6 +98,8 @@ export default {
             propData: this.$root.propData.compositeAttr || {
                 showRows: 2,
                 showColumn: 5,
+                getMyApplicationUrl: '/ctrl/tencentApp/queryMyFavorite',
+                getAllApplicationUrl: '/ctrl/tencentApp/queryAppGroupByGrant',
             },
             is_edit: false,
             my_application_data: [
@@ -140,11 +143,13 @@ export default {
     destroyed() { },
     methods: {
         getMyApplicatinData() {
+            console.log('初始化数据',this.moduleObject)
             if ( this.moduleObject.env == 'develop' ) {
                 return
             }
+            console.log('propData',this.propData)
             if ( this.propData.getMyApplicationUrl ) {
-                window.IDM.http.post(this.propData.getMyApplicationUrl)
+                window.IDM.http.post(base_url + this.propData.getMyApplicationUrl)
                     .then((res) => {
                         if ( res.data && res.data.type == 'success' ) {
                             this.my_application_data = res.data.data
@@ -159,7 +164,7 @@ export default {
                 return
             }
             if ( this.propData.getAllApplicationUrl ) {
-                window.IDM.http.post(this.propData.getAllApplicationUrl)
+                window.IDM.http.post(base_url + this.propData.getAllApplicationUrl)
                     .then((res) => {
                         if ( res.data && res.data.type == 'success' ) {
                             this.application_data = res.data.data
@@ -180,7 +185,7 @@ export default {
                     appId_arr.push(item.value)
                 })
                 appId = appId_arr.join(',')
-                window.IDM.http.post(this.propData.saveMyApplicationUrl,{
+                window.IDM.http.post(base_url + this.propData.saveMyApplicationUrl,{
                     appId: appId
                 }).then((res) => {
                     if ( res.data && res.data.type == 'success' ) {
@@ -423,75 +428,16 @@ export default {
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_text", styleObjectTitle);
             this.initData();
         },
-        /**
-         * 通用的url参数对象
-         * 所有地址的url参数转换
-         */
-        commonParam() {
-            let urlObject = IDM.url.queryObject();
-            var params = {
-                pageId:
-                    window.IDM.broadcast && window.IDM.broadcast.pageModule
-                        ? window.IDM.broadcast.pageModule.id
-                        : "",
-                urlData: JSON.stringify(urlObject),
-            };
-            return params;
-        },
-        /**
-         * 重新加载
-         */
+       
+        /** * 重新加载 */
         reload() {
             //请求数据源
             this.initData();
         },
-        /**
-         * 加载动态数据
-         */
         initData() {
-            let that = this;
-            //所有地址的url参数转换
-            var params = that.commonParam();
+            this.getMyApplicatinData()
+            this.getAllApplicatinData()
         },
-        /**
-         * 通用的获取表达式匹配后的结果
-         */
-        getExpressData(dataName, dataFiled, resultData) {
-            //给defaultValue设置dataFiled的值
-            var _defaultVal = undefined;
-            if (dataFiled) {
-                var filedExp = dataFiled;
-                filedExp =
-                    dataName +
-                    (filedExp.startsWiths("[") ? "" : ".") +
-                    filedExp;
-                var dataObject = { IDM: window.IDM };
-                dataObject[dataName] = resultData;
-                _defaultVal = window.IDM.express.replace.call(
-                    this,
-                    "@[" + filedExp + "]",
-                    dataObject
-                );
-            }
-            //对结果进行再次函数自定义
-            if (this.propData.customFunction && this.propData.customFunction.length > 0) {
-                var params = this.commonParam();
-                var resValue = "";
-                try {
-                    resValue = window[this.propData.customFunction[0].name] && window[this.propData.customFunction[0].name].call(this, {
-                        ...params,
-                        ...this.propData.customFunction[0].param,
-                        moduleObject: this.moduleObject,
-                        expressData: _defaultVal, interfaceData: resultData
-                    });
-                } catch (error) {
-                }
-                _defaultVal = resValue;
-            }
-
-            return _defaultVal;
-        },
-       
         
         /**
          * 组件通信：接收消息的方法

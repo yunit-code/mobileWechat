@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { base_url } from '../api/config.js'
 import { Grid, GridItem } from 'vant';
 import 'vant/lib/grid/style';
 export default {
@@ -91,7 +92,6 @@ export default {
     created() {
         this.moduleObject = this.$root.moduleObject
         this.getHavePowerApplication()
-        this.initApplicationData()
         this.convertAttrToStyleObject();
     },
     mounted() {
@@ -107,8 +107,8 @@ export default {
             let user_info = window.IDM.user.getCurrentUserInfo()
             let apps = []
             let have_power_application_data_ids = [];
-            if ( user_info && user_info.appGrant && user_info.appGrant.length ) {
-                apps = user_info.appGrant
+            if ( user_info && user_info.data && user_info.data.appRoleList && user_info.data.appRoleList.length ) {
+                apps = user_info.data.appRoleList
             }
             apps.forEach((item) => {
                 have_power_application_data_ids.push(item.value)
@@ -143,7 +143,7 @@ export default {
             }
             var params = this.commonParam();
             if ( this.propData.isMyApplication && this.propData.getMyApplicationUrl ) {
-                window.IDM.http.post(this.propData.getMyApplicationUrl, params)
+                window.IDM.http.post(base_url + this.propData.getMyApplicationUrl, params)
                     .then((res) => {
                         if ( res.data && res.data.type == 'success' ) {
                             this.makeMyApplicationData(res.data.data)
@@ -215,17 +215,24 @@ export default {
             if ( this.moduleObject.env == 'develop' ) {
                 return
             }
-            window.IDM.http.post('ctrl/dataSource/getDatas',{
-                id: sourceId
-            }).then(result=>{
-                if(result&&result.data&&result.data.type == 'success' && result.data.data && result.data.data.type == 'success' && result.data.data.data){
-                    this.$set(this.application_data[index], "todoNumber", result.data.data.data.count);
-                }
-            })
+            if ( this.propData.getApplicationMarkNumberUrl ) {
+                window.IDM.http.post(base_url + this.propData.getApplicationMarkNumberUrl,{
+                    id: sourceId
+                }).then(result=>{
+                    if ( !this.propData.dataFiled ) {
+                        if(result&&result.data&&result.data.type == 'success' && result.data.data && result.data.data.type == 'success' && result.data.data.data){
+                            this.$set(this.application_data[index], "todoNumber", result.data.data.data.count);
+                        }
+                    } else {
+                        this.$set(this.application_data[index], "todoNumber", result.data.data.data[this.propData.dataFiled]);
+                    }
+                })
+            }
         },
 
         /** * 提供父级组件调用的刷新prop数据组件 */
         propDataWatchHandle(propData) {
+            console.log('propData',propData)
             this.propData = propData.compositeAttr || {};
             this.convertAttrToStyleObject();
         },
@@ -381,7 +388,7 @@ export default {
             window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_text", styleObjectTitle);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_icon .idm_filed_svg_icon", styleObjectTitleIcon);
-            this.reload()
+            this.initApplicationData()
         },
         /**
          * 通用的url参数对象

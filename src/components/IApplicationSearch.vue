@@ -33,6 +33,8 @@
 </template>
 
 <script>
+import { base_url } from '../api/config.js'
+
 import { Search,Sticky,Toast  } from 'vant';
 import 'vant/lib/search/style';
 import 'vant/lib/sticky/style';
@@ -76,7 +78,7 @@ export default {
             if ( this.moduleObject.env == 'develop' || !this.propData.getAllApplicationUrl ) {
                 return
             }
-            window.IDM.http.post(this.propData.getAllApplicationUrl,{
+            window.IDM.http.post(base_url + this.propData.getAllApplicationUrl,{
                 appName: this.search_text
             }).then(result=>{
                 if(result && result.data && result.data.type == 'success'){
@@ -89,7 +91,7 @@ export default {
                 return
             }
             let url = this.propData.addApplicationUrl + '?type=1&appId=' + item.value
-            window.IDM.http.post(this.propData.addApplicationUrl,{
+            window.IDM.http.post(base_url + this.propData.addApplicationUrl,{
 
             }).then(result=>{
                 if(result && result.data && result.data.type == 'success'){
@@ -239,12 +241,15 @@ export default {
                 }
             }
             window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
-            this.reload();
+            this.initData();
         },
         
         /** * 重新加载 */
         reload() {
-            this.getApplicationList();
+            this.initData()
+        },
+        initData() {
+            this.getApplicationList()
         },
         
         showThisModuleHandle() {
