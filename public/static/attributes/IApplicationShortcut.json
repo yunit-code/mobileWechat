@@ -63,7 +63,7 @@
                             "layoutType": "inline",
                             "text": "选择应用",
                             "bindKey": "selectApplication",
-                            "dataSourceUrl": "",
+                            "dataSourceUrl": "/ctrl/tencentApp/getAllApps",
                             "default": ""
                         },
                         {

@@ -38,6 +38,8 @@
 </template>
 
 <script>
+import { base_url } from '../api/config.js'
+
 import { Grid, GridItem } from 'vant';
 import 'vant/lib/grid/style';
 export default {
@@ -106,8 +108,8 @@ export default {
             let user_info = window.IDM.user.getCurrentUserInfo()
             let apps = []
             let have_power_application_data_ids = [];
-            if ( user_info && user_info.appGrant && user_info.appGrant.length ) {
-                apps = user_info.appGrant
+            if ( user_info && user_info.data && user_info.data.appRoleList && user_info.data.appRoleList.length ) {
+                apps = user_info.data.appRoleList
             }
             apps.forEach((item) => {
                 have_power_application_data_ids.push(item.value)
@@ -122,7 +124,7 @@ export default {
                     if ( this.moduleObject.env == 'develop' ) {
                         application_data.push(applicationList[i])
                     } else {
-                        if ( applicationList[i].selectApplication && applicationList[i].selectApplication.value && this.have_power_application_data_ids.indexOf(applicationList[i].selectApplication.value) != -1 ) {
+                        if ( applicationList[i].selectApplication && applicationList[i].selectApplication.value && this.have_power_application_data_ids.indexOf(applicationList[i].selectApplication.value) != -2 ) {
                             application_data.push(applicationList[i])
                         }
                     }
@@ -143,7 +145,7 @@ export default {
             if ( this.moduleObject.env == 'develop' ) {
                 return
             }
-            window.IDM.http.post('ctrl/dataSource/getDatas',{
+            window.IDM.http.post(base_url + '/ctrl/dataSource/getDatas',{
                 id: sourceId
             }).then(result=>{
                 if(result&&result.data&&result.data.type == 'success' && result.data.data && result.data.data.type == 'success' && result.data.data.data){
