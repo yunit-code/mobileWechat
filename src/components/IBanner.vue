@@ -18,7 +18,7 @@
         <ul class="swiper-wrapper">
           <li
             class="swiper-slide idm-banner-box-swiper-item-container banner-item-container"
-            v-for="(item, index) in list.value"
+            v-for="(item, index) in bannerData[propData.dataFiled|| 'value']"
             :key="index"
             @click="handleClick(item)"
           >
@@ -78,27 +78,14 @@ export default {
           selectVal: "px"
         },
       },
-      list: data
+      bannerData: data,
     };
   },
-  props: {},
   created() {
     this.moduleObject = this.$root.moduleObject;
     // console.log(this.moduleObject)
     this.convertAttrToStyleObject();
   },
-  // watch: {
-  //   'propData.height': {
-  //     immediate: false,
-  //     handler(){
-  //       this.mySwiper.destroy()
-  //       this.$forceUpdate()
-  //       setTimeout(()=>{
-  //         this.initSwiper()
-  //       })
-  //     }
-  //   }
-  // },
   mounted() {
     console.log(this.moduleObject)
     if(this.moduleObject.env === 'develop') {
@@ -354,30 +341,21 @@ export default {
       if(this.moduleObject.env === 'develop') {
         return
       }
-      let that = this;
-      //所有地址的url参数转换
-      var params = that.commonParam();
-      this.propData.bannerInterfaceUrl &&
+      this.propData.customInterfaceUrl
       window.IDM.http
-        .get(this.propData.bannerInterfaceUrl, {
-          ...params,
+        .get(window.IDM.url.getWebPath(this.propData.customInterfaceUrl), {
+          id: this.propData.dataSource && this.propData.dataSource.value,
           start: 0,
           limit: this.propData.limit
         })
         .then((res) => {
           //res.data
-          this.list = res.data
+          this.bannerData = res.data || data
           this.initSwiper()
         })
         .catch((error) => {
-          let res = {
-            code: 200,
-            type: "success",
-            message: "操作成功",
-            data
-          }
-        this.list = res.data
-        this.initSwiper()
+          this.bannerData = data
+          this.initSwiper()
       })
     },
     /**
@@ -486,7 +464,7 @@ export default {
         // this.propData.fontContent = this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data);
         this.$set(
           this.propData,
-          "list",
+          "bannerData",
           this.getExpressData(
             this.propData.dataName,
             this.propData.dataFiled,
