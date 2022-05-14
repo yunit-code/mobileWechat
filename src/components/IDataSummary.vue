@@ -294,7 +294,11 @@ export default {
         var params = {
           id: this.propData.selectApplication
         }
-        this.propData.selectApplication&&this.propData.customInterfaceUrl&&window.IDM.http.post(base_url + this.propData.customInterfaceUrl, params)
+        this.propData.selectApplication&&this.propData.customInterfaceUrl&&window.IDM.http.post(base_url + this.propData.customInterfaceUrl, params, {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        })
         .then((res) => {
           //res.data
           if ( res.data && res.data.type == 'success') {
