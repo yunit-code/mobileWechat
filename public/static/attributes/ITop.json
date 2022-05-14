@@ -29,6 +29,24 @@
                     "default": true
                 },
                 {
+                    "type": "textarea",
+                    "layoutType": "block",
+                    "text": "用户名显示字段",
+                    "bindKey": "userFiled",
+                    "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData且它的值为{data:{userName:'test',userUnit: '单位'}}，则这里应该填写data.userName",
+                    "default": "data.userName",
+                    "placeholder": "示例：data.userName"
+                },
+                {
+                    "type": "textarea",
+                    "layoutType": "block",
+                    "text": "单位显示字段",
+                    "bindKey": "unitFiled",
+                    "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData且它的值为{data:{userUnit: '单位'}}，则这里应该填写data.userUnit",
+                    "default": "data.userUnit",
+                    "placeholder": "示例：data.userUnit"
+                },
+                {
                     "type": "switch",
                     "layoutType": "inline",
                     "text": "天气定位",
@@ -308,35 +326,6 @@
                     "layoutType": "block",
                     "text": "文字",
                     "bindKey": "font"
-                }
-            ]
-        },
-        {
-            "type": "group",
-            "text": "高级",
-            "desc": "点击？查看高级设置用法指南",
-            "children": [
-                {
-                    "type": "treeSelect",
-                    "layoutType": "inline",
-                    "text": "数据源",
-                    "bindKey": "selectApplication",
-                    "dataSourceUrl": "/ctrl/dataSource/getDataSourceList",
-                    "default": []
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "用户接口",
-                    "bindKey": "userInfoInterface",
-                    "desc": "用于获取数据源的接口地址，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}"
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "天气接口",
-                    "bindKey": "weatherInterface",
-                    "desc": "用于获取数据源的接口地址，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}"
                 }
             ]
         }

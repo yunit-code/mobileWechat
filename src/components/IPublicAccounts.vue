@@ -21,6 +21,7 @@
         trigger="click"
         :placement="placement"
         :actions="accountList"
+        :close-on-click-action="false"
         @select="onSelect"
       >
         <template #reference>
@@ -34,6 +35,7 @@
 </template>
 
 <script>
+import { base_url } from '../api/config.js'
 import { Popover } from 'vant';
 import 'vant/lib/popover/style';
 export default {
@@ -56,10 +58,6 @@ export default {
       moduleObject:{},
       accountList:[
         {
-          text: 'testtest',
-          className: 'chose'
-        },
-        {
           text: '公共账号',
         },
       ],
@@ -69,6 +67,8 @@ export default {
         coordinates: 'leftTop',
         offsetX: '20',
         offsetY: '20',
+        customInterfaceUrl: '/ctrl/virtualAccount/getVirtualAccountList',
+        changeInterfaceUrl: '/ctrl/virtualAccount/switchAccount'
       }
     }
   },
@@ -182,19 +182,29 @@ export default {
     end() {
       this.flags = false;
     },
-    // 点击发送消息
+    // 切换账号
     onSelect(action,index) {
       console.log(action,index)
-      this.accountList.forEach((v) => {
-        v.className = ''
-      })
-      this.$set(this.accountList[index], 'className', 'chose')
-      const obj = {
-        type: 'linkageReload',
-        message: '',
-        rangeModule:''
+      this.showPopover = true;
+      if(this.moduleObject.env=="production"){
+        const params = {userId: action.userId, userName: action.userName}
+        this.propData.changeInterfaceUrl&&window.IDM.http.get(base_url + this.propData.changeInterfaceUrl,params)
+        .then((res) => {
+          //res.data
+          if ( res.data && res.data.type == 'success' ) {
+            // this.accountList.forEach((v) => {
+            //   v.className = ''
+            // })
+            // this.$set(this.accountList[index], 'className', 'chose')
+            // 刷新当前页面
+            this.showPopover = false;
+            setTimeout(() => {
+              window.location.reload();
+            }, 200)
+          }
+        })
       }
-      this.sendBroadcastMessage(obj)
+      
     },
     /**
      * 提供父级组件调用的刷新prop数据组件
@@ -360,13 +370,19 @@ export default {
      */
     initData(){
       let that = this;
-      //所有地址的url参数转换
-      var params = that.commonParam();
-      this.propData.customInterfaceUrl&&window.IDM.http.get(this.propData.customInterfaceUrl,params)
-      .then((res) => {
-        //res.data
-        this.accountList = res.data;
-      })
+      if(this.moduleObject.env=="production"){
+        this.propData.customInterfaceUrl&&window.IDM.http.get(base_url + this.propData.customInterfaceUrl)
+        .then((res) => {
+          //res.data
+          console.log(res)
+          if ( res.data && res.data.type == 'success' ) {
+            that.accountList = res.data.data
+            that.accountList && that.accountList.forEach((v, i) => {
+              v.text = v.userName
+            })
+          }
+        })
+      }
     },
     /**
      * 组件通信：接收消息的方法

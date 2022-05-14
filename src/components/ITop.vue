@@ -21,19 +21,19 @@
         </div>
         <div class="top-content">
           <div class="user-info" v-if="propData.userInfo">
-            <img v-if="userInfo.logo" class="default-logo" :src="userInfo.logo" alt="">
+            <img v-if="logo" class="default-logo" :src="logo" alt="">
             <span v-else class="default-logo"></span>
             <div>
-              <div>{{userInfo.name}}</div>
-              <div>{{userInfo.city}}</div>
+              <div>{{userName}}</div>
+              <div>{{userUnit}}</div>
             </div>      
           </div>
           <div class="weather-info" v-if="propData.weather">
             <div>
-              <img v-if="weatherInfo.logo" :src="weatherInfo.logo" alt="">
-              {{weatherInfo.temperature | temperature}}
+              <img v-if="weatherLogo" :src="weatherLogo" alt="">
+              {{temperature | temperature}}
             </div>
-            <div>{{weatherInfo.city}}</div>
+            <div>{{city}}</div>
           </div>
         </div>
       </div>
@@ -46,14 +46,12 @@ export default {
   data(){
     return {
       moduleObject:{},
-      userInfo: {
-        name: 'test',
-        city: '广东市'
-      },
-      weatherInfo: {
-        temperature: '32.7',
-        city: '广东市'
-      },
+      logo: '',
+      userName: '测试',
+      userUnit: '单位',
+      weatherLogo: '',
+      temperature: '32.7',
+      city: '广东市',
       propData:this.$root.propData.compositeAttr||{
         userInfo:true,
         weather: true,
@@ -259,28 +257,25 @@ export default {
      * 加载动态数据
      */
     initData(){
-      let that = this;
-      //所有地址的url参数转换
-      // var params = that.commonParam();
-      var params = {
-        id: this.propData.selectApplication
-      }
-      this.propData.selectApplication&&this.propData.userInfoInterface&&window.IDM.http.get(this.propData.userInfoInterface,params)
-      .then((res) => {
-        //res.data
-        this.userInfo = res.data;
-      })
-      .catch(function (error) {
-        
-      });
-      this.propData.weatherInterface&&window.IDM.http.get(this.propData.weatherInterface)
-        .then((res) => {
-          //res.data
-          this.weatherInfo = res.data;
-        })
-        .catch(function (error) {
-          
-        });
+      if(this.moduleObject.env=="production"){
+        var dataObject = {IDM:window.IDM};
+        dataObject["userInfo"] = IDM.user.getCurrentUserInfo();
+
+        var _defaultVal = "";
+        var _defaultUnit = "";
+        if(this.propData.userFiled){
+          let filedExp = this.propData.userFiled;
+          filedExp = "userInfo"+(filedExp.startsWiths("[")?"":".")+filedExp;
+          _defaultVal = window.IDM.express.replace.call(this, "@["+filedExp+"]", dataObject);
+        }
+        if(this.propData.unitFiled){
+          let filedExp = this.propData.unitFiled;
+          filedExp = "userInfo"+(filedExp.startsWiths("[")?"":".")+filedExp;
+          _defaultUnit = window.IDM.express.replace.call(this, "@["+filedExp+"]", dataObject);
+        }
+        this.userName = _defaultVal;
+        this.userUnit = _defaultUnit;
+    }
 
     },
     /**

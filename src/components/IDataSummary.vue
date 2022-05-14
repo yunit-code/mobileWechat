@@ -29,8 +29,8 @@
         <li v-for="(v,i) in propData.summaryConfigList && propData.summaryConfigList.slice(0, propData.maxNumber)" :key="i" class="summary-item"
         style="width: 50%">
           <div class="summary-bg" :style="{backgroundImage: v.bgUrl ? 'url('+IDM.url.getWebPath(v.bgUrl)+')' : 'linear-gradient(to right,#f4b0b0,#f4acac,#f18c8b)'}" v-proportion="0.5">
-            <div style="marginBottom: 5px" class="summary-name">{{v.name}}</div>
-            <div class="summary-num">{{v.sumNum}}</div>
+            <div style="marginBottom: 5px" class="summary-name">{{IDM.express.replace("@[data."+v.dataFiled+".name]",data,true)}}</div>
+            <div class="summary-num">{{IDM.express.replace("@[data."+v.dataFiled+".count]",data,true)}}</div>
           </div>
         </li>
       </ul>
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { base_url } from '../api/config.js'
 export default {
   name: 'IDataSummary',
   data(){
@@ -48,25 +49,16 @@ export default {
       propData:this.$root.propData.compositeAttr||{
         comTitle: '数据汇总',
         maxNumber: 4,
+        customInterfaceUrl: '/ctrl/dataSource/getDatas',
         summaryConfigList:[
           {
             name: '省政府领导分工',
-            sumNum: 10,
+            count: 10,
             bgUrl: '',
           },
           {
             name: 'test1',
-            sumNum: 10,
-            bgUrl: '',
-          },
-          {
-            name: 'test2',
-            sumNum: 10,
-            bgUrl: '',
-          },
-          {
-            name: 'test3',
-            sumNum: 10,
+            count: 10,
             bgUrl: '',
           },
         ]
@@ -298,24 +290,18 @@ export default {
      */
     initData(){
       let that = this;
-      //所有地址的url参数转换
-      // var params = that.commonParam();
-      var params = {
-        id: this.propData.selectApplication
+      if(this.moduleObject.env=="production"){
+        var params = {
+          id: this.propData.selectApplication
+        }
+        this.propData.selectApplication&&this.propData.customInterfaceUrl&&window.IDM.http.post(base_url + this.propData.customInterfaceUrl, params)
+        .then((res) => {
+          //res.data
+          if ( res.data && res.data.type == 'success') {
+            that.$set(that.propData,"summaryConfigList",res.data.data);
+          }
+        })
       }
-      this.propData.selectApplication&&this.propData.customInterfaceUrl&&window.IDM.http.get(this.propData.customInterfaceUrl, params)
-      .then((res) => {
-        //res.data
-        that.$set(that.propData,"summaryConfigList",res.data);
-      })
-      // if(this.propData.customFunction&&this.propData.customFunction.length>0){
-      //   let resValue = "";
-      //   try {
-      //     resValue = window[this.propData.customFunction[0].name]&&window[this.propData.customFunction[0].name].call(this,{...params,...this.propData.customFunction[0].param,moduleObject:this.moduleObject});
-      //   } catch (error) {
-      //   }
-      //   that.propData.summaryConfigList = resValue;
-      // }
     },
     /**
      * 组件通信：接收消息的方法
