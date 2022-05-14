@@ -198,8 +198,11 @@ export default {
             }
         },
         search() {
-            this.save()
+            // this.save()
             this.is_edit = false;
+            if ( this.moduleObject.env == 'develop' ) {
+                return
+            }
             if ( this.propData.clickSearchUrl ) {
                 if ( this.propData.clickSearchJumpType == '_self' ) {
                     window.location.href = this.propData.clickSearchUrl

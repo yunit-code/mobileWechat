@@ -185,12 +185,14 @@ export default {
             }
         },
         toApplication(item) {
-            console.log('item',item)
-            if ( this.moduleObject.env == 'production' && item.appUrl ) {
+            if ( this.moduleObject.env != 'develop' && item.appUrl ) {
                 window.location.href = item.appUrl;
             }
         },
         toApplicationManage() {
+            if ( this.moduleObject.env == 'develop' ) {
+                return
+            }
             if ( this.propData.moreApplicationUrl ) {
                 if ( this.propData.moreApplicationJumpType == '_self' ) {
                     window.location.href = this.propData.moreApplicationUrl

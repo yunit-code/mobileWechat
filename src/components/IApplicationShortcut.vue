@@ -186,8 +186,7 @@ export default {
             }
         },
         toApplication(item) {
-            console.log('item',item)
-            if ( this.moduleObject.env == 'production' && item.appUrl ) {
+            if ( this.moduleObject.env != 'develop' && item.appUrl ) {
                 window.location.href = item.appUrl;
             }
         },
