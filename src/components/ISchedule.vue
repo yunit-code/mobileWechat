@@ -188,10 +188,14 @@ export default {
       const endDate =
         this.currentList[2][this.currentList[2].length - 1].realDate;
       const sub = url.indexOf("?") === -1 ? "?" : "&";
-      url = `${url}${sub}startDate=${startDate}&endDate=${endDate}`;
+      url = `${url}${sub}id=${this.propData.dataSource.value}`;
       IDM.http
-        .get(url)
+        .post(url,{
+          startDate,
+          endDate
+        })
         .done((res) => {
+          console.log(res,"接口数据")
           if (res.code === "200") {
             this.dealRes(res);
           } else {
@@ -206,19 +210,20 @@ export default {
      * 处理返回结果
      */
     dealRes(res) {
+      const data = this.propData.dataFiled ? res[this.propData.dataFiled] : res;
       // 更多按钮地址
-      if (res.moreUrl) {
+      if (data.moreUrl) {
         this.propData.moreUrl = this.propData.moreUrl
           ? this.propData.moreUrl
           : res.moreUrl;
       }
       // 日程列表
       const scheduleList = [];
-      if (res.value.length > 0) {
+      if (data.value.length > 0) {
         this.currentList.forEach((week) => {
           week.forEach((date) => {
             scheduleList.push(date);
-            res.value.forEach((item) => {
+            data.value.forEach((item) => {
               if (item.date === date.realDate) {
                 date.schedule = item.schedule;
               }
