@@ -184,7 +184,7 @@
                     "text": "显示字段",
                     "bindKey": "dataFiled",
                     "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData（自定义接口忽略）且它的值为{data:{filedName:[{\"text\":\"\",\"value\":\"\",\"check\":true}]}}，则这里应该填写data.filedName",
-                    "default": "value",
+                    "default": "title",
                     "placeholder": "示例：data.filedName 或者 [0].data[0].filedName"
                 },
                 {

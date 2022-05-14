@@ -21,14 +21,14 @@
       </div>
       <van-icon v-if="propData.showMore" class="idm-unifie-todo-box-title-more" name="ellipsis" @click="handleClickMore" />
     </div>
-    <div class="idm-unifie-todo-box-sub" v-for="(item, index) in todoData[propData.dataFiled || 'value']" :key="index" @click="handleClickItem(item)">
+    <div class="idm-unifie-todo-box-sub" v-for="(item, index) in todoData.value" :key="index" @click="handleClickItem(item)">
       <div class="idm-unifie-todo-box-sub-title" :class="{'idm-unifie-todo-box-sub-no-read': true}">
         <div class="idm-unifie-todo-box-sub-title-icon" v-if="item.isHot">
           <svg-icon icon-class="fire" ></svg-icon>
         </div>
         <div class="flex-1">
           <div class="idm-unifie-todo-box-sub-content">
-            {{item.title}}
+            {{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}
           </div>
           <div class="idm-unifie-todo-box-sub-intr">
             <div class="d-flex align-c">
@@ -53,25 +53,28 @@ import { Icon } from 'vant';
 import 'vant/lib/icon/style';
 const todoData = {
   value: [{
+    jumpUrl: '/14',
     isHot: true,
     statusText: '已读',
     department: '文档处',
     time: '2022-05-09 09:00',
     title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
   },{
+    jumpUrl: '/14',
     isHot: true,
     statusText: '已读',
     department: '文档处',
     time: '2022-05-09 09:00',
     title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
   },{
+    jumpUrl: '/14',
     isHot: true,
     statusText: '已读',
     department: '文档处',
     time: '2022-05-09 09:00',
     title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
   }],
- moreUrl: ''
+ moreUrl: '/sdaf'
 }
 export default {
   name: 'IUnifiedTodo',
@@ -93,6 +96,7 @@ export default {
             }
           }
         },
+        dataFiled: 'title',
         bgColor: '#fff',
         maxCount: '3', // 最多显示几条
       },
@@ -486,8 +490,8 @@ export default {
       height: 18px;
       margin: 0 0 0 8px;
     }
-    &-more{
-      font-size: 23px;
+    & &-more{
+      font-size: 22px;
     }
   }
   &-sub{

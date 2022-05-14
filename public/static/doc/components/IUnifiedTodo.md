@@ -121,8 +121,19 @@ mobilewechat@1.0.6
 ##### 数据源【dataSource】
 用于选择数据源
 - 标识：`dataSource`
+- 默认值：`/ctrl/dataSource/getDatasourceByGroup`
 
-- 默认值：空
+##### 数据接口【customInterfaceUrl】
+通过自定义数据接口获取数据
+- 标识：`customInterfaceUrl`
+- 默认值：`/ctrl/dataSource/getDatas`
+
+##### 显示字段【dataFiled】
+根据接口返回数据显示消息标题字段
+- 标识：`dataFiled`
+
+- 默认值：'title'
+
 ##### 点击单项动作【clickToDoItemFunction】
 此设置用于点击时候执行自定义函数逻辑，如果设置了此函数则内置的根据数据跳转链接则失效
 - 标识：`clickToDoItemFunction`

@@ -66,14 +66,14 @@ mobilewechat@1.0.7
 ##### 数据源【dataSource】
 用于选择数据源
 - 标识：`dataSource`
+- 默认值：`/ctrl/dataSource/getDatasourceByGroup`
 
-- 默认值：空
-##### 数据接口【bannerInterfaceUrl】
+##### 数据接口【customInterfaceUrl】
 通过自定义数据接口获取数据
-- 标识：`bannerInterfaceUrl`
-- 默认值：''
+- 标识：`customInterfaceUrl`
+- 默认值：`/ctrl/dataSource/getDatas`
 
 ##### 显示字段【dataFiled】
-根据接口返回数据格式指定结果集的字段
+根据接口返回数据显示轮播图片字段
 - 标识：`dataFiled`
-- 默认值：''
+- 默认值：'image'

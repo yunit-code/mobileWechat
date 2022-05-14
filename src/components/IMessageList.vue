@@ -39,20 +39,20 @@
         </div>
       </div>
       <ul class="idm-message-list-box-list" v-if="propData.compStyle === 'styleFour' || propData.compStyle === 'styleOne'">
-        <li class="d-flex align-c" v-for="(item, index) in messageData[propData.dataFiled || 'list']" :key="index" @click="handleClickItem(item)">
+        <li class="d-flex align-c" v-for="(item, index) in messageData.list" :key="index" @click="handleClickItem(item)">
           <!-- <span class="idm-message-list-box-list-style-square" v-if="propData.compStyle === 'styleFour'"></span>
           <span class="idm-message-list-box-list-style-square1" v-else></span> -->
           <svg-icon iconClass="square" class="idm-message-list-box-list-style-square"></svg-icon>
-          <span class="idm-message-list-box-list-content">{{item.title}}</span>
+          <span class="idm-message-list-box-list-content">{{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}</span>
           <span class="idm-message-list-box-list-time" v-if="propData.compStyle !== 'styleOne'">{{item.time}}</span>
           </li>
       </ul>
       <ul class="idm-message-list-box-list2" v-if="propData.compStyle === 'styleTwo' || propData.compStyle === 'styleThree'">
-        <li class="d-flex" v-for="(item, index) in messageData[propData.dataFiled || 'list']" :key="index" @click="handleClickItem(item)">
+        <li class="d-flex" v-for="(item, index) in messageData.list" :key="index" @click="handleClickItem(item)">
           <img :src="item.image" :class="propData.compStyle === 'styleTwo' ? 'idm-message-list-box-list2-left-img' : 'idm-message-list-box-list2-left-img2'" alt="">
           <div style="overflow:hidden">
             <div class="idm-message-list-box-list2-title" :class="propData.compStyle === 'styleTwo' ? 'idm-message-list-box-list2-title' : 'idm-message-list-box-list2-title2'">
-              {{item.title}}
+              {{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}
             </div>
             <div class="idm-message-list-box-list2-title-bottom">
               {{item.time}}
@@ -115,6 +115,7 @@ export default {
             }
           }
         },
+        dataFiled: 'title',
         compStyle: 'styleFour',
         maxGroupCount: 3,
         limit: 3,

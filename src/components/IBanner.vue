@@ -18,11 +18,11 @@
         <ul class="swiper-wrapper">
           <li
             class="swiper-slide idm-banner-box-swiper-item-container banner-item-container"
-            v-for="(item, index) in bannerData[propData.dataFiled|| 'value']"
+            v-for="(item, index) in bannerData.value"
             :key="index"
             @click="handleClick(item)"
           >
-            <img :src="item.image"  class="slider-img" alt="" />
+            <img :src="IDM.express.replace('@['+propData.dataFiled+']', item, true)"  class="slider-img" alt="" />
             <span class="idm-banner-box-swiper-text">{{item.title}}</span>
           </li>
         </ul>
@@ -77,6 +77,7 @@ export default {
           inputVal: 8,
           selectVal: "px"
         },
+        dataFiled: 'image',
       },
       bannerData: data,
     };
