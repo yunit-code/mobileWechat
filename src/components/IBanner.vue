@@ -83,11 +83,9 @@ export default {
   },
   created() {
     this.moduleObject = this.$root.moduleObject;
-    // console.log(this.moduleObject)
     this.convertAttrToStyleObject();
   },
   mounted() {
-    console.log(this.moduleObject)
     if(this.moduleObject.env === 'develop') {
       this.initSwiper();
     }
