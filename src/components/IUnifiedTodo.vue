@@ -63,7 +63,7 @@ export default {
     return {
       moduleObject:{},
       propData:this.$root.propData.compositeAttr||{
-        htmlTitle:"紧急代办",
+        htmlTitle:"紧急待办",
         width: '100%',
         height: 'auto',
         borderRadius: '5px',

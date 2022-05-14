@@ -23,15 +23,40 @@
                 {
                     "type": "input",
                     "layoutType": "inline",
-                    "text": "标题文字",
+                    "text": "组件标题",
                     "bindKey": "htmlTitle",
-                    "default": "紧急代办"
+                    "default": "紧急待办"
+                },
+                {
+                    "type": "select",
+                    "layoutType": "inline",
+                    "text": "跳转方式",
+                    "bindKey": "jumpStyle",
+                    "desc": "设置组件点击链接跳转方式",
+                    "dictionary": [
+                        {
+                            "label": "当前页跳转",
+                            "value": "_self"
+                        },
+                        {
+                            "label": "新窗口打开",
+                            "value": "_blank"
+                        }
+                    ],
+                    "default": "_self"
+                },
+                {
+                    "type": "switch",
+                    "layoutType": "inline",
+                    "text": "显示更多",
+                    "bindKey": "showMore",
+                    "default": true
                 },
                 {
                     "type": "slider",
                     "layoutType": "block",
-                    "text": "最多显示几条待办",
-                    "bindKey": "maxCount",
+                    "text": "显示数量",
+                    "bindKey": "limit",
                     "default": "3"
                 },
                 {
@@ -54,24 +79,6 @@
                     "text": "图标大小",
                     "bindKey": "titleIconFontSize",
                     "default": 18
-                },
-                {
-                    "type": "select",
-                    "layoutType": "inline",
-                    "text": "跳转方式",
-                    "bindKey": "jumpStyle",
-                    "desc": "设置组件点击链接跳转方式",
-                    "dictionary": [
-                        {
-                            "label": "当前页跳转",
-                            "value": "_self"
-                        },
-                        {
-                            "label": "新窗口打开",
-                            "value": "_blank"
-                        }
-                    ],
-                    "default": "_self"
                 }
             ]
         },
@@ -166,24 +173,18 @@
                 {
                     "type": "actionSelect",
                     "layoutType": "block",
-                    "text": "点击待办项动作",
+                    "text": "点击单项动作",
                     "bindKey": "clickToDoItemFunction",
                     "desc": "此设置用于点击时候执行自定义函数逻辑，如果设置了此函数则内置的根据数据跳转链接则失效",
                     "multiple": true
-                },
-                {
-                    "type": "switch",
-                    "layoutType": "inline",
-                    "text": "显示更多",
-                    "bindKey": "showMore",
-                    "default": "true"
                 },
                 {
                     "type": "input",
                     "layoutType": "inline",
                     "text": "更多链接",
                     "bindKey": "moreListLink",
-                    "desc": "此设置用于点击更多时候跳转链接，如果设置了链接地址则内置的根据数据跳转链接则失效"
+                    "desc": "此设置用于点击更多时候跳转链接，如果设置了链接地址则内置的根据数据跳转链接则失效",
+                    "display": "@[showMore == true]"
                 }
             ]
         }

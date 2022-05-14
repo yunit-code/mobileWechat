@@ -28,14 +28,6 @@
                     "default": "广告轮播"
                 },
                 {
-                    "type": "inputNumber",
-                    "layoutType": "inline",
-                    "text": "显示数量",
-                    "desc": "设置显示轮播图片数量",
-                    "bindKey": "limit",
-                    "default": 5
-                },
-                {
                     "type": "select",
                     "layoutType": "inline",
                     "text": "跳转方式",
@@ -52,6 +44,14 @@
                         }
                     ],
                     "default": "_self"
+                },
+                {
+                    "type": "slider",
+                    "layoutType": "block",
+                    "text": "显示数量",
+                    "desc": "设置显示轮播图片数量",
+                    "bindKey": "limit",
+                    "default": 5
                 }
             ]
         },
