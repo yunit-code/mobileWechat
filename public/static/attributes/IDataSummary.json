@@ -357,7 +357,7 @@
                     "layoutType": "inline",
                     "text": "数据源",
                     "bindKey": "selectApplication",
-                    "dataSourceUrl": "http://116.236.111.158:27181/mock/11/DreamWeb/ctrl/dataSource/getDatasourceByGroup",
+                    "dataSourceUrl": "/ctrl/dataSource/getDatasourceByGroup",
                     "default": []
                 },
                 {
