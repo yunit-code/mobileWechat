@@ -342,7 +342,7 @@ export default {
       }
       this.propData.customInterfaceUrl &&
       window.IDM.http
-        .post(window.IDM.url.getWebPath(this.propData.customInterfaceUrl), {
+        .post(this.propData.customInterfaceUrl, {
           id: this.propData.dataSource && this.propData.dataSource.value,
           start: 0,
           limit: this.propData.limit

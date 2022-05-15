@@ -361,7 +361,7 @@ export default {
       var params = that.commonParam();
       this.propData.customInterfaceUrl&&window.IDM.http.get(this.propData.customInterfaceUrl,{
         ...params,
-        tabKey: item.tabKey || this.propData.messageTitleList[0] || this.propData.messageTitleList[0].tabKey,
+        tabKey: item.tabKey || this.propData.messageTitleList[0] && this.propData.messageTitleList[0].tabKey,
         start: 0,
         limit: this.propData.limit
       })
