@@ -135,10 +135,9 @@
                         {
                             "type": "switch",
                             "layoutType": "inline",
-                            "text": "默认显示",
-                            "bindKey": "isShow",
-                            "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData（自定义接口忽略）且它的值为{data:{filedName:[{\"text\":\"\",\"value\":\"\",\"check\":true}]}}，则这里应该填写data.filedName",
-                            "placeholder": "示例：data.filedName 或者 [0].data[0].filedName",
+                            "text": "默认选中",
+                            "bindKey": "isActive",
+                            "desc": "设置此页签是否默认选中，如设置了多个则默认选中第一个",
                             "default": false
                         }
                     ]
@@ -253,7 +252,7 @@
                     "layoutType": "inline",
                     "text": "数据源",
                     "bindKey": "dataSource",
-                    "dataSourceUrl":""
+                    "dataSourceUrl":"/ctrl/dataSource/getDatasourceByGroup"
                 },
                 {
                     "type": "input",

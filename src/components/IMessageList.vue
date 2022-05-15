@@ -29,13 +29,13 @@
     <div class="idm-message-list-box" :style="{width: propData.width, height: propData.height}">
       <div v-if="propData.compStyle === 'styleFour'" class="idm-message-list-box-top d-flex just-b align-c">
         <div class="idm-message-list-box-top-left flex-1 idm-message-list-box-title-font-fourStyle">
-          <span v-for="(item, index) in showTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.tabTitle}}</span>
+          <span v-for="(item, index) in propData.messageTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.tabTitle}}</span>
         </div>
         <van-icon v-if="propData.showMore" class="idm-message-list-box-top-more" name="ellipsis" @click="handleClickMore" />
       </div>
       <div v-else class="idm-message-list-box-top2 d-flex just-b align-c">
         <div class="idm-message-list-box-top2-left d-flex flex-1">
-          <div v-for="(item, index) in showTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.tabTitle}}</div>
+          <div v-for="(item, index) in propData.messageTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.tabTitle}}</div>
         </div>
       </div>
       <ul class="idm-message-list-box-list" v-if="propData.compStyle === 'styleFour' || propData.compStyle === 'styleOne'">
@@ -101,7 +101,6 @@ export default {
   data(){
     return {
       moduleObject:{},
-      activeIndex: 0,
       defaultIndex: 0,
       propData:this.$root.propData.compositeAttr||{
         htmlTitle:"信息列表",
@@ -119,24 +118,24 @@ export default {
         compStyle: 'styleFour',
         maxGroupCount: 3,
         limit: 3,
-        messageTitleList: []
+        messageTitleList: [{tabTitle: '页签名称', tabKey: '', isActive: false}]
       },
       messageData
-    }
-  },
-  computed: {
-    showTitleList(){
-      const list = this.propData.messageTitleList.filter(el => el.isShow === true)
-      if(list.length === 0) {
-        return [{tabTitle: '页签名称', tabKey: ''}]
-      }
-      return list
     }
   },
   created() {
     this.moduleObject = this.$root.moduleObject
     // console.log(this.moduleObject)
     this.convertAttrToStyleObject();
+  },
+  watch: {
+    'propData.messageTitleList':{
+      deep: true,
+      immediate: true,
+      handler(newV) {
+        this.defaultIndex = newV && newV.findIndex(el => el.isActive)
+      }
+    }
   },
   mounted() {
     //赋值给window提供跨页面调用
@@ -588,7 +587,6 @@ export default {
           }
         }
         .active{
-          background-color: #fff;
           color: rgb(61, 140, 243);
           font-weight: 500;
         }
