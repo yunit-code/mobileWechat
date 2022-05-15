@@ -148,6 +148,10 @@ export default {
             if ( this.propData.getApplicationMarkNumberUrl ) {
                 window.IDM.http.post(base_url + '/ctrl/dataSource/getDatas',{
                     id: sourceId
+                },{
+                    headers: {
+                        "Content-Type": "application/json;charset=UTF-8",
+                    },
                 }).then(result=>{
                     if ( !this.propData.dataFiled ) {
                         if(result&&result.data&&result.data.type == 'success' && result.data.data && result.data.data.type == 'success' && result.data.data.data){
