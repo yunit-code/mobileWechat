@@ -154,11 +154,11 @@ export default {
                     },
                 }).then(result=>{
                     if ( !this.propData.dataFiled ) {
-                        if(result&&result.data&&result.data.type == 'success' && result.data.data && result.data.data.type == 'success' && result.data.data.data){
-                            this.$set(this.application_data[index], "todoNumber", result.data.data.data.count);
+                        if(result&&result.data&&result.data.type == 'success' && result.data.data){
+                            this.$set(this.application_data[index], "todoNumber", result.data.data.count);
                         }
                     } else {
-                        this.$set(this.application_data[index], "todoNumber", result.data.data.data[this.propData.dataFiled]);
+                        this.$set(this.application_data[index], "todoNumber", result.data.data[this.propData.dataFiled]);
                     }
                 })
             }
