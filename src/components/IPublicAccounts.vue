@@ -199,7 +199,7 @@ export default {
             // 刷新当前页面
             this.showPopover = false;
             setTimeout(() => {
-              window.location.reload();
+              this.moduleObject.env=="production" && window.location.reload();
             }, 200)
           }
         })

@@ -87,7 +87,7 @@ export default {
     goUrl(v) {
       if (v.shotUrl) {
         this.propData.jumpType === 'new' &&  window.open(v.shotUrl)
-        this.propData.jumpType === 'current' && (window.location.href=v.shotUrl)
+        this.propData.jumpType === 'current' && this.moduleObject.env=="production" && (window.location.href=v.shotUrl)
       }
     },
     /**
