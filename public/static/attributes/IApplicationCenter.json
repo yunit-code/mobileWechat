@@ -144,6 +144,31 @@
                             "default": ""
                         },
                         {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "应用链接",
+                            "bindKey": "applicationUrl",
+                            "default": ""
+                        },
+                        {
+                            "type": "select",
+                            "layoutType": "inline",
+                            "text": "跳转方式",
+                            "bindKey": "applicationJumpType",
+                            "desc": "设置组件显示风格",
+                            "dictionary": [
+                                {
+                                    "label": "当前页跳转",
+                                    "value": "_self"
+                                },
+                                {
+                                    "label": "新窗口打开",
+                                    "value": "_blank"
+                                }
+                            ],
+                            "default": "_self"
+                        },
+                        {
                             "type": "switch",
                             "layoutType": "inline",
                             "text": "显示角标",

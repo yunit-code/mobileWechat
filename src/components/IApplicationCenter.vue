@@ -185,8 +185,15 @@ export default {
             }
         },
         toApplication(item) {
-            if ( this.moduleObject.env != 'develop' && item.appUrl ) {
-                window.location.href = item.appUrl;
+            if ( this.moduleObject.env != 'develop' && item.selectApplication ) {
+                let url = item.applicationUrl ? item.applicationUrl : (item.selectApplication ? item.selectApplication.appUrl : '')
+                if ( url ) {
+                    if ( item.applicationJumpType == '_self' ) {
+                        window.location.href = url
+                    } else {
+                        window.open(url,item.applicationJumpType);
+                    }
+                }   
             }
         },
         toApplicationManage() {
