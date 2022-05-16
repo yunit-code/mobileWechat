@@ -292,7 +292,7 @@ export default {
       let that = this;
       if(this.moduleObject.env=="production"){
         var params = {
-          id: this.propData.selectApplication
+          id: this.propData.selectApplication.value
         }
         this.propData.selectApplication&&this.propData.customInterfaceUrl&&window.IDM.http.post(base_url + this.propData.customInterfaceUrl, params, {
           headers: {

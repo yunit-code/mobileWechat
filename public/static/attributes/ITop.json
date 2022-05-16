@@ -52,7 +52,7 @@
                     "text": "天气定位",
                     "bindKey": "weather",
                     "desc":"设置是否显示天气信息",
-                    "default": true
+                    "default": false
                 },
                 {
                     "type": "switch",
