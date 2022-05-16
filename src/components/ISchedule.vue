@@ -232,7 +232,6 @@ export default {
         });
       }
       this.scheduleList = scheduleList;
-      console.log(scheduleList, "日程列表");
     },
     /**
      * 请求失败
@@ -244,7 +243,7 @@ export default {
      * 日程详情
      */
     detailClick(url) {
-      if (this.propData.moreTarget === '_blank' && (!this.moduleObject.env || this.moduleObject.env == "develop")) { 
+      if(!this.moduleObject.env || this.moduleObject.env == "develop"){
         return
       }
       window.open(url, this.propData.detailTarget);
@@ -282,6 +281,7 @@ export default {
     propDataWatchHandle(propData) {
       this.propData = propData.compositeAttr || {};
       this.convertAttrToStyleObject();
+      this.convertThemeListAttrToStyleObject();
     },
     /**
      * 把属性转换成样式对象
@@ -645,6 +645,16 @@ export default {
       // this.initData();
     },
     /**
+     * 主题颜色
+     */
+    convertThemeListAttrToStyleObject() {
+      var themeList = this.propData.themeList;
+      console.log(themeList,"主题颜色")
+      if (!themeList) {
+        return;
+      }
+    },
+    /**
      * 格式化当前时间
      */
     setNowDate(nowDate, sub = "-") {
@@ -767,7 +777,7 @@ export default {
      * 更多按钮跳转
      */
     moreClick() {
-      if (this.propData.moreTarget === '_blank' && (!this.moduleObject.env || this.moduleObject.env == "develop")) { 
+      if(!this.moduleObject.env || this.moduleObject.env == "develop"){
         return
       }
       window.open(this.propData.moreUrl, this.propData.moreTarget);
