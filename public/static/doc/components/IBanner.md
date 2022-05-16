@@ -63,6 +63,39 @@ mobilewechat@1.0.7
 ### 高级
 <font color="#CCCCCC">用于对组件高级设置的属性的分组。</font>
 
+##### 数据模式【showType】
+用于设置轮播组件数据展示模式 可选 数据源 / 自定义上传图片
+- 标识：`showType`
+- 默认值：`dataSource`
+
+##### 轮播配置【bannerTable】
+用于设置轮播组件数据上传自定义上传图片
+- 标识：`bannerTable`
+- 默认值：
+```json
+{
+    "type": "input",
+    "layoutType": "inline",
+    "text": "轮播标题",
+    "bindKey": "title",
+    "default": "标题"
+},
+{
+    "type": "input",
+    "layoutType": "inline",
+    "text": "跳转链接",
+    "bindKey": "jumpUrl",
+    "default": ""
+},
+{
+    "type": "uploadImage",
+    "layoutType": "block",
+    "text": "轮播图片",
+    "bindKey": "image",
+    "default": ""
+}
+```
+
 ##### 数据源【dataSource】
 用于选择数据源
 - 标识：`dataSource`
