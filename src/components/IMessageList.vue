@@ -178,7 +178,7 @@ export default {
     // 顶部tabs点击
     handleTitleClick(item, index) {
       this.defaultIndex = index
-      this.initData(item)
+      this.initData(item, index)
     },
     /**
      * 提供父级组件调用的刷新prop数据组件
@@ -350,12 +350,17 @@ export default {
     /**
      * 加载动态数据
      */
-    initData(item = {}){
+    initData(item = {}, index = -1){
+      
       let activeIndex = this.propData.messageTitleList && this.propData.messageTitleList.findIndex(el => el.isActive)
       if(activeIndex === -1){
         activeIndex = 0
       }
-      this.defaultIndex = activeIndex
+      if(index === -1){
+        this.defaultIndex = activeIndex
+      }else {
+        this.defaultIndex = index
+      }
       if(this.moduleObject.env === 'develop') {
         return
       }

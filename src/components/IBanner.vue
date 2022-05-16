@@ -118,7 +118,7 @@ export default {
             modifier: 1,
             slideShadows: false,
           },
-          observer: true, //修改swiper自己或子元素时，自动初始化swiper，主要是这两行
+          observer: true, //修改swiper自己或子元素时，自动初始化swiper，这个为true下面俩个才生效
           observeParents: true,
           observeSlideChildren: true,
           on: {
