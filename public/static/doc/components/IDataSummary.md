@@ -175,6 +175,31 @@ mobileWechat@1.0.7
 - 默认值：空
 #### 接口地址【customInterfaceUrl】
 设置组件获取动态数据的接口路径。
+参数
+``` json
+{
+	"id":"数据源ID",
+}
+```
+接口返回格式
+``` json
+{
+    "code":"200",
+    "type":"success",
+    "message":"操作成功",
+    "data":{
+        "inbox":{
+            "name":"待办",
+            "count":"13",
+            "jumpUrl":"跳转地址"
+        },
+        "toread":{
+            "name":"待阅",
+            "count":"22",
+            "jumpUrl":"跳转地址"
+        }
+    }
+```
 
 - 标识：`接口地址【customInterfaceUrl】`
 

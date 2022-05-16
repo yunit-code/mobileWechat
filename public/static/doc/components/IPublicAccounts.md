@@ -36,3 +36,47 @@ mobileWechat@1.0.7
 用于设置组件的拖拽图标基于坐标点的Y轴偏移量
 - 标识：`【offsetY】`
 - 默认值：`20px`
+### 高级
+#### 虚拟账号接口地址【customInterfaceUrl】
+设置组件获取动态数据的接口路径。
+接口返回格式
+``` json
+{
+  "code": "200",
+  "type": "success",
+  "message": "操作成功",
+  "metadata": null,
+  "token": "",
+  "data": [
+    {
+    "orgName": "部门01",
+    "photoPath": "upload/photo/220514144443yYMi7Lpxy29zqFjnomd.jpeg",
+    "isVirtual": "1",
+    "userName": "幻体",
+    "userId": "2009241700406GangTMvhEkT0bnEQBi",
+    "orgId": "200817150158KpfXFWUcxxRv8Qpw4yi"
+    }
+  ]
+}
+```
+
+- 标识：`接口地址【customInterfaceUrl】`
+
+- 默认值：`/ctrl/virtualAccount/getVirtualAccountList`
+#### 切换账号接口地址【changeInterfaceUrl】
+设置组件获取动态数据的接口路径。
+接口返回格式
+``` json
+{
+  "code": "200",
+  "type": "success",
+  "message": "操作成功",
+  "metadata": null,
+  "token": "",
+  "data": null
+}
+```
+
+- 标识：`接口地址【changeInterfaceUrl】`
+
+- 默认值：`/ctrl/virtualAccount/switchAccount`
