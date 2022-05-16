@@ -316,13 +316,13 @@ export default {
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id,styleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-title .idm-message-list-box-title-icon", styleObjectTitleIcon);
+      // 区分样式风格设置css
       if(this.propData.compStyle === 'styleFour'){
         window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-top-left", titleFontStyleObj);
       }else{
         window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-title-font", titleFontStyleObj);
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-top-left .active", titleFontStyleActiveObj);
-
       this.initData();
     },
     /**
@@ -351,14 +351,17 @@ export default {
      * 加载动态数据
      */
     initData(item = {}, index = -1){
-      
+      // 获取传入titleList默认选中
       let activeIndex = this.propData.messageTitleList && this.propData.messageTitleList.findIndex(el => el.isActive)
+      //如果没有设置，初始化为第一个
       if(activeIndex === -1){
         activeIndex = 0
       }
+      // 标题点击设置选中
       if(index === -1){
         this.defaultIndex = activeIndex
       }else {
+        //配置时或初始化时设置选中
         this.defaultIndex = index
       }
       if(this.moduleObject.env === 'develop') {

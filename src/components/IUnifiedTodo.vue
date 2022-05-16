@@ -342,7 +342,7 @@ export default {
       window.IDM.http
         .post(this.propData.customInterfaceUrl, {
           id: this.propData.dataSource && this.propData.dataSource.value,
-          // start: 0,
+          // componentType: 0,
           maxCount: this.propData.limit
         },{
           headers: {

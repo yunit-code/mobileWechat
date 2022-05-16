@@ -343,10 +343,12 @@ export default {
       // 刷新数每次加1,确保元素刷新
       this.refreshKeyNumber ++
       if(this.propData.dataType === 'custom'){
+         // 自定义数据直接使用
         this.$set(this.bannerData, 'value', this.propData.bannerTable)
         this.initSwiper();
         return
       }else{
+        // 开发环境使用假数据，深拷贝方式数据fix不更新
         if(this.moduleObject.env === 'develop') {
           this.bannerData = _.cloneDeep(data)
           this.initSwiper();
