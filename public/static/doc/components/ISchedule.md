@@ -235,14 +235,55 @@ mobileWechat@1.0.6
 ### 高级
 <font color="#CCCCCC">用于对组件高级设置的属性的分组。</font>
 
-##### 接口地址【customInterfaceUrl】
-用于获取数据源的接口地址
-- 标识：`customInterfaceUrl`
+##### 数据源【dataSource】
+用于选择数据源，可以通过dataSourceUrl配置数据源获取地址,当前组件需要选择日程提醒
+- 标识：`dataSource`
+- 返回格式
+    ```
+    {
+        "title": "日程提醒",
+        "value": "数据源id",
+        "key": "数据源id"
+    }
+    ```
 
 - 默认值：空
 
-##### 数据源【dataSource】
-用于选择数据源
-- 标识：`dataSource`
+##### 数据接口【customInterfaceUrl】
+用于获取日程数据的接口地址，需要个数据源搭配使用
+- 标识：`customInterfaceUrl`
+- 参数 
+    ```
+    query 
+    {
+        id:"数据源id"
+    }
+    params
+    {
+        startDate:"开始日期"
+        endDate:"结束日期"
+    }
+    ```
+- 返回格式
+    ```
+    {
+        "code": "200",
+        "type": "success",
+        "message": "操作成功",
+        "data": {
+            "value": [{
+                "title": "标题",
+                "image": "图片下载地址",
+                "jumpUrl": "详情打开地址"
+            }],
+            "moreUrl": "更多跳转地址"
+        }
+    }
+    ```
+- 默认值：空
+
+##### 显示字段【dataFiled】
+根据接口返回数据格式指定结果集的字段，比如结果集名为resultData（自定义接口忽略）且它的值为{data:{filedName:[{\"text\":\"\",\"value\":\"\",\"check\":true}]}}，则这里应该填写data.filedName
+- 标识：`dataFiled`
 
 - 默认值：空
