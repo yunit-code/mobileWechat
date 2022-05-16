@@ -363,9 +363,9 @@
                     "layoutType": "inline",
                     "text": "显示字段",
                     "bindKey": "dataFiled",
-                    "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData（自定义接口忽略）且它的值为{data:{filedName:[{\"text\":\"\",\"value\":\"\",\"check\":true}]}}，则这里应该填写filedName",
+                    "desc": "根据接口返回数据格式指定结果集的字段，且它的值为{data:{count:5}}，则这里应该填写count",
                     "default": "count",
-                    "placeholder": "示例:filedName"
+                    "placeholder": "示例:count"
                 }
             ]
         }

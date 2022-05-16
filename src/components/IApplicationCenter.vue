@@ -141,9 +141,8 @@ export default {
             if ( this.moduleObject.env == 'develop' ) {
                 return
             }
-            var params = this.commonParam();
             if ( this.propData.isMyApplication && this.propData.getMyApplicationUrl ) {
-                window.IDM.http.post(base_url + this.propData.getMyApplicationUrl, params)
+                window.IDM.http.get(base_url + this.propData.getMyApplicationUrl)
                     .then((res) => {
                         if ( res.data && res.data.type == 'success' ) {
                             this.makeMyApplicationData(res.data.data)

@@ -151,18 +151,71 @@ mobilewechat@1.0.6
 
 - 标识：`getMyApplicationUrl`
 - 默认值：`/ctrl/tencentApp/queryMyFavorite`
+- 接口返回格式需要按照以下要求：
+``` json
+{
+    "code":"200",
+    "type":"success",
+    "message":"操作成功",
+    "metadata":null,
+    "token":"",
+    "data": [
+        {
+            "sourceId": 1, //应用数据源id
+            "imageUrl": 1, //应用图标url
+            "appUrl": 1, //应用地址
+            "title": "应用名称", //应用名称
+            "value": 1, //应用key
+        }
+    ]
+}
+```
 
 #### 全部应用【getAllApplicationUrl】
 用于获取组件中全部应用模块数据的接口地址。
 
 - 标识：`getAllApplicationUrl`
 - 默认值：`/ctrl/tencentApp/queryAppGroupByGrant`
+- 接口返回格式需要按照以下要求：
+``` json
+{
+    "code":"200",
+    "type":"success",
+    "message":"操作成功",
+    "metadata":null,
+    "token":"",
+    "data": [
+        {
+            "title": "分组名称", //分组名称
+            "value": 1, //分组值
+            "key": 1, //分组key
+            "children": [
+                {
+                    "is_favorite": "0",
+                    "imageUrl": "", //应用图片url
+                    "appUrl": "", //应用链接
+                    "title": "应用名称", //应用名称
+                    "value": "1", //应用id
+                    "key": "1", //分组key
+                }
+            ]
+        }
+    ]
+}
+```
 
 #### 保存接口【saveMyApplicationUrl】
 保存用户设置的我的应用的接口地址
 
 - 标识：`saveMyApplicationUrl`
 - 默认值：`/ctrl/tencentApp/batchSetFavoriteApp`
+- 参数格式需要按照以下要求：
+``` json
+{
+    "appId":"1,2", //我的应用的集合以 , 拼接  
+}
+```
+
 
 #### 搜索地址【clickSearchUrl】
 点击搜索按钮时页面跳转的地址

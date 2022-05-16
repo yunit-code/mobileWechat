@@ -123,12 +123,38 @@ mobilewechat@1.0.6
 
 - 标识：`getAllApplicationUrl`
 - 默认值：`/ctrl/tencentApp/queryAppByGrant`
+- 接口返回格式需要按照以下要求：
+``` json
+{
+    "code":"200",
+    "type":"success",
+    "message":"操作成功",
+    "metadata":null,
+    "token":"",
+    "data": [
+        {
+            "is_favorite": "0",
+            "imageUrl": "", //应用图片url
+            "appUrl": "", //应用链接
+            "title": "应用名称", //应用名称
+            "value": "1", //应用id
+        }
+    ]
+}
+```
 
 #### 添加应用【addApplicationUrl】
 用于获取全部应用数据的接口地址。
 
 - 标识：`addApplicationUrl`
 - 默认值：`/ctrl/tencentApp/setFavoriteApp`
+- 参数格式需要按照以下要求：
+``` json
+{
+    "appId": "1", //应用id
+    "type": "0", //要进行操作类型 0取消我的应用 1添加我的应用
+}
+```
 
 #### 点击取消时动作【clickCancelFunction】
 点击取消的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}

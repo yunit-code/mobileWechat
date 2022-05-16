@@ -20,7 +20,9 @@
                     <van-grid :border="false" :column-num="5">
                         <van-grid-item v-for="(item,index) in my_application_data" :key="item.value">
                             <div class="idm_applicationcenter_main_list">
-                                <img v-if="item.imageUrl" :src="item.imageUrl">
+                                <div v-if="item.imageUrl">
+                                    <img :src="item.imageUrl">
+                                </div>
                                 <svg-icon v-else icon-class="application" />
 
                                 <div class="idm_applicationcenter_main_list_name">{{ item.title || ('应用' + index + 1) }}</div>
@@ -43,7 +45,9 @@
                             <van-grid :border="false" :column-num="5">
                                 <van-grid-item v-for="(item1,index1) in item.children" :key="item1.value">
                                     <div class="idm_applicationcenter_main_list">
-                                        <img v-if="item1.imageUrl" :src="item1.imageUrl">
+                                        <div v-if="item1.imageUrl">
+                                            <img :src="item1.imageUrl">
+                                        </div>
                                         <svg-icon v-else icon-class="application" />
 
                                         <div class="idm_applicationcenter_main_list_name">{{ item1.title || ('应用' + index1 + 1) }}</div>
@@ -149,7 +153,7 @@ export default {
             }
             console.log('propData',this.propData)
             if ( this.propData.getMyApplicationUrl ) {
-                window.IDM.http.post(base_url + this.propData.getMyApplicationUrl)
+                window.IDM.http.get(base_url + this.propData.getMyApplicationUrl)
                     .then((res) => {
                         if ( res.data && res.data.type == 'success' ) {
                             this.my_application_data = res.data.data
@@ -477,9 +481,7 @@ export default {
          *  globalSend:如果为true则全站发送消息，注意全站rangeModule是无效的，只有className才有效，默认为false
          * } object 
          */
-        sendBroadcastMessage(object) {
-            window.IDM.broadcast && window.IDM.broadcast.send(object);
-        },
+        
         /**
          * 交互功能：设置组件的上下文内容值
          * @param {

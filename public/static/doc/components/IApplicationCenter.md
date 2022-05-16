@@ -184,7 +184,31 @@ mobilewechat@1.0.6
 - 标识：`font`
 - 默认值：空
 
+### 数据源
+#### 接口地址【getApplicationMarkNumberUrl】
+当应用开启角标显示时，用于获取应用角标数据的接口地址
 
+- 标识：`getApplicationMarkNumberUrl`
+- 默认值：`/ctrl/dataSource/getDatas`
+- 接口返回格式需要按照以下要求：
+``` json
+{
+    "code":"200",
+    "type":"success",
+    "message":"操作成功",
+    "metadata":null,
+    "token":"",
+    "data": {
+        "count": 5, //应用角标显示值
+    }
+}
+```
+
+#### 显示字段【dataFiled】
+根据接口返回数据格式指定结果集的字段，比如返回值为{data:{count:5}}，则这里应该填写count
+
+- 标识：`dataFiled`
+- 默认值：`count`
 
 ### 高级
 #### 接口地址【getMyApplicationUrl】
@@ -192,3 +216,22 @@ mobilewechat@1.0.6
 
 - 标识：`getMyApplicationUrl`
 - 默认值：`/ctrl/tencentApp/queryMyFavorite`
+- 接口返回格式需要按照以下要求：
+``` json
+{
+    "code":"200",
+    "type":"success",
+    "message":"操作成功",
+    "metadata":null,
+    "token":"",
+    "data": [
+        {
+            "sourceId": 1, //应用数据源id
+            "imageUrl": 1, //应用图标url
+            "appUrl": 1, //应用地址
+            "title": "应用名称", //应用名称
+            "value": 1, //应用key
+        }
+    ]
+}
+```
