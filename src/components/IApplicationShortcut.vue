@@ -121,7 +121,7 @@ export default {
                 let applicationList = JSON.parse(JSON.stringify(this.propData.applicationList))
                 let application_data = [];
                 for( let i = 0,maxi = applicationList.length;i < maxi;i++ ) {
-                    if ( this.moduleObject.env == 'develop' ) {
+                    if ( this.moduleObject.env == 'develop' || !applicationList[i].applicationOpenValid ) {
                         application_data.push(applicationList[i])
                     } else {
                         if ( applicationList[i].selectApplication && applicationList[i].selectApplication.value && this.have_power_application_data_ids.indexOf(applicationList[i].selectApplication.value) != 1 ) {

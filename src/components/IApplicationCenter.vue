@@ -91,6 +91,7 @@ export default {
     },
     created() {
         this.moduleObject = this.$root.moduleObject
+        console.log('propData',this.propData)
         this.getHavePowerApplication()
         this.convertAttrToStyleObject();
     },
@@ -105,6 +106,7 @@ export default {
     methods: {
         getHavePowerApplication() {
             let user_info = window.IDM.user.getCurrentUserInfo()
+            console.log('获取用户信息',user_info)
             let apps = []
             let have_power_application_data_ids = [];
             if ( user_info && user_info.data && user_info.data.appRoleList && user_info.data.appRoleList.length ) {
@@ -123,7 +125,7 @@ export default {
                     let applicationList = JSON.parse(JSON.stringify(this.propData.applicationList))
                     let application_data = [];
                     for( let i = 0,maxi = applicationList.length;i < maxi;i++ ) {
-                        if ( this.moduleObject.env == 'develop' ) {
+                        if ( this.moduleObject.env == 'develop' || !applicationList[i].applicationOpenValid ) {
                             application_data.push(applicationList[i])
                         } else {
                             if ( applicationList[i].selectApplication && applicationList[i].selectApplication.value && this.have_power_application_data_ids.indexOf(applicationList[i].selectApplication.value) != -1 ) {

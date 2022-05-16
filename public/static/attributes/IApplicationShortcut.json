@@ -81,6 +81,14 @@
                             "default": ""
                         },
                         {
+                            "type": "switch",
+                            "layoutType": "inline",
+                            "text": "权限过滤",
+                            "desc":"设置应用是否开启权限过滤功能，如果开启，则会根据用户是否有权限来展示应用",
+                            "bindKey": "applicationOpenValid",
+                            "default": false
+                        },
+                        {
                             "type": "input",
                             "layoutType": "inline",
                             "text": "应用链接",
