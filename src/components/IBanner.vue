@@ -22,7 +22,7 @@
             :key="index"
             @click="handleClick(item)"
           >
-            <img v-if="propData && propData.showType === 'custom'" :src="item.image && item.image.indexOf('http') === -1 ? IDM.url.getWebPath(item.image) : item.image"  class="slider-img" alt="" />
+            <img v-if="propData && propData.dataType === 'custom'" :src="item.image && item.image.indexOf('http') === -1 ? IDM.url.getWebPath(item.image) : item.image"  class="slider-img" alt="" />
 
             <img v-else :src="IDM.express.replace('@['+propData.dataFiled+']', item, true)"  class="slider-img" alt="" />
             <span class="idm-banner-box-swiper-text">{{item.title}}</span>
@@ -80,7 +80,7 @@ export default {
           selectVal: "px"
         },
         dataFiled: 'image',
-        showType: 'dataSource'
+        dataType: 'dataSource'
       },
       bannerData: _.cloneDeep(data),
       refreshKeyNumber: 0
@@ -342,7 +342,7 @@ export default {
     initData() {
       
       this.refreshKeyNumber ++
-      if(this.propData.showType === 'custom'){
+      if(this.propData.dataType === 'custom'){
         this.$set(this.bannerData, 'value', this.propData.bannerTable)
         this.initSwiper();
         return
