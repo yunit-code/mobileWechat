@@ -161,7 +161,10 @@ export default {
             });
         });
       }else{
-        const url = IDM.url.getWebPath(item.jumpUrl)
+        let url = item.jumpUrl
+        if(url.indexOf('http') === -1) {
+          url = IDM.url.getWebPath(url)
+        }
         window.open(url, this.propData.jumpStyle || '_self')
       }
     },
@@ -174,7 +177,10 @@ export default {
       if(this.propData.moreListLink) {
         url = this.propData.moreListLink
       }
-      window.open(IDM.url.getWebPath(url), this.propData.jumpStyle || '_self')
+      if(url.indexOf('http') === -1) {
+        url = IDM.url.getWebPath(url)
+      }
+      window.open(url, this.propData.jumpStyle || '_self')
     },
     // 顶部tabs点击
     handleTitleClick(item, index) {
@@ -361,15 +367,21 @@ export default {
       this.propData.customInterfaceUrl&&window.IDM.http.get(this.propData.customInterfaceUrl,{
         ...params,
         tabKey: item.tabKey || this.propData.messageTitleList[0] && this.propData.messageTitleList[0].tabKey,
-        start: 0,
-        limit: this.propData.limit
+        maxCount: this.propData.limit
+      }, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+        }
       })
       .then((res) => {
-        this.messageData = res.data || messageData
+        if(res.status == 200 && res.data.code == 200 && Array.isArray(res.data.data.list)){
+          this.messageData = res.data.data
+        }else {
+          IDM.message.error(res.data.msg)
+        }
         // that.propData.fontContent = ;
       })
       .catch((error) => {
-        this.messageData = messageData
       });
     },
     /**

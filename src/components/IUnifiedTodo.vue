@@ -141,7 +141,11 @@ export default {
             });
         });
       }else{
-        window.open(IDM.url.getWebPath(itemObject.jumpUrl), this.propData.jumpStyle || '_self')
+        let url = itemObject.jumpUrl
+        if(url.indexOf('http') === -1) {
+          url = IDM.url.getWebPath(url)
+        }
+        window.open(url, this.propData.jumpStyle || '_self')
       }
     },
     handleClickMore() {
@@ -153,7 +157,10 @@ export default {
       if(this.propData.moreListLink) {
         url = this.propData.moreListLink
       }
-      window.open(IDM.url.getWebPath(url), this.propData.jumpStyle || '_self')
+      if(url.indexOf('http') === -1) {
+        url = IDM.url.getWebPath(url)
+      }
+      window.open(url, this.propData.jumpStyle || '_self')
     },
     /**
      * 提供父级组件调用的刷新prop数据组件
@@ -227,11 +234,9 @@ export default {
               break;
             case "positionX":
               //背景横向偏移
-              
               break;
             case "positionY":
               //背景纵向偏移
-              
               break;
             case "bgRepeat":
               //平铺模式
@@ -335,16 +340,21 @@ export default {
       window.IDM.http
         .post(this.propData.customInterfaceUrl, {
           id: this.propData.dataSource && this.propData.dataSource.value,
-          start: 0,
-          limit: this.propData.limit
+          // start: 0,
+          maxCount: this.propData.limit
+        },{
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+          }
         })
         .then((res) => {
-          //res.data
-          this.todoData = res.data || todoData
+          if(res.status == 200 && res.data.code == 200 && Array.isArray(res.data.data.value)){
+            this.todoData = res.data.data
+          }else {
+            IDM.message.error(res.data.msg)
+          }
         })
-        .catch((error) => {
-          this.todoData = todoData
-      })
+        .catch((error) => {})
     },
     /**
      * 通用的获取表达式匹配后的结果
