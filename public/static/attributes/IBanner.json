@@ -108,11 +108,62 @@
             "desc": "点击？查看高级设置用法指南",
             "children": [
                 {
+                    "type": "radio",
+                    "styleType": "radio",
+                    "layoutType": "inline",
+                    "text": "模式",
+                    "bindKey": "showType",
+                    "desc": "设置点击轮播图片时链接跳转方式",
+                    "dictionary": [
+                        {
+                            "label": "数据源",
+                            "value": "dataSource"
+                        },
+                        {
+                            "label": "自定义",
+                            "value": "custom"
+                        }
+                    ],
+                    "default": "dataSource"
+                },
+                {
+                    "type": "table",
+                    "layoutType": "inline",
+                    "text": "轮播配置",
+                    "bindKey": "bannerTable",
+                    "tabText": "轮播[index]",
+                    "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "轮播标题",
+                            "bindKey": "title",
+                            "default": "标题"
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "跳转链接",
+                            "bindKey": "jumpUrl",
+                            "default": ""
+                        },
+                        {
+                            "type": "uploadImage",
+                            "layoutType": "block",
+                            "text": "轮播图片",
+                            "bindKey": "image",
+                            "default": "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp7.itc.cn%2Fimages01%2F20200903%2F9f80293e09644046a408f8be7359d4ff.jpeg&refer=http%3A%2F%2Fp7.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654761049&t=b2726a52f403b5d4dcca968820d55109"
+                        }
+                    ],
+                    "display": "@[showType === 'custom']"
+                },
+                {
                     "type": "treeSelect",
                     "layoutType": "inline",
                     "text": "数据源",
                     "bindKey": "dataSource",
-                    "dataSourceUrl":"/ctrl/dataSource/getDatasourceByGroup"
+                    "dataSourceUrl":"/ctrl/dataSource/getDatasourceByGroup",
+                    "display": "@[showType === 'dataSource']"
                 },
                 {
                     "type": "input",
@@ -120,7 +171,8 @@
                     "text": "数据接口",
                     "bindKey": "customInterfaceUrl",
                     "default": "/ctrl/dataSource/getDatas",
-                    "desc": "用于获取数据源的接口地址，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}"
+                    "desc": "用于获取数据源的接口地址，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}",
+                    "display": "@[showType === 'dataSource']"
                 },
                 {
                     "type": "textarea",
@@ -129,7 +181,8 @@
                     "bindKey": "dataFiled",
                     "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData（自定义接口忽略）且它的值为{data:{filedName:[{\"text\":\"\",\"value\":\"\",\"check\":true}]}}，则这里应该填写data.filedName",
                     "default": "image",
-                    "placeholder": "示例：data.filedName 或者 [0].data[0].filedName"
+                    "placeholder": "示例：data.filedName 或者 [0].data[0].filedName",
+                    "display": "@[showType === 'dataSource']"
                 }
             ]
         }

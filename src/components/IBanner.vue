@@ -14,7 +14,7 @@
     class="idm-banner-box"
   >
     <div class="idm-banner-box-swiper">
-      <div class="idm-banner-box-swiper-container">
+      <div :class="'idm-banner-box-swiper-container' + refreshKeyNumber">
         <ul class="swiper-wrapper">
           <li
             class="swiper-slide idm-banner-box-swiper-item-container banner-item-container"
@@ -22,7 +22,9 @@
             :key="index"
             @click="handleClick(item)"
           >
-            <img :src="IDM.express.replace('@['+propData.dataFiled+']', item, true)"  class="slider-img" alt="" />
+            <img v-if="propData && propData.showType === 'custom'" :src="item.image && item.image.indexOf('http') === -1 ? IDM.url.getWebPath(item.image) : item.image"  class="slider-img" alt="" />
+
+            <img v-else :src="IDM.express.replace('@['+propData.dataFiled+']', item, true)"  class="slider-img" alt="" />
             <span class="idm-banner-box-swiper-text">{{item.title}}</span>
           </li>
         </ul>
@@ -78,8 +80,10 @@ export default {
           selectVal: "px"
         },
         dataFiled: 'image',
+        showType: 'dataSource'
       },
-      bannerData: data,
+      bannerData: _.cloneDeep(data),
+      refreshKeyNumber: 0
     };
   },
   created() {
@@ -91,18 +95,17 @@ export default {
       this.initSwiper();
     }
   },
-  destroyed() {},
   methods: {
     initSwiper() {
       this.$nextTick(()=> {
-        new Swiper('#'+this.moduleObject.id + " .idm-banner-box-swiper-container", {
+        new Swiper('#'+this.moduleObject.id + " .idm-banner-box-swiper-container" + this.refreshKeyNumber, {
           autoplay: 2000,
           speed: 500,
           loop: true,
           loopedSlides: 100,
           slidesPerView: 'auto',
           effect: 'coverflow',
-          pagination: {
+          pagination: this.moduleObject.env === 'develop' ? '' :  {
             el: '.idm-banner-swiper-pagination',
             bulletClass : 'idm-banner-my-bullet',
             bulletActiveClass: 'idm-banner-my-bullet-active',
@@ -337,19 +340,37 @@ export default {
      * 加载动态数据
      */
     initData() {
-      if(this.moduleObject.env === 'develop') {
+      
+      this.refreshKeyNumber ++
+      if(this.propData.showType === 'custom'){
+        this.$set(this.bannerData, 'value', this.propData.bannerTable)
+        this.initSwiper();
         return
+      }else{
+        if(this.moduleObject.env === 'develop') {
+          this.bannerData = _.cloneDeep(data)
+          this.initSwiper();
+          return
+        }
       }
       this.propData.customInterfaceUrl &&
       window.IDM.http
         .post(this.propData.customInterfaceUrl, {
           id: this.propData.dataSource && this.propData.dataSource.value,
-          start: 0,
-          limit: this.propData.limit
+          maxCount: this.propData.limit,
+          componentType: 'gglb'
+        },{
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+          }
         })
         .then((res) => {
           //res.data
-          this.bannerData = res.data || data
+          if(res.status == 200 && res.data.code == 200 && Array.isArray(res.data.data.value)){
+            this.bannerData = res.data.data
+          }else {
+            IDM.message.error(res.data.msg)
+          }
           this.initSwiper()
         })
         .catch((error) => {
@@ -404,7 +425,10 @@ export default {
       if(this.moduleObject.env === 'develop') {
         return
       }
-      const url = IDM.url.getWebPath(item.jumpUrl)
+      let url = item.jumpUrl
+      if(item.jumpUrl.indexOf('http') === -1) {
+         url = IDM.url.getWebPath(url)
+      }
       window.open(url, this.propData.jumpStyle || '_self')
     },
     showThisModuleHandle() {
@@ -479,6 +503,7 @@ export default {
 <style lang="scss">
 .idm-banner-box {
   padding: 0;
+  overflow: hidden;
   &-swiper-container {
     position: relative;
     width: 100%;
