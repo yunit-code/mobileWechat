@@ -49,9 +49,10 @@
                     "type": "slider",
                     "layoutType": "block",
                     "text": "显示数量",
-                    "desc": "设置显示轮播图片数量",
+                    "desc": "设置显示轮播图片数量，自定义配置轮播时失效",
                     "bindKey": "limit",
-                    "default": 5
+                    "default": 5,
+                    "display": "@[dataType === 'dataSource']"
                 }
             ]
         },

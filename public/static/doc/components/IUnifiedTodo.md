@@ -127,12 +127,31 @@ mobilewechat@1.0.6
 通过自定义数据接口获取数据
 - 标识：`customInterfaceUrl`
 - 默认值：`/ctrl/dataSource/getDatas`
+- 返回数据默认格式:
+```json
+"res": "200",
+"message: "success",
+"data" : {
+    "value": [
+        {
+          "jumpUrl": "/14",
+          "isHot": true,
+          "readStatus": 1,
+          "readStatusText": "已读",
+          "department": "文档处",
+          "time": "2022-05-09 09:00",
+          "title": "标题标题标题，这是标题，这是他标题，
+        }
+    ],
+    "moreUrl": "更多跳转地址"
+}
+```
 
 ##### 显示字段【dataFiled】
 根据接口返回数据显示消息标题字段
 - 标识：`dataFiled`
 
-- 默认值：'title'
+- 默认值：`title`
 
 ##### 点击单项动作【clickToDoItemFunction】
 此设置用于点击时候执行自定义函数逻辑，如果设置了此函数则内置的根据数据跳转链接则失效

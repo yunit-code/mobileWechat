@@ -33,7 +33,7 @@
           <div class="idm-unifie-todo-box-sub-intr">
             <div class="d-flex align-c">
               <svg-icon iconClass="duihao" class="idm-unifie-todo-box-sub-icon"></svg-icon>
-              <span>{{item.statusText}}</span> </div>
+              <span>{{item.readStatusText}}</span> </div>
             <div class="d-flex align-c">
               <svg-icon iconClass="person" class="idm-unifie-todo-box-sub-icon"></svg-icon> 
               <span>{{item.department}}</span> </div>
@@ -55,26 +55,26 @@ const todoData = {
   value: [{
     jumpUrl: '/14',
     isHot: true,
-    statusText: '已读',
+    readStatusText: '已读',
     department: '文档处',
     time: '2022-05-09 09:00',
     title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
   },{
     jumpUrl: '/14',
     isHot: true,
-    statusText: '已读',
+    readStatusText: '已读',
     department: '文档处',
     time: '2022-05-09 09:00',
     title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
   },{
     jumpUrl: '/14',
     isHot: true,
-    statusText: '已读',
+    readStatusText: '已读',
     department: '文档处',
     time: '2022-05-09 09:00',
     title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
   }],
- moreUrl: '/sdaf'
+  moreUrl: '/sdaf'
 }
 export default {
   name: 'IUnifiedTodo',
@@ -119,7 +119,11 @@ export default {
   },
   destroyed() {},
   methods:{
-    handleClickItem(itemObject){
+    /**
+     * 点击单个事件
+     * @param {单个待办} item 
+     */
+    handleClickItem(item){
       if(this.moduleObject.env=="develop"){
         //开发模式下不执行此事件
         return;
@@ -141,13 +145,14 @@ export default {
             });
         });
       }else{
-        let url = itemObject.jumpUrl
-        if(url.indexOf('http') === -1) {
-          url = IDM.url.getWebPath(url)
+        if(item.jumpUrl) {
+          window.open(IDM.url.getWebPath(item.jumpUrl), this.propData.jumpStyle || '_self')
         }
-        window.open(url, this.propData.jumpStyle || '_self')
       }
     },
+    /**
+     * 点击更多事件
+     */
     handleClickMore() {
       if(this.moduleObject.env === 'develop') {
         return
@@ -157,10 +162,7 @@ export default {
       if(this.propData.moreListLink) {
         url = this.propData.moreListLink
       }
-      if(url.indexOf('http') === -1) {
-        url = IDM.url.getWebPath(url)
-      }
-      window.open(url, this.propData.jumpStyle || '_self')
+      window.open(IDM.url.getWebPath(url), this.propData.jumpStyle || '_self')
     },
     /**
      * 提供父级组件调用的刷新prop数据组件
@@ -351,7 +353,7 @@ export default {
           if(res.status == 200 && res.data.code == 200 && Array.isArray(res.data.data.value)){
             this.todoData = res.data.data
           }else {
-            IDM.message.error(res.data.msg)
+            IDM.message.error(res.data.message)
           }
         })
         .catch((error) => {})
