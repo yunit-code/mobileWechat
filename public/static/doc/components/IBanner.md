@@ -105,6 +105,21 @@ mobilewechat@1.0.7
 通过自定义数据接口获取数据
 - 标识：`customInterfaceUrl`
 - 默认值：`/ctrl/dataSource/getDatas`
+- 返回数据默认格式:
+```json
+"res": "200",
+"message: "success",
+"data" : {
+    "value": [
+        {
+            "jumpUrl": '/dreamweb/',
+            "image": "",
+            "title": "标题",
+        }
+    ],
+    "moreUrl": "更多跳转地址"
+}
+```
 
 ##### 显示字段【dataFiled】
 根据接口返回数据显示轮播图片字段

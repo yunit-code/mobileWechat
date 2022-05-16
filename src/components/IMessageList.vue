@@ -128,15 +128,6 @@ export default {
     // console.log(this.moduleObject)
     this.convertAttrToStyleObject();
   },
-  watch: {
-    'propData.messageTitleList':{
-      deep: true,
-      immediate: true,
-      handler(newV) {
-        this.defaultIndex = newV && newV.findIndex(el => el.isActive)
-      }
-    }
-  },
   mounted() {
     //赋值给window提供跨页面调用
     this.$nextTick(function(params) {
@@ -146,6 +137,10 @@ export default {
   },
   destroyed() {},
   methods:{
+    /**
+     * 单个信息点击事件
+     * @param {单个信息} item 
+     */
     handleClickItem(item){
       if(this.moduleObject.env === 'develop') {
         return
@@ -161,13 +156,14 @@ export default {
             });
         });
       }else{
-        let url = item.jumpUrl
-        if(url.indexOf('http') === -1) {
-          url = IDM.url.getWebPath(url)
+        if(item.jumpUrl) {
+          window.open(IDM.url.getWebPath(item.jumpUrl), this.propData.jumpStyle || '_self')
         }
-        window.open(url, this.propData.jumpStyle || '_self')
       }
     },
+    /**
+     * 点击更多事件d
+     */
     handleClickMore(){
       if(this.moduleObject.env === 'develop') {
         return
@@ -177,10 +173,7 @@ export default {
       if(this.propData.moreListLink) {
         url = this.propData.moreListLink
       }
-      if(url.indexOf('http') === -1) {
-        url = IDM.url.getWebPath(url)
-      }
-      window.open(url, this.propData.jumpStyle || '_self')
+      window.open(IDM.url.getWebPath(url), this.propData.jumpStyle || '_self')
     },
     // 顶部tabs点击
     handleTitleClick(item, index) {
@@ -358,15 +351,19 @@ export default {
      * 加载动态数据
      */
     initData(item = {}){
+      let activeIndex = this.propData.messageTitleList && this.propData.messageTitleList.findIndex(el => el.isActive)
+      if(activeIndex === -1){
+        activeIndex = 0
+      }
+      this.defaultIndex = activeIndex
       if(this.moduleObject.env === 'develop') {
         return
       }
-      let that = this;
-      //所有地址的url参数转换
-      var params = that.commonParam();
-      this.propData.customInterfaceUrl&&window.IDM.http.get(this.propData.customInterfaceUrl,{
-        ...params,
-        tabKey: item.tabKey || this.propData.messageTitleList[0] && this.propData.messageTitleList[0].tabKey,
+      // 获取数据源
+      this.propData.customInterfaceUrl&&window.IDM.http.post(this.propData.customInterfaceUrl,{
+        id: this.propData.dataSource && this.propData.dataSource.value,
+        tabKey: item.tabKey || this.propData.messageTitleList[this.defaultIndex] && this.propData.messageTitleList[this.defaultIndex].tabKey,
+        componentType: 'infoList',
         maxCount: this.propData.limit
       }, {
         headers: {
@@ -377,11 +374,11 @@ export default {
         if(res.status == 200 && res.data.code == 200 && Array.isArray(res.data.data.list)){
           this.messageData = res.data.data
         }else {
-          IDM.message.error(res.data.msg)
+          IDM.message.error(res.data.message)
         }
-        // that.propData.fontContent = ;
       })
       .catch((error) => {
+        console.log(error)
       });
     },
     /**
@@ -601,6 +598,7 @@ export default {
         .active{
           color: rgb(61, 140, 243);
           font-weight: 500;
+          background-color: transparent;
         }
       }
       &-more{

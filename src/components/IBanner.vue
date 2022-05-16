@@ -22,7 +22,7 @@
             :key="index"
             @click="handleClick(item)"
           >
-            <img v-if="propData && propData.dataType === 'custom'" :src="item.image && item.image.indexOf('http') === -1 ? IDM.url.getWebPath(item.image) : item.image"  class="slider-img" alt="" />
+            <img v-if="propData && propData.dataType === 'custom'" :src="item.image && IDM.url.getWebPath(item.image)"  class="slider-img" alt="" />
 
             <img v-else :src="IDM.express.replace('@['+propData.dataFiled+']', item, true)"  class="slider-img" alt="" />
             <span class="idm-banner-box-swiper-text">{{item.title}}</span>
@@ -340,7 +340,7 @@ export default {
      * 加载动态数据
      */
     initData() {
-      
+      // 刷新数每次加1,确保元素刷新
       this.refreshKeyNumber ++
       if(this.propData.dataType === 'custom'){
         this.$set(this.bannerData, 'value', this.propData.bannerTable)
@@ -369,7 +369,7 @@ export default {
           if(res.status == 200 && res.data.code == 200 && Array.isArray(res.data.data.value)){
             this.bannerData = res.data.data
           }else {
-            IDM.message.error(res.data.msg)
+            IDM.message.error(res.data.message)
           }
           this.initSwiper()
         })
@@ -425,11 +425,9 @@ export default {
       if(this.moduleObject.env === 'develop') {
         return
       }
-      let url = item.jumpUrl
-      if(item.jumpUrl.indexOf('http') === -1) {
-         url = IDM.url.getWebPath(url)
+      if(item.jumpUrl) {
+        window.open(IDM.url.getWebPath(item.jumpUrl), this.propData.jumpStyle || '_self')
       }
-      window.open(url, this.propData.jumpStyle || '_self')
     },
     showThisModuleHandle() {
       this.propData.defaultStatus = "default";
