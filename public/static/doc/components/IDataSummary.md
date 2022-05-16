@@ -46,7 +46,14 @@ mobileWechat@1.0.7
 - 标识：`默认值【sumNum】`
 - 默认值：`--`
 ##### 显示字段【dataFiled】
-设置当前字段要显示每行数据对象中的哪个字段属性名称，data[0].name；data[0].sumNum
+设置当前字段要显示每行数据对象中的哪个字段属性名称
+``` json
+"data":{
+    "inbox":{
+      "name":"待办",
+      "count":"13",
+    }
+```
 - 标识：`dataFiled`
 - 默认值：空
 ##### 背景图片【bgUrl】
