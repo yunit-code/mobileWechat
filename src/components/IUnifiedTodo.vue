@@ -54,21 +54,21 @@ import 'vant/lib/icon/style';
 const todoData = {
   value: [{
     jumpUrl: '/14',
-    isHot: true,
+    isHot: false,
     readStatusText: '已读',
     department: '文档处',
     time: '2022-05-09 09:00',
     title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
   },{
     jumpUrl: '/14',
-    isHot: true,
+    isHot: false,
     readStatusText: '已读',
     department: '文档处',
     time: '2022-05-09 09:00',
     title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
   },{
     jumpUrl: '/14',
-    isHot: true,
+    isHot: false,
     readStatusText: '已读',
     department: '文档处',
     time: '2022-05-09 09:00',
