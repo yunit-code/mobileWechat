@@ -113,7 +113,7 @@
                     "layoutType": "inline",
                     "text": "数据模式",
                     "bindKey": "dataType",
-                    "desc": "设置点击轮播图片时链接跳转方式",
+                    "desc": "设置点击轮播图片数据模式",
                     "dictionary": [
                         {
                             "label": "数据源",
