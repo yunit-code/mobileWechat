@@ -170,8 +170,8 @@ export default {
       }
       //默认接口地址
       let url =  this.messageData.moreUrl
-      if(this.propData.moreListLink) {
-        url = this.propData.moreListLink
+      if(this.propData.messageTitleList[this.defaultIndex].moreListLink) {
+        url = this.propData.messageTitleList[this.defaultIndex].moreListLink
       }
       window.open(IDM.url.getWebPath(url), this.propData.jumpStyle || '_self')
     },

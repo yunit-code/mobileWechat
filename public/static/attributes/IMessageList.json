@@ -133,6 +133,14 @@
                             "default": ""
                         },
                         {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "更多链接",
+                            "bindKey": "moreListLink",
+                            "desc": "此设置用于点击更多时候跳转链接，如果设置了链接地址则内置的根据数据跳转链接则失效",
+                            "display": "@[showMore == true]"
+                        },
+                        {
                             "type": "switch",
                             "layoutType": "inline",
                             "text": "默认选中",
@@ -278,14 +286,6 @@
                     "bindKey": "clickMessageItemFunction",
                     "desc": "此设置用于点击时候执行自定义函数逻辑，如果设置了此函数则内置的根据数据跳转链接则失效",
                     "multiple": true
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "更多链接",
-                    "bindKey": "moreListLink",
-                    "desc": "此设置用于点击更多时候跳转链接，如果设置了链接地址则内置的根据数据跳转链接则失效",
-                    "display": "@[showMore == true]"
                 }
             ]
         }
