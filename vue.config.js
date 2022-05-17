@@ -110,9 +110,9 @@ module.exports = {
         //   name: getAssetsDir(`img/[name].[hash:8].[ext]`),
         //   limit: 1
         // })
-      config
-        .plugin('webpack-bundle-analyzer')
-        .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
+      // config
+      //   .plugin('webpack-bundle-analyzer')
+      //   .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
     },
     configureWebpack: {
       plugins: [
