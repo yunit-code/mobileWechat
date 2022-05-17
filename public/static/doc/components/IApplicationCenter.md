@@ -184,9 +184,10 @@ mobilewechat@1.0.6
 - 标识：`font`
 - 默认值：空
 
-### 数据源
-#### 接口地址【getApplicationMarkNumberUrl】
-当应用开启角标显示时，用于获取应用角标数据的接口地址
+### 高级
+#### 角标接口设置
+##### 数据接口
+应用显示角标选项打开的时候，用于获取应用右上角角标数据的接口地址
 
 - 标识：`getApplicationMarkNumberUrl`
 - 默认值：`/ctrl/dataSource/getDatas`
@@ -204,13 +205,12 @@ mobilewechat@1.0.6
 }
 ```
 
-#### 显示字段【dataFiled】
-根据接口返回数据格式指定结果集的字段，比如返回值为{data:{count:5}}，则这里应该填写count
+##### 角标字段【dataFiled】
+应用显示角标选项打开的时候，根据应用右上角角标接口返回数据格式指定结果集的字段，若它的值为{data:{count:5}}，则这里应该填写count
 
 - 标识：`dataFiled`
 - 默认值：`count`
 
-### 高级
 #### 接口地址【getMyApplicationUrl】
 当组件设置为我的应用的时候，用于获取组件应用的数据。
 

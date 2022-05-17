@@ -433,43 +433,43 @@
         },
         {
             "type": "group",
-            "text": "数据源",
-            "desc": "点击？查看数据源用法指南",
-            "children": [
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "接口地址",
-                    "desc": "用于获取应用角标的接口地址",
-                    "bindKey": "getApplicationMarkNumberUrl",
-                    "default": "/ctrl/dataSource/getDatas"
-                },
-                {
-                    "type": "textarea",
-                    "layoutType": "inline",
-                    "text": "显示字段",
-                    "bindKey": "dataFiled",
-                    "desc": "根据接口返回数据格式指定结果集的字段,且它的值为{data:{count:5}}，则这里应该填写count",
-                    "default": "count",
-                    "placeholder": "示例:count"
-                }
-            ]
-        },
-        {
-            "type": "group",
             "text": "高级",
             "desc": "点击？查看高级设置用法指南",
             "children": [
+                {
+                    "type": "group",
+                    "text": "角标接口设置",
+                    "desc": "应用显示角标选项打开的时候，用于获取应用右上角角标数据的接口设置",
+                    "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "数据接口",
+                            "desc": "应用显示角标选项打开的时候，用于获取应用右上角角标数据的接口地址",
+                            "bindKey": "getApplicationMarkNumberUrl",
+                            "default": "/ctrl/dataSource/getDatas"
+                        },
+                        {
+                            "type": "textarea",
+                            "layoutType": "inline",
+                            "text": "角标字段",
+                            "bindKey": "dataFiled",
+                            "desc": "应用显示角标选项打开的时候，根据应用右上角角标接口返回数据格式指定结果集的字段，若它的值为{data:{count:5}}，则这里应该填写count",
+                            "default": "count",
+                            "placeholder": "示例:count"
+                        }
+                    ]
+                },
                 {
                     "type": "input",
                     "layoutType": "inline",
                     "text": "接口地址",
                     "desc": "用于获取用户设置的我的应用数据的接口地址",
                     "bindKey": "getMyApplicationUrl",
-                    "default": "/ctrl/tencentApp/queryMyFavorite"
+                    "default": "/ctrl/tencentApp/queryMyFavorite",
+                    "display": "@[isMyApplication]"
                 }
-            ],
-            "display": "@[isMyApplication]"
+            ]
         }
     ]
 }
