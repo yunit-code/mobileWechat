@@ -53,6 +53,14 @@
                     "default": true
                 },
                 {
+                    "type": "switch",
+                    "layoutType": "inline",
+                    "text": "显示角标",
+                    "desc": "设置组件右上角待办数量，为false时显示省略号",
+                    "bindKey": "showTodoNumber",
+                    "default": false
+                },
+                {
                     "type": "slider",
                     "layoutType": "block",
                     "text": "显示数量",

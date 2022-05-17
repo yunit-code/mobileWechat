@@ -19,20 +19,27 @@
         </svg>
         <svg-icon v-else icon-class="threeLine" className="idm-unifie-todo-box-title-icon"></svg-icon>
       </div>
-      <van-icon v-if="propData.showMore" class="idm-unifie-todo-box-title-more" name="ellipsis" @click="handleClickMore" />
+      <div v-if="propData.showMore" class="d-flex align-c"  @click="handleClickMore">
+        <span v-if="todoData.count && propData.showTodoNumber">
+          <span class="idm-unifie-todo-box-title-number">{{todoData.count}}</span>
+          <van-icon name="arrow" />
+        </span>
+        <van-icon v-else  class="idm-unifie-todo-box-title-more" name="ellipsis" />
+      </div>
     </div>
     <div class="idm-unifie-todo-box-sub" v-for="(item, index) in todoData.value" :key="index" @click="handleClickItem(item)">
       <div class="idm-unifie-todo-box-sub-title" :class="{'idm-unifie-todo-box-sub-no-read': true}">
-        <div class="idm-unifie-todo-box-sub-title-icon" v-if="item.isHot">
+        <div class="idm-unifie-todo-box-sub-title-icon" v-if="item.isHot != '-1'">
           <svg-icon icon-class="fire" ></svg-icon>
         </div>
         <div class="flex-1">
-          <div class="idm-unifie-todo-box-sub-content">
+          <div class="idm-unifie-todo-box-sub-content" :class="item.readStatus == '1' ?'idm-unifie-todo-box-sub-hasRead' : ''">
             {{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}
           </div>
           <div class="idm-unifie-todo-box-sub-intr">
             <div class="d-flex align-c">
-              <svg-icon iconClass="duihao" class="idm-unifie-todo-box-sub-icon"></svg-icon>
+              <svg-icon iconClass="duihao" v-if="item.readStatus == '1'" class="idm-unifie-todo-box-sub-icon"></svg-icon>
+              <svg-icon iconClass="weidu" v-else class="idm-unifie-todo-box-sub-icon"></svg-icon>
               <span>{{item.readStatusText}}</span> </div>
             <div class="d-flex align-c">
               <svg-icon iconClass="person" class="idm-unifie-todo-box-sub-icon"></svg-icon> 
@@ -54,26 +61,30 @@ import 'vant/lib/icon/style';
 const todoData = {
   value: [{
     jumpUrl: '',
-    isHot: false,
-    readStatusText: '已读',
+    isHot: '-1',
+    readStatus: '0',
+    readStatusText: '未读',
     department: '文档处',
     time: '2022-04-21 12:56',
     title: '[发文] 关于扎实做好近期疫情防控有关工作的通知'
   },{
     jumpUrl: '',
-    isHot: false,
+    isHot: '-1',
+    readStatus: '1',
     readStatusText: '已读',
     department: '李干杰',
     time: '2022-04-21 09:23',
     title: '[发文] 关于印发《山东省职业卫生技术服务机构乙级资质认可程序》的通知'
   },{
     jumpUrl: '',
-    isHot: false,
+    isHot: '-1',
+    readStatus: '1',
     readStatusText: '已读',
     department: '文档处',
     time: '2022-04-21 08:56',
     title: '[发文] 关于印发数字山东2021行动方案的通知'
   }],
+  count: 2,
   moreUrl: ''
 }
 export default {
@@ -96,6 +107,8 @@ export default {
             }
           }
         },
+        showMore: true,
+        showTodoNumber: true,
         dataFiled: 'title',
         bgColor: '#fff',
         maxCount: '3', // 最多显示几条
@@ -489,6 +502,9 @@ export default {
     & &-more{
       font-size: 22px;
     }
+    &-number{
+      padding: 0 5px 0 0;
+    }
   }
   &-sub{
     border-bottom: .6px solid #eee;
@@ -518,6 +534,9 @@ export default {
     &-no-read{
       color: #000;
       font-weight: 500;
+    }
+    &-hasRead{
+      color: #999;
     }
     &-intr{
       padding: 8px 0;
