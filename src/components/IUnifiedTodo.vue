@@ -357,8 +357,8 @@ export default {
       window.IDM.http
         .post(this.propData.customInterfaceUrl, {
           id: this.propData.dataSource && this.propData.dataSource.value,
-          // componentType: 0,
-          maxCount: this.propData.limit
+          start: 0,
+          limit: this.propData.limit
         },{
           headers: {
             "Content-Type": "application/json;charset=UTF-8",

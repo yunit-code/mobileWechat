@@ -373,8 +373,8 @@ export default {
       this.propData.customInterfaceUrl&&window.IDM.http.post(this.propData.customInterfaceUrl,{
         id: this.propData.dataSource && this.propData.dataSource.value,
         tabKey: item.tabKey || this.propData.messageTitleList[this.defaultIndex] && this.propData.messageTitleList[this.defaultIndex].tabKey,
-        componentType: 'infoList',
-        maxCount: this.propData.limit
+        limit: this.propData.limit,
+        start: 0,
       }, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
