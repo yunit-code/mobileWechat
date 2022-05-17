@@ -212,7 +212,7 @@ mobilewechat@1.0.6
 - 默认值：`count`
 
 #### 接口地址【getMyApplicationUrl】
-当组件设置为我的应用的时候，用于获取组件应用的数据。
+当我的应用选项打开的时候，用于获取应用数据的接口地址
 
 - 标识：`getMyApplicationUrl`
 - 默认值：`/ctrl/tencentApp/queryMyFavorite`
