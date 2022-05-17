@@ -67,7 +67,7 @@
                     <van-icon name="search" color="#fff"/>
                 </div>
             </div>
-            <div class="idm_applicationmanage_footer flex_between">
+            <div v-if="is_edit" class="idm_applicationmanage_footer flex_between">
                 <van-button @click="cancel" class="button" block type="default">取消</van-button>
                 <van-button @click="save" class="button" block type="info">保存</van-button>
             </div>
