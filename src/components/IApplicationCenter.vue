@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div @click="toApplicationManage" v-if="propData.showConfig" class="idm_applicationcenter_title_right">
-                    <svg-icon icon-class="more" />
+                    <van-icon class="idm-message-list-box-top-more" name="ellipsis" />
                 </div>
             </div>
             <div class="idm_applicationcenter_main">
@@ -43,13 +43,15 @@
 
 <script>
 import { base_url } from '../api/config.js'
-import { Grid, GridItem } from 'vant';
+import { Grid, GridItem, Icon } from 'vant';
 import 'vant/lib/grid/style';
+import 'vant/lib/icon/style';
 export default {
     name: 'IApplicationCenter',
     components: {
         [Grid.name]: Grid,
         [GridItem.name]: GridItem,
+        [Icon.name]: Icon,
     },
     data() {
         return {
@@ -551,7 +553,7 @@ export default {
             line-height: 22px;
         }
         .idm_applicationcenter_title_right{
-            font-size: 16px;
+            font-size: 23px;
         }
     }
     .idm_applicationcenter_main{
