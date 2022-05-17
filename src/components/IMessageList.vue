@@ -638,7 +638,7 @@ export default {
       }
       &-time{
         white-space: nowrap;
-        color: #ccc;
+        color: #999;
         font-size: 16px;
         margin: 0 0 0 10px;
       }
@@ -689,12 +689,12 @@ export default {
       }
       &-title-bottom{
         margin: 10px 0 0 0;
-        color: #ccc;
+        color: #999;
         font-size: 14px;
       }
       &-title-bottom2{
         margin: 10px 0 0 0;
-        color: #ccc;
+        color: #999;
         font-size: 3.7vw;
       }
     }
