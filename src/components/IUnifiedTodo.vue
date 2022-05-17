@@ -53,28 +53,28 @@ import { Icon } from 'vant';
 import 'vant/lib/icon/style';
 const todoData = {
   value: [{
-    jumpUrl: '/14',
+    jumpUrl: '',
     isHot: false,
     readStatusText: '已读',
     department: '文档处',
-    time: '2022-05-09 09:00',
-    title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
+    time: '2022-04-21 12:56',
+    title: '[发文] 关于扎实做好近期疫情防控有关工作的通知'
   },{
-    jumpUrl: '/14',
+    jumpUrl: '',
     isHot: false,
     readStatusText: '已读',
-    department: '文档处',
-    time: '2022-05-09 09:00',
-    title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
+    department: '李干杰',
+    time: '2022-04-21 09:23',
+    title: '[发文] 关于印发《山东省职业卫生技术服务机构乙级资质认可程序》的通知'
   },{
-    jumpUrl: '/14',
+    jumpUrl: '',
     isHot: false,
     readStatusText: '已读',
     department: '文档处',
-    time: '2022-05-09 09:00',
-    title: '标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，'
+    time: '2022-04-21 08:56',
+    title: '[发文] 关于印发数字山东2021行动方案的通知'
   }],
-  moreUrl: '/sdaf'
+  moreUrl: ''
 }
 export default {
   name: 'IUnifiedTodo',
@@ -162,7 +162,9 @@ export default {
       if(this.propData.moreListLink) {
         url = this.propData.moreListLink
       }
-      window.open(IDM.url.getWebPath(url), this.propData.jumpStyle || '_self')
+      if(url){
+        window.open(IDM.url.getWebPath(url), this.propData.jumpStyle || '_self')
+      }
     },
     /**
      * 提供父级组件调用的刷新prop数据组件
@@ -395,24 +397,6 @@ export default {
       }
       
       return _defaultVal;
-    },
-    handleClick(type, item = {}){
-      if(this.moduleObject.env=="develop"){
-        //开发模式下不执行此事件
-        return;
-      }
-      //获取所有的URL参数、页面ID（pageId）、以及所有组件的返回值（用范围值去调用IDM提供的方法取出所有的组件值）
-      let urlObject = window.IDM.url.queryObject(),
-      pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
-      var clickFunction = this.propData[type];
-      clickFunction&&clickFunction.forEach(item=>{
-        window[item.name]&&window[item.name].call(this,{
-          urlData:urlObject,
-          pageId,
-          customParam:item.param,
-          _this:this
-        });
-      })
     },
     showThisModuleHandle(){
       this.propData.defaultStatus = "default";

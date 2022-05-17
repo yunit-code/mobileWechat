@@ -67,27 +67,27 @@
 <script>
 const messageData = {
     list:[{
-      title: "这是一标题，这是一标题，这是一标题，这是一标题，这是一标题，这是一标题，这是一标题，",
+      title: "营商环境优，引得“近邻”来",
       image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.xntv.tv%2Fd%2Ffile%2F2018-04-26%2Ffa767ea3d7f35f9d44531daa96fd32a4.jpg&refer=http%3A%2F%2Fwww.xntv.tv&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1655102114&t=f60af982a9e9191280839e5d2a4cafd1",
-      jumpUrl: "/ctrl",
-      time: "2022-05-09",
+      jumpUrl: "",
+      time: "2022-04-15",
       author: "作者"
     },
     {
-      title: "这是一标题，这是一标题，这是一标题，这是一标题，这是一标题，这是一标题，这是一标题，",
+      title: "山东“职教高地”建设提质培优",
       image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fq_70%2Cc_zoom%2Cw_640%2Fimages%2F20190329%2F3dfe53bbc72945efa027676bc250d87c.jpeg&refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1655102114&t=d03ee07e0978bf8c3483099216cdac6c",
-      jumpUrl: "/ctrl",
-      time: "2022-05-09",
+      jumpUrl: "",
+      time: "2022-04-14",
       author: "作者"
     },
     {
-      title: "这是一标题，这是一标题，这是一标题，这是一标题，这是一标题，这是一标题，这是一标题，",
+      title: "山东省人民政府办公厅关于印发",
       image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.xntv.tv%2Fd%2Ffile%2F2018-04-26%2Ffa767ea3d7f35f9d44531daa96fd32a4.jpg&refer=http%3A%2F%2Fwww.xntv.tv&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1655102114&t=f60af982a9e9191280839e5d2a4cafd1",
-      jumpUrl: "/ctrl",
-      time: "2022-05-09",
+      jumpUrl: "",
+      time: "2022-04-13",
       author: "作者"
     }],
-    moreUrl: "更多跳转地址",
+    moreUrl: "",
     total:"99"
   }
 
@@ -173,7 +173,9 @@ export default {
       if(this.propData.messageTitleList[this.defaultIndex].moreListLink) {
         url = this.propData.messageTitleList[this.defaultIndex].moreListLink
       }
-      window.open(IDM.url.getWebPath(url), this.propData.jumpStyle || '_self')
+      if(url){
+        window.open(IDM.url.getWebPath(url), this.propData.jumpStyle || '_self')
+      }
     },
     // 顶部tabs点击
     handleTitleClick(item, index) {
