@@ -16,7 +16,7 @@
                     </div>
                     <div @click="manageApplication" class="idm_applicationcenter_title_right">管理</div>
                 </div>
-                <div class="idm_applicationcenter_main">
+                <div v-if="my_application_data && my_application_data.length" class="idm_applicationcenter_main">
                     <van-grid :border="false" :column-num="5">
                         <van-grid-item v-for="(item,index) in my_application_data" :key="item.value">
                             <div class="idm_applicationcenter_main_list">
@@ -39,7 +39,7 @@
                         <div class="idm_applicationcenter_title_left_text">全部应用</div>
                     </div>
                 </div>
-                 <div class="idm_applicationcenter_main">
+                 <div v-if="application_data && application_data.length" class="idm_applicationcenter_main">
                     <van-tabs>
                         <van-tab v-for="(item,index) in application_data" :key="item.value" :title="item.title">
                             <van-grid :border="false" :column-num="5">
