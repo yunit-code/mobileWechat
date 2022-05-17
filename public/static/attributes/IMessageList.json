@@ -117,6 +117,7 @@
                     "text": "页签配置",
                     "bindKey": "messageTitleList",
                     "tabText": "页签[index]",
+                    "openGroup": true,
                     "children": [
                         {
                             "type": "input",
@@ -279,6 +280,15 @@
                     "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData（自定义接口忽略）且它的值为{data:{filedName:[{\"text\":\"\",\"value\":\"\",\"check\":true}]}}，则这里应该填写data.filedName",
                     "default": "title",
                     "placeholder": "示例：data.filedName 或者 [0].data[0].filedName"
+                },
+                {
+                    "type": "textarea",
+                    "layoutType": "block",
+                    "text": "消息刷新标识",
+                    "bindKey": "messageRefreshKey",
+                    "desc": "根据组件接受到的消息来刷新数据，可配置多个，以英文逗号分开",
+                    "default": "",
+                    "placeholder": "示例：inbox,info,toread"
                 },
                 {
                     "type": "actionSelect",
