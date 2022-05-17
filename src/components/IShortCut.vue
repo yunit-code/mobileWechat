@@ -44,7 +44,16 @@ export default {
   data(){
     return {
       moduleObject:{},
-      propData:this.$root.propData.compositeAttr||{
+      propData:this.$root.propData.compositeAttr||{}
+    }
+  },
+  props: {
+  },
+  created() {
+    this.moduleObject = this.$root.moduleObject
+    this.convertAttrToStyleObject();
+    if(this.moduleObject.env=="develop" || !IDM.env_dev){
+      this.propData = {
         comTitle: '快捷方式',
         showType: 'else',
         maxNumber: 2,
@@ -66,12 +75,6 @@ export default {
         ]
       }
     }
-  },
-  props: {
-  },
-  created() {
-    this.moduleObject = this.$root.moduleObject
-    this.convertAttrToStyleObject();
   },
   mounted() {
     //赋值给window提供跨页面调用

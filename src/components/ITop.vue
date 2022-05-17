@@ -47,11 +47,11 @@ export default {
     return {
       moduleObject:{},
       logo: '',
-      userName: '测试',
-      userUnit: '单位',
+      userName: '',
+      userUnit: '',
       weatherLogo: '',
-      temperature: '32.7',
-      city: '广东市',
+      temperature: '',
+      city: '',
       propData:this.$root.propData.compositeAttr||{
         userInfo:true,
         weather: true,
@@ -76,6 +76,12 @@ export default {
   created() {
     this.moduleObject = this.$root.moduleObject
     this.convertAttrToStyleObject();
+    if(this.moduleObject.env=="develop" || !IDM.env_dev){
+      this.userName = '测试';
+      this.userUnit = '单位';
+      this.temperature = '32.7';
+      this.city = '广东市';
+    }
   },
   mounted() {
     //赋值给window提供跨页面调用

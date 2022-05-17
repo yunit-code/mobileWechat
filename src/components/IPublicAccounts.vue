@@ -56,11 +56,7 @@ export default {
       xPum: "",
       yPum: "",
       moduleObject:{},
-      accountList:[
-        {
-          text: '公共账号',
-        },
-      ],
+      accountList:[],
       propData:this.$root.propData.compositeAttr||{
         accountUrl: '',
         fixed: true,
@@ -103,6 +99,13 @@ export default {
   created() {
     this.moduleObject = this.$root.moduleObject
     this.convertAttrToStyleObject();
+    if(this.moduleObject.env=="develop" || !IDM.env_dev){
+      this.accountList = [
+        {
+          text: '公共账号',
+        },
+      ]
+    }
   },
   mounted() {
     //赋值给window提供跨页面调用

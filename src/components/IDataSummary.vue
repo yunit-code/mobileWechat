@@ -46,7 +46,16 @@ export default {
   data(){
     return {
       moduleObject:{},
-      propData:this.$root.propData.compositeAttr||{
+      propData:this.$root.propData.compositeAttr||{}
+    }
+  },
+  props: {
+  },
+  created() {
+    this.moduleObject = this.$root.moduleObject
+    this.convertAttrToStyleObject();
+    if(this.moduleObject.env=="develop" || !IDM.env_dev){
+      this.propData = {
         comTitle: '数据汇总',
         maxNumber: 4,
         customInterfaceUrl: '/ctrl/dataSource/getDatas',
@@ -56,20 +65,9 @@ export default {
             count: 10,
             bgUrl: '',
           },
-          {
-            name: 'test1',
-            count: 10,
-            bgUrl: '',
-          },
         ]
       }
     }
-  },
-  props: {
-  },
-  created() {
-    this.moduleObject = this.$root.moduleObject
-    this.convertAttrToStyleObject();
   },
   mounted() {
     //赋值给window提供跨页面调用
