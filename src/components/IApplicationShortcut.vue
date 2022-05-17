@@ -13,11 +13,12 @@
                 <van-grid :border="false" :column-num="propData.showColumn">
                     <van-grid-item v-for="(item,index) in application_data" :key="index">
                         <div @click="toApplication(item)" class="idm_applicationcenter_main_list">
-                            <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
-                            <svg-icon v-else icon-class="application" />
-
+                            <div class="img_box">
+                                <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
+                                <svg-icon v-else icon-class="application" />
+                                <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
+                            </div>
                             <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
-                            <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
                         </div>
                     </van-grid-item>
                 </van-grid>
@@ -25,11 +26,12 @@
             <div v-else class="idm_applicationcenter_main">
                 <div class="swiper_block flex_start">
                     <span @click="toApplication(item)" v-for="(item,index) in application_data" :key="index" class="swiper_block_list">
-                        <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
-                        <svg-icon v-else icon-class="application" />
-
+                        <div class="img_box">
+                            <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
+                            <svg-icon v-else icon-class="application" />
+                            <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
+                        </div>
                         <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
-                        <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
                     </span>
                 </div>
             </div>
@@ -54,7 +56,7 @@ export default {
             propData: this.$root.propData.compositeAttr || {
                 
             },
-            application_data: [],
+            application_data: [ ],
             have_power_application_data_ids: [],//用户有权限的app
         }
     },
@@ -125,6 +127,7 @@ export default {
             this.getApplicationMarkNumber()
         },
         getApplicationMarkNumber() {
+            console.log('application_data',this.application_data)
             for( let i = 0,maxi = this.application_data.length;i < maxi;i++ ) {
                 if ( this.propData.showTodoNumber && this.application_data[i].showTodoNumber &&  this.application_data[i].selectApplication && this.application_data[i].selectApplication.sourceId ) {
                     this.getApplicationMarkNumberSubmit(i,this.application_data[i].selectApplication.sourceId)
@@ -132,6 +135,7 @@ export default {
             }
         },
         getApplicationMarkNumberSubmit(index,sourceId) {
+            console.log('getApplicationMarkNumberUrl',this.propData.getApplicationMarkNumberUrl)
             if ( this.moduleObject.env == 'develop' ) {
                 return
             }
@@ -467,11 +471,15 @@ export default {
         .idm_applicationcenter_main_list{
             position: relative;
             text-align: center;
-            img,svg{
+            .img_box,img,svg{
                 width: 40px;
                 height: 40px;
                 margin: 0 auto 2.5px auto;
             }
+            .img_box{
+                position: relative;
+            }
+            
             .idm_applicationcenter_main_list_name{
                 font-size: 12px;
                 color: #333333;
@@ -507,10 +515,13 @@ export default {
                 position: relative;
                 text-align: center;
                 flex-shrink: 0;
-                img,svg{
+                .img_box,img,svg{
                     width: 40px;
                     height: 40px;
                     margin: 0 auto 2.5px auto;
+                }
+                .img_box{
+                    position: relative;
                 }
                 .idm_applicationcenter_main_list_name{
                     font-size: 12px;
@@ -523,7 +534,7 @@ export default {
                     line-height: 15px;
                     position: absolute;
                     top: -7px;
-                    right: 7px;
+                    right: -7px;
                     text-align: center;
                     font-size: 12px;
                     overflow: hidden;

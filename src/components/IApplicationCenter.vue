@@ -28,11 +28,12 @@
                 <van-grid :border="false" :column-num="propData.showColumn">
                     <van-grid-item v-for="(item,index) in application_data" :key="item.key">
                         <div @click="toApplication(item)" class="idm_applicationcenter_main_list">
-                            <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
-                            <svg-icon v-else icon-class="application" />
-
+                            <div class="img_box">
+                                <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
+                                <svg-icon v-else icon-class="application" />
+                                <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
+                            </div>
                             <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
-                            <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
                         </div>
                     </van-grid-item>
                 </van-grid>
@@ -73,6 +74,8 @@ export default {
             handler(value) {
                 if ( this.propData.applicationList && this.propData.applicationList.length ) {
                     this.application_data = JSON.parse(JSON.stringify(this.propData.applicationList))
+                } else {
+                    this.application_data = [];
                 }
                 this.changeLines()
             },
@@ -81,6 +84,7 @@ export default {
     },
     created() {
         this.moduleObject = this.$root.moduleObject
+        console.log('moduleObject',this.moduleObject)
         console.log('propData',this.propData)
         this.getHavePowerApplication()
         this.convertAttrToStyleObject();
@@ -94,6 +98,42 @@ export default {
     },
     destroyed() { },
     methods: {
+        watchApplicationChange(value,old) {
+            console.log('value',value)
+            console.log('old',old)
+            if ( (!value) || !value.length ) {
+                return
+            }
+            if ( value.length != old.length ) {
+                return
+            }
+            console.log('555')
+            if( value.length == old.length ) {
+                for( let i = 0,maxi = value.length;i < maxi;i++ ) {
+                    if ( value[i].selectApplication && value[i].selectApplication.value ) {
+                        let is_change_application = this.isChangeSelectedApplication(value[i].selectApplication.value,old)
+                        console.log('is_change_application',is_change_application)
+                        if ( (!is_change_application) || !is_change_application.length ) {
+                            value[i].applicationName = value[i].selectApplication.title;
+                            value[i].applicationIconUrl = value[i].selectApplication.imageUrl;
+                            value[i].applicationUrl = value[i].selectApplication.appUrl;
+                            console.log('更改属性值',value)
+                            IDM.develop.externalMixAttributeChangeHandle({
+                                applicationList: JSON.parse(JSON.stringify(value))
+                            },this.moduleObject.packageid,-1,false)
+                        }
+                    }
+
+                }
+            }
+            
+        },
+        isChangeSelectedApplication(id,old) {
+            let result = old.filter((item) => {
+                return item.selectApplication && item.selectApplication.value == id
+            })
+            return result
+        },
         getHavePowerApplication() {
             let user_info = window.IDM.user.getCurrentUserInfo()
             console.log('获取用户信息',user_info)
@@ -237,6 +277,7 @@ export default {
         /** * 提供父级组件调用的刷新prop数据组件 */
         propDataWatchHandle(propData) {
             console.log('propData',propData)
+            this.watchApplicationChange(propData.compositeAttr.applicationList,this.application_data)
             this.propData = propData.compositeAttr || {};
             this.convertAttrToStyleObject();
         },
@@ -548,10 +589,13 @@ export default {
         .idm_applicationcenter_main_list{
             position: relative;
             text-align: center;
-            img,svg{
+            .img_box,img,svg{
                 width: 40px;
                 height: 40px;
                 margin: 0 auto 2.5px auto;
+            }
+            .img_box{
+                position: relative;
             }
             .idm_applicationcenter_main_list_name{
                 font-size: 12px;

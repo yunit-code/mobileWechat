@@ -57,6 +57,7 @@
                     "text": "应用配置",
                     "bindKey": "applicationList",
                     "tabText": "应用[index]",
+                    "openGroup": true,
                     "children": [
                         {
                             "type": "treeSelect",
@@ -64,7 +65,8 @@
                             "text": "选择应用",
                             "bindKey": "selectApplication",
                             "dataSourceUrl": "/ctrl/tencentApp/getAllApps",
-                            "default": ""
+                            "default": "",
+                            "openGroup": true
                         },
                         {
                             "type": "input",
