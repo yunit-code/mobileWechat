@@ -100,41 +100,18 @@ export default {
         return {
             moduleObject: {},
             propData: this.$root.propData.compositeAttr || {
-                showRows: 2,
-                showColumn: 5,
-                getMyApplicationUrl: '/ctrl/tencentApp/queryMyFavorite',
-                getAllApplicationUrl: '/ctrl/tencentApp/queryAppGroupByGrant',
+                
             },
             is_edit: false,
-            my_application_data: [
-                {
-                    value: '1',
-                    imageUrl: '',
-                    title: '应用名称'
-                }
-            ],
-            application_data: [
-                {
-                    title: '公文',
-                    value: '1',
-                    children: [
-                        {
-                            is_favorite: "1", //是否设置我的应用 0否 1是
-                            imageUrl: "", //应用图标url
-                            appUrl: "", //应用点击url
-                            title: "公文管理", //应用名称
-                            value: "11", //应用ID
-                            key: "11" //应用ID
-                        }
-                    ]
-                }
-            ],
+            my_application_data: [ ],
+            application_data: [ ],
         }
     },
     props: {
     },
     created() {
         this.moduleObject = this.$root.moduleObject
+        this.initDevelopData()
         this.convertAttrToStyleObject();
     },
     mounted() {
@@ -146,6 +123,45 @@ export default {
     },
     destroyed() { },
     methods: {
+        initDevelopData() {
+            if ( this.moduleObject.env == 'develop' ) {
+                this.my_application_data = [
+                    {
+                        value: '1',
+                        imageUrl: '',
+                        title: '应用名称'
+                    }
+                ]
+                this.application_data = [
+                    {
+                        title: '公文',
+                        value: '1',
+                        children: [
+                            {
+                                is_favorite: "1", //是否设置我的应用 0否 1是
+                                imageUrl: "", //应用图标url
+                                appUrl: "", //应用点击url
+                                title: "公文管理", //应用名称
+                                value: "11", //应用ID
+                                key: "11" //应用ID
+                            }
+                        ]
+                    },
+                    {
+                        title: '会议',
+                        value: '2',
+                    },
+                    {
+                        title: '签报',
+                        value: '3',
+                    },
+                    {
+                        title: '日程',
+                        value: '4',
+                    },
+                ]
+            }
+        },
         getMyApplicatinData() {
             console.log('初始化数据',this.moduleObject)
             if ( this.moduleObject.env == 'develop' ) {

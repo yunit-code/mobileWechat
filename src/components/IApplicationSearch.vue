@@ -24,7 +24,7 @@
                     </div>
                     <div class="list_right">
                         <span v-if="item.is_favorite == '1'" class="add_disabled">已添加</span>
-                        <span @click="add" v-else class="add">添加</span>
+                        <span @click="add(item,index)" v-else class="add">添加</span>
                     </div>
                 </div>
             </div>
@@ -49,20 +49,17 @@ export default {
         return {
             moduleObject: {},
             propData: this.$root.propData.compositeAttr || {
-                getAllApplicationUrl: '/ctrl/tencentApp/queryAppByGrant'
+
             },
             search_text: '',
-            application_data: [ 
-                {
-
-                }
-            ],
+            application_data: [],
         }
     },
     props: {
     },
     created() {
         this.moduleObject = this.$root.moduleObject
+        this.initDevelopData()
         this.convertAttrToStyleObject();
     },
     mounted() {
@@ -74,10 +71,19 @@ export default {
     },
     destroyed() { },
     methods: {
+        initDevelopData() {
+            if ( this.moduleObject.env == 'develop' ) {
+                this.application_data = [
+                    {
+                        title: '应用名称'
+                    }
+                ]
+            }
+        },
         getApplicationList() {
-            // if ( this.moduleObject.env == 'develop' || !this.propData.getAllApplicationUrl ) {
-            //     return
-            // }
+            if ( this.moduleObject.env == 'develop' || !this.propData.getAllApplicationUrl ) {
+                return
+            }
             window.IDM.http.post(base_url + this.propData.getAllApplicationUrl,{
                 appName: this.search_text
             }).then(result=>{

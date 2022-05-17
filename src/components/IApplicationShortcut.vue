@@ -52,17 +52,7 @@ export default {
         return {
             moduleObject: {},
             propData: this.$root.propData.compositeAttr || {
-                isSlide: false,
-                showRows: 1,
-                showColumn: 5,
-                showTodoNumber: false,
-                applicationList: [
-                    {
-                        selectApplication: {},
-                        showTodoNumber: false,
-                        todoNumber: 0,
-                    }
-                ],
+                
             },
             application_data: [],
             have_power_application_data_ids: [],//用户有权限的app
