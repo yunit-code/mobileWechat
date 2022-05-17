@@ -51,6 +51,7 @@
                     "text": "组件样式",
                     "bindKey": "compStyle",
                     "desc": "设置组件显示风格",
+                    "display": false,
                     "dictionary": [
                         {
                             "label": "样式一",
