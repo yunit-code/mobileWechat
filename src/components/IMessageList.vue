@@ -369,7 +369,7 @@ export default {
         start: 0,
       }, {headers: { "Content-Type": "application/json;charset=UTF-8" }})
       .then((res) => {
-        if(res.status == 200 && res.data.code == 200 && Array.isArray(res.data.data.list)){
+        if(res.status == 200 && res.data.code == 200){
           this.messageData = res.data.data
         }else {
           IDM.message.error(res.data.message)

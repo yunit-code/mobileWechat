@@ -368,7 +368,7 @@ export default {
         })
         .then((res) => {
           //res.data
-          if(res.status == 200 && res.data.code == 200 && Array.isArray(res.data.data.value)){
+          if(res.status == 200 && res.data.code == 200){
             this.bannerData = res.data.data
           }else {
             IDM.message.error(res.data.message)

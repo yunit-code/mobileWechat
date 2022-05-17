@@ -351,7 +351,7 @@ export default {
           limit: this.propData.limit
         },{headers: {"Content-Type": "application/json;charset=UTF-8"}})
         .then((res) => {
-          if(res.status == 200 && res.data.code == 200 && Array.isArray(res.data.data.value)){
+          if(res.status == 200 && res.data.code == 200){
             this.todoData = res.data.data
           }else {
             IDM.message.error(res.data.message)
