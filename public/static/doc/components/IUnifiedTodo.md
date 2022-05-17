@@ -36,6 +36,12 @@ mobilewechat@1.0.6
 - 标识：`showMore`
 - 默认值： "true"
 
+#### 显示角标【showTodoNumber】
+<font color="#CCCCCC">是否待办数量，在显示更多为true的前提下，设置组件右上角待办数量，为false时显示省略号</font>
+
+- 标识：`showTodoNumber`
+- 默认值： "true"
+
 #### 显示数量【limit】
 <font color="#CCCCCC">当前组件标题，用来增加组件辨识度</font>
 
