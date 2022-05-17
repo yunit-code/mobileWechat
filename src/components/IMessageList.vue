@@ -120,7 +120,7 @@ export default {
         limit: 3,
         messageTitleList: [{tabTitle: '页签名称', tabKey: '', isActive: false}]
       },
-      messageData
+      messageData: {list: []}
     }
   },
   created() {
@@ -367,6 +367,7 @@ export default {
         this.defaultIndex = index
       }
       if(this.moduleObject.env === 'develop') {
+        this.messageData = _.cloneDeep(messageData)
         return
       }
       // 获取数据源
@@ -374,6 +375,7 @@ export default {
         id: this.propData.dataSource && this.propData.dataSource.value,
         tabKey: item.tabKey || this.propData.messageTitleList[this.defaultIndex] && this.propData.messageTitleList[this.defaultIndex].tabKey,
         limit: this.propData.limit,
+        type: '',
         start: 0,
       }, {
         headers: {

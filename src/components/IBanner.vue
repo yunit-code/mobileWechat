@@ -82,7 +82,7 @@ export default {
         dataFiled: 'image',
         dataType: 'dataSource'
       },
-      bannerData: _.cloneDeep(data),
+      bannerData: {value: []},
       refreshKeyNumber: 0
     };
   },
@@ -358,6 +358,7 @@ export default {
       this.propData.customInterfaceUrl &&
       window.IDM.http
         .post(this.propData.customInterfaceUrl, {
+          type: 'picture',
           id: this.propData.dataSource && this.propData.dataSource.value,
           limit: this.propData.limit,
           start: 0
@@ -376,7 +377,6 @@ export default {
           this.initSwiper()
         })
         .catch((error) => {
-          this.bannerData = data
           this.initSwiper()
       })
     },

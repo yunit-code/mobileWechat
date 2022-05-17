@@ -113,7 +113,7 @@ export default {
         bgColor: '#fff',
         maxCount: '3', // 最多显示几条
       },
-      todoData
+      todoData: {value: []}
     }
   },
   props: {
@@ -168,6 +168,7 @@ export default {
      */
     handleClickMore() {
       if(this.moduleObject.env === 'develop') {
+        this.todoData = _.cloneDeep(todoData)
         return
       }
       //默认接口地址
@@ -351,6 +352,7 @@ export default {
      */
     initData(){
       if(this.moduleObject.env === 'develop') {
+        this.todoData = _.cloneDeep(todoData)
         return
       }
       this.propData.customInterfaceUrl &&
@@ -358,6 +360,7 @@ export default {
         .post(this.propData.customInterfaceUrl, {
           id: this.propData.dataSource && this.propData.dataSource.value,
           start: 0,
+          type: 'todo',
           limit: this.propData.limit
         },{
           headers: {
@@ -368,6 +371,7 @@ export default {
           if(res.status == 200 && res.data.code == 200 && Array.isArray(res.data.data.value)){
             this.todoData = res.data.data
           }else {
+            this.todoData = _.cloneDeep(todoData)
             IDM.message.error(res.data.message)
           }
         })
