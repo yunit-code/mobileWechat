@@ -42,25 +42,25 @@ const data = {
     jumpUrl: '/dreamweb/',
     image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp7.itc.cn%2Fimages01%2F20200903%2F9f80293e09644046a408f8be7359d4ff.jpeg&refer=http%3A%2F%2Fp7.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654761049&t=b2726a52f403b5d4dcca968820d55109",
     title:
-      "标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，",
+      "李干杰主持召开省政府常务会议 研究",
   },
   {
     jumpUrl: '/dreamweb/',
     image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp6.itc.cn%2Fimages01%2F20201012%2F19ebfe9ad37b4e29bac785eb0146d02e.jpeg&refer=http%3A%2F%2Fp6.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654761049&t=5100670fe8877ffd3ad76e0f0f7bb6a0",
     title:
-      "标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，",
+      "山东“职教高地”建设提质培优",
   },
   {
     jumpUrl: '/dreamweb/',
     image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp1.itc.cn%2Fq_70%2Fimages03%2F20210129%2Fcb5a1f799b364202beed7f122e87bf8a.png&refer=http%3A%2F%2Fp1.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654761049&t=8a20f26c2574d17e04376728ba796324",
     title:
-      "标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，",
+      "营商环境优，引得“近邻”来",
   },
   {
     jumpUrl: '/dreamweb/',
     image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp6.itc.cn%2Fimages01%2F20201012%2F19ebfe9ad37b4e29bac785eb0146d02e.jpeg&refer=http%3A%2F%2Fp6.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654761049&t=5100670fe8877ffd3ad76e0f0f7bb6a0",
     title:
-      "标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，标题标题标题，这是标题，这是他标题，",
+      "[发文] 关于扎实做好近期疫情防控有关工作的通知",
   }],
   moreUrl: "更多跳转地址"
 }
