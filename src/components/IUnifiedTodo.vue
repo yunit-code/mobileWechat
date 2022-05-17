@@ -116,21 +116,10 @@ export default {
       todoData: {value: []}
     }
   },
-  props: {
-  },
   created() {
     this.moduleObject = this.$root.moduleObject
-    // console.log(this.moduleObject)
     this.convertAttrToStyleObject();
   },
-  mounted() {
-    //赋值给window提供跨页面调用
-    this.$nextTick(function(params) {
-      //单独组件不能使用这种方式
-      // window[this.moduleObject.packageid] = this;
-    });
-  },
-  destroyed() {},
   methods:{
     /**
      * 点击单个事件
@@ -144,7 +133,6 @@ export default {
       //获取所有的URL参数、页面ID（pageId）、以及所有组件的返回值（用范围值去调用IDM提供的方法取出所有的组件值）
       let urlObject = window.IDM.url.queryObject(),
       pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
-      
       var clickToDoItemFunction = this.propData.clickToDoItemFunction;
       if (clickToDoItemFunction) {
         clickToDoItemFunction.forEach((item) => {
@@ -168,7 +156,6 @@ export default {
      */
     handleClickMore() {
       if(this.moduleObject.env === 'develop') {
-        this.todoData = _.cloneDeep(todoData)
         return
       }
       //默认接口地址
@@ -362,16 +349,11 @@ export default {
           start: 0,
           type: 'todo',
           limit: this.propData.limit
-        },{
-          headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-          }
-        })
+        },{headers: {"Content-Type": "application/json;charset=UTF-8"}})
         .then((res) => {
           if(res.status == 200 && res.data.code == 200 && Array.isArray(res.data.data.value)){
             this.todoData = res.data.data
           }else {
-            this.todoData = _.cloneDeep(todoData)
             IDM.message.error(res.data.message)
           }
         })
@@ -415,12 +397,6 @@ export default {
       
       return _defaultVal;
     },
-    showThisModuleHandle(){
-      this.propData.defaultStatus = "default";
-    },
-    hideThisModuleHandle(){
-      this.propData.defaultStatus = "hidden";
-    },
     /**
      * 组件通信：接收消息的方法
      * @param {
@@ -433,11 +409,6 @@ export default {
      */
     receiveBroadcastMessage(object){
       console.log("组件收到消息",object)
-      if(object.type&&object.type=="linkageShowModule"){
-        this.showThisModuleHandle();
-      }else if(object.type&&object.type=="linkageHideModule"){
-        this.hideThisModuleHandle();
-      }
     },
     /**
      * 组件通信：发送消息的方法
