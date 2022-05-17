@@ -20,7 +20,7 @@
                         <svg-icon v-else icon-class="application-icon" />
                     </div>
                 </div>
-                <div @click="toApplicationManage" class="idm_applicationcenter_title_right">
+                <div @click="toApplicationManage" v-if="propData.showConfig" class="idm_applicationcenter_title_right">
                     <van-icon class="idm-message-list-box-top-more" name="ellipsis" />
                 </div>
             </div>
