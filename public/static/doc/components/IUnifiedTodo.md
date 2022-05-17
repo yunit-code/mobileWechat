@@ -34,19 +34,19 @@ mobilewechat@1.0.6
 <font color="#CCCCCC">是否显示更多按钮/icon</font>
 
 - 标识：`showMore`
-- 默认值： "true"
+- 默认值： `true`显示
 
 #### 显示角标【showTodoNumber】
 <font color="#CCCCCC">是否待办数量，在显示更多为true的前提下，设置组件右上角待办数量，为false时显示省略号</font>
 
 - 标识：`showTodoNumber`
-- 默认值： "true"
+- 默认值： `false`隐藏
 
 #### 显示数量【limit】
 <font color="#CCCCCC">当前组件标题，用来增加组件辨识度</font>
 
 - 标识：`htmlTitle`
-- 默认值： 紧急待办
+- 默认值： `紧急待办`
 
 #### 标题图标【titleIconClass】
 <font color="#CCCCCC">当前组件标题右侧图标选择</font>
@@ -63,7 +63,7 @@ mobilewechat@1.0.6
 <font color="#CCCCCC">当前组件标题右侧图标大小设置</font>
 
 - 标识：`titleIconFontSize`
-- 默认值： 18
+- 默认值： `18`
 
 ### 样式设置
 组件内部样式设置
@@ -94,9 +94,10 @@ mobilewechat@1.0.6
 
 - 默认值：`auto`
 ##### 高【height】
-组件的高度，填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等，不过此处建议设置为<font color="#FF0000">`auto`</font>
-- 标识：`height`
+组件的高度，填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等，不过此处建议设置为
+<font color="#FF0000">`auto`</font>
 
+- 标识：`height`
 - 默认值：`auto`
 
 #### 内外边距【box】
@@ -144,7 +145,7 @@ mobilewechat@1.0.6
           "isHot": true,
           "readStatus": 1,
           "readStatusText": "已读",
-          "department": "文档处",
+          "sendUserName": "文档处",
           "time": "2022-05-09 09:00",
           "title": "标题标题标题，这是标题，这是他标题，
         }

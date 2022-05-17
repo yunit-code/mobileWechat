@@ -24,23 +24,22 @@ mobilewechat@1.0.6
 - 默认值： 信息列表
 
 #### 跳转方式【jumpStyle】
-
 > 点击事件跳转方式
 - _self:当前页跳转
 - _blank:新开窗口跳转
 - 默认值：`_self`
 
 #### 组件样式【compStyle】
-<font color="#CCCCCC">可灵活选择多个组件样式</font>
+<font color="#CCCCCC">可灵活选择多个组件样式，总共4种样式</font>
 
 - 标识：`compStyle`
-- 默认值： `styleFour`
+- 默认值： `styleFour`样式四
 
 #### 显示更多【showMore】
 <font color="#CCCCCC">是否显示更多按钮/icon</font>
 
 - 标识：`showMore`
-- 默认值： true
+- 默认值： `true`显示
 
 #### 标题图标【titleIconClass】
 <font color="#CCCCCC">当前组件标题右侧图标选择</font>
@@ -57,13 +56,42 @@ mobilewechat@1.0.6
 <font color="#CCCCCC">当前组件标题右侧图标大小设置</font>
 
 - 标识：`titleIconFontSize`
-- 默认值： 18
+- 默认值： `18px`
 
 #### 页签配置【messageTitleList】
 <font color="#CCCCCC">信息页签配置，添加完后默认不显示，需要手动打开显示switch</font>
 
 - 标识：`messageTitleList`
-- 默认值： ``
+- 默认值：
+```json
+[
+  {
+    "text": "显示名称",
+    "bindKey": "tabTitle"
+  },
+  {
+    "text": "页签标识",
+    "bindKey": "tabKey",
+  },
+  {
+    "text": "更多链接",
+    "bindKey": "moreListLink",
+    "desc": "此设置用于点击更多时候跳转链接，如果设置了链接地址则内置的根据数据跳转链接则失效",
+  },
+  {
+    "text": "默认选中",
+    "bindKey": "isActive",
+    "desc": "设置此页签是否默认选中，如设置了多个则默认选中第一个",
+  }
+]
+```
+
+
+<!-- ##### 更多链接【moreListLink】
+此设置用于点击更多时候跳转链接，如果设置了链接地址则内置的根据数据跳转链接则失效
+- 标识：`moreListLink`
+
+- 默认值：跳转接口返回地址 -->
 
 #### 内容显示数量【limit】
 - 标识: `limit`
@@ -110,11 +138,11 @@ mobilewechat@1.0.6
 
 #### 宽高
 <font color="#CCCCCC">用于对容器的宽高进行行内分组，此处建议都设置为auto。</font>
-##### 宽【width】
-组件的宽度，填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等，不过此处建议设置为<font color="#FF0000">`auto`</font>
+##### 宽【width】组件的宽度，填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等，不过此处建议设置为
+<font color="#FF0000">`auto`<font>
 - 标识：`width`
-
 - 默认值：`auto`
+
 ##### 高【height】
 组件的高度，填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等，不过此处建议设置为<font color="#FF0000">`auto`</font>
 - 标识：`height`
@@ -182,11 +210,5 @@ mobilewechat@1.0.6
 ##### 点击单项动作【clickMessageItemFunction】
 此设置用于点击时候执行自定义函数逻辑，如果设置了此函数则内置的根据数据跳转链接则失效
 - 标识：`clickMessageItemFunction`
-
-- 默认值：跳转接口返回地址
-
-##### 更多链接【moreListLink】
-此设置用于点击更多时候跳转链接，如果设置了链接地址则内置的根据数据跳转链接则失效
-- 标识：`moreListLink`
 
 - 默认值：跳转接口返回地址
