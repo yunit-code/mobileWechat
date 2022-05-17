@@ -90,13 +90,15 @@ export default {
             if ( this.moduleObject.env == 'develop' || !this.propData.addApplicationUrl ) {
                 return
             }
-            let url = this.propData.addApplicationUrl + '?type=1&appId=' + item.value
             window.IDM.http.post(base_url + this.propData.addApplicationUrl,{
-
+                appId: item.value,
+                type: '1'
             }).then(result=>{
                 if(result && result.data && result.data.type == 'success'){
                     this.$set(item,'is_favorite','1')
                     Toast.success('添加应用成功');
+                } else {
+                    Toast.fail(result.data.message);
                 }
             })
         },
