@@ -73,6 +73,8 @@ export default {
             handler(value) {
                 if ( this.propData.applicationList && this.propData.applicationList.length ) {
                     this.application_data = JSON.parse(JSON.stringify(this.propData.applicationList))
+                } else {
+                    this.application_data = [];
                 }
                 this.changeLines()
             },
@@ -94,6 +96,37 @@ export default {
     },
     destroyed() { },
     methods: {
+        watchApplicationChange(value,old) {
+            if ( (!value) || !value.length ) {
+                return
+            }
+            if ( value.length != old.length ) {
+                return
+            }
+            if( value.length == old.length ) {
+                for( let i = 0,maxi = value.length;i < maxi;i++ ) {
+                    if ( value[i].selectApplication && value[i].selectApplication.value ) {
+                        let is_change_application = this.isChangeSelectedApplication(value[i].selectApplication.value,old)
+                        console.log('is_change_application',is_change_application)
+                        if ( !is_change_application ) {
+                            value[i].applicationName = value[i].selectApplication.title;
+                            value[i].applicationIconUrl = value[i].selectApplication.imageUrl;
+                            value[i].applicationUrl = value[i].selectApplication.appUrl;
+                        }
+                    }
+
+                }
+            }
+            IDM.develop.externalMixAttributeChangeHandle({
+                applicationUrl: JSON.parse(JSON.stringify(value))
+            },this.moduleObject.packageid,-1,true)
+        },
+        isChangeSelectedApplication(id,old) {
+            let result = old.filter(() => {
+                return item.selectApplication && item.selectApplication.value == id
+            })
+            return result
+        },
         getHavePowerApplication() {
             let user_info = window.IDM.user.getCurrentUserInfo()
             console.log('获取用户信息',user_info)
@@ -237,6 +270,7 @@ export default {
         /** * 提供父级组件调用的刷新prop数据组件 */
         propDataWatchHandle(propData) {
             console.log('propData',propData)
+            this.watchApplicationChange(propData.applicationList,this.application_data)
             this.propData = propData.compositeAttr || {};
             this.convertAttrToStyleObject();
         },
