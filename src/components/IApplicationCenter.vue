@@ -28,11 +28,12 @@
                 <van-grid :border="false" :column-num="propData.showColumn">
                     <van-grid-item v-for="(item,index) in application_data" :key="item.key">
                         <div @click="toApplication(item)" class="idm_applicationcenter_main_list">
-                            <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
-                            <svg-icon v-else icon-class="application" />
-
+                            <div class="img_box">
+                                <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
+                                <svg-icon v-else icon-class="application" />
+                                <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
+                            </div>
                             <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
-                            <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
                         </div>
                     </van-grid-item>
                 </van-grid>
@@ -83,6 +84,7 @@ export default {
     },
     created() {
         this.moduleObject = this.$root.moduleObject
+        console.log('moduleObject',this.moduleObject)
         console.log('propData',this.propData)
         this.getHavePowerApplication()
         this.convertAttrToStyleObject();
@@ -587,10 +589,13 @@ export default {
         .idm_applicationcenter_main_list{
             position: relative;
             text-align: center;
-            img,svg{
+            .img_box,img,svg{
                 width: 40px;
                 height: 40px;
                 margin: 0 auto 2.5px auto;
+            }
+            .img_box{
+                position: relative;
             }
             .idm_applicationcenter_main_list_name{
                 font-size: 12px;
