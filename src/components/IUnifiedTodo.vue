@@ -43,7 +43,7 @@
               <span>{{item.readStatusText}}</span> </div>
             <div class="d-flex align-c">
               <svg-icon iconClass="person" class="idm-unifie-todo-box-sub-icon"></svg-icon> 
-              <span>{{item.department}}</span> </div>
+              <span>{{item.sendUserName}}</span> </div>
             <div class="d-flex align-c">
               <svg-icon iconClass="time" class="idm-unifie-todo-box-sub-icon"></svg-icon>
               <span>{{item.time}}</span>
@@ -64,7 +64,7 @@ const todoData = {
     isHot: '-1',
     readStatus: '0',
     readStatusText: '未读',
-    department: '文档处',
+    sendUserName: '文档处',
     time: '2022-04-21 12:56',
     title: '[发文] 关于扎实做好近期疫情防控有关工作的通知'
   },{
@@ -72,7 +72,7 @@ const todoData = {
     isHot: '-1',
     readStatus: '1',
     readStatusText: '已读',
-    department: '李干杰',
+    sendUserName: '李干杰',
     time: '2022-04-21 09:23',
     title: '[发文] 关于印发《山东省职业卫生技术服务机构乙级资质认可程序》的通知'
   },{
@@ -80,7 +80,7 @@ const todoData = {
     isHot: '-1',
     readStatus: '1',
     readStatusText: '已读',
-    department: '文档处',
+    sendUserName: '文档处',
     time: '2022-04-21 08:56',
     title: '[发文] 关于印发数字山东2021行动方案的通知'
   }],
