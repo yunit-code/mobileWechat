@@ -125,21 +125,12 @@ export default {
   },
   created() {
     this.moduleObject = this.$root.moduleObject
-    // console.log(this.moduleObject)
     this.convertAttrToStyleObject();
   },
-  mounted() {
-    //赋值给window提供跨页面调用
-    this.$nextTick(function(params) {
-      //单独组件不能使用这种方式
-      // window[this.moduleObject.packageid] = this;
-    });
-  },
-  destroyed() {},
   methods:{
     /**
      * 单个信息点击事件
-     * @param {单个信息} item 
+     * @param {单个信息} item
      */
     handleClickItem(item){
       if(this.moduleObject.env === 'develop') {
@@ -275,7 +266,6 @@ export default {
                   styleObject["border-left-color"]=element.border.left.colors.hex8;
                 }
               }
-              
               styleObject["border-top-left-radius"]=element.radius.leftTop.radius+element.radius.leftTop.radiusUnit;
               styleObject["border-top-right-radius"]=element.radius.rightTop.radius+element.radius.rightTop.radiusUnit;
               styleObject["border-bottom-left-radius"]=element.radius.leftBottom.radius+element.radius.leftBottom.radiusUnit;
@@ -377,11 +367,7 @@ export default {
         limit: this.propData.limit,
         type: '',
         start: 0,
-      }, {
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-        }
-      })
+      }, {headers: { "Content-Type": "application/json;charset=UTF-8" }})
       .then((res) => {
         if(res.status == 200 && res.data.code == 200 && Array.isArray(res.data.data.list)){
           this.messageData = res.data.data
@@ -432,39 +418,6 @@ export default {
       return _defaultVal;
     },
     /**
-     * 文本点击事件
-     */
-    handleClick(type, item = {}){
-      if(this.moduleObject.env=="develop"){
-        //开发模式下不执行此事件
-        return;
-      }
-      //获取所有的URL参数、页面ID（pageId）、以及所有组件的返回值（用范围值去调用IDM提供的方法取出所有的组件值）
-      let urlObject = window.IDM.url.queryObject(),
-      pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
-      //自定义函数
-      /**
-       * [
-       * {name:"",param:{}}
-       * ]
-       */
-      var clickFunction = this.propData[type];
-      clickFunction&&clickFunction.forEach(item=>{
-        window[item.name]&&window[item.name].call(this,{
-          urlData:urlObject,
-          pageId,
-          customParam:item.param,
-          _this:this
-        });
-      })
-    },
-    showThisModuleHandle(){
-      this.propData.defaultStatus = "default";
-    },
-    hideThisModuleHandle(){
-      this.propData.defaultStatus = "hidden";
-    },
-    /**
      * 组件通信：接收消息的方法
      * @param {
      *  type:"发送消息的时候定义的类型，这里可以自己用来要具体做什么，统一规定的type：linkageResult（组件联动传结果值）、linkageDemand（组件联动传需求值）、linkageReload（联动组件重新加载）
@@ -476,11 +429,6 @@ export default {
      */
     receiveBroadcastMessage(object){
       console.log("组件收到消息",object)
-      if(object.type&&object.type=="linkageShowModule"){
-        this.showThisModuleHandle();
-      }else if(object.type&&object.type=="linkageHideModule"){
-        this.hideThisModuleHandle();
-      }
     },
     /**
      * 组件通信：发送消息的方法

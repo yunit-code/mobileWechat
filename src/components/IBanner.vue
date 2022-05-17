@@ -69,7 +69,6 @@ export default {
   data() {
     return {
       moduleObject: {},
-      currentSwiperIndex: 0,
       propData: this.$root.propData.compositeAttr || {
         htmlTitle: "广告轮播",
         width: "100%",
@@ -99,34 +98,34 @@ export default {
     initSwiper() {
       this.$nextTick(()=> {
         new Swiper('#'+this.moduleObject.id + " .idm-banner-box-swiper-container" + this.refreshKeyNumber, {
-          autoplay: 2000,
-          speed: 500,
-          loop: true,
-          loopedSlides: 100,
-          slidesPerView: 'auto',
-          effect: 'coverflow',
-          pagination: this.moduleObject.env === 'develop' ? '' :  {
-            el: '.idm-banner-swiper-pagination',
-            bulletClass : 'idm-banner-my-bullet',
-            bulletActiveClass: 'idm-banner-my-bullet-active',
+          autoplay: 2000,                                           //自动播放
+          speed: 500,                                               //播放速度
+          loop: true,                                               //循环播放
+          loopedSlides: 100,                                        //循环个数
+          slidesPerView: 'auto',                                    //预览slide个数
+          effect: 'coverflow',                                      //特效组件
+          pagination: this.moduleObject.env === 'develop' ? '' :  { //指示器
+            el: '.idm-banner-swiper-pagination',                    //指示器元素
+            bulletClass : 'idm-banner-my-bullet',                   //指示器单个元素类名
+            bulletActiveClass: 'idm-banner-my-bullet-active',       //指示器单个元素当前激活类名
           },
-          centeredSlides: true,
-          coverflowEffect: {
-            rotate: 0,
-            stretch: '-7%',
-            depth: 100,
-            modifier: 1,
-            slideShadows: false,
+          centeredSlides: true,                                     //居中
+          coverflowEffect: {                                        //特效组件属性
+            rotate: 0,                                              //旋转度数
+            stretch: '-7%',                                         //左右拉伸
+            depth: 100,                                             //位置深度，越大越小
+            modifier: 1,                                            //depth和rotate和stretch的倍率
+            slideShadows: false,                                    //阴影
           },
-          observer: true, //修改swiper自己或子元素时，自动初始化swiper，这个为true下面俩个才生效
-          observeParents: true,
-          observeSlideChildren: true,
+          observer: true,                                           //监视器，开启时下面两个才生效
+          observeParents: true,                                     //监视父级元素变化,例如show/hide、第一级子元素增加/删除等，则更新Swiper 并触发 observerUpdate 事件
+          observeSlideChildren: true,                               //监视监测Swiper 的子元素（wrapper、pagination、navigation、scrollbar）。 当新增/删除这些子元素时，则更新Swiper 并触发 observerUpdate 事件
           on: {
             observerUpdate: function(){
-              console.log('监测到Swiper 更新了');
+              console.log('Swiper更新了');
             },
             paginationUpdate: function(){
-              console.log('分页器更新了')
+              console.log('pagination更新了')
             },
           }
         });
@@ -431,12 +430,6 @@ export default {
         window.open(IDM.url.getWebPath(item.jumpUrl), this.propData.jumpStyle || '_self')
       }
     },
-    showThisModuleHandle() {
-      this.propData.defaultStatus = "default";
-    },
-    hideThisModuleHandle() {
-      this.propData.defaultStatus = "hidden";
-    },
     /**
      * 组件通信：接收消息的方法
      * @param {
@@ -449,11 +442,6 @@ export default {
      */
     receiveBroadcastMessage(object) {
       console.log("组件收到消息", object);
-      if (object.type && object.type == "linkageShowModule") {
-        this.showThisModuleHandle();
-      } else if (object.type && object.type == "linkageHideModule") {
-        this.hideThisModuleHandle();
-      }
     },
     /**
      * 组件通信：发送消息的方法
