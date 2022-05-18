@@ -210,6 +210,14 @@
                     "bindKey": "moreListLink",
                     "desc": "此设置用于点击更多时候跳转链接，如果设置了链接地址则内置的根据数据跳转链接则失效",
                     "display": "@[showMore == true]"
+                },{
+                    "type": "textarea",
+                    "layoutType": "block",
+                    "text": "刷新KEY",
+                    "bindKey": "messageRefreshKey",
+                    "desc": "根据组件接受到的消息KEY来刷新数据，可配置多个，以英文逗号分开",
+                    "default": "",
+                    "placeholder": "示例：inbox,info,toread"
                 }
             ]
         }

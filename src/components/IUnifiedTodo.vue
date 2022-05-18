@@ -407,8 +407,16 @@ export default {
      *  isAcross:如果为true则代表发送来源是其他页面的组件，默认为false
      * } object 
      */
-    receiveBroadcastMessage(object){
-      console.log("组件收到消息",object)
+    receiveBroadcastMessage(messageObject){
+      // 配置了刷新KEY，消息类型是websocket，收到的消息对象有message并不为空
+      if(this.propData.messageRefreshKey && messageObject.type === 'websocket' && messageObject.message){
+        const messageData = typeof messageObject.message === 'string' && JSON.parse(messageObject.message) || messageObject.message
+        const arr = this.propData.messageRefreshKey.split(',')
+        if(messageData.badgeType && arr.includes(messageData.badgeType)){
+          this.initData()
+        }
+      }
+      console.log("组件收到消息",messageObject)
     },
     /**
      * 组件通信：发送消息的方法

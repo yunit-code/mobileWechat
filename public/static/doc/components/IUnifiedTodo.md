@@ -163,7 +163,6 @@ mobilewechat@1.0.6
 ##### 点击单项动作【clickToDoItemFunction】
 此设置用于点击时候执行自定义函数逻辑，如果设置了此函数则内置的根据数据跳转链接则失效
 - 标识：`clickToDoItemFunction`
-
 - 默认值：跳转接口返回地址
 
 ##### 更多链接【moreListLink】
@@ -171,3 +170,8 @@ mobilewechat@1.0.6
 - 标识：`moreListLink`
 
 - 默认值：跳转接口返回地址
+
+##### 刷新KEY【messageRefreshKey】
+根据组件接受到的websocket类型的消息KEY来刷新数据，可配置多个，以英文逗号分开
+- 标识：`messageRefreshKey`
+- 默认值：''

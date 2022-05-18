@@ -282,21 +282,21 @@
                     "placeholder": "示例：data.filedName 或者 [0].data[0].filedName"
                 },
                 {
-                    "type": "textarea",
-                    "layoutType": "block",
-                    "text": "消息刷新标识",
-                    "bindKey": "messageRefreshKey",
-                    "desc": "根据组件接受到的消息来刷新数据，可配置多个，以英文逗号分开",
-                    "default": "",
-                    "placeholder": "示例：inbox,info,toread"
-                },
-                {
                     "type": "actionSelect",
                     "layoutType": "block",
                     "text": "点击单项动作",
                     "bindKey": "clickMessageItemFunction",
                     "desc": "此设置用于点击时候执行自定义函数逻辑，如果设置了此函数则内置的根据数据跳转链接则失效",
                     "multiple": true
+                },
+                {
+                    "type": "textarea",
+                    "layoutType": "block",
+                    "text": "刷新KEY",
+                    "bindKey": "messageRefreshKey",
+                    "desc": "根据组件接受到的消息KEY来刷新数据，可配置多个，以英文逗号分开",
+                    "default": "",
+                    "placeholder": "示例：inbox,info,toread"
                 }
             ]
         }

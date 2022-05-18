@@ -350,12 +350,8 @@ export default {
         activeIndex = 0
       }
       // 标题点击设置选中
-      if(index === -1){
-        this.defaultIndex = activeIndex
-      }else {
-        //配置时或初始化时设置选中
-        this.defaultIndex = index
-      }
+      if(index === -1) this.defaultIndex = activeIndex
+      else this.defaultIndex = index //配置时或初始化时设置选中
       if(this.moduleObject.env === 'develop') {
         this.messageData = _.cloneDeep(messageData)
         return
@@ -425,10 +421,18 @@ export default {
      *  message:{发送的时候传输的消息对象数据}
      *  messageKey:"消息数据的key值，代表数据类型是什么，常用于表单交互上，比如通过这个key判断是什么数据"
      *  isAcross:如果为true则代表发送来源是其他页面的组件，默认为false
-     * } object 
+     * } object
      */
-    receiveBroadcastMessage(object){
-      console.log("组件收到消息",object)
+    receiveBroadcastMessage(messageObject){
+      // 配置了刷新KEY，消息类型是websocket，收到的消息对象有message并不为空
+      if(this.propData.messageRefreshKey && messageObject.type === 'websocket' && messageObject.message){
+        const messageData = typeof messageObject.message === 'string' && JSON.parse(messageObject.message) || messageObject.message
+        const arr = this.propData.messageRefreshKey.split(',')
+        if(messageData.badgeType && arr.includes(messageData.badgeType)){
+          this.initData(this.propData.messageTitleList[this.defaultIndex], this.defaultIndex)
+        }
+      }
+      console.log("组件收到消息",messageObject)
     },
     /**
      * 组件通信：发送消息的方法
