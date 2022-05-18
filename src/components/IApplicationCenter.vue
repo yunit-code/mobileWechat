@@ -66,8 +66,7 @@ export default {
         return {
             moduleObject: {},
             propData: this.$root.propData.compositeAttr || {
-                isPopShowApplicationManage: true,
-                showConfig: true
+                
             },
             application_data: [],
             have_power_application_data_ids: [],//用户有权限的app
