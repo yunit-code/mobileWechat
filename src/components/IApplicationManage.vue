@@ -159,6 +159,10 @@ export default {
                         title: '日程',
                         value: '4',
                     },
+                    {
+                        title: '人事',
+                        value: '4',
+                    }
                 ]
             }
         },

@@ -96,6 +96,69 @@ export default {
     },
     destroyed() { },
     methods: {
+        watchApplicationChange(value,old) {
+            console.log('value',value)
+            console.log('old',old)
+            if ( (!value) || !value.length ) {
+                return
+            }
+            if ( value.length != old.length ) {
+                return
+            }
+            console.log('555')
+            if( value.length == old.length ) {
+                var is_sort_application = this.isSortApplication(value,old)
+                console.log('is_sort_application',is_sort_application)
+                for( let i = 0,maxi = value.length;i < maxi;i++ ) {
+                    if ( value[i].selectApplication && value[i].selectApplication.value && !is_sort_application ) {
+                        // if ( (!is_change_application) || !is_change_application.length ) {
+                        //     value[i].applicationName = value[i].selectApplication.title;
+                        //     value[i].applicationIconUrl = value[i].selectApplication.imageUrl;
+                        //     value[i].applicationUrl = value[i].selectApplication.appUrl;
+                        //     console.log('更改属性值',value)
+                        //     IDM.develop.externalMixAttributeChangeHandle({
+                        //         applicationList: JSON.parse(JSON.stringify(value))
+                        //     },this.moduleObject.packageid,-1,false)
+                        // }
+                        if ( (!old[i].selectApplication) || value[i].selectApplication.value != old[i].selectApplication.value ) {
+                            value[i].applicationName = value[i].selectApplication.title;
+                            value[i].applicationIconUrl = value[i].selectApplication.imageUrl;
+                            value[i].applicationUrl = value[i].selectApplication.appUrl;
+                            console.log('更改属性值',value)
+                            IDM.develop.externalMixAttributeChangeHandle({
+                                applicationList: JSON.parse(JSON.stringify(value))
+                            },this.moduleObject.packageid,-1,false)
+                        }
+                    }
+
+                }
+            }
+            
+        },
+        isSortApplication(value,old) {
+            var flag = true;
+            for( let i = 0,maxi = value.length;i < maxi;i++ ) {
+                if ( value[i].selectApplication && value[i].selectApplication.value ) {
+                    let is_change_application = this.isChangeSelectedApplication(value[i].selectApplication.value,old)
+                    console.log('is_change_application',is_change_application)
+                    if ( (!is_change_application) || !is_change_application.length ) {
+                        flag = false
+                        return flag
+                    }
+                }
+            }
+            return flag
+        },
+        // isHaveInSelectedApplication(value,id) {
+
+
+        // },
+        isChangeSelectedApplication(id,old) {
+            let result = old.filter((item) => {
+                return item.selectApplication && item.selectApplication.value == id
+            })
+            return result
+        },
         getHavePowerApplication() {
             let user_info = window.IDM.user.getCurrentUserInfo()
             let apps = []
@@ -199,6 +262,7 @@ export default {
         /** * 提供父级组件调用的刷新prop数据组件 */
         propDataWatchHandle(propData) {
             this.propData = propData.compositeAttr || {};
+            this.watchApplicationChange(propData.compositeAttr.applicationList,this.application_data)
             this.convertAttrToStyleObject();
         },
         /**
@@ -403,12 +467,20 @@ export default {
          *  isAcross:如果为true则代表发送来源是其他页面的组件，默认为false
          * } object 
          */
-        receiveBroadcastMessage(object) {
-            console.log("组件收到消息", object)
-            if (object.type && object.type == "linkageShowModule") {
+        receiveBroadcastMessage(messageObject) {
+            console.log("组件收到消息", messageObject)
+            if (messageObject.type && messageObject.type == "linkageShowModule") {
                 this.showThisModuleHandle();
-            } else if (object.type && object.type == "linkageHideModule") {
+            } else if (messageObject.type && messageObject.type == "linkageHideModule") {
                 this.hideThisModuleHandle();
+            }
+            // 配置了刷新KEY，消息类型是websocket，收到的消息对象有message并不为空
+            if(this.propData.messageRefreshKey && messageObject.type === 'websocket' && messageObject.message){
+                const messageData = typeof messageObject.message === 'string' && JSON.parse(messageObject.message) || messageObject.message
+                const arr = this.propData.messageRefreshKey.split(',')
+                if(messageData.badgeType && arr.includes(messageData.badgeType)){
+                    this.initApplicationData()
+                }
             }
         },
         showThisModuleHandle() {
