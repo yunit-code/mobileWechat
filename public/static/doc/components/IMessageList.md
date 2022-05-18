@@ -212,7 +212,3 @@ mobilewechat@1.0.6
 - 标识：`clickMessageItemFunction`
 - 默认值：跳转接口返回地址
 
-##### 刷新KEY【messageRefreshKey】
-根据组件接受到的websocket类型的消息KEY来刷新数据，可配置多个，以英文逗号分开
-- 标识：`messageRefreshKey`
-- 默认值：''
