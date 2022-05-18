@@ -29,9 +29,9 @@
     </div>
     <div class="idm-unifie-todo-box-sub" v-for="(item, index) in todoData.value" :key="index" @click="handleClickItem(item)">
       <div class="idm-unifie-todo-box-sub-title" :class="{'idm-unifie-todo-box-sub-no-read': true}">
-        <div class="idm-unifie-todo-box-sub-title-icon" v-if="item.isHot != '-1'">
+        <!-- <div class="idm-unifie-todo-box-sub-title-icon" v-if="item.isHot != '-1'">
           <svg-icon icon-class="fire" ></svg-icon>
-        </div>
+        </div> -->
         <div class="flex-1">
           <div class="idm-unifie-todo-box-sub-content" :class="item.readStatus == '1' ?'idm-unifie-todo-box-sub-hasRead' : ''">
             {{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}
@@ -342,9 +342,10 @@ export default {
         this.todoData = _.cloneDeep(todoData)
         return
       }
-      this.propData.customInterfaceUrl &&
+      const requestUrl = this.propData.dataType === 'dataSource' ? this.propData.customInterfaceUrl : this.propData.customGetTodoDataInterfaceUrl
+      requestUrl &&
       window.IDM.http
-        .post(this.propData.customInterfaceUrl, {
+        .post(requestUrl, {
           id: this.propData.dataSource && this.propData.dataSource.value,
           start: 0,
           type: 'todo',

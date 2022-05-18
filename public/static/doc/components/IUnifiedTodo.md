@@ -125,6 +125,22 @@ mobilewechat@1.0.6
 ### 高级
 <font color="#CCCCCC">用于对组件高级设置的属性的分组。</font>
 
+##### 设置待办数据来源【dataType】
+根据接口返回数据显示消息标题字段
+- 标识：`dataType`
+- 默认值：`dataSource`
+- 可选：
+```json
+{
+  "label": "数据源",
+  "value": "dataSource"
+},
+{
+  "label": "自定义",
+  "value": "custom"
+}
+```
+
 ##### 数据源【dataSource】
 用于选择数据源
 - 标识：`dataSource`
@@ -154,10 +170,15 @@ mobilewechat@1.0.6
 }
 ```
 
+##### 自定义数据接口【customGetTodoDataInterfaceUrl】
+根据接口返回数据显示消息标题字段
+- 标识：`customGetTodoDataInterfaceUrl`
+- 默认值：`/ctrl/customizeTodo/getTodoPage"`
+
+
 ##### 显示字段【dataFiled】
 根据接口返回数据显示消息标题字段
 - 标识：`dataFiled`
-
 - 默认值：`title`
 
 ##### 点击单项动作【clickToDoItemFunction】

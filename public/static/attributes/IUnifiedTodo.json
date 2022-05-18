@@ -172,11 +172,31 @@
             "desc": "点击？查看高级设置用法指南",
             "children": [
                 {
+                    "type": "radio",
+                    "styleType": "radio",
+                    "layoutType": "inline",
+                    "text": "数据模式",
+                    "bindKey": "dataType",
+                    "desc": "设置待办数据来源",
+                    "dictionary": [
+                        {
+                            "label": "数据源",
+                            "value": "dataSource"
+                        },
+                        {
+                            "label": "自定义",
+                            "value": "custom"
+                        }
+                    ],
+                    "default": "dataSource"
+                },
+                {
                     "type": "treeSelect",
                     "layoutType": "inline",
                     "text": "数据源",
                     "bindKey": "dataSource",
-                    "dataSourceUrl":"/ctrl/dataSource/getDatasourceByGroup"
+                    "dataSourceUrl":"/ctrl/dataSource/getDatasourceByGroup",
+                    "display": "@[dataType === 'dataSource']"
                 },
                 {
                     "type": "input",
@@ -184,7 +204,17 @@
                     "text": "数据接口",
                     "bindKey": "customInterfaceUrl",
                     "default": "/ctrl/dataSource/getDatas",
-                    "desc": "用于获取数据源的接口地址，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}"
+                    "desc": "用于获取数据源的接口地址，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}",
+                    "display": "@[dataType === 'dataSource']"
+                },
+                {
+                    "type": "input",
+                    "layoutType": "block",
+                    "text": "自定义数据接口",
+                    "bindKey": "customGetTodoDataInterfaceUrl",
+                    "default": "/ctrl/customizeTodo/getTodoPage",
+                    "desc": "用于获取自定义数据源的接口地址，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}",
+                    "display": "@[dataType === 'custom']"
                 },
                 {
                     "type": "textarea",
