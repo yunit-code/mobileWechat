@@ -39,7 +39,7 @@
                 </van-grid>
             </div>
 
-            <van-popup v-model="is_application_manage_show" closeable round>
+            <van-popup id="application_manage_pop" v-model="is_application_manage_show" overlay-class="application_manage_pop" @close="closeApplicationManage" closeable round>
                 <IApplicationManage :is_pop_type="true" :datas="propData"></IApplicationManage>
             </van-popup>
         </div>
@@ -108,6 +108,10 @@ export default {
     },
     destroyed() { },
     methods: {
+        closeApplicationManage() {
+            console.log('应用中心propsdata',this.propData)
+            this.convertAttrToStyleObject();
+        },
         watchApplicationChange(value,old) {
             console.log('value',value)
             console.log('old',old)

@@ -119,6 +119,9 @@ export default {
         } else {
             this.propData = { }
         }
+        console.log('moduleObject',this.moduleObject)
+        console.log('is_pop_type',this.is_pop_type)
+        console.log('propData',this.propData)
         this.initDevelopData()
         this.convertAttrToStyleObject();
     },
@@ -307,14 +310,14 @@ export default {
                     }
                     switch (key) {
                         case "widthManage":
-                            styleObject[key] = element;
+                            styleObject['width'] = element;
                         case "titleWidth":
-                            styleObjectTitle[key] = element;
+                            styleObjectTitle['width'] = element;
                         case "heightManage":
-                            styleObject[key] = element;
+                            styleObject['height'] = element;
                             break;
                         case "titleHeight":
-                            styleObjectTitle[key] = element;
+                            styleObjectTitle['height'] = element;
                             break;
                         case "bgColorManage":
                             if (element && element.hex8) {
@@ -444,7 +447,7 @@ export default {
                             styleObject["text-align"] = element.fontTextAlign;
                             styleObject["text-decoration"] = element.fontDecoration;
                             break;
-                        case "titleFont":
+                        case "titleFontManage":
                             styleObjectTitle["font-family"] = element.fontFamily;
                             if (element.fontColors.hex8) {
                                 styleObjectTitle["color"] = element.fontColors.hex8;
@@ -459,8 +462,13 @@ export default {
                     }
                 }
             }
-            window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
-            window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_text", styleObjectTitle);
+            if ( this.is_pop_type ) {
+                window.IDM.setStyleToPageHead('application_manage_pop', styleObject);
+                window.IDM.setStyleToPageHead('application_manage_pop' + " .idm_applicationcenter_title_left_text", styleObjectTitle);
+            } else {
+                window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
+                window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_text", styleObjectTitle);
+            }
             this.initData();
         },
        
