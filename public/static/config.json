@@ -96,6 +96,12 @@
             "className": "IApplicationLoginForm",
             "comType": "common",
             "comLangue": "vue"
+        },{
+            "classId": "idm.componet.mobileWechat.popupWorkbench",
+            "comName": "工作台切换",
+            "className": "IPopupWorkbench",
+            "comType": "common",
+            "comLangue": "vue"
         }
     ]
 }

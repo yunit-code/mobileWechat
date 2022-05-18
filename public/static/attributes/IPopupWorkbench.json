@@ -1,0 +1,221 @@
+{
+  "classId": "idm.componet.mobilewechat.unifiedTodo",
+  "comName": "统一待办",
+  "className": "IUnifiedTodo",
+  "comType": "common",
+  "comLangue": "vue",
+  "compositeAttr": [
+    {
+      "type": "input",
+      "layoutType": "inline",
+      "text": "唯一标识",
+      "bindKey": "ctrlId",
+      "disabled": true,
+      "default": "@[packageid]",
+      "desc": "",
+      "helpUrl": ""
+    },
+    {
+      "type": "group",
+      "text": "基本属性",
+      "desc": "提供设置组件能达到展示效果的基本属性设置信息",
+      "children": [
+        {
+          "type": "radio",
+          "layoutType": "inline",
+          "text": "弹出位置",
+          "bindKey": "position",
+          "desc": "决定弹出框从哪一侧弹出",
+          "dictionary": [
+            {
+              "label": "左侧",
+              "value": "left"
+            },
+            {
+              "label": "右侧",
+              "value": "right"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "input",
+          "layoutType": "inline",
+          "text": "悬浮高度",
+          "desc": "触发按钮距离顶部的距离，使用px、%单位，比如100%、100px",
+          "bindKey": "btnTop",
+          "default": "10px"
+        },
+        {
+          "type": "radio",
+          "layoutType": "inline",
+          "text": "蒙层关闭",
+          "bindKey": "overlayClose",
+          "desc": "蒙层是否触发关闭弹出框",
+          "dictionary": [
+            {
+              "label": "是",
+              "value": "true"
+            },
+            {
+              "label": "否",
+              "value": "false"
+            }
+          ],
+          "default": "true"
+        },
+        {
+          "type": "input",
+          "layoutType": "inline",
+          "text": "数据接口",
+          "bindKey": "dataSourceUrl",
+          "default": "/ctrl/customizePortal/loadAllPage?groupId=wxgzt",
+          "desc": "用于获取工作台列表的接口地址，请按照统一标准的返回格式"
+        },
+        {
+          "type": "textarea",
+          "layoutType": "inline",
+          "text": "显示字段",
+          "bindKey": "dataFiled",
+          "desc": "根据接口返回数据格式指定结果集中的字段，填写data下数组对象中的字段即可",
+          "default": "title",
+          "placeholder": "示例：text 或者 title"
+        },
+        {
+          "type": "input",
+          "layoutType": "inline",
+          "text": "切换接口",
+          "bindKey": "changeUrl",
+          "default": "/ctrl/customizePortal/savePage",
+          "desc": "用于调用切换工作台的后台接口，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}"
+        },
+        {
+          "type": "select",
+          "layoutType": "inline",
+          "text": "跳转方式",
+          "bindKey": "jumpStyle",
+          "desc": "设置跳转方式",
+          "dictionary": [
+            {
+              "label": "当前页跳转",
+              "value": "_self"
+            },
+            {
+              "label": "新窗口打开",
+              "value": "_blank"
+            }
+          ],
+          "default": "_self"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "text": "样式设置",
+      "desc": "点击？查看样式设置用法指南",
+      "helpUrl": "",
+      "children": [
+        {
+          "type": "colorPicker",
+          "layoutType": "inline",
+          "text": "主题颜色",
+          "bindKey": "themeColor",
+          "default": {
+            "hex8": "#3976C7FF"
+          }
+        },
+        {
+          "type": "input",
+          "layoutType": "inline",
+          "text": "边界阴影",
+          "bindKey": "bdShadow"
+        },
+        {
+          "type": "font",
+          "layoutType": "block",
+          "text": "字体设置",
+          "bindKey": "fontStyle",
+          "default": {
+            "fontColors": {
+                "hex8": "#333333FF"
+            },
+            "fontSize": 14,
+            "fontSizeUnit": "px"
+          }
+        },
+        {
+          "type": "input",
+          "layoutType": "inline",
+          "text": "菜单行高",
+          "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
+          "bindKey": "lineHeight",
+          "default": "auto"
+        },
+        {
+          "type": "input",
+          "layoutType": "inline",
+          "text": "菜单宽度",
+          "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
+          "bindKey": "menuWidth",
+          "default": "40%"
+        },
+        {
+          "type": "box",
+          "layoutType": "block",
+          "text": "菜单内外边距",
+          "bindKey": "box"
+        },
+        {
+          "type": "border",
+          "layoutType": "block",
+          "text": "菜单边框",
+          "bindKey": "border"
+        },
+        {
+          "type": "inlineGroup",
+          "text": "按钮宽高",
+          "children": [
+            {
+              "type": "input",
+              "layoutType": "block",
+              "text": "按钮宽",
+              "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
+              "bindKey": "width",
+              "width": "60px",
+              "default": "24px"
+            },
+            {
+              "type": "input",
+              "layoutType": "block",
+              "text": "按钮高",
+              "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
+              "bindKey": "height",
+              "width": "60px",
+              "default": "24px"
+            }
+          ]
+        },
+        {
+          "type": "input",
+          "layoutType": "inline",
+          "text": "图标大小",
+          "desc": "使用px单位，比如16px",
+          "bindKey": "iconSize",
+          "default": "16px"
+        },
+        {
+          "type": "box",
+          "layoutType": "block",
+          "text": "按钮内外边距",
+          "bindKey": "btnbox"
+        },
+        {
+          "type": "border",
+          "layoutType": "block",
+          "text": "按钮边框",
+          "bindKey": "btnborder"
+        }
+      ]
+    }
+  ]
+}
