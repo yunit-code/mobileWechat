@@ -179,3 +179,8 @@ mobilewechat@1.0.6
 - 标识：`dataFiled`
 - 默认值：`count`
 
+##### 刷新KEY【messageRefreshKey】
+根据组件接受到的消息KEY来刷新数据，可配置多个，以英文逗号分开
+
+- 标识：`messageRefreshKey`
+- 默认值：``

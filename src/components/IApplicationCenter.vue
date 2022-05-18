@@ -142,8 +142,13 @@ export default {
             for( let i = 0,maxi = value.length;i < maxi;i++ ) {
                 if ( value[i].selectApplication && value[i].selectApplication.value ) {
                     let is_change_application = this.isChangeSelectedApplication(value[i].selectApplication.value,old)
+                    let is_have_in_selected = this.isHaveInSelectedApplication(value,value[i].selectApplication.value)
                     console.log('is_change_application',is_change_application)
                     if ( (!is_change_application) || !is_change_application.length ) {
+                        flag = false
+                        return flag
+                    }
+                    if ( is_have_in_selected && is_have_in_selected.length > 1 ) {
                         flag = false
                         return flag
                     }
@@ -151,10 +156,12 @@ export default {
             }
             return flag
         },
-        // isHaveInSelectedApplication(value,id) {
-
-
-        // },
+        isHaveInSelectedApplication(value,id) {
+            let result = value.filter((item) => {
+                return item.selectApplication && item.selectApplication.value == id
+            })
+            return result
+        },
         isChangeSelectedApplication(id,old) {
             let result = old.filter((item) => {
                 return item.selectApplication && item.selectApplication.value == id
