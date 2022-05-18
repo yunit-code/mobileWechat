@@ -100,22 +100,11 @@ export default {
   data() {
     return {
       moduleObject: {},
-      propData: this.$root.propData.compositeAttr || {
-        position: "left",
-        overlayClose: true,
-        overlayColor: "#ebedf0",
-        dataFiled: "title",
-        dataSourceUrl: "/ctrl/customizePortal/loadAllPage?groupId=wxgzt",
-        changeUrl: "/ctrl/customizePortal/savePage",
-      },
+      propData: this.$root.propData.compositeAttr || {},
       visible: false,
       selectedKey: "",
       activeKey: "",
-      menuList: [
-        { text: "工作台1", value: "1", key: "1" },
-        { text: "工作台2", value: "2", key: "2" },
-        { text: "工作台3", value: "3", key: "3" },
-      ],
+      menuList: [],
     };
   },
   created() {
@@ -155,12 +144,7 @@ export default {
       IDM.http
         .post(
           this.propData.changeUrl,
-          { pageId: item.pageId },
-          {
-            headers: {
-              "Content-Type": "application/json;charset=UTF-8",
-            },
-          }
+          { pageId: item.pageId }
         )
         .done((res) => {
           IDM.layer.close(layerIndex);
