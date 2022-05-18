@@ -90,6 +90,12 @@
             "className": "ITop",
             "comType": "common",
             "comLangue": "vue"
+        },{
+            "classId": "idm.componet.mobilewechat.applicationloginform",
+            "comName": "登录",
+            "className": "IApplicationLoginForm",
+            "comType": "common",
+            "comLangue": "vue"
         }
     ]
 }
