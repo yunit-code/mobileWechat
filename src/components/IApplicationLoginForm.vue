@@ -19,6 +19,7 @@
     -->
     <div class="sys-login-box formbox loginForm">
         <!-- <div class="login_title">用户登录</div> -->
+        <div class="title">{{propData.htmlTitle}}</div>
         <van-form @submit="login">
           <van-field v-model="logname" :rules="[{ required: true }]" name="账号" placeholder="请输入账号" center>
             <template #left-icon>
@@ -57,6 +58,7 @@ export default {
     return {
       moduleObject:{},
       propData:this.$root.propData.compositeAttr||{
+        htmlTitle: "山东省人民政府移动办公平台"
       },
       autoLogin: false,
       logname: "",
@@ -80,7 +82,7 @@ export default {
         logName: this.logname,
         password: this.txtpassword,
         decrypt: "" // RSA
-      }, {headers: { "Content-Type": "application/json;charset=UTF-8" }})
+      })
       .then((res) => {
         this.autoLogin = false;
         if(res.status == 200 && res.data.code == 200){
@@ -425,6 +427,12 @@ export default {
 
 <style lang="scss" scoped>
   .idm_app-sys-login {
+    .title {
+      font-size: 18px;
+      font-weight: 800;
+      text-align: center;
+      margin: 20px;
+    }
     .van-cell {
       border: 1px solid #EEEEEE;
       border-radius: 46px;
