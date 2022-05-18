@@ -58,7 +58,12 @@ export default {
     return {
       moduleObject:{},
       propData:this.$root.propData.compositeAttr||{
-        htmlTitle: "山东省人民政府移动办公平台"
+        htmlTitle: "山东省人民政府移动办公平台",
+        box: {
+          marginTopVal: '100px',
+          marginLeftVal: '20px',
+          marginRightVal: '20px',
+        }
       },
       autoLogin: false,
       logname: "",
