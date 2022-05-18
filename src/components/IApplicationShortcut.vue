@@ -111,15 +111,6 @@ export default {
                 console.log('is_sort_application',is_sort_application)
                 for( let i = 0,maxi = value.length;i < maxi;i++ ) {
                     if ( value[i].selectApplication && value[i].selectApplication.value && !is_sort_application ) {
-                        // if ( (!is_change_application) || !is_change_application.length ) {
-                        //     value[i].applicationName = value[i].selectApplication.title;
-                        //     value[i].applicationIconUrl = value[i].selectApplication.imageUrl;
-                        //     value[i].applicationUrl = value[i].selectApplication.appUrl;
-                        //     console.log('更改属性值',value)
-                        //     IDM.develop.externalMixAttributeChangeHandle({
-                        //         applicationList: JSON.parse(JSON.stringify(value))
-                        //     },this.moduleObject.packageid,-1,false)
-                        // }
                         if ( (!old[i].selectApplication) || value[i].selectApplication.value != old[i].selectApplication.value ) {
                             value[i].applicationName = value[i].selectApplication.title;
                             value[i].applicationIconUrl = value[i].selectApplication.imageUrl;

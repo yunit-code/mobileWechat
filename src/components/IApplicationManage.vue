@@ -99,18 +99,26 @@ export default {
     data() {
         return {
             moduleObject: {},
-            propData: this.$root.propData.compositeAttr || {
-                
-            },
+            propData: { },
             is_edit: false,
             my_application_data: [ ],
             application_data: [ ],
         }
     },
-    props: {
-    },
+    props: [ 'is_pop_type','datas' ],
     created() {
         this.moduleObject = this.$root.moduleObject
+        if ( this.is_pop_type ) {
+            this.propData = {
+                ...this.datas
+            }
+        } else if ( this.$root && this.$root.propData && this.$root.propData.compositeAttr )  {
+            this.propData = {
+                ...this.$root.propData.compositeAttr
+            }
+        } else {
+            this.propData = { }
+        }
         this.initDevelopData()
         this.convertAttrToStyleObject();
     },
@@ -172,8 +180,8 @@ export default {
                 return
             }
             console.log('propData',this.propData)
-            if ( this.propData.getMyApplicationUrl ) {
-                window.IDM.http.get(base_url + this.propData.getMyApplicationUrl)
+            if ( this.propData.getMyApplicationUrlManage ) {
+                window.IDM.http.get(base_url + this.propData.getMyApplicationUrlManage)
                     .then((res) => {
                         if ( res.data && res.data.type == 'success' ) {
                             this.my_application_data = res.data.data
@@ -280,16 +288,16 @@ export default {
         convertAttrToStyleObject() {
             var styleObject = {};
             var styleObjectTitle = {};
-            if (this.propData.bgSize && this.propData.bgSize == "custom") {
-                styleObject["background-size"] = (this.propData.bgSizeWidth ? this.propData.bgSizeWidth.inputVal + this.propData.bgSizeWidth.selectVal : "auto") + " " + (this.propData.bgSizeHeight ? this.propData.bgSizeHeight.inputVal + this.propData.bgSizeHeight.selectVal : "auto")
-            } else if (this.propData.bgSize) {
-                styleObject["background-size"] = this.propData.bgSize;
+            if (this.propData.bgSizeManage && this.propData.bgSizeManage == "custom") {
+                styleObject["background-size"] = (this.propData.bgSizeWidthManage ? this.propData.bgSizeWidthManage.inputVal + this.propData.bgSizeWidthManage.selectVal : "auto") + " " + (this.propData.bgSizeHeightManage ? this.propData.bgSizeHeightManage.inputVal + this.propData.bgSizeHeightManage.selectVal : "auto")
+            } else if (this.propData.bgSizeManage) {
+                styleObject["background-size"] = this.propData.bgSizeManage;
             }
-            if (this.propData.positionX && this.propData.positionX.inputVal) {
-                styleObject["background-position-x"] = this.propData.positionX.inputVal + this.propData.positionX.selectVal;
+            if (this.propData.positionXManage && this.propData.positionXManage.inputVal) {
+                styleObject["background-position-x"] = this.propData.positionXManage.inputVal + this.propData.positionXManage.selectVal;
             }
-            if (this.propData.positionY && this.propData.positionY.inputVal) {
-                styleObject["background-position-y"] = this.propData.positionY.inputVal + this.propData.positionY.selectVal;
+            if (this.propData.positionYManage && this.propData.positionYManage.inputVal) {
+                styleObject["background-position-y"] = this.propData.positionYManage.inputVal + this.propData.positionYManage.selectVal;
             }
             for (const key in this.propData) {
                 if (this.propData.hasOwnProperty.call(this.propData, key)) {
@@ -298,17 +306,17 @@ export default {
                         continue;
                     }
                     switch (key) {
-                        case "width":
+                        case "widthManage":
                             styleObject[key] = element;
                         case "titleWidth":
                             styleObjectTitle[key] = element;
-                        case "height":
+                        case "heightManage":
                             styleObject[key] = element;
                             break;
                         case "titleHeight":
                             styleObjectTitle[key] = element;
                             break;
-                        case "bgColor":
+                        case "bgColorManage":
                             if (element && element.hex8) {
                                 styleObject["background-color"] = element.hex8;
                             }
@@ -318,7 +326,7 @@ export default {
                                 styleObjectTitle["background-color"] = element.hex8;
                             }
                             break;
-                        case "box":
+                        case "boxManage":
                             if (element.marginTopVal) {
                                 styleObject["margin-top"] = `${element.marginTopVal}`;
                             }
@@ -370,26 +378,26 @@ export default {
                                 styleObjectTitle["padding-left"] = `${element.paddingLeftVal}`;
                             }
                             break;
-                        case "bgImgUrl":
+                        case "bgImgUrlManage":
                             styleObject["background-image"] = `url(${window.IDM.url.getWebPath(element)})`;
                             break;
-                        case "positionX":
+                        case "positionXManage":
                             //背景横向偏移
 
                             break;
-                        case "positionY":
+                        case "positionYManage":
                             //背景纵向偏移
 
                             break;
-                        case "bgRepeat":
+                        case "bgRepeatManage":
                             //平铺模式
                             styleObject["background-repeat"] = element;
                             break;
-                        case "bgAttachment":
+                        case "bgAttachmentManage":
                             //背景模式
                             styleObject["background-attachment"] = element;
                             break;
-                        case "border":
+                        case "borderManage":
                             if (element.border.top.width > 0) {
                                 styleObject["border-top-width"] = element.border.top.width + element.border.top.widthUnit;
                                 styleObject["border-top-style"] = element.border.top.style;
@@ -424,7 +432,7 @@ export default {
                             styleObject["border-bottom-left-radius"] = element.radius.leftBottom.radius + element.radius.leftBottom.radiusUnit;
                             styleObject["border-bottom-right-radius"] = element.radius.rightBottom.radius + element.radius.rightBottom.radiusUnit;
                             break;
-                        case "font":
+                        case "fontManage":
                             styleObject["font-family"] = element.fontFamily;
                             if (element.fontColors.hex8) {
                                 styleObject["color"] = element.fontColors.hex8;

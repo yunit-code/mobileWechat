@@ -490,6 +490,367 @@
                     "placeholder": "示例：inbox,info,toread"
                 }
             ]
+        },
+        {
+            "type": "group",
+            "text": "应用管理配置",
+            "desc": "当显示更多设置打开且弹框展示选项打开时，用于应用管理组件配置",
+            "children": [
+                {
+                    "type": "group",
+                    "text": "标题样式设置",
+                    "desc": "点击？查看样式设置用法指南",
+                    "helpUrl": "",
+                    "children": [
+                        {
+                            "type": "box",
+                            "layoutType": "block",
+                            "text": "内外边距",
+                            "bindKey": "titleBox"
+                        },
+                        {
+                            "type": "inlineGroup",
+                            "text": "宽高",
+                            "children": [
+                                {
+                                    "type": "input",
+                                    "layoutType": "block",
+                                    "text": "宽",
+                                    "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
+                                    "bindKey": "titleWidth",
+                                    "width": "60px",
+                                    "default": "auto"
+                                },
+                                {
+                                    "type": "input",
+                                    "layoutType": "block",
+                                    "text": "高",
+                                    "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
+                                    "bindKey": "titleHeight",
+                                    "width": "60px",
+                                    "default": "auto"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "font",
+                            "layoutType": "block",
+                            "text": "文字",
+                            "bindKey": "titleFontManage"
+                        },
+                        {
+                            "type": "group",
+                            "text": "背景设置",
+                            "desc": "点击？查看背景设置用法指南",
+                            "helpUrl": "",
+                            "children": [
+                                {
+                                    "type": "colorPicker",
+                                    "layoutType": "inline",
+                                    "text": "背景色",
+                                    "bindKey": "titleBgColor",
+                                    "placeholder": "请选择颜色",
+                                    "default": {}
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "text": "样式设置",
+                    "desc": "点击？查看样式设置用法指南",
+                    "helpUrl": "",
+                    "children": [
+                        {
+                            "type": "box",
+                            "layoutType": "block",
+                            "text": "内外边距",
+                            "bindKey": "boxManage"
+                        },
+                        {
+                            "type": "inlineGroup",
+                            "text": "宽高",
+                            "children": [
+                                {
+                                    "type": "input",
+                                    "layoutType": "block",
+                                    "text": "宽",
+                                    "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
+                                    "bindKey": "widthManage",
+                                    "width": "60px",
+                                    "default": "auto"
+                                },
+                                {
+                                    "type": "input",
+                                    "layoutType": "block",
+                                    "text": "高",
+                                    "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
+                                    "bindKey": "heightManage",
+                                    "width": "60px",
+                                    "default": "auto"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "group",
+                            "text": "背景设置",
+                            "desc": "点击？查看背景设置用法指南",
+                            "helpUrl": "",
+                            "children": [
+                                {
+                                    "type": "colorPicker",
+                                    "layoutType": "inline",
+                                    "text": "背景色",
+                                    "bindKey": "bgColorManage",
+                                    "placeholder": "请选择颜色",
+                                    "default": {}
+                                },
+                                {
+                                    "type": "uploadImage",
+                                    "layoutType": "inline",
+                                    "text": "背景图片",
+                                    "bindKey": "bgImgUrlManage",
+                                    "placeholder": "可输入图片地址或直接上传"
+                                },
+                                {
+                                    "type": "inputNumberUnit",
+                                    "layoutType": "inline",
+                                    "text": "横向偏移",
+                                    "bindKey": "positionXManage",
+                                    "dictionary": [
+                                        {
+                                            "label": "px",
+                                            "value": "px"
+                                        },
+                                        {
+                                            "label": "%",
+                                            "value": "%"
+                                        },
+                                        {
+                                            "label": "em",
+                                            "value": "em"
+                                        }
+                                    ],
+                                    "display": "@[bgImgUrlManage]"
+                                },
+                                {
+                                    "type": "inputNumberUnit",
+                                    "layoutType": "inline",
+                                    "text": "纵向偏移",
+                                    "bindKey": "positionYManage",
+                                    "dictionary": [
+                                        {
+                                            "label": "px",
+                                            "value": "px"
+                                        },
+                                        {
+                                            "label": "%",
+                                            "value": "%"
+                                        },
+                                        {
+                                            "label": "em",
+                                            "value": "em"
+                                        }
+                                    ],
+                                    "display": "@[bgImgUrlManage]"
+                                },
+                                {
+                                    "type": "radio",
+                                    "layoutType": "block",
+                                    "text": "背景大小",
+                                    "bindKey": "bgSizeManage",
+                                    "dictionary": [
+                                        {
+                                            "label": "裁切显示",
+                                            "value": "cover"
+                                        },
+                                        {
+                                            "label": "完全显示",
+                                            "value": "contain"
+                                        },
+                                        {
+                                            "label": "自定义",
+                                            "value": "custom"
+                                        }
+                                    ],
+                                    "display": "@[bgImgUrlManage]"
+                                },
+                                {
+                                    "type": "inputNumberUnit",
+                                    "layoutType": "inline",
+                                    "text": "宽度",
+                                    "bindKey": "bgSizeWidthManage",
+                                    "dictionary": [
+                                        {
+                                            "label": "px",
+                                            "value": "px"
+                                        },
+                                        {
+                                            "label": "%",
+                                            "value": "%"
+                                        },
+                                        {
+                                            "label": "em",
+                                            "value": "em"
+                                        }
+                                    ],
+                                    "display": "@[bgSizeManage=='custom']"
+                                },
+                                {
+                                    "type": "inputNumberUnit",
+                                    "layoutType": "inline",
+                                    "text": "高度",
+                                    "bindKey": "bgSizeHeightManage",
+                                    "dictionary": [
+                                        {
+                                            "label": "px",
+                                            "value": "px"
+                                        },
+                                        {
+                                            "label": "%",
+                                            "value": "%"
+                                        },
+                                        {
+                                            "label": "em",
+                                            "value": "em"
+                                        }
+                                    ],
+                                    "display": "@[bgSizeManage=='custom']"
+                                },
+                                {
+                                    "type": "radio",
+                                    "layoutType": "block",
+                                    "text": "平铺模式",
+                                    "bindKey": "bgRepeatManage",
+                                    "dictionary": [
+                                        {
+                                            "label": "双向重复",
+                                            "value": "repeat"
+                                        },
+                                        {
+                                            "label": "水平重复",
+                                            "value": "repeat-x"
+                                        },
+                                        {
+                                            "label": "垂直重复",
+                                            "value": "repeat-y"
+                                        },
+                                        {
+                                            "label": "不重复",
+                                            "value": "no-repeat"
+                                        },
+                                        {
+                                            "label": "继承",
+                                            "value": "inherit"
+                                        }
+                                    ],
+                                    "display": "@[bgImgUrlManage]"
+                                },
+                                {
+                                    "type": "radio",
+                                    "layoutType": "inline",
+                                    "text": "背景模式",
+                                    "bindKey": "bgAttachmentManage",
+                                    "dictionary": [
+                                        {
+                                            "label": "固定",
+                                            "value": "fixed"
+                                        },
+                                        {
+                                            "label": "滚动",
+                                            "value": "scroll"
+                                        },
+                                        {
+                                            "label": "继承",
+                                            "value": "inherit"
+                                        }
+                                    ],
+                                    "display": "@[bgImgUrlManage]"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "border",
+                            "layoutType": "block",
+                            "text": "边框",
+                            "bindKey": "borderManage"
+                        },
+                        {
+                            "type": "font",
+                            "layoutType": "block",
+                            "text": "文字",
+                            "bindKey": "fontManage"
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "text": "高级",
+                    "desc": "点击？查看高级设置用法指南",
+                    "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "我的应用",
+                            "desc": "用于获取用户设置的我的应用数据的接口地址",
+                            "bindKey": "getMyApplicationUrlManage",
+                            "default": "/ctrl/tencentApp/queryMyFavorite"
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "全部应用",
+                            "desc": "用于获取用户所有有权限的应用数据的接口地址",
+                            "bindKey": "getAllApplicationUrl",
+                            "default": "/ctrl/tencentApp/queryAppGroupByGrant"
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "保存接口",
+                            "desc": "用户保存所设置的我的应用数据的接口地址",
+                            "bindKey": "saveMyApplicationUrl",
+                            "default": "/ctrl/tencentApp/batchSetFavoriteApp"
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "搜索地址",
+                            "desc": "点击搜索按钮时页面跳转的地址",
+                            "bindKey": "clickSearchUrl",
+                            "default": ""
+                        },
+                        {
+                            "type": "select",
+                            "layoutType": "inline",
+                            "text": "跳转方式",
+                            "bindKey": "clickSearchJumpType",
+                            "desc": "点击搜索按钮时页面跳转的方式",
+                            "dictionary": [
+                                {
+                                    "label": "当前页跳转",
+                                    "value": "_self"
+                                },
+                                {
+                                    "label": "新窗口打开",
+                                    "value": "_blank"
+                                }
+                            ],
+                            "default": "_self"
+                        },
+                        {
+                            "type": "actionSelect",
+                            "layoutType": "block",
+                            "text": "点击[取消]时动作",
+                            "bindKey": "clickCancelFunction",
+                            "desc": "点击取消的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
+                            "multiple": true
+                        }
+                    ]
+                }
+            ],
+            "display": "@[showConfig && isPopShowApplicationManage]"
         }
     ]
 }

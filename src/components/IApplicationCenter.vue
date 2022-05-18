@@ -40,7 +40,7 @@
             </div>
 
             <van-popup v-model="is_application_manage_show" closeable round>
-                <IApplicationManage></IApplicationManage>
+                <IApplicationManage :is_pop_type="true" :datas="propData"></IApplicationManage>
             </van-popup>
         </div>
     </div>
@@ -123,15 +123,6 @@ export default {
                 console.log('is_sort_application',is_sort_application)
                 for( let i = 0,maxi = value.length;i < maxi;i++ ) {
                     if ( value[i].selectApplication && value[i].selectApplication.value && !is_sort_application ) {
-                        // if ( (!is_change_application) || !is_change_application.length ) {
-                        //     value[i].applicationName = value[i].selectApplication.title;
-                        //     value[i].applicationIconUrl = value[i].selectApplication.imageUrl;
-                        //     value[i].applicationUrl = value[i].selectApplication.appUrl;
-                        //     console.log('更改属性值',value)
-                        //     IDM.develop.externalMixAttributeChangeHandle({
-                        //         applicationList: JSON.parse(JSON.stringify(value))
-                        //     },this.moduleObject.packageid,-1,false)
-                        // }
                         if ( (!old[i].selectApplication) || value[i].selectApplication.value != old[i].selectApplication.value ) {
                             value[i].applicationName = value[i].selectApplication.title;
                             value[i].applicationIconUrl = value[i].selectApplication.imageUrl;
@@ -275,17 +266,21 @@ export default {
             if ( this.moduleObject.env == 'develop' ) {
                 return
             }
+            console.log('isPopShowApplicationManage',this.propData)
             if ( this.propData.isPopShowApplicationManage ) {
+                console.log('弹框展示')
                 this.is_application_manage_show = true;
                 return
+            } else {
+                console.log('跳转页面')
+                if ( this.propData.moreApplicationUrl ) {
+                    if ( this.propData.moreApplicationJumpType == '_self' ) {
+                        window.location.href = this.propData.moreApplicationUrl
+                    } else {
+                        window.open(this.propData.moreApplicationUrl,this.propData.moreApplicationJumpType);
+                    }
+                }  
             }
-            if ( this.propData.moreApplicationUrl ) {
-                if ( this.propData.moreApplicationJumpType == '_self' ) {
-                    window.location.href = this.propData.moreApplicationUrl
-                } else {
-                    window.open(this.propData.moreApplicationUrl,this.propData.moreApplicationJumpType);
-                }
-            }    
         },
         changeLines() {
             if ( this.application_data && (this.application_data.length > this.propData.showRows * this.propData.showColumn) ) {
