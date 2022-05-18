@@ -555,7 +555,7 @@ export default {
                 const messageData = typeof messageObject.message === 'string' && JSON.parse(messageObject.message) || messageObject.message
                 const arr = this.propData.messageRefreshKey.split(',')
                 if(messageData.badgeType && arr.includes(messageData.badgeType)){
-                    this.initApplicationData()
+                    this.getApplicationMarkNumber()
                 }
             }
         },
