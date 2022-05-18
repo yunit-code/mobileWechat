@@ -86,13 +86,11 @@ export default {
       .then((res) => {
         this.autoLogin = false;
         if(res.status == 200 && res.data.code == 200){
-          this.messageData = res.data.data
-          var tId = "180125135009mnbVQ2sewkDKJZqA33i";
           if(res.data.message === "1") {
-            window.location.href = IDM.url.getWebPath("/ctrl/portal/index?tId="+tId);
+            window.location.href = IDM.url.getWebPath("/p1000/idm/index.html#/preview/220513155441BpglvZJhEiJozhVUZ4F");
           }else {
             /*window.location.href = contextPath + "/ctrl/portal/index?tId=180125135009mnbVQ2sewkDKJZqA33i";*/
-            window.location.href = IDM.url.getWebPath("/ctrl/dsfa/rm/projectComponent/pageIndex?tId="+tId);
+            window.location.href = IDM.url.getWebPath("/ctrl/customizePortal/index?groupId=wxgzt");
           }
         }else {
           IDM.message.error(res.data.message)
