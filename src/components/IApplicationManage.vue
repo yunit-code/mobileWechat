@@ -463,8 +463,8 @@ export default {
                 }
             }
             if ( this.is_pop_type ) {
-                window.IDM.setStyleToPageHead('application_manage_pop', styleObject);
-                window.IDM.setStyleToPageHead('application_manage_pop' + " .idm_applicationcenter_title_left_text", styleObjectTitle);
+                window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop', styleObject);
+                window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop' + " .idm_applicationcenter_title_left_text", styleObjectTitle);
             } else {
                 window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_text", styleObjectTitle);

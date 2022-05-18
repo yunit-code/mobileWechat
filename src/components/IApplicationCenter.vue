@@ -682,8 +682,8 @@ export default {
 }
 .idm_applicationcenter{
     .van-popup--center{
-        width: 95%;
-        height: 90vh;
+        width: 95% !important;
+        height: 90vh !important;
         overflow-y: auto;
         padding: 40px 0 20px 0;
     }
