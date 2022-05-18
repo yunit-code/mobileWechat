@@ -477,7 +477,7 @@
                     "text": "刷新KEY",
                     "bindKey": "messageRefreshKey",
                     "desc": "根据组件接受到的消息KEY来刷新数据，可配置多个，以英文逗号分开",
-                    "default": "",
+                    "default": "info",
                     "placeholder": "示例：inbox,info,toread"
                 }
             ]

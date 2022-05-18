@@ -544,7 +544,7 @@ export default {
          * } messageObject 
          */
         receiveBroadcastMessage(messageObject) {
-            console.log("组件收到消息", messageObject)
+            console.log("应用组件收到消息", messageObject)
             if (messageObject.type && messageObject.type == "linkageShowModule") {
                 this.showThisModuleHandle();
             } else if (messageObject.type && messageObject.type == "linkageHideModule") {
