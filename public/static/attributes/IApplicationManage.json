@@ -55,7 +55,7 @@
                     "type": "font",
                     "layoutType": "block",
                     "text": "文字",
-                    "bindKey": "titleFont"
+                    "bindKey": "titleFontManage"
                 },
                 {
                     "type": "group",
