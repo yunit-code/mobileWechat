@@ -38,30 +38,40 @@
                     </van-grid-item>
                 </van-grid>
             </div>
+
+            <van-popup v-model="is_application_manage_show" closeable round>
+                <IApplicationManage></IApplicationManage>
+            </van-popup>
         </div>
     </div>
 </template>
 
 <script>
 import { base_url } from '../api/config.js'
-import { Grid, GridItem, Icon } from 'vant';
+import { Grid, GridItem, Icon, Popup } from 'vant';
 import 'vant/lib/grid/style';
 import 'vant/lib/icon/style';
+import 'vant/lib/popup/style';
+import IApplicationManage from './IApplicationManage.vue'
 export default {
     name: 'IApplicationCenter',
     components: {
         [Grid.name]: Grid,
         [GridItem.name]: GridItem,
         [Icon.name]: Icon,
+        [Popup.name]: Popup,
+        IApplicationManage
     },
     data() {
         return {
             moduleObject: {},
             propData: this.$root.propData.compositeAttr || {
-                
+                isPopShowApplicationManage: true,
+                showConfig: true
             },
             application_data: [],
             have_power_application_data_ids: [],//用户有权限的app
+            is_application_manage_show: false,
         }
     },
     props: {
@@ -263,6 +273,10 @@ export default {
         },
         toApplicationManage() {
             if ( this.moduleObject.env == 'develop' ) {
+                return
+            }
+            if ( this.propData.isPopShowApplicationManage ) {
+                this.is_application_manage_show = true;
                 return
             }
             if ( this.propData.moreApplicationUrl ) {
@@ -601,17 +615,6 @@ export default {
 }
 </script>
 <style lang="scss">
-.van-grid-item__content{
-    padding: 7px 8px;
-}
-.idm_filed_svg_icon {
-    font-size: 14px;
-    width: 14px;
-    height: 14px;
-    fill: currentColor;
-    vertical-align: -0.15em;
-    outline: none;
-}
 .idm_applicationcenter {
     border-radius: 10px;
     .idm_applicationcenter_title{
@@ -624,7 +627,9 @@ export default {
             line-height: 22px;
         }
         .idm_applicationcenter_title_right{
-            font-size: 23px;
+            i{
+                font-size: 23px;
+            }
         }
     }
     .idm_applicationcenter_main{
@@ -662,4 +667,27 @@ export default {
         }
     }
 }
+</style>
+<style lang="scss">
+.van-grid-item__content{
+    padding: 7px 8px;
+}
+
+.idm_filed_svg_icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+    vertical-align: -0.15em;
+    outline: none;
+}
+.idm_applicationcenter{
+    .van-popup--center{
+        width: 95%;
+        height: 90vh;
+        overflow-y: auto;
+        padding: 40px 0 20px 0;
+    }
+}
+
 </style>
