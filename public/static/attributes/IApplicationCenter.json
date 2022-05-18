@@ -45,13 +45,22 @@
                     "display": "@[!isMyApplication]"
                 },
                 {
+                    "type": "switch",
+                    "layoutType": "inline",
+                    "text": "弹框展示",
+                    "desc":"点击更多操作时，是否在当前页面以弹框的形式展示应用管理页面",
+                    "bindKey": "isPopShowApplicationManage",
+                    "default": false,
+                    "display": "@[!isMyApplication]"
+                },
+                {
                     "type": "textarea",
                     "layoutType": "inline",
                     "text": "跳转地址",
                     "desc":"用于设置跳转到更多应用的页面地址",
                     "bindKey": "moreApplicationUrl",
                     "default": "",
-                    "display": "@[showConfig]"
+                    "display": "@[showConfig && !isPopShowApplicationManage]"
                 },
                 {
                     "type": "select",
@@ -70,7 +79,7 @@
                         }
                     ],
                     "default": "_self",
-                    "display": "@[showConfig]"
+                    "display": "@[showConfig && !isPopShowApplicationManage]"
                 },
                 {
                     "type": "switch",
