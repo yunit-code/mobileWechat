@@ -22,9 +22,9 @@
             "children": [
                 {
                     "type": "input",
-                    "layoutType": "htmlTitle",
+                    "layoutType": "inline",
                     "text": "标题",
-                    "bindKey": "fontContent",
+                    "bindKey": "htmlTitle",
                     "default": "山东省人民政府移动办公平台"
                 }
             ]
