@@ -345,7 +345,7 @@ export default {
         return
       }
       let requestUrl = this.propData.customInterfaceUrl
-      if(this.propData.dataType === 'dataSource'){
+      if(this.propData.dataType === 'custom'){
         requestUrl =  this.propData.customGetTodoDataInterfaceUrl
         this.countKey = 'total'
         this.listKey = 'list'
