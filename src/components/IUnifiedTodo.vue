@@ -20,14 +20,14 @@
         <svg-icon v-else icon-class="threeLine" className="idm-unifie-todo-box-title-icon"></svg-icon>
       </div>
       <div v-if="propData.showMore" class="d-flex align-c"  @click="handleClickMore">
-        <span v-if="todoData.count && propData.showTodoNumber">
+        <span v-if="todoData[countKey] && propData.showTodoNumber">
           <span class="idm-unifie-todo-box-title-number">{{todoData.count}}</span>
           <van-icon name="arrow" />
         </span>
         <van-icon v-else  class="idm-unifie-todo-box-title-more" name="ellipsis" />
       </div>
     </div>
-    <div class="idm-unifie-todo-box-sub" v-for="(item, index) in todoData.value" :key="index" @click="handleClickItem(item)">
+    <div class="idm-unifie-todo-box-sub" v-for="(item, index) in todoData[listKey]" :key="index" @click="handleClickItem(item)">
       <div class="idm-unifie-todo-box-sub-title" :class="{'idm-unifie-todo-box-sub-no-read': true}">
         <!-- <div class="idm-unifie-todo-box-sub-title-icon" v-if="item.isHot != '-1'">
           <svg-icon icon-class="fire" ></svg-icon>
@@ -113,7 +113,9 @@ export default {
         bgColor: '#fff',
         maxCount: '3', // 最多显示几条
       },
-      todoData: {value: []}
+      todoData: {value: []},
+      countKey: 'count',
+      listKey: 'value'
     }
   },
   created() {
@@ -342,7 +344,13 @@ export default {
         this.todoData = _.cloneDeep(todoData)
         return
       }
-      const requestUrl = this.propData.dataType === 'dataSource' ? this.propData.customInterfaceUrl : this.propData.customGetTodoDataInterfaceUrl
+      let requestUrl = this.propData.customInterfaceUrl
+      if(this.propData.dataType === 'dataSource'){
+        requestUrl =  this.propData.customGetTodoDataInterfaceUrl
+        this.countKey = 'total'
+        this.listKey = 'list'
+      }
+      
       requestUrl &&
       window.IDM.http
         .post(requestUrl, {

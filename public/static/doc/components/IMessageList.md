@@ -1,4 +1,4 @@
-# 文本
+# 信息列表
 信息列表组件
 ## 组件类名（className）
 IMessageList
