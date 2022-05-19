@@ -100,7 +100,13 @@ export default {
   data() {
     return {
       moduleObject: {},
-      propData: this.$root.propData.compositeAttr || {},
+      propData: this.$root.propData.compositeAttr || {
+        position: 'left',
+        overlayClose: 'true',
+        height: '24px',
+        width: '24px',
+        dataFiled: 'title'
+      },
       visible: false,
       selectedKey: "",
       activeKey: "",
@@ -160,9 +166,9 @@ export default {
         .error((error) => {});
     },
     getMenuList() {
-      // if (this.moduleObject.env === "develop" || !this.propData.dataSourceUrl) {
-      //   return false;
-      // }
+      if (this.moduleObject.env === "develop" || !this.propData.dataSourceUrl) {
+        return false;
+      }
       const pageId =
         window.IDM.broadcast && window.IDM.broadcast.pageModule
           ? window.IDM.broadcast.pageModule.id
@@ -437,7 +443,7 @@ export default {
         btnStyleObject
       );
       window.IDM.setStyleToPageHead(
-        "idm_popupWorkbench_popup" + " .van-cell .cell_selected",
+        "idm_popupWorkbench_popup" + " .van-cell.cell_selected .van-cell__title div",
         cellSelectedStyleObject
       );
       window.IDM.setStyleToPageHead(
