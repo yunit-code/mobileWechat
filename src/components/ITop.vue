@@ -96,8 +96,11 @@ export default {
     // 设置图标跳转
     goUrl() {
       if (this.propData.setUrl) {
-        this.propData.jumpType === 'new' &&  window.open(this.propData.setUrl)
-        this.propData.jumpType === 'current' && this.moduleObject.env=="production" && (window.location.href=this.propData.setUrl)
+        let url = this.propData.setUrl;
+        url+=url.indexOf("?")>-1?"&":"?";
+        url+="pageid="+this.commonParam().pageId;
+        this.propData.jumpType === 'new' &&  window.open(IDM.url.getWebPath(url))
+        this.propData.jumpType === 'current' && this.moduleObject.env=="production" && (window.location.href=IDM.url.getWebPath(url))
       }
     },
     /**
