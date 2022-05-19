@@ -60,9 +60,12 @@ export default {
       propData:this.$root.propData.compositeAttr||{
         htmlTitle: "山东省人民政府移动办公平台",
         box: {
-          marginTopVal: '100px',
           marginLeftVal: '20px',
           marginRightVal: '20px',
+          paddingRightVal: "10px",
+          paddingLeftVal: "10px",
+          paddingBottomVal: "10px",
+          paddingTopVal: "10px"
         }
       },
       autoLogin: false,
@@ -104,7 +107,7 @@ export default {
       .catch((error) => {
         this.autoLogin = false;
         console.log(error)
-        IDM.message.error(error)
+        IDM.message.error(error.message)
       });
     },
     /**
@@ -242,7 +245,6 @@ export default {
         }
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id,styleObject);
-      window.IDM.setStyleToPageHead(this.moduleObject.id + ' .sys-login-box', styleObject);
       this.initData();
     },
     /**
