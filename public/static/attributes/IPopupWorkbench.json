@@ -65,31 +65,6 @@
           "default": "true"
         },
         {
-          "type": "input",
-          "layoutType": "inline",
-          "text": "数据接口",
-          "bindKey": "dataSourceUrl",
-          "default": "/ctrl/customizePortal/loadAllPage?groupId=wxgzt",
-          "desc": "用于获取工作台列表的接口地址，请按照统一标准的返回格式"
-        },
-        {
-          "type": "textarea",
-          "layoutType": "inline",
-          "text": "显示字段",
-          "bindKey": "dataFiled",
-          "desc": "根据接口返回数据格式指定结果集中的字段，填写data下数组对象中的字段即可",
-          "default": "title",
-          "placeholder": "示例：text 或者 title"
-        },
-        {
-          "type": "input",
-          "layoutType": "inline",
-          "text": "切换接口",
-          "bindKey": "changeUrl",
-          "default": "/ctrl/customizePortal/savePage",
-          "desc": "用于调用切换工作台的后台接口，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}"
-        },
-        {
           "type": "select",
           "layoutType": "inline",
           "text": "跳转方式",
@@ -199,7 +174,7 @@
           "type": "input",
           "layoutType": "inline",
           "text": "图标大小",
-          "desc": "使用px单位，比如16px",
+          "desc": "按钮图标大小，使用px单位，比如16px",
           "bindKey": "iconSize",
           "default": "16px"
         },
@@ -214,6 +189,38 @@
           "layoutType": "block",
           "text": "按钮边框",
           "bindKey": "btnborder"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "text": "高级",
+      "desc": "点击？查看高级设置用法指南",
+      "children": [
+        {
+          "type": "input",
+          "layoutType": "inline",
+          "text": "数据接口",
+          "bindKey": "dataSourceUrl",
+          "default": "/ctrl/customizePortal/loadAllPage?groupId=wxgzt",
+          "desc": "用于获取工作台列表的接口地址，请按照统一标准的返回格式"
+        },
+        {
+          "type": "textarea",
+          "layoutType": "inline",
+          "text": "显示字段",
+          "bindKey": "dataFiled",
+          "desc": "根据接口返回数据格式指定结果集中的字段，填写data下数组对象中的字段即可",
+          "default": "title",
+          "placeholder": "示例：text 或者 title"
+        },
+        {
+          "type": "input",
+          "layoutType": "inline",
+          "text": "切换接口",
+          "bindKey": "changeUrl",
+          "default": "/ctrl/customizePortal/savePage",
+          "desc": "用于调用切换工作台的后台接口，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}"
         }
       ]
     }
