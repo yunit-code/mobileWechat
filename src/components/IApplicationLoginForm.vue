@@ -101,7 +101,7 @@ export default {
             window.location.href = IDM.url.getWebPath("/ctrl/customizePortal/index?groupId=wxgzt");
           }
         }else {
-          IDM.message.error(res.data.message)
+          IDM.message.error(res.data.message||'请确认用户名或密码是否正确')
         }
       })
       .catch((error) => {
