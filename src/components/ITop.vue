@@ -347,7 +347,7 @@ export default {
     flex-direction: column;
     .top-set{
       display: flex;
-      justify-content: end;
+      justify-content: flex-end;
       align-items: center;
     }
     .top-content{
