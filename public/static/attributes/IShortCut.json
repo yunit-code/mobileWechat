@@ -110,7 +110,7 @@
                             "ctrlAttrObject": {
                                 "width": "",
                                 "height": "",
-                                "cropper": true
+                                "cropper": false
                             }
                         }
                     ]

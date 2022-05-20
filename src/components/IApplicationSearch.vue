@@ -16,15 +16,29 @@
                 </van-sticky>
             </div>
             <div class="idm_iapplicationsearch_main">
-                <div v-for="(item,index) in application_data" :key="index" class="list flex_between">
-                    <div class="list_left flex_start">
-                        <img v-if="item.imageUrl" :src="item.imageUrl">
-                        <svg-icon v-else icon-class="application" />
-                        <span>{{ item.title || '应用' }}</span>
+                <div v-if="is_loading" class="loading_box">
+                    <van-loading vertical>加载中...</van-loading>
+                </div>
+                <div v-else class="block">
+                    <div v-if="application_data && application_data.length" class="block">
+                        <div v-for="(item,index) in application_data" :key="index" class="list flex_between">
+                            <div class="list_left flex_start">
+                                <img v-if="item.imageUrl" :src="item.imageUrl">
+                                <svg-icon v-else icon-class="application" />
+                                <span>{{ item.title || '应用' }}</span>
+                            </div>
+                            <div class="list_right">
+                                <span v-if="item.is_favorite == '1'" class="add_disabled">已添加</span>
+                                <span @click="add(item,index)" v-else class="add">添加</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="list_right">
-                        <span v-if="item.is_favorite == '1'" class="add_disabled">已添加</span>
-                        <span @click="add(item,index)" v-else class="add">添加</span>
+                    <div v-else class="block">
+                        <van-empty class="empty_block" description="暂无数据">
+                            <template #description>
+                                <div>暂无数据</div>
+                            </template>
+                        </van-empty>
                     </div>
                 </div>
             </div>
@@ -35,15 +49,18 @@
 <script>
 import { base_url } from '../api/config.js'
 
-import { Search,Sticky,Toast  } from 'vant';
+import { Search,Sticky,Toast,Loading } from 'vant';
 import 'vant/lib/search/style';
 import 'vant/lib/sticky/style';
 import 'vant/lib/toast/style';
+import 'vant/lib/loading/style';
 export default {
     name: 'IApplicationSearch',
     components: {
         [Search.name]: Search,
-        [Toast.name]: Toast
+        [Sticky.name]: Sticky,
+        [Toast.name]: Toast,
+        [Loading.name]: Loading,
     },
     data() {
         return {
@@ -53,6 +70,7 @@ export default {
             },
             search_text: '',
             application_data: [],
+            is_loading: false
         }
     },
     props: {
@@ -84,12 +102,19 @@ export default {
             if ( this.moduleObject.env == 'develop' || !this.propData.getAllApplicationUrl ) {
                 return
             }
+            this.is_loading = true;
             window.IDM.http.post(base_url + this.propData.getAllApplicationUrl,{
                 appName: this.search_text
             }).then(result=>{
+                this.is_loading = false;
                 if(result && result.data && result.data.type == 'success'){
                     this.application_data = result.data.data
+                } else {
+                    Toast.fail(result.data.message);
                 }
+            }).catch((err) => {
+                console.log(err)
+                this.is_loading = false;
             })
         },
         add(item,index) {
@@ -354,4 +379,14 @@ export default {
         }
     }
 }
+</style>
+<style lang="scss">
+.idm_iapplicationsearch{
+    .loading_box{
+        margin-top: 150px;
+        padding: 20px 0;
+        text-align: center;
+    }
+}
+
 </style>

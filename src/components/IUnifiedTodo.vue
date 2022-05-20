@@ -10,7 +10,7 @@
    :idm-ctrl-id="moduleObject.id" 
    :title="propData.htmlTitle" 
    v-show="propData.defaultStatus!='hidden'"
-   class="idm-unifie-todo-box">
+   class="idm-unifie-todo-box in-box">
     <div class="idm-unifie-todo-box-title d-flex align-c just-b">
       <div class="d-flex align-c">
         <span class="idm-unifie-todo-box-title-font">{{propData.htmlTitle}}</span>
@@ -20,44 +20,59 @@
         <svg-icon v-else icon-class="threeLine" className="idm-unifie-todo-box-title-icon"></svg-icon>
       </div>
       <div v-if="propData.showMore" class="d-flex align-c"  @click="handleClickMore">
-        <span v-if="todoData[countKey] && propData.showTodoNumber">
-          <span class="idm-unifie-todo-box-title-number">{{todoData.count}}</span>
+        <span v-if="propData.showTodoNumber">
+          <span class="idm-unifie-todo-box-title-number">{{todoData[countKey] || 0}}</span>
           <van-icon name="arrow" />
         </span>
         <van-icon v-else  class="idm-unifie-todo-box-title-more" name="ellipsis" />
       </div>
     </div>
-    <div class="idm-unifie-todo-box-sub" v-for="(item, index) in todoData[listKey]" :key="index" @click="handleClickItem(item)">
-      <div class="idm-unifie-todo-box-sub-title" :class="{'idm-unifie-todo-box-sub-no-read': true}">
-        <!-- <div class="idm-unifie-todo-box-sub-title-icon" v-if="item.isHot != '-1'">
-          <svg-icon icon-class="fire" ></svg-icon>
-        </div> -->
-        <div class="flex-1">
-          <div class="idm-unifie-todo-box-sub-content" :class="item.readStatus == '1' ?'idm-unifie-todo-box-sub-hasRead' : ''">
-            {{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}
-          </div>
-          <div class="idm-unifie-todo-box-sub-intr">
-            <div class="d-flex align-c">
-              <svg-icon iconClass="duihao" v-if="item.readStatus == '1'" class="idm-unifie-todo-box-sub-icon"></svg-icon>
-              <svg-icon iconClass="weidu" v-else class="idm-unifie-todo-box-sub-icon"></svg-icon>
-              <span>{{item.readStatusText}}</span> </div>
-            <div class="d-flex align-c">
-              <svg-icon iconClass="person" class="idm-unifie-todo-box-sub-icon"></svg-icon> 
-              <span>{{item.sendUserName}}</span> </div>
-            <div class="d-flex align-c">
-              <svg-icon iconClass="time" class="idm-unifie-todo-box-sub-icon"></svg-icon>
-              <span>{{item.time}}</span>
+    <template v-if="!pageLoading">
+      <div class="idm-unifie-todo-box-sub" v-for="(item, index) in todoData[listKey]" :key="index" @click="handleClickItem(item)">
+        <div class="idm-unifie-todo-box-sub-title" :class="{'idm-unifie-todo-box-sub-no-read': true}">
+          <!-- <div class="idm-unifie-todo-box-sub-title-icon" v-if="item.isHot != '-1'">
+            <svg-icon icon-class="fire" ></svg-icon>
+          </div> -->
+          <div class="flex-1">
+            <div class="idm-unifie-todo-box-sub-content" :class="getExpressData('data', propData.readExpression, item) ?'idm-unifie-todo-box-sub-hasRead' : ''">
+              {{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}
+            </div>
+            <div class="idm-unifie-todo-box-sub-intr">
+              <div class="d-flex align-c">
+                <svg v-if="item.readStatus == '1'" class="idm-unifie-todo-box-sub-icon" aria-hidden="true" >
+                  <use xlink:href="#idm-icon-xuanze"></use>
+                </svg>
+                <svg v-if="propData.noReadIcon && propData.noReadIcon.length && item.readStatus != '1'" class="idm-unifie-todo-box-sub-icon" aria-hidden="true" >
+                  <use :xlink:href="`#${propData.noReadIcon[0]}`"></use>
+                </svg>
+                <svg-icon iconClass="weidu" v-if="!propData.noReadIcon && item.readStatus != '1'" class="idm-unifie-todo-box-sub-icon"></svg-icon>
+                <span>{{item.readStatusText}}</span> </div>
+              <div class="d-flex align-c">
+                <svg-icon iconClass="person" class="idm-unifie-todo-box-sub-icon"></svg-icon> 
+                <span>{{item.sendUserName}}</span> </div>
+              <div class="d-flex align-c">
+                <svg-icon iconClass="time" class="idm-unifie-todo-box-sub-icon"></svg-icon>
+                <span>{{item.time}}</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </template>
+    <div v-if="pageLoading">
+      <van-loading type="circular" vertical>加载中...</van-loading>
+    </div>
+    <div v-if="!isFirst && ( !todoData[listKey] || todoData[listKey].length === 0)" class="idm-unifie-todo-box-empty">
+      <van-empty :description="propData.emptyText || '数据为空'" :image-size="60"/>
     </div>
   </div>
 </template>
 
 <script>
-import { Icon } from 'vant';
+import { Icon, Loading, Empty } from 'vant';
 import 'vant/lib/icon/style';
+import 'vant/lib/loading/style';
+import 'vant/lib/empty/style';
 const todoData = {
   value: [{
     jumpUrl: '',
@@ -90,7 +105,9 @@ const todoData = {
 export default {
   name: 'IUnifiedTodo',
   components: {
-    [Icon.name]: Icon
+    [Icon.name]: Icon,
+    [Loading.name]: Loading,
+    [Empty.name]: Empty,
   },
   data(){
     return {
@@ -108,14 +125,16 @@ export default {
           }
         },
         showMore: true,
-        showTodoNumber: true,
+        showTodoNumber: false,
         dataFiled: 'title',
         bgColor: '#fff',
         maxCount: '3', // 最多显示几条
       },
       todoData: {value: []},
       countKey: 'count',
-      listKey: 'value'
+      listKey: 'value',
+      pageLoading: false,
+      isFirst: true
     }
   },
   created() {
@@ -183,6 +202,9 @@ export default {
       var styleObject = {};
       let styleObjectTitleIcon = {}
       let titleFontStyleObj = {}
+      let todoFontStyleObj = {}
+      let readFontStyleObj = {}
+      let emptyBoxHeightObj = {}
       if(this.propData.bgSize&&this.propData.bgSize=="custom"){
         styleObject["background-size"]=(this.propData.bgSizeWidth?this.propData.bgSizeWidth.inputVal+this.propData.bgSizeWidth.selectVal:"auto")+" "+(this.propData.bgSizeHeight?this.propData.bgSizeHeight.inputVal+this.propData.bgSizeHeight.selectVal:"auto")
       }else if(this.propData.bgSize){
@@ -306,12 +328,43 @@ export default {
               titleFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
               titleFontStyleObj["text-align"] = element.fontTextAlign;
               titleFontStyleObj["text-decoration"] = element.fontDecoration;
+              break
+            case 'todoFontStyle':
+              todoFontStyleObj["font-family"] = element.fontFamily;
+              if (element.fontColors.hex8) {
+                  todoFontStyleObj["color"] = element.fontColors.hex8;
+              }
+              todoFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
+              todoFontStyleObj["font-style"] = element.fontStyle;
+              todoFontStyleObj["font-size"] = element.fontSize + element.fontSizeUnit;
+              todoFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
+              todoFontStyleObj["text-align"] = element.fontTextAlign;
+              todoFontStyleObj["text-decoration"] = element.fontDecoration;
+              break
+            case 'readFontStyle':
+              readFontStyleObj["font-family"] = element.fontFamily;
+              if (element.fontColors.hex8) {
+                  readFontStyleObj["color"] = element.fontColors.hex8;
+              }
+              readFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
+              readFontStyleObj["font-style"] = element.fontStyle;
+              readFontStyleObj["font-size"] = element.fontSize + element.fontSizeUnit;
+              readFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
+              readFontStyleObj["text-align"] = element.fontTextAlign;
+              readFontStyleObj["text-decoration"] = element.fontDecoration;
+              break
+            case 'emptyBoxHeight':
+              emptyBoxHeightObj['height'] = element.inputVal + element.selectVal
           }
+
         }
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id,styleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-title-icon", styleObjectTitleIcon);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-title-font", titleFontStyleObj);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-content", todoFontStyleObj);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-hasRead", readFontStyleObj);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-empty", emptyBoxHeightObj);
       this.initData();
     },
     /**
@@ -344,6 +397,7 @@ export default {
         this.todoData = _.cloneDeep(todoData)
         return
       }
+      this.pageLoading = true
       let requestUrl = this.propData.customInterfaceUrl
       if(this.propData.dataType === 'custom'){
         requestUrl =  this.propData.customGetTodoDataInterfaceUrl
@@ -367,6 +421,10 @@ export default {
           }
         })
         .catch((error) => {})
+        .finally(()=>{
+          this.isFirst = false
+          this.pageLoading = false
+        })
     },
     /**
      * 通用的获取表达式匹配后的结果
@@ -473,8 +531,16 @@ export default {
 .just-b{
   justify-content: space-between;
 }
+.just-c{
+  justify-content: center;
+}
 .flex-1{
   flex: 1;
+}
+.in-box {
+  >>> .van-empty{
+    padding: 0;
+  }
 }
 </style>
 
@@ -549,6 +615,10 @@ export default {
       vertical-align: -0.15em;
       outline: none;
       margin: 0 3px 0 0;
+    }
+    &-empty{
+      overflow: hidden;
+      height: 90px;
     }
   }
 }

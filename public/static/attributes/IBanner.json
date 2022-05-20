@@ -133,6 +133,7 @@
                     "text": "轮播配置",
                     "bindKey": "bannerTable",
                     "tabText": "轮播[index]",
+                    "openGroup": true,
                     "children": [
                         {
                             "type": "input",
