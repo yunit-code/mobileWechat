@@ -327,12 +327,12 @@ export default {
                         "Content-Type": "application/json;charset=UTF-8", 
                     }
                 }).then(result=>{
-                    if ( !this.propData.dataFiled ) {
-                        if(result&&result.data&&result.data.type == 'success' && result.data.data ){
+                    if ( result&&result.data&&result.data.type == 'success' && result.data.data ) {
+                        if ( !this.propData.dataFiled ) {
                             this.$set(this.application_data[index], "todoNumber", result.data.data.count);
+                        } else {
+                            this.$set(this.application_data[index], "todoNumber", result.data.data[this.propData.dataFiled]);
                         }
-                    } else {
-                        this.$set(this.application_data[index], "todoNumber", result.data.data[this.propData.dataFiled]);
                     }
                 })
             }
