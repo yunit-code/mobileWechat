@@ -20,8 +20,8 @@
         <svg-icon v-else icon-class="threeLine" className="idm-unifie-todo-box-title-icon"></svg-icon>
       </div>
       <div v-if="propData.showMore" class="d-flex align-c"  @click="handleClickMore">
-        <span v-if="todoData[countKey] && propData.showTodoNumber">
-          <span class="idm-unifie-todo-box-title-number">{{todoData.count}}</span>
+        <span v-if="propData.showTodoNumber">
+          <span class="idm-unifie-todo-box-title-number">{{todoData[countKey] || 0}}</span>
           <van-icon name="arrow" />
         </span>
         <van-icon v-else  class="idm-unifie-todo-box-title-more" name="ellipsis" />
