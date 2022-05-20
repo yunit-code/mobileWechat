@@ -546,7 +546,7 @@ export default {
 }
 .idm-banner-swiper-pagination{
   position: absolute;
-  left: 82% !important;
+  left: 80% !important;
   bottom: 5px !important;
   z-index: 9;
 }
