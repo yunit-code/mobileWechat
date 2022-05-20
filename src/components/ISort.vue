@@ -13,51 +13,61 @@
     class="i-sort-outer"
   >
   <div class="i-sort-tip">
-    {{ propData.tipText || '你可以通过拖拽对功能组件进行排序，点击置顶图表快速置顶重要组件，点击隐藏图标隐藏当前组件。'}}
+    {{ propData.tipText || '你可以通过拖拽对功能组件进行排序，点击置顶图标快速置顶重要组件，点击隐藏图标隐藏当前组件。'}}
   </div>
   <div class="i-sort-header">
     已添加的组件
   </div>
-  <draggable
-    class="i-sort-drag"
-    handle=".i-sort-item-handle"
-    v-model="listData"
-    animation="200"
-    @end="dragEnd"
-  >
-    <div
-      class="i-sort-item"
-      v-for="(item, index) in listData"
-      :key="`sort-${index}`"
+  <van-loading v-if="isLoading" size="24px" vertical>加载中...</van-loading>
+  <div v-if="!isLoading">
+    <draggable
+      class="i-sort-drag"
+      handle=".i-sort-item-handle"
+      v-model="listData"
+      animation="200"
+      @end="dragEnd"
     >
-      <div class="i-sort-item-handle">
-        <svg-icon icon-class="isort-drag" />
+      <div
+        class="i-sort-item"
+        v-for="(item, index) in listData"
+        :key="`sort-${index}`"
+      >
+        <div class="i-sort-item-handle">
+          <svg-icon icon-class="isort-drag" />
+        </div>
+        <div class="i-sort-item-name">{{ item.asName }}</div>
+        <div class="i-sort-item-operation">
+          <span @click="toppingClick(index)">
+            <svg-icon v-show="index !== 0" icon-class="isort-topping" />
+          </span>
+          <span @click="visibleClick(item)">
+            <svg-icon
+              :icon-class="!item.hidden ? 'isort-visible' : 'isort-invisible'"
+            />
+          </span>
+        </div>
       </div>
-      <div class="i-sort-item-name">{{ item.asName }}</div>
-      <div class="i-sort-item-operation">
-        <span @click="toppingClick(index)">
-          <svg-icon v-show="index !== 0" icon-class="isort-topping" />
-        </span>
-        <span @click="visibleClick(item)">
-          <svg-icon
-            :icon-class="!item.hidden ? 'isort-visible' : 'isort-invisible'"
-          />
-        </span>
-      </div>
-    </div>
-  </draggable>
+    </draggable>
+    <van-empty v-if="!listData || listData.length === 0" :image-size="propData.emptyImageSize || '100px'" :description="propData.emptyDescription || '暂无数据'" />
+  </div>
 </div>
 </template>
 
 <script>
+import { Empty,Loading  } from 'vant';
+import 'vant/lib/empty/style';
+import 'vant/lib/loading/style';
 import Draggable from "vuedraggable";
 export default {
   name: "ISort",
   components: {
     Draggable,
+    [Empty.name]: Empty,
+    [Loading.name]: Loading
   },
   data() {
     return {
+      isLoading:true,
       moduleObject: {},
       propData: this.$root.propData.compositeAttr || {},
       listData: [],
@@ -72,34 +82,37 @@ export default {
     this.convertAttrToStyleObject();
 
     if (!this.moduleObject.env || this.moduleObject.env === "develop") {
-      //开发模式下给例子数据
-      this.listData = [
-        {
-          comId: "1",
-          asName: "广告轮播",
-          hidden: false,
-        },
-        {
-          comId: "2",
-          asName: "统一待办",
-          hidden: false,
-        },
-        {
-          comId: "3",
-          asName: "待办列表",
-          hidden: false,
-        },
-        {
-          comId: "4",
-          asName: "应用中心",
-          hidden: false,
-        },
-        {
-          comId: "5",
-          asName: "信息列表",
-          hidden: false,
-        },
-      ];
+      setTimeout(() => {
+        //开发模式下给例子数据
+        this.listData = [
+          {
+            comId: "1",
+            asName: "广告轮播",
+            hidden: false,
+          },
+          {
+            comId: "2",
+            asName: "统一待办",
+            hidden: false,
+          },
+          {
+            comId: "3",
+            asName: "待办列表",
+            hidden: false,
+          },
+          {
+            comId: "4",
+            asName: "应用中心",
+            hidden: false,
+          },
+          {
+            comId: "5",
+            asName: "信息列表",
+            hidden: false,
+          },
+        ];
+        this.isLoading = false
+      }, 1000);
     }else if(this.moduleObject.env ===  "production"){
       this.requestDefaultCustomization()
     }
@@ -181,6 +194,8 @@ export default {
       });
       // 保存列表信息
       this.listData = list;
+      // 关闭加载状态
+      this.isLoading = false;
     },
     /**
      * 拖拽结束
@@ -223,6 +238,7 @@ export default {
       var styleObject = {};
       var tipStyleObject = {};
       var cardStyleObject = {};
+      var emptyStyleObject = {};
       if (this.propData.bgSize && this.propData.bgSize == "custom") {
         styleObject["background-size"] =
           (this.propData.bgSizeWidth
@@ -290,6 +306,32 @@ export default {
               }
               if (element.paddingLeftVal) {
                 styleObject["padding-left"] = `${element.paddingLeftVal}`;
+              }
+              break;
+            case "emptyBox":
+              if (element.marginTopVal) {
+                emptyStyleObject["margin-top"] = `${element.marginTopVal}`;
+              }
+              if (element.marginRightVal) {
+                emptyStyleObject["margin-right"] = `${element.marginRightVal}`;
+              }
+              if (element.marginBottomVal) {
+                emptyStyleObject["margin-bottom"] = `${element.marginBottomVal}`;
+              }
+              if (element.marginLeftVal) {
+                emptyStyleObject["margin-left"] = `${element.marginLeftVal}`;
+              }
+              if (element.paddingTopVal) {
+                emptyStyleObject["padding-top"] = `${element.paddingTopVal}`;
+              }
+              if (element.paddingRightVal) {
+                emptyStyleObject["padding-right"] = `${element.paddingRightVal}`;
+              }
+              if (element.paddingBottomVal) {
+                emptyStyleObject["padding-bottom"] = `${element.paddingBottomVal}`;
+              }
+              if (element.paddingLeftVal) {
+                emptyStyleObject["padding-left"] = `${element.paddingLeftVal}`;
               }
               break;
             case "bgImgUrl":
@@ -410,6 +452,7 @@ export default {
       window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .i-sort-tip", tipStyleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .i-sort-item", cardStyleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .van-empty", emptyStyleObject);
       // this.initData();
     },
     /**
@@ -450,6 +493,11 @@ export default {
     margin-bottom: 14px;
     color: #888;
     font-size: 14px;
+  }
+
+  ::v-deep .van-loading {
+    min-height: 210px;
+    justify-content: center;
   }
 
   .i-sort-drag {
