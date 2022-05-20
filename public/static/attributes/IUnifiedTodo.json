@@ -61,32 +61,47 @@
                     "default": false
                 },
                 {
+                    "type": "group",
+                    "text": "标题图标设置",
+                    "desc": "点击？查看样式设置用法指南",
+                    "helpUrl": "",
+                    "children": [
+                        {
+                            "type": "iconSelect",
+                            "layoutType": "inline",
+                            "text": "标题图标",
+                            "bindKey": "titleIconClass",
+                            "default": ""
+                        },
+                        {
+                            "type": "colorPicker",
+                            "layoutType": "inline",
+                            "text": "图标颜色",
+                            "bindKey": "titleIconFontColor",
+                            "default": ""
+                        },
+                        {
+                            "type": "inputNumber",
+                            "layoutType": "inline",
+                            "text": "图标大小",
+                            "bindKey": "titleIconFontSize",
+                            "default": 18
+                        }
+                    ]
+                },
+                {
+                    "type": "iconSelect",
+                    "layoutType": "inline",
+                    "text": "未读图标",
+                    "bindKey": "noReadIcon",
+                    "default": ""
+                },
+                {
                     "type": "slider",
                     "layoutType": "block",
                     "text": "显示数量",
                     "bindKey": "limit",
                     "default": "3"
-                },
-                {
-                    "type": "iconSelect",
-                    "layoutType": "inline",
-                    "text": "标题图标",
-                    "bindKey": "titleIconClass",
-                    "default": ""
-                },
-                {
-                    "type": "colorPicker",
-                    "layoutType": "inline",
-                    "text": "图标颜色",
-                    "bindKey": "titleIconFontColor",
-                    "default": ""
-                },
-                {
-                    "type": "inputNumber",
-                    "layoutType": "inline",
-                    "text": "图标大小",
-                    "bindKey": "titleIconFontSize",
-                    "default": 18
                 }
             ]
         },
@@ -99,7 +114,7 @@
                 {
                     "type": "font",
                     "layoutType": "block",
-                    "text": "标题字体设置",
+                    "text": "标题字体",
                     "bindKey": "titleFontStyle",
                     "default": {
                         "fontColors": {
@@ -109,6 +124,43 @@
                         "fontSizeUnit": "px",
                         "fontWeight": "800"
                     }
+                },
+                {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "默认待办字体",
+                    "bindKey": "todoFontStyle",
+                    "default": {
+                        "fontColors": {
+                            "hex": "#000000"
+                        },
+                        "fontSize": 15,
+                        "fontSizeUnit": "px",
+                        "fontWeight": "500"
+                    }
+                },
+                {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "已读文字字体",
+                    "bindKey": "readFontStyle",
+                    "default": {
+                        "fontColors": {
+                            "hex": "#999999"
+                        },
+                        "fontSize": 15,
+                        "fontSizeUnit": "px",
+                        "fontWeight": "500"
+                    }
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "已读判断",
+                    "desc":"已读判断表达式,不需要根据已读变化直接为空即可，表达式结果为true则显示，false则不显示，此处填写表达式，更多详细用法点击查看",
+                    "bindKey": "readExpression",
+                    "placeholder":"readStatus 或者 readStatus=='1'",
+                    "default": "readStatus == '1'"
                 },
                 {
                     "type": "colorPicker",

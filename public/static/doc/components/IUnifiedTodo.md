@@ -42,11 +42,6 @@ mobilewechat@1.0.6
 - 标识：`showTodoNumber`
 - 默认值： `false`隐藏
 
-#### 显示数量【limit】
-<font color="#CCCCCC">当前组件标题，用来增加组件辨识度</font>
-
-- 标识：`htmlTitle`
-- 默认值： `紧急待办`
 
 #### 标题图标【titleIconClass】
 <font color="#CCCCCC">当前组件标题右侧图标选择</font>
@@ -65,10 +60,17 @@ mobilewechat@1.0.6
 - 标识：`titleIconFontSize`
 - 默认值： `18`
 
+
+#### 显示数量【limit】
+<font color="#CCCCCC">当前组件标题，用来增加组件辨识度</font>
+
+- 标识：`htmlTitle`
+- 默认值： `紧急待办`
+
 ### 样式设置
 组件内部样式设置
 #### 标题字体样式设置【titleFontStyle】
-<font color="#CCCCCC">设置标题字体样式，样式四时设置页签字体样式，其他样式设置标题字体样式</font>
+<font color="#CCCCCC">设置标题字体样式</font>
 
 - 标识：`titleFontStyle`
 - 默认值：
@@ -81,6 +83,44 @@ mobilewechat@1.0.6
   "fontSizeUnit": "px"
 }
 ```
+
+#### 默认待办字体【todoFontStyle】
+<font color="#CCCCCC">设置默认待办字体样式</font>
+
+- 标识：`todoFontStyle`
+- 默认值：
+```json
+"default": {
+  "fontColors": {
+      "hex": "#000000"
+  },
+  "fontSize": 15,
+  "fontSizeUnit": "px",
+  "fontWeight": "500"
+}
+```
+#### 已读文字【readFontStyle】
+<font color="#CCCCCC">设置已读文字字体样式</font>
+
+- 标识：`readFontStyle`
+- 默认值：
+```json
+"default": {
+  "fontColors": {
+      "hex": "#999999"
+  },
+  "fontSize": 15,
+  "fontSizeUnit": "px",
+  "fontWeight": "500"
+}
+```
+
+#### 已读判断【readExpression】
+<font color="#CCCCCC">已读判断表达式，满足结果为true时设置已读，反之未读</font>
+
+- 标识：`readExpression`
+- 默认值：`readStatus == '1'`
+
 #### 背景色【bgColor】
 设置组件的整体背景颜色
 - 标识：`bgColor`

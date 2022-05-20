@@ -33,13 +33,18 @@
           <svg-icon icon-class="fire" ></svg-icon>
         </div> -->
         <div class="flex-1">
-          <div class="idm-unifie-todo-box-sub-content" :class="item.readStatus == '1' ?'idm-unifie-todo-box-sub-hasRead' : ''">
+          <div class="idm-unifie-todo-box-sub-content" :class="getExpressData('data', propData.readExpression, item) ?'idm-unifie-todo-box-sub-hasRead' : ''">
             {{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}
           </div>
           <div class="idm-unifie-todo-box-sub-intr">
             <div class="d-flex align-c">
-              <svg-icon iconClass="duihao" v-if="item.readStatus == '1'" class="idm-unifie-todo-box-sub-icon"></svg-icon>
-              <svg-icon iconClass="weidu" v-else class="idm-unifie-todo-box-sub-icon"></svg-icon>
+              <svg v-if="item.readStatus == '1'" class="idm-unifie-todo-box-sub-icon" aria-hidden="true" >
+                <use xlink:href="#idm-icon-xuanze"></use>
+              </svg>
+              <svg v-if="propData.noReadIcon && propData.noReadIcon.length && item.readStatus != '1'" class="idm-unifie-todo-box-sub-icon" aria-hidden="true" >
+                <use :xlink:href="`#${propData.noReadIcon[0]}`"></use>
+              </svg>
+              <svg-icon iconClass="weidu" v-if="!propData.noReadIcon && item.readStatus != '1'" class="idm-unifie-todo-box-sub-icon"></svg-icon>
               <span>{{item.readStatusText}}</span> </div>
             <div class="d-flex align-c">
               <svg-icon iconClass="person" class="idm-unifie-todo-box-sub-icon"></svg-icon> 
@@ -183,6 +188,8 @@ export default {
       var styleObject = {};
       let styleObjectTitleIcon = {}
       let titleFontStyleObj = {}
+      let todoFontStyleObj = {}
+      let readFontStyleObj = {}
       if(this.propData.bgSize&&this.propData.bgSize=="custom"){
         styleObject["background-size"]=(this.propData.bgSizeWidth?this.propData.bgSizeWidth.inputVal+this.propData.bgSizeWidth.selectVal:"auto")+" "+(this.propData.bgSizeHeight?this.propData.bgSizeHeight.inputVal+this.propData.bgSizeHeight.selectVal:"auto")
       }else if(this.propData.bgSize){
@@ -306,12 +313,40 @@ export default {
               titleFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
               titleFontStyleObj["text-align"] = element.fontTextAlign;
               titleFontStyleObj["text-decoration"] = element.fontDecoration;
+              break
+            case 'todoFontStyle':
+              todoFontStyleObj["font-family"] = element.fontFamily;
+              if (element.fontColors.hex8) {
+                  todoFontStyleObj["color"] = element.fontColors.hex8;
+              }
+              todoFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
+              todoFontStyleObj["font-style"] = element.fontStyle;
+              todoFontStyleObj["font-size"] = element.fontSize + element.fontSizeUnit;
+              todoFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
+              todoFontStyleObj["text-align"] = element.fontTextAlign;
+              todoFontStyleObj["text-decoration"] = element.fontDecoration;
+              break
+            case 'readFontStyle':
+              readFontStyleObj["font-family"] = element.fontFamily;
+              if (element.fontColors.hex8) {
+                  readFontStyleObj["color"] = element.fontColors.hex8;
+              }
+              readFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
+              readFontStyleObj["font-style"] = element.fontStyle;
+              readFontStyleObj["font-size"] = element.fontSize + element.fontSizeUnit;
+              readFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
+              readFontStyleObj["text-align"] = element.fontTextAlign;
+              readFontStyleObj["text-decoration"] = element.fontDecoration;
+              break
           }
+
         }
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id,styleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-title-icon", styleObjectTitleIcon);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-title-font", titleFontStyleObj);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-content", todoFontStyleObj);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-hasRead", readFontStyleObj);
       this.initData();
     },
     /**
