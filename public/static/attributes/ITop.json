@@ -33,9 +33,9 @@
                     "layoutType": "block",
                     "text": "用户名显示字段",
                     "bindKey": "userFiled",
-                    "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData且它的值为{data:{userName:'test',userUnit: '单位'}}，则这里应该填写data.userName",
-                    "default": "data.userName",
-                    "placeholder": "示例：data.userName"
+                    "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData且它的值为{data:{username:'test',userUnit: '单位'}}，则这里应该填写data.username",
+                    "default": "data.username",
+                    "placeholder": "示例：data.username"
                 },
                 {
                     "type": "textarea",
