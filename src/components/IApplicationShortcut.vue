@@ -535,7 +535,7 @@ export default {
 </script>
 <style lang="scss">
 .van-grid-item__content{
-    padding: 7px 8px;
+    padding: 7px 3px;
 }
 .idm_applicationshortcut {
     width: auto;

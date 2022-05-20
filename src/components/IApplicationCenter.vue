@@ -686,7 +686,7 @@ export default {
 </style>
 <style lang="scss">
 .van-grid-item__content{
-    padding: 7px 8px;
+    padding: 7px 3px;
 }
 
 .idm_filed_svg_icon {
