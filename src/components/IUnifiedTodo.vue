@@ -10,7 +10,7 @@
    :idm-ctrl-id="moduleObject.id" 
    :title="propData.htmlTitle" 
    v-show="propData.defaultStatus!='hidden'"
-   class="idm-unifie-todo-box in-box-class">
+   class="idm-unifie-todo-box">
     <div class="idm-unifie-todo-box-title d-flex align-c just-b">
       <div class="d-flex align-c">
         <span class="idm-unifie-todo-box-title-font">{{propData.htmlTitle}}</span>
@@ -59,10 +59,10 @@
         </div>
       </div>
     </template>
-    <div v-if="pageLoading" class="d-flex just-c">
-      <van-loading type="spinner" />
+    <div v-if="pageLoading">
+      <van-loading type="circular" vertical>加载中...</van-loading>
     </div>
-    <div v-if="!isFirst && ( !todoData[listKey] || todoData[listKey].length === 0)" class="d-flex just-c align-c idm-unifie-todo-box-empty">
+    <div v-if="!isFirst && ( !todoData[listKey] || todoData[listKey].length === 0)" class="idm-unifie-todo-box-empty">
       <van-empty :description="propData.emptyText" :image-size="60"/>
     </div>
   </div>
@@ -71,6 +71,8 @@
 <script>
 import { Icon, Loading, Empty } from 'vant';
 import 'vant/lib/icon/style';
+import 'vant/lib/loading/style';
+import 'vant/lib/empty/style';
 const todoData = {
   value: [{
     jumpUrl: '',
@@ -131,7 +133,7 @@ export default {
       todoData: {value: []},
       countKey: 'count',
       listKey: 'value',
-      pageLoading: false,
+      pageLoading: true,
       isFirst: true
     }
   },
@@ -534,12 +536,6 @@ export default {
 }
 .flex-1{
   flex: 1;
-}
-.in-box-class{
-  >>> .van-empty .van-empty__image img{
-    width: 100%;
-    height: 100%;
-  }
 }
 </style>
 

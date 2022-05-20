@@ -10,7 +10,7 @@
    :idm-ctrl-id="moduleObject.id" 
    :title="propData.htmlTitle" 
    v-show="propData.defaultStatus!='hidden'"
-   class="idm-message-list-parent-box in-box-class"
+   class="idm-message-list-parent-box"
    >
     <template v-if="propData.compStyle !== 'styleFour'">
       <div class="idm-message-list-box-title d-flex align-c just-b">
@@ -62,10 +62,10 @@
           </li>
         </ul>
       </template>
-      <div v-if="pageLoading" class="d-flex just-c">
-        <van-loading type="spinner" />
+      <div v-if="pageLoading">
+        <van-loading type="circular" vertical>加载中...</van-loading>
       </div>
-      <div v-if="!isFirst && ( !messageData.list || messageData.list.length === 0)" class="d-flex just-c align-c idm-message-list-box-empty">
+      <div v-if="!isFirst && ( !messageData.list || messageData.list.length === 0)" class="idm-message-list-box-empty">
         <van-empty :description="propData.emptyText" image-size="60"/>
       </div>
       
@@ -102,13 +102,14 @@ const messageData = {
 
 import { Icon, Loading, Empty } from 'vant';
 import 'vant/lib/icon/style';
+import 'vant/lib/loading/style';
+import 'vant/lib/empty/style';
 export default {
   name: 'IMessageList',
   components: {
     [Icon.name]: Icon,
     [Loading.name]: Loading,
     [Empty.name]: Empty,
-    [Loading.name]: Loading,
   },
   data(){
     return {
@@ -504,12 +505,6 @@ export default {
 }
 .flex-1{
   flex: 1;
-}
-.in-box-class{
-  >>> .van-empty .van-empty__image img{
-    width: 100%;
-    height: 100%;
-  }
 }
 </style>
 
