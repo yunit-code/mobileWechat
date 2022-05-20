@@ -31,7 +31,7 @@
       </div>
       <div
         class="i-schedule-header-more"
-        v-if="propData.moreBtn === undefined ? true : propData.moreBtn "
+        v-if="propData.moreBtn === undefined ? true : propData.moreBtn"
         @click="moreClick"
       >
         更多>
@@ -69,8 +69,9 @@
           </ul>
         </div>
       </div>
-      <div class="i-schedule-content-note">
-        <a-tabs v-model="nowDate">
+      <van-loading v-if="isLoading" size="24px" vertical>加载中...</van-loading>
+      <div class="i-schedule-content-note" v-if="!isLoading">
+        <a-tabs v-model="nowDate" :animated="false">
           <a-tab-pane
             :tab="item.realDate"
             v-for="item in scheduleList"
@@ -81,9 +82,9 @@
                 <p
                   v-for="(time, i) in item.schedule"
                   :key="`time-${i}`"
-                  :class="{'active':isTimeRange(time.timeRange)}"
+                  :class="{ active: isTimeRange(time.timeRange) }"
                 >
-                  {{ time.startTime.split(" ")[1]}}
+                  {{ time.startTime.split(" ")[1] }}
                 </p>
               </div>
               <div class="i-schedule-content-note-right">
@@ -99,20 +100,20 @@
                 </div>
               </div>
             </div>
-            <div
+            <van-empty
               v-if="
                 !item.schedule || (item.schedule && item.schedule.length == 0)
               "
-              style="text-align: center; width: 100%"
-            >
-              <a-empty
-                :image="simpleImage"
-                :image-style="{ margin: '10px auto' }"
-                :description="propData.emptyDescription || '暂无日程'"
-              />
-            </div>
+              :image-size="propData.emptyImageSize || '100px'"
+              :description="propData.emptyDescription || '暂无日程'"
+            />
           </a-tab-pane>
         </a-tabs>
+        <van-empty
+          v-if="!scheduleList || scheduleList.length == 0"
+          :image-size="propData.emptyImageSize || '100px'"
+          :description="propData.emptyDescription || '暂无日程'"
+        />
       </div>
     </div>
   </div>
@@ -121,11 +122,18 @@
 <script>
 import Swiper from "swiper";
 import "swiper/css/swiper.min.css";
-import { Empty } from "ant-design-vue";
+import { Empty, Loading } from "vant";
+import "vant/lib/empty/style";
+import "vant/lib/loading/style";
 export default {
   name: "ISchedule",
+  components: {
+    [Empty.name]: Empty,
+    [Loading.name]: Loading,
+  },
   data() {
     return {
+      isLoading: true,
       moduleObject: {},
       propData: this.$root.propData.compositeAttr || {},
       simpleImage: Empty.PRESENTED_IMAGE_SIMPLE,
@@ -153,25 +161,27 @@ export default {
      */
     initData() {
       if (!this.moduleObject.env || this.moduleObject.env == "develop") {
-        const today = this.setNowDate(new Date());
-        const mock = {
-          value: [
-            {
-              date: today,
-              schedule: [
-                {
-                  startTime: today + " 09:00",
-                  timeRange: "09:00-09:30",
-                  address: "第一会议室",
-                  title: "XXX会议",
-                  jumpUrl: "打开详情地址",
-                },
-              ],
-            },
-          ],
-          moreUrl: "更多跳转地址",
-        };
-        this.dealRes(mock);
+        setTimeout(() => {
+          const today = this.setNowDate(new Date());
+          const mock = {
+            value: [
+              {
+                date: today,
+                schedule: [
+                  {
+                    startTime: today + " 09:00",
+                    timeRange: "09:00-09:30",
+                    address: "第一会议室",
+                    title: "XXX会议",
+                    jumpUrl: "打开详情地址",
+                  },
+                ],
+              }
+            ],
+            moreUrl: "更多跳转地址",
+          };
+          this.dealRes(mock);
+        }, 1000);
       } else if (this.moduleObject.env === "production") {
         this.requsetList();
       }
@@ -185,17 +195,17 @@ export default {
         return;
       }
       const startDate = this.currentList[0][0].realDate;
-      const endDate =
-        this.currentList[2][this.currentList[2].length - 1].realDate;
+      const endDate = this.currentList[2][this.currentList[2].length - 1]
+        .realDate;
       const sub = url.indexOf("?") === -1 ? "?" : "&";
       url = `${url}${sub}id=${this.propData.dataSource.value}`;
       IDM.http
-        .post(url,{
+        .post(url, {
           startDate,
-          endDate
+          endDate,
         })
         .done((res) => {
-          console.log(res,"接口数据")
+          console.log(res, "接口数据");
           if (res.code === "200") {
             this.dealRes(res);
           } else {
@@ -232,6 +242,7 @@ export default {
         });
       }
       this.scheduleList = scheduleList;
+      this.isLoading = false;
     },
     /**
      * 请求失败
@@ -243,8 +254,8 @@ export default {
      * 日程详情
      */
     detailClick(url) {
-      if(!this.moduleObject.env || this.moduleObject.env == "develop"){
-        return
+      if (!this.moduleObject.env || this.moduleObject.env == "develop") {
+        return;
       }
       window.open(url, this.propData.detailTarget);
     },
@@ -252,28 +263,28 @@ export default {
      * 时间范围
      */
     isTimeRange(range) {
-      const beginTime = range.split("-")[0]
-      const endTime = range.split("-")[1]
-      var strb = beginTime.split (":");
+      const beginTime = range.split("-")[0];
+      const endTime = range.split("-")[1];
+      var strb = beginTime.split(":");
       if (strb.length != 2) {
-          return false;
+        return false;
       }
 
-      var stre = endTime.split (":");
+      var stre = endTime.split(":");
       if (stre.length != 2) {
-          return false;
+        return false;
       }
 
-      var b = new Date ();
-      var e = new Date ();
-      var n = new Date ();
+      var b = new Date();
+      var e = new Date();
+      var n = new Date();
 
-      b.setHours (strb[0]);
-      b.setMinutes (strb[1]);
-      e.setHours (stre[0]);
-      e.setMinutes (stre[1]);
+      b.setHours(strb[0]);
+      b.setMinutes(strb[1]);
+      e.setHours(stre[0]);
+      e.setMinutes(stre[1]);
 
-      return n.getTime () - b.getTime () > 0 && n.getTime () - e.getTime () < 0
+      return n.getTime() - b.getTime() > 0 && n.getTime() - e.getTime() < 0;
     },
     /**
      * 提供父级组件调用的刷新prop数据组件
@@ -291,6 +302,7 @@ export default {
       var titleStyleObject = {};
       var innerCardStyleObject = {};
       var iconStyleObject = {};
+      var emptyStyleObject = {};
       if (this.propData.bgSize && this.propData.bgSize == "custom") {
         styleObject["background-size"] =
           (this.propData.bgSizeWidth
@@ -430,6 +442,32 @@ export default {
                 innerCardStyleObject[
                   "padding-left"
                 ] = `${element.paddingLeftVal}`;
+              }
+              break;
+            case "emptyBox":
+              if (element.marginTopVal) {
+                emptyStyleObject["margin-top"] = `${element.marginTopVal}`;
+              }
+              if (element.marginRightVal) {
+                emptyStyleObject["margin-right"] = `${element.marginRightVal}`;
+              }
+              if (element.marginBottomVal) {
+                emptyStyleObject["margin-bottom"] = `${element.marginBottomVal}`;
+              }
+              if (element.marginLeftVal) {
+                emptyStyleObject["margin-left"] = `${element.marginLeftVal}`;
+              }
+              if (element.paddingTopVal) {
+                emptyStyleObject["padding-top"] = `${element.paddingTopVal}`;
+              }
+              if (element.paddingRightVal) {
+                emptyStyleObject["padding-right"] = `${element.paddingRightVal}`;
+              }
+              if (element.paddingBottomVal) {
+                emptyStyleObject["padding-bottom"] = `${element.paddingBottomVal}`;
+              }
+              if (element.paddingLeftVal) {
+                emptyStyleObject["padding-left"] = `${element.paddingLeftVal}`;
               }
               break;
             case "bgImgUrl":
@@ -642,6 +680,7 @@ export default {
         this.moduleObject.id + " .idm_filed_svg_icon",
         iconStyleObject
       );
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .van-empty", emptyStyleObject);
       // this.initData();
     },
     /**
@@ -649,7 +688,7 @@ export default {
      */
     convertThemeListAttrToStyleObject() {
       var themeList = this.propData.themeList;
-      console.log(themeList,"主题颜色")
+      console.log(themeList, "主题颜色");
       if (!themeList) {
         return;
       }
@@ -777,8 +816,8 @@ export default {
      * 更多按钮跳转
      */
     moreClick() {
-      if(!this.moduleObject.env || this.moduleObject.env == "develop"){
-        return
+      if (!this.moduleObject.env || this.moduleObject.env == "develop") {
+        return;
       }
       window.open(this.propData.moreUrl, this.propData.moreTarget);
     },
@@ -834,6 +873,11 @@ export default {
     background-color: #fff;
     border-radius: 10px;
     padding: 10px 14px;
+
+    ::v-deep .van-loading {
+      min-height: 210px;
+      justify-content: center;
+    }
 
     .i-schedule-content-calendar.swiper-container {
       position: relative;
@@ -909,7 +953,7 @@ export default {
       ::v-deep .ant-tabs-bar {
         display: none;
       }
-
+      
       .i-schedule-content-note-inner {
         display: flex;
 

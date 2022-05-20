@@ -40,6 +40,47 @@
         },
         {
             "type": "group",
+            "text": "内容为空设置",
+            "desc": "内容为空时，提示文字及其样式设置",
+            "helpUrl": "",
+            "children": [
+                {
+                    "type": "textarea",
+                    "layoutType": "inline",
+                    "text": "为空描述",
+                    "bindKey": "emptyDescription",
+                    "desc": "内容为空的时候描述文字提示",
+                    "default": "暂无数据",
+                    "placeholder": "示例：暂无数据"
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "图标大小",
+                    "bindKey": "emptyImageSize",
+                    "desc": "内容为空的时候为空图标大小",
+                    "default": "100px"
+                },
+                {
+                    "type": "box",
+                    "layoutType": "block",
+                    "text": "内外边距",
+                    "bindKey": "emptyBox",
+                    "default":{
+                        "marginTopVal": "",
+                        "marginRightVal": "",
+                        "marginBottomVal": "",
+                        "marginLeftVal": "",
+                        "paddingTopVal": "60px",
+                        "paddingRightVal": "",
+                        "paddingBottomVal": "60px",
+                        "paddingLeftVal": ""
+                    }
+                }
+            ]
+        },
+        {
+            "type": "group",
             "text": "样式设置",
             "desc": "点击？查看样式设置用法指南",
             "helpUrl": "",
