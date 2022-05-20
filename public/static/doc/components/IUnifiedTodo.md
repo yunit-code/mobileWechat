@@ -60,6 +60,23 @@ mobilewechat@1.0.6
 - 标识：`titleIconFontSize`
 - 默认值： `18`
 
+#### 未读图标【noReadIcon】
+<font color="#CCCCCC">设置待办项未读状态时图标</font>
+
+- 标识：`noReadIcon`
+- 默认值： ''
+
+#### 空白列表提示文字【emptyText】
+<font color="#CCCCCC">设置待办列表为空时，空白数据提示文字</font>
+
+- 标识：`emptyText`
+- 默认值： ''
+
+#### 空白列表提示高度【emptyBoxHeight】
+<font color="#CCCCCC">设置待办列表为空时，空白数据提示内容高度</font>
+
+- 标识：`emptyBoxHeight`
+- 默认值： ''
 
 #### 显示数量【limit】
 <font color="#CCCCCC">当前组件标题，用来增加组件辨识度</font>

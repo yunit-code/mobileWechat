@@ -87,11 +87,17 @@ mobilewechat@1.0.6
 ```
 
 
-<!-- ##### 更多链接【moreListLink】
-此设置用于点击更多时候跳转链接，如果设置了链接地址则内置的根据数据跳转链接则失效
-- 标识：`moreListLink`
+#### 空白列表提示文字【emptyText】
+<font color="#CCCCCC">设置待办列表为空时，空白数据提示文字</font>
 
-- 默认值：跳转接口返回地址 -->
+- 标识：`emptyText`
+- 默认值： ''
+
+#### 空白列表提示高度【emptyBoxHeight】
+<font color="#CCCCCC">设置待办列表为空时，空白数据提示内容高度</font>
+
+- 标识：`emptyBoxHeight`
+- 默认值： ''
 
 #### 内容显示数量【limit】
 - 标识: `limit`
