@@ -10,7 +10,7 @@
    :idm-ctrl-id="moduleObject.id" 
    :title="propData.htmlTitle" 
    v-show="propData.defaultStatus!='hidden'"
-   class="idm-message-list-parent-box"
+   class="idm-message-list-parent-box in-box-class"
    >
     <template v-if="propData.compStyle !== 'styleFour'">
       <div class="idm-message-list-box-title d-flex align-c just-b">
@@ -38,28 +38,37 @@
           <div v-for="(item, index) in propData.messageTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.tabTitle}}</div>
         </div>
       </div>
-      <ul class="idm-message-list-box-list" v-if="propData.compStyle === 'styleFour' || propData.compStyle === 'styleOne'">
-        <li class="d-flex align-c" v-for="(item, index) in messageData.list" :key="index" @click="handleClickItem(item)">
-          <!-- <span class="idm-message-list-box-list-style-square" v-if="propData.compStyle === 'styleFour'"></span>
-          <span class="idm-message-list-box-list-style-square1" v-else></span> -->
-          <svg-icon iconClass="square" class="idm-message-list-box-list-style-square"></svg-icon>
-          <span class="idm-message-list-box-list-content">{{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}</span>
-          <span class="idm-message-list-box-list-time" v-if="propData.compStyle !== 'styleOne'">{{item.time}}</span>
+      <template v-if="!pageLoading">
+        <ul class="idm-message-list-box-list" v-if="propData.compStyle === 'styleFour' || propData.compStyle === 'styleOne'">
+          <li class="d-flex align-c" v-for="(item, index) in messageData.list" :key="index" @click="handleClickItem(item)">
+            <!-- <span class="idm-message-list-box-list-style-square" v-if="propData.compStyle === 'styleFour'"></span>
+            <span class="idm-message-list-box-list-style-square1" v-else></span> -->
+            <svg-icon iconClass="square" class="idm-message-list-box-list-style-square"></svg-icon>
+            <span class="idm-message-list-box-list-content">{{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}</span>
+            <span class="idm-message-list-box-list-time" v-if="propData.compStyle !== 'styleOne'">{{item.time}}</span>
+            </li>
+        </ul>
+        <ul class="idm-message-list-box-list2" v-if="propData.compStyle === 'styleTwo' || propData.compStyle === 'styleThree'">
+          <li class="d-flex" v-for="(item, index) in messageData.list" :key="index" @click="handleClickItem(item)">
+            <img :src="item.image" :class="propData.compStyle === 'styleTwo' ? 'idm-message-list-box-list2-left-img' : 'idm-message-list-box-list2-left-img2'" alt="">
+            <div style="overflow:hidden">
+              <div class="idm-message-list-box-list2-title" :class="propData.compStyle === 'styleTwo' ? 'idm-message-list-box-list2-title' : 'idm-message-list-box-list2-title2'">
+                {{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}
+              </div>
+              <div class="idm-message-list-box-list2-title-bottom">
+                {{item.time}}
+              </div>
+            </div>
           </li>
-      </ul>
-      <ul class="idm-message-list-box-list2" v-if="propData.compStyle === 'styleTwo' || propData.compStyle === 'styleThree'">
-        <li class="d-flex" v-for="(item, index) in messageData.list" :key="index" @click="handleClickItem(item)">
-          <img :src="item.image" :class="propData.compStyle === 'styleTwo' ? 'idm-message-list-box-list2-left-img' : 'idm-message-list-box-list2-left-img2'" alt="">
-          <div style="overflow:hidden">
-            <div class="idm-message-list-box-list2-title" :class="propData.compStyle === 'styleTwo' ? 'idm-message-list-box-list2-title' : 'idm-message-list-box-list2-title2'">
-              {{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}
-            </div>
-            <div class="idm-message-list-box-list2-title-bottom">
-              {{item.time}}
-            </div>
-          </div>
-        </li>
-      </ul>
+        </ul>
+      </template>
+      <div v-if="pageLoading" class="d-flex just-c">
+        <van-loading type="spinner" />
+      </div>
+      <div v-if="!isFirst && ( !messageData.list || messageData.list.length === 0)" class="d-flex just-c align-c idm-message-list-box-empty">
+        <van-empty :description="propData.emptyText" image-size="60"/>
+      </div>
+      
     </div>
   </div>
 </template>
@@ -91,12 +100,15 @@ const messageData = {
     total:"99"
   }
 
-import { Icon } from 'vant';
+import { Icon, Loading, Empty } from 'vant';
 import 'vant/lib/icon/style';
 export default {
   name: 'IMessageList',
   components: {
-    [Icon.name]: Icon
+    [Icon.name]: Icon,
+    [Loading.name]: Loading,
+    [Empty.name]: Empty,
+    [Loading.name]: Loading,
   },
   data(){
     return {
@@ -120,7 +132,9 @@ export default {
         limit: 3,
         messageTitleList: [{tabTitle: '页签名称', tabKey: '', isActive: false}]
       },
-      messageData: {list: []}
+      messageData: {list: []},
+      pageLoading: false,
+      isFirst: true
     }
   },
   created() {
@@ -373,7 +387,11 @@ export default {
       })
       .catch((error) => {
         console.log(error)
-      });
+      })
+      .finally(()=>{
+          this.isFirst = false
+          this.pageLoading = false
+        });
     },
     /**
      * 通用的获取表达式匹配后的结果
@@ -481,9 +499,21 @@ export default {
 .just-b{
   justify-content: space-between;
 }
+.just-c{
+  justify-content: center;
+}
 .flex-1{
   flex: 1;
 }
+.in-box-class{
+  >>> .van-empty .van-empty__image img{
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>
+
+<style lang="scss">
 .idm-message-list-parent-box{
   .idm-message-list-box{
     overflow: hidden;
@@ -652,6 +682,10 @@ export default {
         font-size: 3.7vw;
       }
     }
+  }
+  &-empty{
+    overflow: hidden;
+    height: 90px;
   }
 }
 

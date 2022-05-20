@@ -152,6 +152,24 @@
                         }
                     ]
                 },
+                
+                {
+                    "type": "input",
+                    "layoutType": "block",
+                    "text": "空白列表提示文字",
+                    "bindKey": "emptyText",
+                    "default": "数据为空"
+                },
+                {
+                    "type": "inputNumberUnit",
+                    "layoutType": "block",
+                    "text": "空白列表提示高度",
+                    "bindKey": "emptyBoxHeight",
+                    "default": {
+                        "inputVal": 90,
+                        "selectVal": "px"
+                    }
+                },
                 {
                     "type": "slider",
                     "layoutType": "block",
