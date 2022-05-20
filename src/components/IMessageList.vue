@@ -371,6 +371,7 @@ export default {
         this.messageData = _.cloneDeep(messageData)
         return
       }
+      this.pageLoading = true
       // 获取数据源
       this.propData.customInterfaceUrl&&window.IDM.http.post(this.propData.customInterfaceUrl,{
         id: this.propData.dataSource && this.propData.dataSource.value,
