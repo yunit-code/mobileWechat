@@ -10,7 +10,7 @@
    :idm-ctrl-id="moduleObject.id" 
    :title="propData.htmlTitle" 
    v-show="propData.defaultStatus!='hidden'"
-   class="idm-unifie-todo-box">
+   class="idm-unifie-todo-box in-box">
     <div class="idm-unifie-todo-box-title d-flex align-c just-b">
       <div class="d-flex align-c">
         <span class="idm-unifie-todo-box-title-font">{{propData.htmlTitle}}</span>
@@ -63,7 +63,7 @@
       <van-loading type="circular" vertical>加载中...</van-loading>
     </div>
     <div v-if="!isFirst && ( !todoData[listKey] || todoData[listKey].length === 0)" class="idm-unifie-todo-box-empty">
-      <van-empty :description="propData.emptyText" :image-size="60"/>
+      <van-empty :description="propData.emptyText || '数据为空'" :image-size="60"/>
     </div>
   </div>
 </template>
@@ -536,6 +536,11 @@ export default {
 }
 .flex-1{
   flex: 1;
+}
+.in-box {
+  >>> .van-empty{
+    padding: 0;
+  }
 }
 </style>
 

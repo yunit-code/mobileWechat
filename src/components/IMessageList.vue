@@ -10,7 +10,7 @@
    :idm-ctrl-id="moduleObject.id" 
    :title="propData.htmlTitle" 
    v-show="propData.defaultStatus!='hidden'"
-   class="idm-message-list-parent-box"
+   class="idm-message-list-parent-box in-box"
    >
     <template v-if="propData.compStyle !== 'styleFour'">
       <div class="idm-message-list-box-title d-flex align-c just-b">
@@ -66,7 +66,7 @@
         <van-loading type="circular" vertical>加载中...</van-loading>
       </div>
       <div v-if="!isFirst && ( !messageData.list || messageData.list.length === 0)" class="idm-message-list-box-empty">
-        <van-empty :description="propData.emptyText" image-size="60"/>
+        <van-empty :description="propData.emptyText || '数据为空'" image-size="60"/>
       </div>
       
     </div>
@@ -505,6 +505,11 @@ export default {
 }
 .flex-1{
   flex: 1;
+}
+.in-box {
+  >>> .van-empty{
+    padding: 0;
+  }
 }
 </style>
 
