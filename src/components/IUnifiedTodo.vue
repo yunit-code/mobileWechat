@@ -133,7 +133,7 @@ export default {
       todoData: {value: []},
       countKey: 'count',
       listKey: 'value',
-      pageLoading: true,
+      pageLoading: false,
       isFirst: true
     }
   },
