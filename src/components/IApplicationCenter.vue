@@ -25,18 +25,29 @@
                 </div>
             </div>
             <div class="idm_applicationcenter_main">
-                <van-grid :border="false" :column-num="propData.showColumn">
-                    <van-grid-item v-for="(item,index) in application_data" :key="item.key">
-                        <div @click="toApplication(item)" class="idm_applicationcenter_main_list">
-                            <div class="img_box">
-                                <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
-                                <svg-icon v-else icon-class="application" />
-                                <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
+                <div v-if="is_loading" class="loading_box">
+                    <van-loading />
+                </div>
+                <div v-else class="block">
+                    <van-grid v-if="application_data && application_data.length" :border="false" :column-num="propData.showColumn">
+                        <van-grid-item v-for="(item,index) in application_data" :key="item.key">
+                            <div @click="toApplication(item)" class="idm_applicationcenter_main_list">
+                                <div class="img_box">
+                                    <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
+                                    <svg-icon v-else icon-class="application" />
+                                    <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
+                                </div>
+                                <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
                             </div>
-                            <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
-                        </div>
-                    </van-grid-item>
-                </van-grid>
+                        </van-grid-item>
+                    </van-grid>
+                    <van-empty class="empty_block" v-else description="暂无数据">
+                        <template #image> <span></span> </template>
+                        <template #description>
+                            <div>暂无数据</div>
+                        </template>
+                    </van-empty>
+                </div>
             </div>
 
             <van-popup id="application_manage_pop" v-model="is_application_manage_show" overlay-class="application_manage_pop" @close="closeApplicationManage" closeable round>
@@ -48,10 +59,12 @@
 
 <script>
 import { base_url } from '../api/config.js'
-import { Grid, GridItem, Icon, Popup } from 'vant';
+import { Grid, GridItem, Icon, Popup, Empty, Loading } from 'vant';
 import 'vant/lib/grid/style';
 import 'vant/lib/icon/style';
 import 'vant/lib/popup/style';
+import 'vant/lib/empty/style';
+import 'vant/lib/loading/style';
 import IApplicationManage from './IApplicationManage.vue'
 export default {
     name: 'IApplicationCenter',
@@ -60,6 +73,8 @@ export default {
         [GridItem.name]: GridItem,
         [Icon.name]: Icon,
         [Popup.name]: Popup,
+        [Empty.name]: Empty,
+        [Loading.name]: Loading,
         IApplicationManage
     },
     data() {
@@ -71,6 +86,7 @@ export default {
             application_data: [],
             have_power_application_data_ids: [],//用户有权限的app
             is_application_manage_show: false,
+            is_loading: false
         }
     },
     props: {
@@ -212,13 +228,15 @@ export default {
                 return
             }
             if ( this.propData.isMyApplication && this.propData.getMyApplicationUrl ) {
+                this.is_loading = true
                 window.IDM.http.get(base_url + this.propData.getMyApplicationUrl)
                     .then((res) => {
+                        this.is_loading = false;
                         if ( res.data && res.data.type == 'success' ) {
                             this.makeMyApplicationData(res.data.data)
                         }
                     }).catch(function (error) {
-
+                        this.is_loading = false;
                     });
             }
         },
@@ -685,6 +703,17 @@ export default {
         height: 90vh !important;
         overflow-y: auto;
         padding: 40px 0 20px 0;
+    }
+    .loading_box{
+        padding: 20px 0;
+        text-align: center;
+    }
+    .empty_block{
+        padding: 10px 0;
+        text-align: center;
+        .van-empty__image{
+            display: none;
+        }
     }
 }
 

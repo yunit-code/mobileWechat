@@ -16,21 +16,32 @@
                     </div>
                     <div @click="manageApplication" class="idm_applicationcenter_title_right">管理</div>
                 </div>
-                <div v-if="my_application_data && my_application_data.length" class="idm_applicationcenter_main">
-                    <van-grid :border="false" :column-num="5">
-                        <van-grid-item v-for="(item,index) in my_application_data" :key="item.value">
-                            <div class="idm_applicationcenter_main_list">
-                                <div v-if="item.imageUrl">
-                                    <img :src="item.imageUrl">
-                                </div>
-                                <svg-icon v-else icon-class="application" />
-
-                                <div class="idm_applicationcenter_main_list_name">{{ item.title || ('应用' + index + 1) }}</div>
-                                <van-icon @click="deleteApplication(item,index)" v-if="is_edit" class="icon" name="minus" color="#fff" />
-                            </div>
-                        </van-grid-item>
-                    </van-grid>
+                <div v-if="is_loading_my_application" class="loading_box loading_box_my">
+                    <van-loading vertical>加载中...</van-loading>
                 </div>
+                <div v-else class="block">
+                    <div v-if="my_application_data && my_application_data.length" class="idm_applicationcenter_main">
+                        <van-grid :border="false" :column-num="5">
+                            <van-grid-item v-for="(item,index) in my_application_data" :key="item.value">
+                                <div class="idm_applicationcenter_main_list">
+                                    <div v-if="item.imageUrl">
+                                        <img :src="item.imageUrl">
+                                    </div>
+                                    <svg-icon v-else icon-class="application" />
+
+                                    <div class="idm_applicationcenter_main_list_name">{{ item.title || ('应用' + index + 1) }}</div>
+                                    <van-icon @click="deleteApplication(item,index)" v-if="is_edit" class="icon" name="minus" color="#fff" />
+                                </div>
+                            </van-grid-item>
+                        </van-grid>
+                    </div>
+                    <van-empty class="empty_block" v-else image-size="80px" description="暂无数据">
+                        <template #description>
+                            <div>暂无数据</div>
+                        </template>
+                    </van-empty>
+                </div>
+                
             </div>
             
             <div class="idm_applicationmanage_block">
@@ -39,28 +50,39 @@
                         <div class="idm_applicationcenter_title_left_text">全部应用</div>
                     </div>
                 </div>
-                 <div v-if="application_data && application_data.length" class="idm_applicationcenter_main">
-                    <van-tabs>
-                        <van-tab v-for="(item,index) in application_data" :key="item.value" :title="item.title">
-                            <van-grid :border="false" :column-num="5">
-                                <van-grid-item v-for="(item1,index1) in item.children" :key="item1.value">
-                                    <div class="idm_applicationcenter_main_list">
-                                        <div v-if="item1.imageUrl">
-                                            <img :src="item1.imageUrl">
-                                        </div>
-                                        <svg-icon v-else icon-class="application" />
-
-                                        <div class="idm_applicationcenter_main_list_name">{{ item1.title || ('应用' + index1 + 1) }}</div>
-                                        <div v-if="is_edit">
-                                            <van-icon v-if="isHaveInMyApplication(item1)" class="icon icon_disabled" name="plus" color="#fff" />
-                                            <van-icon @click="addApplication(item1)" v-else class="icon" name="plus" color="#fff" />
-                                        </div>
-                                    </div>
-                                </van-grid-item>
-                            </van-grid>
-                        </van-tab>
-                    </van-tabs>
+                <div v-if="is_loading_all_application" class="loading_box loading_box_all">
+                    <van-loading vertical>加载中...</van-loading>
                 </div>
+                <div v-else class="block">
+                    <div v-if="application_data && application_data.length" class="idm_applicationcenter_main">
+                        <van-tabs>
+                            <van-tab v-for="(item,index) in application_data" :key="item.value" :title="item.title">
+                                <van-grid :border="false" :column-num="5">
+                                    <van-grid-item v-for="(item1,index1) in item.children" :key="item1.value">
+                                        <div class="idm_applicationcenter_main_list">
+                                            <div v-if="item1.imageUrl">
+                                                <img :src="item1.imageUrl">
+                                            </div>
+                                            <svg-icon v-else icon-class="application" />
+
+                                            <div class="idm_applicationcenter_main_list_name">{{ item1.title || ('应用' + index1 + 1) }}</div>
+                                            <div v-if="is_edit">
+                                                <van-icon v-if="isHaveInMyApplication(item1)" class="icon icon_disabled" name="plus" color="#fff" />
+                                                <van-icon @click="addApplication(item1)" v-else class="icon" name="plus" color="#fff" />
+                                            </div>
+                                        </div>
+                                    </van-grid-item>
+                                </van-grid>
+                            </van-tab>
+                        </van-tabs>
+                    </div>
+                    <van-empty class="empty_block" v-else image-size="80px" description="暂无数据">
+                        <template #description>
+                            <div>暂无数据</div>
+                        </template>
+                    </van-empty>
+                </div>
+                    
             </div>
             <div class="idm_applicationmanage_search flex_end">
                 <div @click="search" class="search_main">
@@ -78,13 +100,15 @@
 
 <script>
 import { base_url } from '../api/config.js'
-import { Grid,GridItem,Tab,Tabs,Icon,Button,Toast } from 'vant';
+import { Grid,GridItem,Tab,Tabs,Icon,Button,Toast,Empty,Loading } from 'vant';
 
 import 'vant/lib/grid/style';
 import 'vant/lib/tabs/style';
 import 'vant/lib/icon/style';
 import 'vant/lib/button/style';
 import 'vant/lib/toast/style';
+import 'vant/lib/empty/style';
+import 'vant/lib/loading/style';
 export default {
     name: 'IApplicationManage',
     components: {
@@ -95,6 +119,8 @@ export default {
         [Icon.name]: Icon,
         [Button.name]: Button,
         [Toast.name]: Toast,
+        [Empty.name]: Empty,
+        [Loading.name]: Loading
     },
     data() {
         return {
@@ -103,6 +129,8 @@ export default {
             is_edit: false,
             my_application_data: [ ],
             application_data: [ ],
+            is_loading_my_application: false,
+            is_loading_all_application: false
         }
     },
     props: [ 'is_pop_type','datas' ],
@@ -184,13 +212,15 @@ export default {
             }
             console.log('propData',this.propData)
             if ( this.propData.getMyApplicationUrlManage ) {
+                this.is_loading_my_application = true;
                 window.IDM.http.get(base_url + this.propData.getMyApplicationUrlManage)
                     .then((res) => {
+                        this.is_loading_my_application = false;
                         if ( res.data && res.data.type == 'success' ) {
                             this.my_application_data = res.data.data
                         }
                     }).catch(function (error) {
-
+                        this.is_loading_my_application = false;
                     });
             }
         },
@@ -199,13 +229,15 @@ export default {
                 return
             }
             if ( this.propData.getAllApplicationUrl ) {
+                this.is_loading_all_application = true;
                 window.IDM.http.post(base_url + this.propData.getAllApplicationUrl)
                     .then((res) => {
+                        this.is_loading_all_application = false;
                         if ( res.data && res.data.type == 'success' ) {
                             this.application_data = res.data.data
                         }
                     }).catch(function (error) {
-
+                        this.is_loading_all_application = false;
                     });
             }
         },
@@ -607,6 +639,19 @@ export default {
             background: #1989fa;
             border-radius: 50%;
         }
+    }
+}
+</style>
+<style lang="scss">
+.idm_applicationmanage {
+    .empty_block{
+        padding: 10px 0;
+    }
+    .loading_box_my{
+        margin: 20px 0 20px 0;
+    }
+    .loading_box_all{
+        margin-top: 50px;
     }
 }
 </style>

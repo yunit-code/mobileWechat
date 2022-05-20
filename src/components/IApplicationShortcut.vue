@@ -9,31 +9,40 @@
         :title="propData.htmlTitle ? propData.fontContent : ''" v-show="propData.defaultStatus != 'hidden'">
         <!-- 组件内部容器 增加class="drag_container" 必选 idm-ctrl-id：组件的id，这个必须不能为空 idm-container-index  组件的内部容器索引，不重复唯一且不变，必选 -->
         <div class="idm_applicationshortcut">
-            <div v-if="!propData.isSlide" class="idm_applicationcenter_main">
-                <van-grid :border="false" :column-num="propData.showColumn">
-                    <van-grid-item v-for="(item,index) in application_data" :key="index">
-                        <div @click="toApplication(item)" class="idm_applicationcenter_main_list">
+            <div v-if="application_data && application_data.length" class="block">
+                <div v-if="!propData.isSlide" class="idm_applicationcenter_main">
+                    <van-grid :border="false" :column-num="propData.showColumn">
+                        <van-grid-item v-for="(item,index) in application_data" :key="index">
+                            <div @click="toApplication(item)" class="idm_applicationcenter_main_list">
+                                <div class="img_box">
+                                    <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
+                                    <svg-icon v-else icon-class="application" />
+                                    <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
+                                </div>
+                                <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
+                            </div>
+                        </van-grid-item>
+                    </van-grid>
+                </div>
+                <div v-else class="idm_applicationcenter_main">
+                    <div class="swiper_block flex_start">
+                        <span @click="toApplication(item)" v-for="(item,index) in application_data" :key="index" class="swiper_block_list">
                             <div class="img_box">
                                 <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
                                 <svg-icon v-else icon-class="application" />
                                 <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
                             </div>
                             <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
-                        </div>
-                    </van-grid-item>
-                </van-grid>
-            </div>
-            <div v-else class="idm_applicationcenter_main">
-                <div class="swiper_block flex_start">
-                    <span @click="toApplication(item)" v-for="(item,index) in application_data" :key="index" class="swiper_block_list">
-                        <div class="img_box">
-                            <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
-                            <svg-icon v-else icon-class="application" />
-                            <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
-                        </div>
-                        <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
-                    </span>
+                        </span>
+                    </div>
                 </div>
+            </div>
+            <div v-else class="block">
+                <van-empty class="empty_block" description="暂无数据">
+                    <template #description>
+                        <div>暂无数据</div>
+                    </template>
+                </van-empty>
             </div>
         </div>
     </div>
@@ -42,13 +51,15 @@
 <script>
 import { base_url } from '../api/config.js'
 
-import { Grid, GridItem } from 'vant';
+import { Grid, GridItem, Empty } from 'vant';
 import 'vant/lib/grid/style';
+import 'vant/lib/empty/style';
 export default {
     name: 'IApplicationShortcut',
     components: {
         [Grid.name]: Grid,
         [GridItem.name]: GridItem,
+        [Empty.name]: Empty
     },
     data() {
         return {
@@ -616,4 +627,15 @@ export default {
         }
     }
 }
+</style>
+<style lang="scss">
+    .idm_applicationshortcut{
+        .empty_block{
+            padding: 10px 0;
+            text-align: center;
+            .van-empty__image{
+                display: none;
+            }
+        }
+    }
 </style>
