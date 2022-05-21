@@ -81,6 +81,7 @@ export default {
   },
   methods:{
     login(e) {
+      console.log(window.location.href)
       if(this.moduleObject.env==="develop"){
         //开发模式下不执行此事件
         return;
@@ -97,8 +98,20 @@ export default {
           if(res.data.message === "1") {
             window.location.href = IDM.url.getWebPath("/p1000/idm/index.html#/preview/220513155441BpglvZJhEiJozhVUZ4F");
           }else {
+            function getQueryString(name) {  
+              var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");  
+              var r = window.location.search.substr(1).match(reg);  
+              if (r != null) return decodeURI(r[2]);
+              return null;  
+            }
+            const type = getQueryString('type');
+            console.log(type)
+            if(type) {
+              window.location.href = IDM.url.getWebPath(`/ctrl/customizePortal/index?groupId=wxgzt&type=${type}`);
+            }else {
+              window.location.href = IDM.url.getWebPath("/ctrl/customizePortal/index?groupId=wxgzt");
+            }
             /*window.location.href = contextPath + "/ctrl/portal/index?tId=180125135009mnbVQ2sewkDKJZqA33i";*/
-            window.location.href = IDM.url.getWebPath("/ctrl/customizePortal/index?groupId=wxgzt");
           }
         }else {
           IDM.message.error(res.data.message||'请确认用户名或密码是否正确')
