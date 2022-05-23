@@ -121,9 +121,10 @@
           "type": "input",
           "layoutType": "inline",
           "text": "边界阴影",
-          "desc": "可设置弹出菜单和按钮周围的阴影，写法请遵照标准box-shadow样式，示例：0 0 5px #888888",
+          "desc": "可设置弹出菜单和按钮周围的阴影，写法请遵照标准box-shadow样式，示例：0 0 10px rgba(0,0,0,0.8)",
           "bindKey": "bdShadow",
-          "placeholder": "0 0 5px #888888"
+          "default": "0 0 10px rgba(0,0,0,0.8)",
+          "placeholder": "0 0 10px rgba(0,0,0,0.8)"
         },
         {
           "type": "font",
