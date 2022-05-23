@@ -107,7 +107,7 @@ export default {
           "color": item.mainColor ? item.mainColor.hex8 : "",
           "background-color": item.minorColor ? item.minorColor.hex8 : "",
         };
-        
+
         IDM.setStyleToPageHead(
           "." +
             themeNamePrefix +

@@ -50,10 +50,19 @@
                 {
                     "type": "switch",
                     "layoutType": "inline",
+                    "text": "标题栏",
+                    "desc":"是否显示标题栏",
+                    "bindKey": "isShowTitleBar",
+                    "default": "true"
+                },
+                {
+                    "type": "switch",
+                    "layoutType": "inline",
                     "text": "更多按钮",
                     "desc":"是否显示更多按钮",
                     "bindKey": "moreBtn",
-                    "default": "true"
+                    "default": "true",
+                    "display":"@[isShowTitleBar]"
                 },
                 {
                     "type": "input",
@@ -61,7 +70,7 @@
                     "text": "更多地址",
                     "desc":"更多按钮跳转地址",
                     "bindKey": "moreUrl",
-                    "display": "@[moreBtn]"
+                    "display": "@[isShowTitleBar&&moreBtn]"
                 },
                 {
                     "type": "select",
@@ -69,7 +78,7 @@
                     "text": "跳转方式",
                     "desc":"更多按钮跳转方式",
                     "bindKey": "moreTarget",
-                    "display": "@[moreBtn]",
+                    "display": "@[isShowTitleBar&&moreBtn]",
                     "dictionary":[
                         {
                             "label":"当前页跳转",
@@ -83,25 +92,19 @@
                     "default":"_self"
                 },
                 {
-                    "type": "group",
-                    "text": "标题图标设置",
-                    "desc": "点击？查看样式设置用法指南",
-                    "helpUrl": "",
-                    "children": [
-                        {
-                            "type": "iconSelect",
-                            "layoutType": "inline",
-                            "text": "自定义图标",
-                            "bindKey": "titleIcon"
-                        },
-                        {
-                            "type": "inputNumber",
-                            "layoutType": "inline",
-                            "text": "图标大小",
-                            "bindKey": "titleIconSize",
-                            "default": "14"
-                        }
-                    ]
+                    "type": "iconSelect",
+                    "layoutType": "inline",
+                    "text": "自定义图标",
+                    "bindKey": "titleIcon",
+                    "display":"@[isShowTitleBar]"
+                },
+                {
+                    "type": "inputNumber",
+                    "layoutType": "inline",
+                    "text": "图标大小",
+                    "bindKey": "titleIconSize",
+                    "default": "14",
+                    "display":"@[isShowTitleBar]"
                 }
             ]
         },
