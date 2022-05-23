@@ -405,6 +405,48 @@ export default {
       this.initData();
     },
     /**
+     * 主题颜色
+     */
+    convertThemeListAttrToStyleObject() {
+      var themeList = this.propData.themeList;
+      if (!themeList) {
+        return;
+      }
+      const themeNamePrefix =
+        IDM.setting &&
+        IDM.setting.applications &&
+        IDM.setting.applications.themeNamePrefix
+          ? IDM.setting.applications.themeNamePrefix
+          : "idm-theme-";
+      for (var i = 0; i < themeList.length; i++) {
+        var item = themeList[i];
+        //item.key：为主题样式的key
+        //item.mainColor：主要颜色值
+        //item.minorColor：次要颜色值
+        // if(item.key!=IDM.theme.getCurrentThemeInfo()){
+        //     //此处比对是不渲染输出不用的样式，如果页面会刷新就可以把此处放开
+        //     continue;
+        // }
+        let iconColorObj = {
+          fill: item.mainColor ? item.mainColor.hex8 : "",
+        };
+        IDM.setStyleToPageHead(
+          "." +
+            themeNamePrefix +
+            item.key +
+            " #" +
+            (this.moduleObject.packageid || "module_demo") +
+            " .ant-tabs-nav .ant-tabs-tab-active,."+
+            themeNamePrefix +
+            item.key +
+            " #" +
+            (this.moduleObject.packageid || "module_demo") +
+            " .idm-unifie-todo-box-title-icon",
+          iconColorObj
+        );
+      }
+    },
+    /**
      * 通用的url参数对象
      * 所有地址的url参数转换
      */

@@ -142,6 +142,7 @@ export default {
   created() {
     this.moduleObject = this.$root.moduleObject
     this.convertAttrToStyleObject();
+    this.convertThemeListAttrToStyleObject()
   },
   methods:{
     /**
@@ -196,6 +197,7 @@ export default {
     propDataWatchHandle(propData){
       this.propData = propData.compositeAttr||{};
       this.convertAttrToStyleObject();
+      this.convertThemeListAttrToStyleObject()
     },
     /**
      * 把属性转换成样式对象
@@ -486,8 +488,8 @@ export default {
         //     //此处比对是不渲染输出不用的样式，如果页面会刷新就可以把此处放开
         //     continue;
         // }
-        let cssObject_color_main = {
-          color: item.mainColor ? item.mainColor.hex8 : "",
+        let iconColorObj = {
+          fill: item.mainColor ? item.mainColor.hex8 : "",
         };
         IDM.setStyleToPageHead(
           "." +
@@ -500,8 +502,8 @@ export default {
             item.key +
             " #" +
             (this.moduleObject.packageid || "module_demo") +
-            " .ant-tabs-nav .ant-tabs-tab:hover",
-          cssObject_color_main
+            " .idm-unifie-todo-box-title-icon",
+          iconColorObj
         );
       }
     },
@@ -526,6 +528,7 @@ export default {
     reload(){
       //请求数据源
       this.initData();
+      this.convertThemeListAttrToStyleObject()
     },
     /**
      * 加载动态数据

@@ -88,6 +88,7 @@ export default {
   created() {
     this.moduleObject = this.$root.moduleObject;
     this.convertAttrToStyleObject();
+    this.convertThemeListAttrToStyleObject()
   },
   mounted() {
     if(this.moduleObject.env === 'develop') {
@@ -137,6 +138,7 @@ export default {
     propDataWatchHandle(propData) {
       this.propData = propData.compositeAttr || {};
       this.convertAttrToStyleObject();
+      this.convertThemeListAttrToStyleObject()
     },
     /**
      * 把属性转换成样式对象
@@ -177,8 +179,8 @@ export default {
               styleObject[key] = element;
               break;
             case "height":
-              styleObject[key] = element;
-              bannerItemStyleObj[key] = element
+              styleObject[key] = element.inputVal + element.selectVal;
+              bannerItemStyleObj[key] = element.inputVal + element.selectVal;
               break;
             case "box":
               if (element.marginTopVal) {
@@ -312,6 +314,48 @@ export default {
       window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + ' .idm-banner-box-swiper-item-container', bannerItemStyleObj);
       this.initData();
+    },
+    /**
+     * 主题颜色
+     */
+    convertThemeListAttrToStyleObject() {
+      var themeList = this.propData.themeList;
+      if (!themeList) {
+        return;
+      }
+      const themeNamePrefix =
+        IDM.setting &&
+        IDM.setting.applications &&
+        IDM.setting.applications.themeNamePrefix
+          ? IDM.setting.applications.themeNamePrefix
+          : "idm-theme-";
+      for (var i = 0; i < themeList.length; i++) {
+        var item = themeList[i];
+        //item.key：为主题样式的key
+        //item.mainColor：主要颜色值
+        //item.minorColor：次要颜色值
+        // if(item.key!=IDM.theme.getCurrentThemeInfo()){
+        //     //此处比对是不渲染输出不用的样式，如果页面会刷新就可以把此处放开
+        //     continue;
+        // }
+        let bulletBgColorObj = {
+          'background-color': item.mainColor ? item.mainColor.hex8 : "",
+        };
+        IDM.setStyleToPageHead(
+          "." +
+            themeNamePrefix +
+            item.key +
+            " #" +
+            (this.moduleObject.packageid || "module_demo") +
+            " .ant-tabs-nav .ant-tabs-tab-active,."+
+            themeNamePrefix +
+            item.key +
+            " #" +
+            (this.moduleObject.packageid || "module_demo") +
+            " .idm-banner-my-bullet",
+          bulletBgColorObj
+        );
+      }
     },
     /**
      * 通用的url参数对象
