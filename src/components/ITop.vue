@@ -21,8 +21,7 @@
         </div>
         <div class="top-content">
           <div class="user-info" v-if="propData.userInfo">
-            <img v-if="logo" class="default-logo" :src="logo" alt="">
-            <span v-else class="default-logo"></span>
+            <img class="default-logo" :src="logo ? logo : IDM.url.getModuleAssetsWebPath(require('../assets/default_headpic.jpeg'),moduleObject)" alt="">
             <div>
               <div>{{userName}}</div>
               <div>{{userUnit}}</div>
