@@ -147,6 +147,7 @@ export default {
   props: {},
   created() {
     this.moduleObject = this.$root.moduleObject;
+    this.convertThemeListAttrToStyleObject();
     this.convertAttrToStyleObject();
 
     this.init();
@@ -156,6 +157,15 @@ export default {
   },
   destroyed() {},
   methods: {
+    /**
+     * 组件通信：接收消息的方法
+     */
+    receiveBroadcastMessage(object) {
+      console.log("组件收到消息", object);
+      if(object.messageKey === "linkageReload"){
+        this.init()
+      }
+    },
     /**
      * 初始化数据
      */
@@ -181,6 +191,7 @@ export default {
             moreUrl: "更多跳转地址",
           };
           this.dealRes(mock);
+          this.isLoading = false;
         }, 1000);
       } else if (this.moduleObject.env === "production") {
         this.requsetList();
@@ -192,6 +203,7 @@ export default {
     requsetList() {
       let url = this.propData.customInterfaceUrl;
       if (!url) {
+        this.isLoading = false;
         return;
       }
       const startDate = this.currentList[0][0].realDate;
@@ -211,9 +223,11 @@ export default {
           } else {
             this.failRequest(url);
           }
+          this.isLoading = false;
         })
         .error((response) => {
           this.failRequest(url);
+          this.isLoading = false;
         });
     },
     /**
@@ -242,7 +256,6 @@ export default {
         });
       }
       this.scheduleList = scheduleList;
-      this.isLoading = false;
     },
     /**
      * 请求失败
@@ -291,8 +304,8 @@ export default {
      */
     propDataWatchHandle(propData) {
       this.propData = propData.compositeAttr || {};
-      this.convertAttrToStyleObject();
       this.convertThemeListAttrToStyleObject();
+      this.convertAttrToStyleObject();
     },
     /**
      * 把属性转换成样式对象
@@ -655,9 +668,6 @@ export default {
               titleStyleObject["text-align"] = element.fontTextAlign;
               titleStyleObject["text-decoration"] = element.fontDecoration;
               break;
-            case "titleIconColor":
-              iconStyleObject["color"] = element.hex8;
-              break;
             case "titleIconSize":
               iconStyleObject["font-size"] = element + "px";
               iconStyleObject["width"] = element + "px";
@@ -669,7 +679,7 @@ export default {
       // if(key == "titleFont")
       window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
       window.IDM.setStyleToPageHead(
-        this.moduleObject.id + " .i-schedule-header-tit",
+        this.moduleObject.id + " .i-schedule-header-main",
         titleStyleObject
       );
       window.IDM.setStyleToPageHead(
@@ -687,10 +697,45 @@ export default {
      * 主题颜色
      */
     convertThemeListAttrToStyleObject() {
-      var themeList = this.propData.themeList;
-      console.log(themeList, "主题颜色");
+      const themeList = this.propData.themeList;
       if (!themeList) {
         return;
+      }
+      const themeNamePrefix =
+        IDM.setting &&
+        IDM.setting.applications &&
+        IDM.setting.applications.themeNamePrefix
+          ? IDM.setting.applications.themeNamePrefix
+          : "idm-theme-";
+      for (var i = 0; i < themeList.length; i++) {
+        var item = themeList[i];
+        
+        let dateNumStyleObject = {
+          "background-color": item.mainColor ? item.mainColor.hex8 : "",
+        };
+        let titleSvgStyleObject = {
+          "fill": item.mainColor ? item.mainColor.hex8 : "",
+        };
+        
+
+        IDM.setStyleToPageHead(
+          "." +
+            themeNamePrefix +
+            item.key +
+            " #" +
+            (this.moduleObject.packageid || "module_demo") +
+            " .idm_filed_svg_icon",
+          dateNumStyleObject
+        );
+        IDM.setStyleToPageHead(
+          "." +
+            themeNamePrefix +
+            item.key +
+            " #" +
+            (this.moduleObject.packageid || "module_demo") +
+            " .swiper-wrapper .swiper-slide li .date-num.active",
+          dateNumStyleObject
+        );
       }
     },
     /**
@@ -832,6 +877,8 @@ export default {
   font-family: PingFangSC-Regular;
   font-size: 14px;
   color: #333333;
+  background-color: #fff;
+
   ul,
   li {
     padding: 0;
@@ -848,7 +895,6 @@ export default {
     .i-schedule-header-main {
       display: flex;
       .i-schedule-header-tit {
-        // font-weight: 700;
         margin-left: 6px;
 
         .idm_filed_svg_icon {
