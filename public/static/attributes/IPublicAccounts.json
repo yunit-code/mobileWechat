@@ -25,14 +25,41 @@
                     "layoutType": "inline",
                     "text": "图标",
                     "bindKey": "accountUrl",
-                    "placeholder": "可输入图片地址或直接上传"
+                    "placeholder": "可输入图片地址或直接上传",
+                    "ctrlAttrObject": {
+                        "maxSize": "2097152"
+                    }
+                },
+                {
+                    "type": "inlineGroup",
+                    "text": "图标宽高",
+                    "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "block",
+                            "text": "图标宽",
+                            "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
+                            "bindKey": "imgWidth",
+                            "width": "60px",
+                            "default": "32px"
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "block",
+                            "text": "图标高",
+                            "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
+                            "bindKey": "imgHeight",
+                            "width": "60px",
+                            "default": "32px"
+                        }
+                    ]
                 },
                 {
                     "type": "switch",
                     "layoutType": "inline",
                     "text": "固定位置",
                     "bindKey": "fixed",
-                    "desc":"设置是否固定位置",
+                    "desc": "设置是否固定位置",
                     "default": false
                 },
                 {
@@ -40,7 +67,7 @@
                     "layoutType": "inline",
                     "text": "放置坐标",
                     "bindKey": "coordinates",
-                    "desc":"放置坐标",
+                    "desc": "放置坐标",
                     "dictionary": [
                         {
                             "label": "左上角",
@@ -65,7 +92,7 @@
                     "type": "inputNumber",
                     "layoutType": "inline",
                     "text": "偏移(X)",
-                    "desc":"偏移(X)",
+                    "desc": "偏移(X)",
                     "bindKey": "offsetX",
                     "default": 20
                 },
@@ -73,7 +100,7 @@
                     "type": "inputNumber",
                     "layoutType": "inline",
                     "text": "偏移(Y)",
-                    "desc":"偏移(Y)",
+                    "desc": "偏移(Y)",
                     "bindKey": "offsetY",
                     "default": 20
                 }
