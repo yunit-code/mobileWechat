@@ -237,9 +237,9 @@
                     "layoutType": "block",
                     "text": "标题字体",
                     "bindKey": "titleFontStyle",
-                    "default": {
+                    "default":  {
                         "fontColors": {
-                            "hex": "#333333"
+                            "hex8": "#333333"
                         },
                         "fontSize": 16,
                         "fontSizeUnit": "px",
