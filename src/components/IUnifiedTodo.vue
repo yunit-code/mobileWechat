@@ -496,14 +496,29 @@ export default {
      * } object 
      */
     receiveBroadcastMessage(messageObject){
-      // 配置了刷新KEY，消息类型是websocket，收到的消息对象有message并不为空
-      if(this.propData.messageRefreshKey && messageObject.type === 'websocket' && messageObject.message){
-        const messageData = typeof messageObject.message === 'string' && JSON.parse(messageObject.message) || messageObject.message
-        const arr = this.propData.messageRefreshKey.split(',')
-        if(messageData.badgeType && arr.includes(messageData.badgeType)){
+      switch(messageObject.type) {
+        case 'websocket':
+          if(this.propData.messageRefreshKey && messageObject.message){
+            const messageData = typeof messageObject.message === 'string' && JSON.parse(messageObject.message) || messageObject.message
+            const arr = this.propData.messageRefreshKey.split(',')
+            if(messageData.badgeType && arr.includes(messageData.badgeType)){
+              this.initData()
+            }
+          }
+          break;
+        case 'linkageReload':
           this.initData()
-        }
+          break;
       }
+
+      // 配置了刷新KEY，消息类型是websocket，收到的消息对象有message并不为空
+      // if(this.propData.messageRefreshKey && messageObject.type === 'websocket' && messageObject.message){
+      //   const messageData = typeof messageObject.message === 'string' && JSON.parse(messageObject.message) || messageObject.message
+      //   const arr = this.propData.messageRefreshKey.split(',')
+      //   if(messageData.badgeType && arr.includes(messageData.badgeType)){
+      //     this.initData()
+      //   }
+      // }
       console.log("组件收到消息",messageObject)
     },
     /**

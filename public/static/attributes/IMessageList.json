@@ -51,7 +51,7 @@
                     "text": "组件样式",
                     "bindKey": "compStyle",
                     "desc": "设置组件显示风格",
-                    "display": false,
+                    "display": "@[false]",
                     "dictionary": [
                         {
                             "label": "样式一",
@@ -75,9 +75,17 @@
                 {
                     "type": "switch",
                     "layoutType": "inline",
+                    "text": "显示页签",
+                    "bindKey": "showTab",
+                    "default": true
+                },
+                {
+                    "type": "switch",
+                    "layoutType": "inline",
                     "text": "显示更多",
                     "bindKey": "showMore",
-                    "default": true
+                    "default": true,
+                    "display": "@[showTab == true]"
                 },
                 {
                     "type": "switch",
@@ -198,14 +206,15 @@
                         },
                         "fontSize": 16,
                         "fontSizeUnit": "px"
-                    }
+                    },
+                    "display": "@[showTab == true]"
                 },
                 {
                     "type": "font",
                     "layoutType": "block",
                     "text": "选中页签字体样式设置",
                     "bindKey": "titleFontStyleActive",
-                    "display": "@[compStyle === 'styleFour']",
+                    "display": "@[compStyle === 'styleFour' && showTab == true]",
                     "default": {
                         "fontColors": {
                             "hex": "#000"

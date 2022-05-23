@@ -27,13 +27,13 @@
       </div>
     </template>
     <div class="idm-message-list-box" :style="{width: propData.width, height: propData.height}">
-      <div v-if="propData.compStyle === 'styleFour'" class="idm-message-list-box-top d-flex just-b align-c">
+      <div v-if="propData.compStyle === 'styleFour' && propData.showTab" class="idm-message-list-box-top d-flex just-b align-c">
         <div class="idm-message-list-box-top-left flex-1 idm-message-list-box-title-font-fourStyle">
           <span v-for="(item, index) in propData.messageTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.tabTitle}}</span>
         </div>
         <van-icon v-if="propData.showMore" class="idm-message-list-box-top-more" name="ellipsis" @click="handleClickMore" />
       </div>
-      <div v-else class="idm-message-list-box-top2 d-flex just-b align-c">
+      <div v-if="propData.compStyle !== 'styleFour' && propData.showTab" class="idm-message-list-box-top2 d-flex just-b align-c">
         <div class="idm-message-list-box-top2-left d-flex flex-1">
           <div v-for="(item, index) in propData.messageTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.tabTitle}}</div>
         </div>
@@ -125,6 +125,7 @@ export default {
             }
           }
         },
+        showTab: true,
         dataFiled: 'title',
         compStyle: 'styleFour',
         maxGroupCount: 3,
@@ -450,6 +451,9 @@ export default {
       //     this.initData(this.propData.messageTitleList[this.defaultIndex], this.defaultIndex)
       //   }
       // }
+      if(messageObject.type === 'linkageReload') {
+        this.initData(this.propData.messageTitleList[this.defaultIndex], this.defaultIndex)
+      }
       console.log("组件收到消息",messageObject)
     },
     /**

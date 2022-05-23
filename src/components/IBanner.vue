@@ -442,6 +442,7 @@ export default {
      */
     receiveBroadcastMessage(object) {
       console.log("组件收到消息", object);
+      
     },
     /**
      * 组件通信：发送消息的方法
@@ -556,11 +557,11 @@ export default {
   display: inline-block;
   border-radius: 0;
   transform: rotate(45deg);
-  background-color: #fff;
+  background-color: #1D335E;
   margin: 0 3px;
 }
 .idm-banner-my-bullet-active{
-  background-color: #1D335E ;
+  background-color:  #fff;
 }
 </style>
 <style lang="scss" scoped>
