@@ -544,12 +544,15 @@ export default {
       }
     }
   }
+  .idm_shortcut_cont {
+    font-size: 15px;
+  }
   .short-box{
     display: flex;
     flex-wrap: wrap;
     // margin: 0 -5px;
     .short-item{
-      font-size: 15px;
+      // font-size: 15px;
       padding: 0 5px;
       text-align: center;
       margin-bottom: 10px;
