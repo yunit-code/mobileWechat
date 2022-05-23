@@ -107,7 +107,7 @@ export default {
           "color": item.mainColor ? item.mainColor.hex8 : "",
           "background-color": item.minorColor ? item.minorColor.hex8 : "",
         };
-
+        
         IDM.setStyleToPageHead(
           "." +
             themeNamePrefix +
@@ -124,7 +124,7 @@ export default {
      */
     receiveBroadcastMessage(object) {
       console.log("组件收到消息", object);
-      if(object.messageKey === "linkageReload"){
+      if(object.type === "linkageReload"){
         this.initData();
       }
     },
@@ -503,7 +503,7 @@ export default {
         }
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .i-sort-outer .i-sort-tip", tipStyleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + ".i-sort-outer .i-sort-tip", tipStyleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .i-sort-item", cardStyleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .van-empty", emptyStyleObject);
       // this.initData();
