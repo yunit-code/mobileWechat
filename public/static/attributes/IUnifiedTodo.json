@@ -169,6 +169,20 @@
                     "layoutType": "block",
                     "text": "空白列表提示高度",
                     "bindKey": "emptyBoxHeight",
+                    "dictionary": [
+                        {
+                            "label": "px",
+                            "value": "px"
+                        },
+                        {
+                            "label": "%",
+                            "value": "%"
+                        },
+                        {
+                            "label": "em",
+                            "value": "em"
+                        }
+                    ],
                     "default": {
                         "inputVal": 90,
                         "selectVal": "px"
