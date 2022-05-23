@@ -27,12 +27,9 @@
         <van-icon v-else  class="idm-unifie-todo-box-title-more" name="ellipsis" />
       </div>
     </div>
-    <template v-if="!pageLoading">
+    <div v-if="!pageLoading" class="idm-unifie-todo-box-overflow">
       <div class="idm-unifie-todo-box-sub" v-for="(item, index) in todoData[listKey]" :key="index" @click="handleClickItem(item)">
         <div class="idm-unifie-todo-box-sub-title" :class="{'idm-unifie-todo-box-sub-no-read': true}">
-          <!-- <div class="idm-unifie-todo-box-sub-title-icon" v-if="item.isHot != '-1'">
-            <svg-icon icon-class="fire" ></svg-icon>
-          </div> -->
           <div class="flex-1">
             <div class="idm-unifie-todo-box-sub-content" :class="getExpressData('data', propData.readExpression, item) ?'idm-unifie-todo-box-sub-hasRead' : ''">
               {{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}
@@ -58,10 +55,8 @@
           </div>
         </div>
       </div>
-    </template>
-    <div v-if="pageLoading">
-      <van-loading type="circular" vertical>加载中...</van-loading>
     </div>
+    <van-loading v-if="pageLoading" type="circular" vertical>加载中...</van-loading>
     <div v-if="!isFirst && ( !todoData[listKey] || todoData[listKey].length === 0)" class="idm-unifie-todo-box-empty">
       <van-empty :description="propData.emptyText || '数据为空'" :image-size="60"/>
     </div>
@@ -113,7 +108,7 @@ export default {
     return {
       moduleObject:{},
       propData:this.$root.propData.compositeAttr||{
-        htmlTitle:"紧急待办",
+        htmlTitle:"待办事项",
         width: '100%',
         height: 'auto',
         borderRadius: '5px',
@@ -563,6 +558,10 @@ export default {
     &-number{
       padding: 0 5px 0 0;
     }
+  }
+  &-overflow{
+    overflow: hidden;
+    overflow-y: scroll;
   }
   &-sub{
     border-bottom: .6px solid #eee;

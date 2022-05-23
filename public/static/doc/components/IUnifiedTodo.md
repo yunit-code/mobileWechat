@@ -21,7 +21,7 @@ mobilewechat@1.0.6
 <font color="#CCCCCC">当前组件标题，用来增加组件辨识度</font>
 
 - 标识：`htmlTitle`
-- 默认值： 紧急待办
+- 默认值： 待办事项
 
 
 #### 跳转方式【jumpStyle】

@@ -25,7 +25,7 @@
                     "layoutType": "inline",
                     "text": "组件标题",
                     "bindKey": "htmlTitle",
-                    "default": "紧急待办"
+                    "default": "待办事项"
                 },
                 {
                     "type": "select",
