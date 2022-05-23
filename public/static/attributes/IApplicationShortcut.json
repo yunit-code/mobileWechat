@@ -95,7 +95,12 @@
                                 "/resource/idm/img/zbzs.png",
                                 "/resource/idm/img/zxzys.png",
                                 "/resource/idm/img/zyzx.png"
-                            ]
+                            ],
+                            "ctrlAttrObject": {
+                                "width": "40px",
+                                "height": "40px",
+                                "maxSize": 2097152
+                            }
                         },
                         {
                             "type": "switch",
@@ -197,7 +202,10 @@
                             "layoutType": "inline",
                             "text": "背景图片",
                             "bindKey": "bgImgUrl",
-                            "placeholder": "可输入图片地址或直接上传"
+                            "placeholder": "可输入图片地址或直接上传",
+                            "ctrlAttrObject": {
+                                "maxSize": 2097152
+                            }
                         },
                         {
                             "type": "inputNumberUnit",

@@ -323,6 +323,7 @@ export default {
         convertAttrToStyleObject() {
             var styleObject = {};
             var styleObjectTitle = {};
+            var fontStyleObject = {};
             if (this.propData.bgSizeManage && this.propData.bgSizeManage == "custom") {
                 styleObject["background-size"] = (this.propData.bgSizeWidthManage ? this.propData.bgSizeWidthManage.inputVal + this.propData.bgSizeWidthManage.selectVal : "auto") + " " + (this.propData.bgSizeHeightManage ? this.propData.bgSizeHeightManage.inputVal + this.propData.bgSizeHeightManage.selectVal : "auto")
             } else if (this.propData.bgSizeManage) {
@@ -468,16 +469,16 @@ export default {
                             styleObject["border-bottom-right-radius"] = element.radius.rightBottom.radius + element.radius.rightBottom.radiusUnit;
                             break;
                         case "fontManage":
-                            styleObject["font-family"] = element.fontFamily;
+                            fontStyleObject["font-family"] = element.fontFamily;
                             if (element.fontColors.hex8) {
-                                styleObject["color"] = element.fontColors.hex8;
+                                fontStyleObject["color"] = element.fontColors.hex8;
                             }
-                            styleObject["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
-                            styleObject["font-style"] = element.fontStyle;
-                            styleObject["font-size"] = element.fontSize + element.fontSizeUnit;
-                            styleObject["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
-                            styleObject["text-align"] = element.fontTextAlign;
-                            styleObject["text-decoration"] = element.fontDecoration;
+                            fontStyleObject["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
+                            fontStyleObject["font-style"] = element.fontStyle;
+                            fontStyleObject["font-size"] = element.fontSize + element.fontSizeUnit;
+                            fontStyleObject["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
+                            fontStyleObject["text-align"] = element.fontTextAlign;
+                            fontStyleObject["text-decoration"] = element.fontDecoration;
                             break;
                         case "titleFontManage":
                             styleObjectTitle["font-family"] = element.fontFamily;
@@ -497,9 +498,11 @@ export default {
             if ( this.is_pop_type ) {
                 window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop', styleObject);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop' + " .idm_applicationcenter_title_left_text", styleObjectTitle);
+                window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop' + " .idm_applicationcenter_main_list_name", fontStyleObject);
             } else {
                 window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_text", styleObjectTitle);
+                window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_main_list_name", fontStyleObject);
             }
             this.initData();
         },
@@ -530,6 +533,8 @@ export default {
                 this.showThisModuleHandle();
             } else if (object.type && object.type == "linkageHideModule") {
                 this.hideThisModuleHandle();
+            } else if ( messageObject.type && messageObject.type == "linkageReload" ) {
+                this.initData()
             }
         },
         showThisModuleHandle() {

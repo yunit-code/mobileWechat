@@ -10,7 +10,7 @@
         <!-- 组件内部容器 增加class="drag_container" 必选 idm-ctrl-id：组件的id，这个必须不能为空 idm-container-index  组件的内部容器索引，不重复唯一且不变，必选 -->
         <!-- {{propData.fontContent}} -->
         <div class="idm_applicationcenter">
-            <div class="idm_applicationcenter_title flex_between">
+            <div v-if="propData.showTitle" class="idm_applicationcenter_title flex_between">
                 <div class="idm_applicationcenter_title_left flex_start">
                     <div class="idm_applicationcenter_title_left_text">{{ propData.title || '应用中心' }}</div>
                     <div class="idm_applicationcenter_title_left_icon">
@@ -81,9 +81,11 @@ export default {
         return {
             moduleObject: {},
             propData: this.$root.propData.compositeAttr || {
-                
+                showTitle: false
             },
-            application_data: [],
+            application_data: [
+                {}
+            ],
             have_power_application_data_ids: [],//用户有权限的app
             is_application_manage_show: false,
             is_loading: false
@@ -349,7 +351,9 @@ export default {
          * 把属性转换成样式对象
          */
         convertAttrToStyleObject() {
+            this.convertAttrToStyleObjectInner()
             var styleObject = {};
+            var styleObjectInner = {};
             var styleObjectTitle = {};
             var fontStyleObject = {};
             var styleObjectTitleIcon = {};
@@ -364,6 +368,7 @@ export default {
             if (this.propData.positionY && this.propData.positionY.inputVal) {
                 styleObject["background-position-y"] = this.propData.positionY.inputVal + this.propData.positionY.selectVal;
             }
+
             for (const key in this.propData) {
                 if (this.propData.hasOwnProperty && this.propData.hasOwnProperty.call(this.propData, key)) {
                     const element = this.propData[key];
@@ -500,6 +505,122 @@ export default {
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_icon .idm_filed_svg_icon", styleObjectTitleIcon);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_main_list_name", fontStyleObject);
             this.initApplicationData()
+        },
+        convertAttrToStyleObjectInner() {
+            var styleObject = {};
+            if (this.propData.bgSizeInner && this.propData.bgSizeInner == "custom") {
+                styleObject["background-size"] = (this.propData.bgSizeWidthInner ? this.propData.bgSizeWidthInner.inputVal + this.propData.bgSizeWidthInner.selectVal : "auto") + " " + (this.propData.bgSizeHeightInner ? this.propData.bgSizeHeightInner.inputVal + this.propData.bgSizeHeightInner.selectVal : "auto")
+            } else if (this.propData.bgSizeInner) {
+                styleObject["background-size"] = this.propData.bgSizeInner;
+            }
+            if (this.propData.positionXInner && this.propData.positionXInner.inputVal) {
+                styleObject["background-position-x"] = this.propData.positionXInner.inputVal + this.propData.positionXInner.selectVal;
+            }
+            if (this.propData.positionYInner && this.propData.positionYInner.inputVal) {
+                styleObject["background-position-y"] = this.propData.positionYInner.inputVal + this.propData.positionYInner.selectVal;
+            }
+
+            for (const key in this.propData) {
+                if (this.propData.hasOwnProperty && this.propData.hasOwnProperty.call(this.propData, key)) {
+                    const element = this.propData[key];
+                    if (!element && element !== false && element != 0) {
+                        continue;
+                    }
+                    switch (key) {
+                        case "widthInner":
+                        case "heightInner":
+                            styleObject[key] = element;
+                            break;
+                        case "bgColorInner":
+                            if (element && element.hex8) {
+                                styleObject["background-color"] = element.hex8;
+                            }
+                            break;
+                        case "boxInner":
+                            if (element.marginTopVal) {
+                                styleObject["margin-top"] = `${element.marginTopVal}`;
+                            }
+                            if (element.marginRightVal) {
+                                styleObject["margin-right"] = `${element.marginRightVal}`;
+                            }
+                            if (element.marginBottomVal) {
+                                styleObject["margin-bottom"] = `${element.marginBottomVal}`;
+                            }
+                            if (element.marginLeftVal) {
+                                styleObject["margin-left"] = `${element.marginLeftVal}`;
+                            }
+                            if (element.paddingTopVal) {
+                                styleObject["padding-top"] = `${element.paddingTopVal}`;
+                            }
+                            if (element.paddingRightVal) {
+                                styleObject["padding-right"] = `${element.paddingRightVal}`;
+                            }
+                            if (element.paddingBottomVal) {
+                                styleObject["padding-bottom"] = `${element.paddingBottomVal}`;
+                            }
+                            if (element.paddingLeftVal) {
+                                styleObject["padding-left"] = `${element.paddingLeftVal}`;
+                            }
+                            break;
+                        case "bgImgUrlInner":
+                            styleObject["background-image"] = `url(${window.IDM.url.getWebPath(element)})`;
+                            break;
+                        case "positionXInner":
+                            //背景横向偏移
+
+                            break;
+                        case "positionYInner":
+                            //背景纵向偏移
+
+                            break;
+                        case "bgRepeatInner":
+                            //平铺模式
+                            styleObject["background-repeat"] = element;
+                            break;
+                        case "bgAttachmentInner":
+                            //背景模式
+                            styleObject["background-attachment"] = element;
+                            break;
+                        case "borderInner":
+                            if (element.border.top.width > 0) {
+                                styleObject["border-top-width"] = element.border.top.width + element.border.top.widthUnit;
+                                styleObject["border-top-style"] = element.border.top.style;
+                                if (element.border.top.colors.hex8) {
+                                    styleObject["border-top-color"] = element.border.top.colors.hex8;
+                                }
+                            }
+                            if (element.border.right.width > 0) {
+                                styleObject["border-right-width"] = element.border.right.width + element.border.right.widthUnit;
+                                styleObject["border-right-style"] = element.border.right.style;
+                                if (element.border.right.colors.hex8) {
+                                    styleObject["border-right-color"] = element.border.right.colors.hex8;
+                                }
+                            }
+                            if (element.border.bottom.width > 0) {
+                                styleObject["border-bottom-width"] = element.border.bottom.width + element.border.bottom.widthUnit;
+                                styleObject["border-bottom-style"] = element.border.bottom.style;
+                                if (element.border.bottom.colors.hex8) {
+                                    styleObject["border-bottom-color"] = element.border.bottom.colors.hex8;
+                                }
+                            }
+                            if (element.border.left.width > 0) {
+                                styleObject["border-left-width"] = element.border.left.width + element.border.left.widthUnit;
+                                styleObject["border-left-style"] = element.border.left.style;
+                                if (element.border.left.colors.hex8) {
+                                    styleObject["border-left-color"] = element.border.left.colors.hex8;
+                                }
+                            }
+
+                            styleObject["border-top-left-radius"] = element.radius.leftTop.radius + element.radius.leftTop.radiusUnit;
+                            styleObject["border-top-right-radius"] = element.radius.rightTop.radius + element.radius.rightTop.radiusUnit;
+                            styleObject["border-bottom-left-radius"] = element.radius.leftBottom.radius + element.radius.leftBottom.radiusUnit;
+                            styleObject["border-bottom-right-radius"] = element.radius.rightBottom.radius + element.radius.rightBottom.radiusUnit;
+                            break;
+                        
+                    }
+                }
+            }
+            window.IDM.setStyleToPageHead(this.moduleObject.id + ' .idm_applicationcenter_main', styleObject);
         },
         /**
          * 通用的url参数对象
