@@ -184,6 +184,49 @@
             ]
         },
         {
+            "type": "table",
+            "text": "主题设置",
+            "desc": "点击？查看主题设置用法指南",
+            "bindKey": "themeList",
+            "tabText": "主题[index]",
+            "display": "@[false]",
+            "children": [
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "主题标识",
+                    "bindKey": "key",
+                    "desc":"用于设置主题的标识，此项需要搭配自定义开发切换主题的功能，例如：蓝色标识为blue，用户切换主题的时候存储到数据库中的标识为blue，则这里填写为blue",
+                    "default":"",
+                    "placeholder":"例如：blue"
+                },{
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "主要颜色",
+                    "bindKey": "mainColor",
+                    "desc":"主题的主要颜色",
+                    "placeholder": "请选择颜色",
+                    "display":"@[key]",
+                    "default": {
+                        "hex": "#1890FF",
+                        "hex8": "#1890FFFF"
+                    }
+                },{
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "次要颜色",
+                    "bindKey": "minorColor",
+                    "desc":"主题的次要颜色",
+                    "placeholder": "请选择颜色",
+                    "display":"@[key]",
+                    "default": {
+                        "hex": "#e6f7ff",
+                        "hex8": "#e6f7ffFF"
+                    }
+                }
+            ]
+        },
+        {
             "type": "group",
             "text": "样式设置",
             "desc": "点击？查看样式设置用法指南",
@@ -194,9 +237,9 @@
                     "layoutType": "block",
                     "text": "标题字体",
                     "bindKey": "titleFontStyle",
-                    "default": {
+                    "default":  {
                         "fontColors": {
-                            "hex": "#333333"
+                            "hex8": "#333333"
                         },
                         "fontSize": 16,
                         "fontSizeUnit": "px",
@@ -294,6 +337,69 @@
                     "layoutType": "block",
                     "text": "边框",
                     "bindKey": "border"
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "text": "内层样式设置",
+            "desc": "点击？查看样式设置用法指南",
+            "helpUrl": "",
+            "display": "@[showTitle == true]",
+            "children": [
+                {
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "背景色",
+                    "bindKey": "subBgColor",
+                    "placeholder": "请选择颜色",
+                    "default": {}
+                },
+                {
+                    "type": "inlineGroup",
+                    "text": "宽高",
+                    "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "block",
+                            "text": "宽",
+                            "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
+                            "bindKey": "subWidth",
+                            "width": "60px",
+                            "default": "auto"
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "block",
+                            "text": "高",
+                            "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
+                            "bindKey": "subHeight",
+                            "width": "60px",
+                            "default": "auto"
+                        }
+                    ]
+                },
+                {
+                    "type": "box",
+                    "layoutType": "block",
+                    "text": "内外边距",
+                    "bindKey": "subBox",
+                    "default": {
+                        "marginTopVal": "",
+                        "marginRightVal": "",
+                        "marginBottomVal": "",
+                        "marginLeftVal": "",
+                        "paddingTopVal": "0",
+                        "paddingRightVal": "0",
+                        "paddingBottomVal": "0",
+                        "paddingLeftVal": "0"
+                    }
+                },
+                {
+                    "type": "border",
+                    "layoutType": "block",
+                    "text": "边框",
+                    "bindKey": "subBorder"
                 }
             ]
         },

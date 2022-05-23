@@ -35,6 +35,12 @@ mobilewechat@1.0.6
 - 标识：`compStyle`
 - 默认值： `styleFour`样式四
 
+#### 显示页签【showTab】
+<font color="#CCCCCC">是否显示显示页签，不显示则默认取第一个</font>
+
+- 标识：`showTab`
+- 默认值： `true`显示
+
 #### 显示更多【showMore】
 <font color="#CCCCCC">是否显示更多按钮/icon</font>
 
@@ -177,6 +183,52 @@ mobilewechat@1.0.6
 
 - 标识：`border`
 - 默认值： ''
+
+### 内层样式设置
+设置组件内层样式，显示组件标题时生效
+
+#### 背景色【subBgColor】
+设置组件的内层背景颜色
+- 标识：`bgColor`
+- 默认值：空
+
+#### 宽高
+<font color="#CCCCCC">用于对容器的宽高进行行内分组，此处建议都设置为auto。</font>
+
+##### 宽【subWidth】
+组件的宽度，填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等，不过此处建议设置为<font color="#FF0000">`auto`</font>
+- 标识：`width`
+
+- 默认值：`auto`
+##### 高【subHeight】
+组件的高度，填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等，不过此处建议设置为
+<font color="#FF0000">`auto`</font>
+
+- 标识：`height`
+- 默认值：`auto`
+
+#### 内外边距【subBox】
+设置组件的内层的外边距和内边距
+- 标识：`box`
+- 默认值
+```json
+"default": {
+  "marginTopVal": "",
+  "marginRightVal": "",
+  "marginBottomVal": "",
+  "marginLeftVal": "",
+  "paddingTopVal": "0",
+  "paddingRightVal": "0",
+  "paddingBottomVal": "0",
+  "paddingLeftVal": "0"
+}
+```
+#### 边框【subBorder】
+设置组件的内层的边框和圆角，可点击中间加号统一设置四边或四角，也可单独一边一边设置不同的边框或圆角样式。
+
+- 标识：`border`
+- 默认值： ''
+
 ### 高级
 <font color="#CCCCCC">用于对组件高级设置的属性的分组。</font>
 
