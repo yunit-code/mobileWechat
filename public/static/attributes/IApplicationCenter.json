@@ -41,8 +41,7 @@
                     "text": "显示更多",
                     "desc":"设置用户配置应用程序按钮是否显示",
                     "bindKey": "showConfig",
-                    "default": false,
-                    "display": "@[!isMyApplication]"
+                    "default": false
                 },
                 {
                     "type": "switch",
@@ -51,7 +50,7 @@
                     "desc":"点击更多操作时，是否在当前页面以弹框的形式展示应用管理页面",
                     "bindKey": "isPopShowApplicationManage",
                     "default": false,
-                    "display": "@[!isMyApplication]"
+                    "display": "@[showConfig]"
                 },
                 {
                     "type": "textarea",
@@ -104,25 +103,31 @@
                     "default": 2
                 },
                 {
-                    "type": "iconSelect",
-                    "layoutType": "inline",
-                    "text": "标题图标",
-                    "bindKey": "titleIconClass",
-                    "default": ""
-                },
-                {
-                    "type": "colorPicker",
-                    "layoutType": "inline",
-                    "text": "图标颜色",
-                    "bindKey": "titleIconFontColor",
-                    "default": ""
-                },
-                {
-                    "type": "inputNumber",
-                    "layoutType": "inline",
-                    "text": "图标大小",
-                    "bindKey": "titleIconFontSize",
-                    "default": 14
+                    "type": "group",
+                    "text": "标题图标设置",
+                    "children": [
+                        {
+                            "type": "iconSelect",
+                            "layoutType": "inline",
+                            "text": "标题图标",
+                            "bindKey": "titleIconClass",
+                            "default": ""
+                        },
+                        {
+                            "type": "colorPicker",
+                            "layoutType": "inline",
+                            "text": "图标颜色",
+                            "bindKey": "titleIconFontColor",
+                            "default": ""
+                        },
+                        {
+                            "type": "inputNumber",
+                            "layoutType": "inline",
+                            "text": "图标大小",
+                            "bindKey": "titleIconFontSize",
+                            "default": 14
+                        }
+                    ]
                 },
                 {
                     "type": "table",
@@ -152,7 +157,22 @@
                             "layoutType": "inline",
                             "text": "应用图标",
                             "bindKey": "applicationIconUrl",
-                            "default": ""
+                            "default": "",
+                            "dictionary": [
+                                "/resource/idm/img/6.png",
+                                "/resource/idm/img/12.png",
+                                "/resource/idm/img/14.png",
+                                "/resource/idm/img/19.png",
+                                "/resource/idm/img/bj.png",
+                                "/resource/idm/img/dywj.png",
+                                "/resource/idm/img/rcap.png",
+                                "/resource/idm/img/wdzx.png",
+                                "/resource/idm/img/wjjh.png",
+                                "/resource/idm/img/yqfk.png",
+                                "/resource/idm/img/zbzs.png",
+                                "/resource/idm/img/zxzys.png",
+                                "/resource/idm/img/zyzx.png"
+                            ]
                         },
                         {
                             "type": "switch",
@@ -202,24 +222,22 @@
         },
         {
             "type": "group",
-            "text": "标题样式设置",
+            "text": "样式设置",
             "desc": "点击？查看样式设置用法指南",
             "helpUrl": "",
             "children": [
                 {
                     "type": "font",
                     "layoutType": "block",
-                    "text": "文字",
+                    "text": "标题字体",
                     "bindKey": "titleFont"
-                }
-            ]
-        },
-        {
-            "type": "group",
-            "text": "样式设置",
-            "desc": "点击？查看样式设置用法指南",
-            "helpUrl": "",
-            "children": [
+                },
+                {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "默认组件字体",
+                    "bindKey": "font"
+                },
                 {
                     "type": "box",
                     "layoutType": "block",
@@ -433,12 +451,6 @@
                     "layoutType": "block",
                     "text": "边框",
                     "bindKey": "border"
-                },
-                {
-                    "type": "font",
-                    "layoutType": "block",
-                    "text": "文字",
-                    "bindKey": "font"
                 }
             ]
         },

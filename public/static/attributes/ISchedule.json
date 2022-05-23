@@ -37,11 +37,11 @@
                     "display": "@[moreBtn]",
                     "dictionary":[
                         {
-                            "label":"当前页",
+                            "label":"当前页跳转",
                             "value":"_self"
                         },
                         {
-                            "label":"新窗口",
+                            "label":"新窗口打开",
                             "value":"_blank"
                         }
                     ],
@@ -72,15 +72,36 @@
                     "display": "@[moreBtn]",
                     "dictionary":[
                         {
-                            "label":"当前页",
+                            "label":"当前页跳转",
                             "value":"_self"
                         },
                         {
-                            "label":"新窗口",
+                            "label":"新窗口打开",
                             "value":"_blank"
                         }
                     ],
                     "default":"_self"
+                },
+                {
+                    "type": "group",
+                    "text": "标题图标设置",
+                    "desc": "点击？查看样式设置用法指南",
+                    "helpUrl": "",
+                    "children": [
+                        {
+                            "type": "iconSelect",
+                            "layoutType": "inline",
+                            "text": "自定义图标",
+                            "bindKey": "titleIcon"
+                        },
+                        {
+                            "type": "inputNumber",
+                            "layoutType": "inline",
+                            "text": "图标大小",
+                            "bindKey": "titleIconSize",
+                            "default": "14"
+                        }
+                    ]
                 }
             ]
         },
@@ -167,193 +188,6 @@
                             "text": "内外边距",
                             "bindKey": "box"
                         },
-                        {
-                            "type": "border",
-                            "layoutType": "block",
-                            "text": "边框",
-                            "bindKey": "border"
-                        }
-                    ]
-                },
-                {
-                    "type": "group",
-                    "text": "内层卡片样式设置",
-                    "desc": "点击？查看样式设置用法指南",
-                    "helpUrl": "",
-                    "children": [
-                        {
-                            "type": "box",
-                            "layoutType": "block",
-                            "text": "内外边距",
-                            "bindKey": "innerBox",
-                            "default":
-                            {
-                                "marginTopVal": "",
-                                "marginRightVal": "",
-                                "marginBottomVal": "",
-                                "marginLeftVal": "",
-                                "paddingTopVal": "10px",
-                                "paddingRightVal": "14px",
-                                "paddingBottomVal": "10px",
-                                "paddingLeftVal": "14px"
-                            }
-                        },
-                        {
-                            "type": "border",
-                            "layoutType": "block",
-                            "text": "边框",
-                            "bindKey": "innerBorder",
-                            "default":{
-                                "border": {
-                                    "top": {
-                                        "style": "",
-                                        "width": 0,
-                                        "widthUnit": "px",
-                                        "colors": {
-                                            "hsl": {
-                                                "h": 0,
-                                                "s": 0.895734597156398,
-                                                "l": 0.45011575,
-                                                "a": 1
-                                            },
-                                            "hex": "#DA0C0C",
-                                            "hex8": "#DA0C0CFF",
-                                            "rgba": {
-                                                "r": 218,
-                                                "g": 12,
-                                                "b": 12,
-                                                "a": 1
-                                            },
-                                            "hsv": {
-                                                "h": 0,
-                                                "s": 0.945,
-                                                "v": 0.8533,
-                                                "a": 1
-                                            },
-                                            "oldHue": 0,
-                                            "source": "hsva",
-                                            "a": 1
-                                        }
-                                    },
-                                    "right": {
-                                        "style": "",
-                                        "width": 0,
-                                        "widthUnit": "px",
-                                        "colors": {
-                                            "hsl": {
-                                                "h": 0,
-                                                "s": 0.895734597156398,
-                                                "l": 0.45011575,
-                                                "a": 1
-                                            },
-                                            "hex": "#DA0C0C",
-                                            "hex8": "#DA0C0CFF",
-                                            "rgba": {
-                                                "r": 218,
-                                                "g": 12,
-                                                "b": 12,
-                                                "a": 1
-                                            },
-                                            "hsv": {
-                                                "h": 0,
-                                                "s": 0.945,
-                                                "v": 0.8533,
-                                                "a": 1
-                                            },
-                                            "oldHue": 0,
-                                            "source": "hsva",
-                                            "a": 1
-                                        }
-                                    },
-                                    "bottom": {
-                                        "style": "",
-                                        "width": 0,
-                                        "widthUnit": "px",
-                                        "colors": {
-                                            "hsl": {
-                                                "h": 0,
-                                                "s": 0.895734597156398,
-                                                "l": 0.45011575,
-                                                "a": 1
-                                            },
-                                            "hex": "#DA0C0C",
-                                            "hex8": "#DA0C0CFF",
-                                            "rgba": {
-                                                "r": 218,
-                                                "g": 12,
-                                                "b": 12,
-                                                "a": 1
-                                            },
-                                            "hsv": {
-                                                "h": 0,
-                                                "s": 0.945,
-                                                "v": 0.8533,
-                                                "a": 1
-                                            },
-                                            "oldHue": 0,
-                                            "source": "hsva",
-                                            "a": 1
-                                        }
-                                    },
-                                    "left": {
-                                        "style": "",
-                                        "width": 0,
-                                        "widthUnit": "px",
-                                        "colors": {
-                                            "hsl": {
-                                                "h": 0,
-                                                "s": 0.895734597156398,
-                                                "l": 0.45011575,
-                                                "a": 1
-                                            },
-                                            "hex": "#DA0C0C",
-                                            "hex8": "#DA0C0CFF",
-                                            "rgba": {
-                                                "r": 218,
-                                                "g": 12,
-                                                "b": 12,
-                                                "a": 1
-                                            },
-                                            "hsv": {
-                                                "h": 0,
-                                                "s": 0.945,
-                                                "v": 0.8533,
-                                                "a": 1
-                                            },
-                                            "oldHue": 0,
-                                            "source": "hsva",
-                                            "a": 1
-                                        }
-                                    }
-                                },
-                                "radius": {
-                                    "leftTop": {
-                                        "radius": 10,
-                                        "radiusUnit": "px"
-                                    },
-                                    "rightTop": {
-                                        "radius": 10,
-                                        "radiusUnit": "px"
-                                    },
-                                    "leftBottom": {
-                                        "radius": 10,
-                                        "radiusUnit": "px"
-                                    },
-                                    "rightBottom": {
-                                        "radius": 10,
-                                        "radiusUnit": "px"
-                                    }
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "type": "group",
-                    "text": "外层背景设置",
-                    "desc": "点击？查看背景设置用法指南",
-                    "helpUrl": "",
-                    "children": [
                         {
                             "type": "colorPicker",
                             "layoutType": "inline",
@@ -523,15 +357,38 @@
                                 }
                             ],
                             "display": "@[bgImgUrl]"
+                        },
+                        {
+                            "type": "border",
+                            "layoutType": "block",
+                            "text": "边框",
+                            "bindKey": "border"
                         }
                     ]
                 },
                 {
                     "type": "group",
-                    "text": "内层背景设置",
-                    "desc": "点击？查看背景设置用法指南",
+                    "text": "内层卡片样式设置",
+                    "desc": "点击？查看样式设置用法指南",
                     "helpUrl": "",
                     "children": [
+                        {
+                            "type": "box",
+                            "layoutType": "block",
+                            "text": "内外边距",
+                            "bindKey": "innerBox",
+                            "default":
+                            {
+                                "marginTopVal": "",
+                                "marginRightVal": "",
+                                "marginBottomVal": "",
+                                "marginLeftVal": "",
+                                "paddingTopVal": "10px",
+                                "paddingRightVal": "14px",
+                                "paddingBottomVal": "10px",
+                                "paddingLeftVal": "14px"
+                            }
+                        },
                         {
                             "type": "colorPicker",
                             "layoutType": "inline",
@@ -703,6 +560,154 @@
                                 }
                             ],
                             "display": "@[innerBgImgUrl]"
+                        },
+                        {
+                            "type": "border",
+                            "layoutType": "block",
+                            "text": "边框",
+                            "bindKey": "innerBorder",
+                            "default":{
+                                "border": {
+                                    "top": {
+                                        "style": "",
+                                        "width": 0,
+                                        "widthUnit": "px",
+                                        "colors": {
+                                            "hsl": {
+                                                "h": 0,
+                                                "s": 0.895734597156398,
+                                                "l": 0.45011575,
+                                                "a": 1
+                                            },
+                                            "hex": "#DA0C0C",
+                                            "hex8": "#DA0C0CFF",
+                                            "rgba": {
+                                                "r": 218,
+                                                "g": 12,
+                                                "b": 12,
+                                                "a": 1
+                                            },
+                                            "hsv": {
+                                                "h": 0,
+                                                "s": 0.945,
+                                                "v": 0.8533,
+                                                "a": 1
+                                            },
+                                            "oldHue": 0,
+                                            "source": "hsva",
+                                            "a": 1
+                                        }
+                                    },
+                                    "right": {
+                                        "style": "",
+                                        "width": 0,
+                                        "widthUnit": "px",
+                                        "colors": {
+                                            "hsl": {
+                                                "h": 0,
+                                                "s": 0.895734597156398,
+                                                "l": 0.45011575,
+                                                "a": 1
+                                            },
+                                            "hex": "#DA0C0C",
+                                            "hex8": "#DA0C0CFF",
+                                            "rgba": {
+                                                "r": 218,
+                                                "g": 12,
+                                                "b": 12,
+                                                "a": 1
+                                            },
+                                            "hsv": {
+                                                "h": 0,
+                                                "s": 0.945,
+                                                "v": 0.8533,
+                                                "a": 1
+                                            },
+                                            "oldHue": 0,
+                                            "source": "hsva",
+                                            "a": 1
+                                        }
+                                    },
+                                    "bottom": {
+                                        "style": "",
+                                        "width": 0,
+                                        "widthUnit": "px",
+                                        "colors": {
+                                            "hsl": {
+                                                "h": 0,
+                                                "s": 0.895734597156398,
+                                                "l": 0.45011575,
+                                                "a": 1
+                                            },
+                                            "hex": "#DA0C0C",
+                                            "hex8": "#DA0C0CFF",
+                                            "rgba": {
+                                                "r": 218,
+                                                "g": 12,
+                                                "b": 12,
+                                                "a": 1
+                                            },
+                                            "hsv": {
+                                                "h": 0,
+                                                "s": 0.945,
+                                                "v": 0.8533,
+                                                "a": 1
+                                            },
+                                            "oldHue": 0,
+                                            "source": "hsva",
+                                            "a": 1
+                                        }
+                                    },
+                                    "left": {
+                                        "style": "",
+                                        "width": 0,
+                                        "widthUnit": "px",
+                                        "colors": {
+                                            "hsl": {
+                                                "h": 0,
+                                                "s": 0.895734597156398,
+                                                "l": 0.45011575,
+                                                "a": 1
+                                            },
+                                            "hex": "#DA0C0C",
+                                            "hex8": "#DA0C0CFF",
+                                            "rgba": {
+                                                "r": 218,
+                                                "g": 12,
+                                                "b": 12,
+                                                "a": 1
+                                            },
+                                            "hsv": {
+                                                "h": 0,
+                                                "s": 0.945,
+                                                "v": 0.8533,
+                                                "a": 1
+                                            },
+                                            "oldHue": 0,
+                                            "source": "hsva",
+                                            "a": 1
+                                        }
+                                    }
+                                },
+                                "radius": {
+                                    "leftTop": {
+                                        "radius": 10,
+                                        "radiusUnit": "px"
+                                    },
+                                    "rightTop": {
+                                        "radius": 10,
+                                        "radiusUnit": "px"
+                                    },
+                                    "leftBottom": {
+                                        "radius": 10,
+                                        "radiusUnit": "px"
+                                    },
+                                    "rightBottom": {
+                                        "radius": 10,
+                                        "radiusUnit": "px"
+                                    }
+                                }
+                            }
                         }
                     ]
                 },
@@ -727,33 +732,48 @@
                     "text": "文字",
                     "desc": "全局文字样式设置",
                     "bindKey": "font"
-                },
+                }
+            ]
+        },
+        {
+            "type": "table",
+            "text": "主题设置",
+            "desc": "点击？查看主题设置用法指南",
+            "bindKey": "themeList",
+            "tabText": "主题[index]",
+            "children": [
                 {
-                    "type": "group",
-                    "text": "自定义图标样式",
-                    "desc": "点击？查看样式设置用法指南",
-                    "helpUrl": "",
-                    "children": [
-                        {
-                            "type": "iconSelect",
-                            "layoutType": "inline",
-                            "text": "自定义图标",
-                            "bindKey": "titleIcon"
-                        },
-                        {
-                            "type": "colorPicker",
-                            "layoutType": "inline",
-                            "text": "图标颜色",
-                            "bindKey": "titleIconColor"
-                        },
-                        {
-                            "type": "inputNumber",
-                            "layoutType": "inline",
-                            "text": "图标大小",
-                            "bindKey": "titleIconSize",
-                            "default": "14"
-                        }
-                    ]
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "主题标识",
+                    "bindKey": "key",
+                    "desc":"用于设置主题的标识，此项需要搭配自定义开发切换主题的功能，例如：蓝色标识为blue，用户切换主题的时候存储到数据库中的标识为blue，则这里填写为blue",
+                    "default":"",
+                    "placeholder":"例如：blue"
+                },{
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "主要颜色",
+                    "bindKey": "mainColor",
+                    "desc":"主题的主要颜色",
+                    "placeholder": "请选择颜色",
+                    "display":"@[key]",
+                    "default": {
+                        "hex": "#1890FF",
+                        "hex8": "#1890FFFF"
+                    }
+                },{
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "次要颜色",
+                    "bindKey": "minorColor",
+                    "desc":"主题的次要颜色",
+                    "placeholder": "请选择颜色",
+                    "display":"@[key]",
+                    "default": {
+                        "hex": "#e6f7ff",
+                        "hex8": "#e6f7ffFF"
+                    }
                 }
             ]
         },

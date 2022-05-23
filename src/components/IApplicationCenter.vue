@@ -351,6 +351,7 @@ export default {
         convertAttrToStyleObject() {
             var styleObject = {};
             var styleObjectTitle = {};
+            var fontStyleObject = {};
             var styleObjectTitleIcon = {};
             if (this.propData.bgSize && this.propData.bgSize == "custom") {
                 styleObject["background-size"] = (this.propData.bgSizeWidth ? this.propData.bgSizeWidth.inputVal + this.propData.bgSizeWidth.selectVal : "auto") + " " + (this.propData.bgSizeHeight ? this.propData.bgSizeHeight.inputVal + this.propData.bgSizeHeight.selectVal : "auto")
@@ -460,16 +461,16 @@ export default {
                             styleObject["border-bottom-right-radius"] = element.radius.rightBottom.radius + element.radius.rightBottom.radiusUnit;
                             break;
                         case "font":
-                            styleObject["font-family"] = element.fontFamily;
+                            fontStyleObject["font-family"] = element.fontFamily;
                             if (element.fontColors.hex8) {
-                                styleObject["color"] = element.fontColors.hex8;
+                                fontStyleObject["color"] = element.fontColors.hex8;
                             }
-                            styleObject["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
-                            styleObject["font-style"] = element.fontStyle;
-                            styleObject["font-size"] = element.fontSize + element.fontSizeUnit;
-                            styleObject["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
-                            styleObject["text-align"] = element.fontTextAlign;
-                            styleObject["text-decoration"] = element.fontDecoration;
+                            fontStyleObject["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
+                            fontStyleObject["font-style"] = element.fontStyle;
+                            fontStyleObject["font-size"] = element.fontSize + element.fontSizeUnit;
+                            fontStyleObject["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
+                            fontStyleObject["text-align"] = element.fontTextAlign;
+                            fontStyleObject["text-decoration"] = element.fontDecoration;
                             break;
                         case "titleFont":
                             styleObjectTitle["font-family"] = element.fontFamily;
@@ -497,6 +498,7 @@ export default {
             window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_text", styleObjectTitle);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_icon .idm_filed_svg_icon", styleObjectTitleIcon);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_main_list_name", fontStyleObject);
             this.initApplicationData()
         },
         /**
@@ -579,6 +581,8 @@ export default {
                 this.showThisModuleHandle();
             } else if (messageObject.type && messageObject.type == "linkageHideModule") {
                 this.hideThisModuleHandle();
+            } else if ( messageObject.type && messageObject.type == "linkageReload" ) {
+                this.initApplicationData()
             }
             // 配置了刷新KEY，消息类型是websocket，收到的消息对象有message并不为空
             if(this.propData.messageRefreshKey && messageObject.type === 'websocket' && messageObject.message){
@@ -632,6 +636,10 @@ export default {
 </script>
 <style lang="scss">
 .idm_applicationcenter {
+    font-size: 12px;
+    font-family: PingFangSC-Regular;
+    color: #333333;
+    text-align: center;
     border-radius: 10px;
     .idm_applicationcenter_title{
         padding: 10px 10px 7px 10px;
@@ -659,12 +667,6 @@ export default {
             }
             .img_box{
                 position: relative;
-            }
-            .idm_applicationcenter_main_list_name{
-                font-size: 12px;
-                font-family: PingFangSC-Regular;
-                color: #333333;
-                text-align: center;
             }
             .number{
                 width: 15px;

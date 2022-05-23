@@ -79,47 +79,95 @@ export default {
   props: {},
   created() {
     this.moduleObject = this.$root.moduleObject;
+    this.convertThemeListAttrToStyleObject();
     this.convertAttrToStyleObject();
-
-    if (!this.moduleObject.env || this.moduleObject.env === "develop") {
-      setTimeout(() => {
-        //开发模式下给例子数据
-        this.listData = [
-          {
-            comId: "1",
-            asName: "广告轮播",
-            hidden: false,
-          },
-          {
-            comId: "2",
-            asName: "统一待办",
-            hidden: false,
-          },
-          {
-            comId: "3",
-            asName: "待办列表",
-            hidden: false,
-          },
-          {
-            comId: "4",
-            asName: "应用中心",
-            hidden: false,
-          },
-          {
-            comId: "5",
-            asName: "信息列表",
-            hidden: false,
-          },
-        ];
-        this.isLoading = false
-      }, 1000);
-    }else if(this.moduleObject.env ===  "production"){
-      this.requestDefaultCustomization()
-    }
+    this.initData();
   },
   mounted() {},
   destroyed() {},
   methods: {
+    /**
+     * 主题颜色
+     */
+    convertThemeListAttrToStyleObject(){
+      const themeList = this.propData.themeList;
+      if (!themeList) {
+        return;
+      }
+      const themeNamePrefix =
+        IDM.setting &&
+        IDM.setting.applications &&
+        IDM.setting.applications.themeNamePrefix
+          ? IDM.setting.applications.themeNamePrefix
+          : "idm-theme-";
+      for (var i = 0; i < themeList.length; i++) {
+        var item = themeList[i];
+        
+        let tipStyleObject = {
+          "color": item.mainColor ? item.mainColor.hex8 : "",
+          "background-color": item.minorColor ? item.minorColor.hex8 : "",
+        };
+
+        IDM.setStyleToPageHead(
+          "." +
+            themeNamePrefix +
+            item.key +
+            " #" +
+            (this.moduleObject.packageid || "module_demo") +
+            " .i-sort-tip",
+          tipStyleObject
+        );
+      }
+    },
+    /**
+     * 组件通信：接收消息的方法
+     */
+    receiveBroadcastMessage(object) {
+      console.log("组件收到消息", object);
+      if(object.messageKey === "linkageReload"){
+        this.initData();
+      }
+    },
+    /**
+     * 初始化组件
+     */
+    initData(){
+      if (!this.moduleObject.env || this.moduleObject.env === "develop") {
+        setTimeout(() => {
+          //开发模式下给例子数据
+          this.listData = [
+            {
+              comId: "1",
+              asName: "广告轮播",
+              hidden: false,
+            },
+            {
+              comId: "2",
+              asName: "统一待办",
+              hidden: false,
+            },
+            {
+              comId: "3",
+              asName: "待办列表",
+              hidden: false,
+            },
+            {
+              comId: "4",
+              asName: "应用中心",
+              hidden: false,
+            },
+            {
+              comId: "5",
+              asName: "信息列表",
+              hidden: false,
+            },
+          ];
+          this.isLoading = false
+        }, 1000);
+      }else if(this.moduleObject.env ===  "production"){
+        this.requestDefaultCustomization();
+      }
+    },
     /**
      * 请求失败
      */
@@ -148,9 +196,11 @@ export default {
           }else {
             this.failRequest(url);
           }
+          this.isLoading = false;
         })
         .error((response) => {
           this.failRequest(url);
+          this.isLoading = false;
         });
     },
     /**
@@ -178,9 +228,11 @@ export default {
           } else {
             this.failRequest(url);
           }
+          this.isLoading = false;
         })
         .error((response) => {
           this.failRequest(url);
+          this.isLoading = false;
         });
     },
     /**
@@ -229,6 +281,7 @@ export default {
      */
     propDataWatchHandle(propData) {
       this.propData = propData.compositeAttr || {};
+      this.convertThemeListAttrToStyleObject();
       this.convertAttrToStyleObject();
     },
     /**
@@ -450,7 +503,7 @@ export default {
         }
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .i-sort-tip", tipStyleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .i-sort-outer .i-sort-tip", tipStyleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .i-sort-item", cardStyleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .van-empty", emptyStyleObject);
       // this.initData();
@@ -481,8 +534,8 @@ export default {
   color: #333333;
 
   .i-sort-tip {
-    background-color: rgb(231,241,253);
-    color: rgb(56, 117, 198);
+    background-color: #e6f7ff;
+    color: #1890FF;
     padding: 14px;
     font-size: 14px;
   }

@@ -219,10 +219,13 @@ export default {
                         "Content-Type": "application/json;charset=UTF-8",
                     },
                 }).then(result=>{
+                    console.log('角标接口请求回参',result)
                     if ( result&&result.data&&result.data.type == 'success' && result.data.data ) {
                         if ( !this.propData.dataFiled ) {
+                            console.log(456)
                             this.$set(this.application_data[index], "todoNumber", result.data.data.count);
                         } else {
+                            console.log(123)
                             this.$set(this.application_data[index], "todoNumber", result.data.data[this.propData.dataFiled]);
                         }
                     }
@@ -279,6 +282,7 @@ export default {
          */
         convertAttrToStyleObject() {
             var styleObject = {};
+            var fontStyleObject = {};
             if (this.propData.bgSize && this.propData.bgSize == "custom") {
                 styleObject["background-size"] = (this.propData.bgSizeWidth ? this.propData.bgSizeWidth.inputVal + this.propData.bgSizeWidth.selectVal : "auto") + " " + (this.propData.bgSizeHeight ? this.propData.bgSizeHeight.inputVal + this.propData.bgSizeHeight.selectVal : "auto")
             } else if (this.propData.bgSize) {
@@ -387,21 +391,22 @@ export default {
                             styleObject["border-bottom-right-radius"] = element.radius.rightBottom.radius + element.radius.rightBottom.radiusUnit;
                             break;
                         case "font":
-                            styleObject["font-family"] = element.fontFamily;
+                            fontStyleObject["font-family"] = element.fontFamily;
                             if (element.fontColors.hex8) {
-                                styleObject["color"] = element.fontColors.hex8;
+                                fontStyleObject["color"] = element.fontColors.hex8;
                             }
-                            styleObject["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
-                            styleObject["font-style"] = element.fontStyle;
-                            styleObject["font-size"] = element.fontSize + element.fontSizeUnit;
-                            styleObject["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
-                            styleObject["text-align"] = element.fontTextAlign;
-                            styleObject["text-decoration"] = element.fontDecoration;
+                            fontStyleObject["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
+                            fontStyleObject["font-style"] = element.fontStyle;
+                            fontStyleObject["font-size"] = element.fontSize + element.fontSizeUnit;
+                            fontStyleObject["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
+                            fontStyleObject["text-align"] = element.fontTextAlign;
+                            fontStyleObject["text-decoration"] = element.fontDecoration;
                             break;
                     }
                 }
             }
             window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_main_list_name", fontStyleObject);
             this.reload();
         },
         /**
@@ -482,6 +487,8 @@ export default {
                 this.showThisModuleHandle();
             } else if (messageObject.type && messageObject.type == "linkageHideModule") {
                 this.hideThisModuleHandle();
+            } else if ( messageObject.type && messageObject.type == "linkageReload" ) {
+                this.initApplicationData()
             }
             // 配置了刷新KEY，消息类型是websocket，收到的消息对象有message并不为空
             if(this.propData.messageRefreshKey && messageObject.type === 'websocket' && messageObject.message){
@@ -539,15 +546,10 @@ export default {
 }
 .idm_applicationshortcut {
     width: auto;
+    font-size: 12px;
+    color: #333333;
+    text-align: center;
     border-radius: 10px;
-    .idm_applicationcenter_title{
-        padding: 10px 10px 7px 10px;
-        .idm_applicationcenter_title_left_text{
-            font-size: 16px;
-            color: #333333;
-            line-height: 22px;
-        }
-    }
     .idm_applicationcenter_main{
         .idm_applicationcenter_main_list{
             position: relative;
@@ -559,12 +561,6 @@ export default {
             }
             .img_box{
                 position: relative;
-            }
-            
-            .idm_applicationcenter_main_list_name{
-                font-size: 12px;
-                color: #333333;
-                text-align: center;
             }
             .number{
                 width: 15px;
@@ -603,11 +599,6 @@ export default {
                 }
                 .img_box{
                     position: relative;
-                }
-                .idm_applicationcenter_main_list_name{
-                    font-size: 12px;
-                    color: #333333;
-                    text-align: center;
                 }
                 .number{
                     width: 15px;
