@@ -34,7 +34,7 @@
         <div class="idm-unifie-todo-box-sub-title" :class="{'idm-unifie-todo-box-sub-no-read': true}">
           <div class="flex-1">
             <div class="idm-unifie-todo-box-sub-content" :class="getExpressData('data', propData.readExpression, item) ?'idm-unifie-todo-box-sub-hasRead' : ''">
-              {{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}
+              <span v-if="item.moduleName">[{{item.moduleName}}]</span>{{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}
             </div>
             <div class="idm-unifie-todo-box-sub-intr">
               <div class="d-flex align-c">
@@ -75,6 +75,7 @@ const todoData = {
     jumpUrl: '',
     isHot: '-1',
     readStatus: '0',
+    moduleName: '发文',
     readStatusText: '未读',
     sendUserName: '文档处',
     time: '2022-04-21 12:56',
@@ -82,6 +83,7 @@ const todoData = {
   },{
     jumpUrl: '',
     isHot: '-1',
+    moduleName: '发文',
     readStatus: '1',
     readStatusText: '已读',
     sendUserName: '李干杰',
@@ -91,6 +93,7 @@ const todoData = {
     jumpUrl: '',
     isHot: '-1',
     readStatus: '1',
+    moduleName: '发文',
     readStatusText: '已读',
     sendUserName: '文档处',
     time: '2022-04-21 08:56',
