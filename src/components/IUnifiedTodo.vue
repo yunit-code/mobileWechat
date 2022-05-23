@@ -11,7 +11,7 @@
    :title="propData.htmlTitle" 
    v-show="propData.defaultStatus!='hidden'"
    class="idm-unifie-todo-box in-box">
-    <div class="idm-unifie-todo-box-title d-flex align-c just-b">
+    <div class="idm-unifie-todo-box-title d-flex align-c just-b" v-if="propData.showTitle">
       <div class="d-flex align-c">
         <span class="idm-unifie-todo-box-title-font">{{propData.htmlTitle}}</span>
         <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm-unifie-todo-box-title-icon" aria-hidden="true" >
@@ -36,14 +36,14 @@
             </div>
             <div class="idm-unifie-todo-box-sub-intr">
               <div class="d-flex align-c">
-                <svg v-if="item.readStatus == '1'" class="idm-unifie-todo-box-sub-icon" aria-hidden="true" >
-                  <use xlink:href="#idm-icon-xuanze"></use>
+                <svg v-if="propData.readIcon && propData.readIcon.length > 0 && item.readStatus == '1'" class="idm-unifie-todo-box-sub-icon-has-read" aria-hidden="true" >
+                  <use :xlink:href="`#${propData.readIcon[0]}`"></use>
                 </svg>
-                <svg v-if="propData.noReadIcon && propData.noReadIcon.length && item.readStatus != '1'" class="idm-unifie-todo-box-sub-icon" aria-hidden="true" >
+                <svg v-if="propData.noReadIcon && propData.noReadIcon.length > 0 && item.readStatus != '1'" class="idm-unifie-todo-box-sub-icon-no-read" aria-hidden="true" >
                   <use :xlink:href="`#${propData.noReadIcon[0]}`"></use>
                 </svg>
-                <svg-icon iconClass="weidu" v-if="!propData.noReadIcon && item.readStatus != '1'" class="idm-unifie-todo-box-sub-icon"></svg-icon>
-                <span>{{item.readStatusText}}</span> </div>
+                <span>{{item.readStatusText}}</span> 
+              </div>
               <div class="d-flex align-c">
                 <svg-icon iconClass="person" class="idm-unifie-todo-box-sub-icon"></svg-icon> 
                 <span>{{item.sendUserName}}</span> </div>
@@ -117,8 +117,12 @@ export default {
             colors: {
               hex: '#333'
             }
-          }
+          },
+          fontSize: 16,
+          fontSizeUnit: "px",
+          fontWeight: "800"
         },
+        showTitle: true,
         showMore: true,
         showTodoNumber: false,
         dataFiled: 'title',
@@ -200,6 +204,8 @@ export default {
       let todoFontStyleObj = {}
       let readFontStyleObj = {}
       let emptyBoxHeightObj = {}
+      let readIconObj = {}
+      let noReadIconObj = {}
       if(this.propData.bgSize&&this.propData.bgSize=="custom"){
         styleObject["background-size"]=(this.propData.bgSizeWidth?this.propData.bgSizeWidth.inputVal+this.propData.bgSizeWidth.selectVal:"auto")+" "+(this.propData.bgSizeHeight?this.propData.bgSizeHeight.inputVal+this.propData.bgSizeHeight.selectVal:"auto")
       }else if(this.propData.bgSize){
@@ -350,6 +356,23 @@ export default {
               break
             case 'emptyBoxHeight':
               emptyBoxHeightObj['height'] = element.inputVal + element.selectVal
+              break;
+            case "readIconColor":
+                readIconObj["fill"] = element.hex;
+                break
+            case "readIconSize":
+                readIconObj["font-size"] = element + "px";
+                readIconObj["width"] = element + "px";
+                readIconObj["height"] = element + "px";
+                break
+            case "noReadIconColor":
+                noReadIconObj["fill"] = element.hex;
+                break
+            case "noReadIconSize":
+                noReadIconObj["font-size"] = element + "px";
+                noReadIconObj["width"] = element + "px";
+                noReadIconObj["height"] = element + "px";
+                break
           }
 
         }
@@ -360,6 +383,9 @@ export default {
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-content", todoFontStyleObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-hasRead", readFontStyleObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-empty", emptyBoxHeightObj);
+
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-icon-has-read", readIconObj);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-icon-no-read", noReadIconObj);
       this.initData();
     },
     /**
@@ -547,6 +573,9 @@ export default {
   &-title{
     font: inherit;
     font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     &-icon{
       width: 18px;
       height: 18px;
@@ -561,7 +590,7 @@ export default {
   }
   &-overflow{
     overflow: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
   &-sub{
     border-bottom: .6px solid #eee;
@@ -608,7 +637,22 @@ export default {
     }
     &-icon{
       font-size: 14px;
-      max-height: 14px;
+      width: 14px;
+      fill: currentColor;
+      vertical-align: -0.15em;
+      outline: none;
+      margin: 0 3px 0 0;
+    }
+    &-icon-no-read{
+      font-size: 14px;
+      width: 14px;
+      fill: #f10215;
+      vertical-align: -0.15em;
+      outline: none;
+      margin: 0 3px 0 0;
+    }
+    &-icon-has-read{
+      font-size: 14px;
       width: 14px;
       fill: currentColor;
       vertical-align: -0.15em;

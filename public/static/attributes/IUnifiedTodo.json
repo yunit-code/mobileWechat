@@ -48,9 +48,17 @@
                 {
                     "type": "switch",
                     "layoutType": "inline",
+                    "text": "显示标题",
+                    "bindKey": "showTitle",
+                    "default": true
+                },
+                {
+                    "type": "switch",
+                    "layoutType": "inline",
                     "text": "显示更多",
                     "bindKey": "showMore",
-                    "default": true
+                    "default": true,
+                    "display": "@[showTitle == true]"
                 },
                 {
                     "type": "switch",
@@ -58,12 +66,14 @@
                     "text": "显示角标",
                     "desc": "设置组件右上角待办数量，为false时显示省略号",
                     "bindKey": "showTodoNumber",
-                    "default": false
+                    "default": false,
+                    "display": "@[showTitle == true]"
                 },
                 {
                     "type": "group",
                     "text": "标题图标设置",
                     "desc": "点击？查看样式设置用法指南",
+                    "display": "@[showTitle == true]",
                     "helpUrl": "",
                     "children": [
                         {
@@ -90,11 +100,62 @@
                     ]
                 },
                 {
-                    "type": "iconSelect",
-                    "layoutType": "inline",
-                    "text": "未读图标",
-                    "bindKey": "noReadIcon",
-                    "default": ""
+                    "type": "group",
+                    "text": "已读图标设置",
+                    "desc": "点击？查看样式设置用法指南",
+                    "helpUrl": "",
+                    "children": [
+                        {
+                            "type": "iconSelect",
+                            "layoutType": "inline",
+                            "text": "已读图标",
+                            "bindKey": "readIcon",
+                            "default": ["idm-icon-xuanze"]
+                        },
+                        {
+                            "type": "colorPicker",
+                            "layoutType": "inline",
+                            "text": "图标颜色",
+                            "bindKey": "readIconColor",
+                            "default": ""
+                        },
+                        {
+                            "type": "inputNumber",
+                            "layoutType": "inline",
+                            "text": "图标大小",
+                            "bindKey": "readIconSize",
+                            "default": 18
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "text": "未读图标设置",
+                    "desc": "点击？查看样式设置用法指南",
+                    "helpUrl": "",
+                    "children": [
+                        {
+                            "type": "iconSelect",
+                            "layoutType": "inline",
+                            "text": "未读图标",
+                            "bindKey": "noReadIcon",
+                            "default": ["idm-icon-gantanhao"]
+                        },
+                        {
+                            "type": "colorPicker",
+                            "layoutType": "inline",
+                            "text": "图标颜色",
+                            "bindKey": "noReadIconColor",
+                            "default": ""
+                        },
+                        {
+                            "type": "inputNumber",
+                            "layoutType": "inline",
+                            "text": "图标大小",
+                            "bindKey": "noReadIconSize",
+                            "default": 18
+                        }
+                    ]
                 },
                 {
                     "type": "input",
@@ -140,7 +201,8 @@
                         "fontSize": 16,
                         "fontSizeUnit": "px",
                         "fontWeight": "800"
-                    }
+                    },
+                    "display": "@[showTitle == true]"
                 },
                 {
                     "type": "font",
