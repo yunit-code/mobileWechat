@@ -162,7 +162,7 @@ export default {
      */
     receiveBroadcastMessage(object) {
       console.log("组件收到消息", object);
-      if(object.messageKey === "linkageReload"){
+      if(object.type === "linkageReload"){
         this.init()
       }
     },
@@ -202,7 +202,8 @@ export default {
      */
     requsetList() {
       let url = this.propData.customInterfaceUrl;
-      if (!url) {
+      let dataSource = this.propData.dataSource
+      if (!url || !dataSource) {
         this.isLoading = false;
         return;
       }
@@ -210,7 +211,7 @@ export default {
       const endDate = this.currentList[2][this.currentList[2].length - 1]
         .realDate;
       const sub = url.indexOf("?") === -1 ? "?" : "&";
-      url = `${url}${sub}id=${this.propData.dataSource.value}`;
+      url = `${url}${sub}id=${dataSource.value}`;
       IDM.http
         .post(url, {
           startDate,
@@ -698,6 +699,7 @@ export default {
      */
     convertThemeListAttrToStyleObject() {
       const themeList = this.propData.themeList;
+      console.log(themeList,"themeList")
       if (!themeList) {
         return;
       }
@@ -707,6 +709,7 @@ export default {
         IDM.setting.applications.themeNamePrefix
           ? IDM.setting.applications.themeNamePrefix
           : "idm-theme-";
+      console.log(themeNamePrefix,"themeNamePrefix")
       for (var i = 0; i < themeList.length; i++) {
         var item = themeList[i];
         
@@ -716,7 +719,21 @@ export default {
         let titleSvgStyleObject = {
           "fill": item.mainColor ? item.mainColor.hex8 : "",
         };
+
+        console.log(dateNumStyleObject,"dateNumStyleObject")
         
+        console.log("." +
+            themeNamePrefix +
+            item.key +
+            " #" +
+            (this.moduleObject.packageid || "module_demo") +
+            " .idm_filed_svg_icon","idm_filed_svg_icon")
+        console.log("." +
+            themeNamePrefix +
+            item.key +
+            " #" +
+            (this.moduleObject.packageid || "module_demo") +
+            " .swiper-wrapper .swiper-slide li .date-num.active")
 
         IDM.setStyleToPageHead(
           "." +
