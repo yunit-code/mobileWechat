@@ -12,10 +12,10 @@
     :title="propData.htmlTitle"
     class="i-schedule-outer"
   >
-    <div class="i-schedule-header">
+    <div class="i-schedule-header" v-if="propData.isShowTitleBar === undefined ? true : propData.isShowTitleBar">
       <div class="i-schedule-header-main">
         <div class="i-schedule-header-tit">
-          {{ propData.title || "日程提醒" }}
+          <span>{{ propData.title || "日程提醒" }}</span>
           <svg
             v-if="propData.titleIcon && propData.titleIcon.length > 0"
             class="idm_filed_svg_icon"
@@ -82,7 +82,7 @@
                 <p
                   v-for="(time, i) in item.schedule"
                   :key="`time-${i}`"
-                  :class="{ active: isTimeRange(time.timeRange) }"
+                  :class="{ active: isTimeRange(time.startTime.split(' ')[0],time.timeRange) }"
                 >
                   {{ time.startTime.split(" ")[1] }}
                 </p>
@@ -115,6 +115,9 @@
           :description="propData.emptyDescription || '暂无日程'"
         />
       </div>
+    </div>
+    <div class="i-schedule-mask" v-if="moduleObject.env === 'production' && !propData.dataSource">
+      <span>！未绑定数据源</span>
     </div>
   </div>
 </template>
@@ -180,7 +183,7 @@ export default {
                 schedule: [
                   {
                     startTime: today + " 09:00",
-                    timeRange: "09:00-09:30",
+                    timeRange: "16:00-18:30",
                     address: "第一会议室",
                     title: "XXX会议",
                     jumpUrl: "打开详情地址",
@@ -276,7 +279,11 @@ export default {
     /**
      * 时间范围
      */
-    isTimeRange(range) {
+    isTimeRange(date,range) {
+      // 如果不是今天 跳出
+      if(date !== this.setNowDate(new Date())){
+        return false
+      }
       const beginTime = range.split("-")[0];
       const endTime = range.split("-")[1];
       var strb = beginTime.split(":");
@@ -680,7 +687,7 @@ export default {
       // if(key == "titleFont")
       window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
       window.IDM.setStyleToPageHead(
-        this.moduleObject.id + " .i-schedule-header-main",
+        this.moduleObject.id + " .i-schedule-header-tit",
         titleStyleObject
       );
       window.IDM.setStyleToPageHead(
@@ -699,7 +706,6 @@ export default {
      */
     convertThemeListAttrToStyleObject() {
       const themeList = this.propData.themeList;
-      console.log(themeList,"themeList")
       if (!themeList) {
         return;
       }
@@ -709,31 +715,25 @@ export default {
         IDM.setting.applications.themeNamePrefix
           ? IDM.setting.applications.themeNamePrefix
           : "idm-theme-";
-      console.log(themeNamePrefix,"themeNamePrefix")
       for (var i = 0; i < themeList.length; i++) {
         var item = themeList[i];
         
         let dateNumStyleObject = {
           "background-color": item.mainColor ? item.mainColor.hex8 : "",
         };
+        let todayStyleObject = {
+          "color": item.mainColor ? item.mainColor.hex8 : "",
+        };
         let titleSvgStyleObject = {
           "fill": item.mainColor ? item.mainColor.hex8 : "",
         };
 
-        console.log(dateNumStyleObject,"dateNumStyleObject")
-        
         console.log("." +
             themeNamePrefix +
             item.key +
             " #" +
             (this.moduleObject.packageid || "module_demo") +
-            " .idm_filed_svg_icon","idm_filed_svg_icon")
-        console.log("." +
-            themeNamePrefix +
-            item.key +
-            " #" +
-            (this.moduleObject.packageid || "module_demo") +
-            " .swiper-wrapper .swiper-slide li .date-num.active")
+            " .i-schedule-header-tit svg")
 
         IDM.setStyleToPageHead(
           "." +
@@ -741,8 +741,8 @@ export default {
             item.key +
             " #" +
             (this.moduleObject.packageid || "module_demo") +
-            " .idm_filed_svg_icon",
-          dateNumStyleObject
+            " .i-schedule-header-tit svg",
+          titleSvgStyleObject
         );
         IDM.setStyleToPageHead(
           "." +
@@ -751,6 +751,24 @@ export default {
             " #" +
             (this.moduleObject.packageid || "module_demo") +
             " .swiper-wrapper .swiper-slide li .date-num.active",
+          dateNumStyleObject
+        );
+        IDM.setStyleToPageHead(
+          "." +
+            themeNamePrefix +
+            item.key +
+            " #" +
+            (this.moduleObject.packageid || "module_demo") +
+            " .swiper-wrapper .swiper-slide li .today.active",
+          todayStyleObject
+        );
+        IDM.setStyleToPageHead(
+          "." +
+            themeNamePrefix +
+            item.key +
+            " #" +
+            (this.moduleObject.packageid || "module_demo") +
+            " .i-schedule-content-note-left p.active::before",
           dateNumStyleObject
         );
       }
@@ -895,6 +913,7 @@ export default {
   font-size: 14px;
   color: #333333;
   background-color: #fff;
+  position: relative;
 
   ul,
   li {
@@ -913,6 +932,10 @@ export default {
       display: flex;
       .i-schedule-header-tit {
         margin-left: 6px;
+        font-family: PingFangSC-Regular;
+        color: #333333;
+        font-style: normal;
+        text-decoration: none;
 
         .idm_filed_svg_icon {
           font-size: 14px;
@@ -957,7 +980,7 @@ export default {
           background-color: transparent;
 
           li {
-            color: #333;
+            // color: #333;
             font-size: 14px;
             text-align: center;
             width: 25px;
@@ -988,7 +1011,7 @@ export default {
               height: 18px;
               line-height: 18px;
               text-align: center;
-              background: #4d7eff;
+              background: #1890FF;
               color: #ffffff;
               border-radius: 50%;
               font-size: 14px;
@@ -1000,7 +1023,7 @@ export default {
               transform: scale(1.5);
 
               &.active {
-                color: #4d7eff;
+                color: #1890FF;
               }
             }
           }
@@ -1012,9 +1035,13 @@ export default {
       border-top: 1px solid #eee;
       padding-top: 14px;
       min-height: 20vh;
+      
+      ::v-deep .ant-tabs {
+        color: currentColor;
 
-      ::v-deep .ant-tabs-bar {
-        display: none;
+        .ant-tabs-bar {
+          display: none;
+        }
       }
       
       .i-schedule-content-note-inner {
@@ -1032,7 +1059,7 @@ export default {
               width: 5px;
               height: 5px;
               border-radius: 50%;
-              background-color: #4d7eff;
+              background-color: #1890FF;
               position: absolute;
               top: 0;
               right: 0;
@@ -1059,18 +1086,38 @@ export default {
             }
 
             .schedule-item-name {
-              color: #000;
+              // color: #000;
               padding-bottom: 8px;
             }
             .schedule-item-addr {
-              color: #666;
+              // color: #666;
             }
             .schedule-item-time {
-              color: #aaa;
+              // color: #aaa;
             }
           }
         }
       }
+    }
+  }
+
+  .i-schedule-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: rgba(0,0,0,.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+      padding: 6px 20px;
+      color: #e6a23c;
+      background: #fdf6ec;
+      border:1px solid #f5dab1;
+      border-radius: 4px;
     }
   }
 }
