@@ -125,6 +125,57 @@ export default {
     },
     destroyed() { },
     methods: {
+        /** * 主题颜色 */
+        convertThemeListAttrToStyleObject() {
+            const themeList = this.propData.themeList;
+            console.log(themeList,"themeList")
+            if (!themeList) {
+                return;
+            }
+            const themeNamePrefix =
+                IDM.setting &&
+                IDM.setting.applications &&
+                IDM.setting.applications.themeNamePrefix
+                ? IDM.setting.applications.themeNamePrefix
+                : "idm-theme-";
+            console.log(themeNamePrefix,"themeNamePrefix")
+            for (var i = 0; i < themeList.length; i++) {
+                var item = themeList[i];
+                let styleObject = {
+                    "background-color": item.minorColor ? item.minorColor.hex8 : "",
+                };
+                let fontStyleObject = {
+                    "color": item.mainColor ? item.mainColor.hex8 : "",
+                }
+                IDM.setStyleToPageHead(
+                    "." +
+                        themeNamePrefix +
+                        item.key +
+                        " #" +
+                        (this.moduleObject.packageid || "module_demo") +
+                        " .idm_applicationcenter",
+                    styleObject
+                );
+                IDM.setStyleToPageHead(
+                    "." +
+                        themeNamePrefix +
+                        item.key +
+                        " #" +
+                        (this.moduleObject.packageid || "module_demo") +
+                        " .idm_applicationcenter_main_list",
+                    fontStyleObject
+                );
+                IDM.setStyleToPageHead(
+                    "." +
+                        themeNamePrefix +
+                        item.key +
+                        " #" +
+                        (this.moduleObject.packageid || "module_demo") +
+                        " .idm_applicationcenter_title_left_text",
+                    fontStyleObject
+                );
+            }
+        },
         closeApplicationManage() {
             console.log('应用中心propsdata',this.propData)
             this.convertAttrToStyleObject();
@@ -622,6 +673,7 @@ export default {
             }
             window.IDM.setStyleToPageHead(this.moduleObject.id + ' .idm_applicationcenter_main', styleObject);
         },
+
         /**
          * 通用的url参数对象
          * 所有地址的url参数转换
