@@ -12,7 +12,7 @@
     class="idm_popupWorkbench_box"
   >
     <div
-      v-show="!visible"
+      v-show="!visible && menuList.length > 1 || moduleObject.env === 'develop'"
       :class="
         this.propData.position === 'left'
           ? 'hover_button hover_button_left'
@@ -20,13 +20,22 @@
       "
       :style="
         moduleObject.env === 'develop' && {
-          position: 'static',
-          display: 'inline-block',
+          position: 'static'
         }
       "
       @click="handleVisible"
     >
+      <svg
+        v-if="propData.openIcon && propData.openIcon.length > 0"
+        class="idm_filed_svg_icon"
+        aria-hidden="true"
+      >
+        <use
+          :xlink:href="`#${propData.openIcon && propData.openIcon[0]}`"
+        ></use>
+      </svg>
       <van-icon
+        v-else
         :name="this.propData.position === 'left' ? 'arrow' : 'arrow-left'"
       />
     </div>
@@ -76,7 +85,17 @@
           "
           @click="handleVisible"
         >
+          <svg
+            v-if="propData.closeIcon && propData.closeIcon.length > 0"
+            class="idm_filed_svg_icon"
+            aria-hidden="true"
+          >
+            <use
+              :xlink:href="`#${propData.closeIcon && propData.closeIcon[0]}`"
+            ></use>
+          </svg>
           <van-icon
+            v-else
             :name="this.propData.position === 'left' ? 'arrow-left' : 'arrow'"
           />
         </div>
@@ -101,11 +120,13 @@ export default {
     return {
       moduleObject: {},
       propData: this.$root.propData.compositeAttr || {
-        position: 'left',
-        overlayClose: 'true',
-        height: '24px',
-        width: '24px',
-        dataFiled: 'title'
+        position: "left",
+        overlayClose: "true",
+        height: "32px",
+        width: "32px",
+        dataFiled: "title",
+        menuWidth: "80%",
+        iconSize: "24px",
       },
       visible: false,
       selectedKey: "",
@@ -116,6 +137,7 @@ export default {
   created() {
     this.moduleObject = this.$root.moduleObject;
     this.convertAttrToStyleObject();
+    this.getMenuList();
   },
   methods: {
     /**
@@ -136,7 +158,7 @@ export default {
         return false;
       }
       this.visible = !this.visible;
-      this.visible && this.getMenuList();
+      // this.visible && this.getMenuList();
     },
     onCellChange(item) {
       if (
@@ -148,10 +170,7 @@ export default {
       }
       const layerIndex = IDM.layer.load();
       IDM.http
-        .post(
-          this.propData.changeUrl,
-          { pageId: item.pageId }
-        )
+        .post(this.propData.changeUrl, { pageId: item.pageId })
         .done((res) => {
           IDM.layer.close(layerIndex);
           if (res.type === "success") {
@@ -176,11 +195,11 @@ export default {
       this.activeKey = "";
       this.selectedKey = pageId;
       this.menuList = [];
-      const layerIndex = IDM.layer.load();
+      // const layerIndex = IDM.layer.load();
       IDM.http
         .get(this.propData.dataSourceUrl)
         .done((res) => {
-          IDM.layer.close(layerIndex);
+          // IDM.layer.close(layerIndex);
           if (res.type === "success") {
             this.menuList = res.data.map((item) => ({
               ...item,
@@ -201,6 +220,7 @@ export default {
       let cellSelectedStyleObject = {};
       let popupStyleObject = {};
       let titleStyleObject = {};
+      let iconSizeStyleObject = {};
       for (const key in this.propData) {
         if (this.propData.hasOwnProperty.call(this.propData, key)) {
           const element = this.propData[key];
@@ -227,6 +247,9 @@ export default {
               break;
             case "iconSize":
               btnStyleObject["font-size"] = element;
+              iconSizeStyleObject["font-size"] = element;
+              iconSizeStyleObject["width"] = element;
+              iconSizeStyleObject["height"] = element;
               break;
             case "fontStyle":
               if (element.fontFamily) {
@@ -439,11 +462,20 @@ export default {
         btnStyleObject
       );
       window.IDM.setStyleToPageHead(
+        this.moduleObject.id + " .hover_button .idm_filed_svg_icon",
+        iconSizeStyleObject
+      );
+      window.IDM.setStyleToPageHead(
         "idm_popupWorkbench_popup" + " .hover_button",
         btnStyleObject
       );
       window.IDM.setStyleToPageHead(
-        "idm_popupWorkbench_popup" + " .van-cell.cell_selected .van-cell__title div",
+        "idm_popupWorkbench_popup" + " .hover_button .idm_filed_svg_icon",
+        iconSizeStyleObject
+      );
+      window.IDM.setStyleToPageHead(
+        "idm_popupWorkbench_popup" +
+          " .van-cell.cell_selected .van-cell__title div",
         cellSelectedStyleObject
       );
       window.IDM.setStyleToPageHead(
@@ -468,14 +500,20 @@ export default {
     position: fixed;
     top: 10px;
     background-color: #fff;
+    .idm_filed_svg_icon {
+      font-size: 16px;
+      fill: currentColor;
+      vertical-align: -0.15em;
+      outline: none;
+    }
   }
   .hover_button_left {
-    padding: 0px 6px 0px 0px;
+    padding: 0px 6px 0px 2px;
     border-radius: 0 50% 50% 0;
     left: 0;
   }
   .hover_button_right {
-    padding: 0px 0px 0px 6px;
+    padding: 0px 2px 0px 6px;
     border-radius: 50% 0 0 50%;
     right: 0;
   }
@@ -511,20 +549,25 @@ export default {
   .hover_button {
     display: flex;
     align-items: center;
-    padding: 0px 6px 0px 0px;
     font-size: 16px;
     color: #3976c7;
     position: fixed;
     top: 10px;
     background-color: #fff;
+    .idm_filed_svg_icon {
+      font-size: 16px;
+      fill: currentColor;
+      vertical-align: -0.15em;
+      outline: none;
+    }
   }
   .hover_button_left {
-    padding: 0px 6px 0px 0px;
+    padding: 0px 6px 0px 2px;
     border-radius: 0 50% 50% 0;
     left: 100%;
   }
   .hover_button_right {
-    padding: 0px 0px 0px 6px;
+    padding: 0px 2px 0px 6px;
     border-radius: 50% 0 0 50%;
     right: 100%;
   }

@@ -81,6 +81,24 @@
             }
           ],
           "default": "_self"
+        },
+        {
+          "type": "iconSelect",
+          "layoutType": "inline",
+          "text": "打开图标",
+          "desc": "此为弹窗菜单未打开时的按钮图标，请配合弹出位置调整",
+          "bindKey": "openIcon",
+          "multiple": false,
+          "default": ""
+        },
+        {
+          "type": "iconSelect",
+          "layoutType": "inline",
+          "text": "关闭图标",
+          "desc": "此为弹窗菜单打开后的按钮图标，请配合弹出位置调整",
+          "bindKey": "closeIcon",
+          "multiple": false,
+          "default": ""
         }
       ]
     },
@@ -103,7 +121,9 @@
           "type": "input",
           "layoutType": "inline",
           "text": "边界阴影",
-          "bindKey": "bdShadow"
+          "desc": "可设置弹出菜单和按钮周围的阴影，写法请遵照标准box-shadow样式，示例：0 0 5px #888888",
+          "bindKey": "bdShadow",
+          "placeholder": "0 0 5px #888888"
         },
         {
           "type": "font",
@@ -130,9 +150,9 @@
           "type": "input",
           "layoutType": "inline",
           "text": "菜单宽度",
-          "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
+          "desc": "弹出菜单所占屏幕的宽度，请使用 % 或 px",
           "bindKey": "menuWidth",
-          "default": "40%"
+          "default": "80%"
         },
         {
           "type": "box",
@@ -157,7 +177,7 @@
               "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
               "bindKey": "width",
               "width": "60px",
-              "default": "24px"
+              "default": "28px"
             },
             {
               "type": "input",
@@ -166,7 +186,7 @@
               "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
               "bindKey": "height",
               "width": "60px",
-              "default": "24px"
+              "default": "28px"
             }
           ]
         },
@@ -174,9 +194,9 @@
           "type": "input",
           "layoutType": "inline",
           "text": "图标大小",
-          "desc": "按钮图标大小，使用px单位，比如16px",
+          "desc": "按钮图标大小，使用px单位，比如18px",
           "bindKey": "iconSize",
-          "default": "16px"
+          "default": "18px"
         },
         {
           "type": "box",
