@@ -26,32 +26,28 @@
                     "desc": "提供设置标题、图标样式等属性",
                     "children": [
                         {
+                            "type": "switch",
+                            "layoutType": "inline",
+                            "text": "显示标题",
+                            "desc":"是否显示标题",
+                            "bindKey": "isShowTitle",
+                            "default": "true"
+                        },
+                        {
                             "type": "input",
                             "layoutType": "inline",
                             "text": "标题",
                             "bindKey": "comTitle",
-                            "default": "快捷方式"
+                            "default": "快捷方式",
+                            "display": "@[isShowTitle]"
                         },
                         {
                             "type": "iconSelect",
                             "layoutType": "inline",
                             "text": "标题图标",
                             "bindKey": "titleIconClass",
-                            "default": ""
-                        },
-                        {
-                            "type": "colorPicker",
-                            "layoutType": "inline",
-                            "text": "图标颜色",
-                            "bindKey": "titleIconFontColor",
-                            "default": ""
-                        },
-                        {
-                            "type": "inputNumber",
-                            "layoutType": "inline",
-                            "text": "图标大小",
-                            "bindKey": "titleIconFontSize",
-                            "default": 14
+                            "default": "",
+                            "display": "@[isShowTitle]"
                         }
                     ]
                 },
@@ -75,6 +71,7 @@
                             "layoutType": "inline",
                             "text": "每项高度",
                             "bindKey": "shortItemHeight",
+                            "default": {"inputVal":72.5, "selectVal": "px"},
                             "dictionary": [
                                 {
                                     "label": "px",
@@ -89,63 +86,63 @@
                                     "value": "em"
                                 }
                             ]
+                        }
+                    ]
+                },
+                {
+                    "type": "table",
+                    "layoutType": "inline",
+                    "text": "快捷方式配置",
+                    "bindKey": "shortConfigList",
+                    "tabText": "快捷方式[index]",
+                    "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "名称",
+                            "bindKey": "name",
+                            "desc":"",
+                            "default":"省政府领导分工",
+                            "placeholder":"请输入名称"
                         },
                         {
-                            "type": "table",
+                            "type": "radio",
                             "layoutType": "inline",
-                            "text": "快捷方式配置",
-                            "bindKey": "shortConfigList",
-                            "tabText": "快捷方式[index]",
-                            "children": [
+                            "text": "跳转方式",
+                            "desc":"用于设置是当页跳转还是弹出新窗口两种方式",
+                            "bindKey": "jumpType",
+                            "dictionary": [
                                 {
-                                    "type": "input",
-                                    "layoutType": "inline",
-                                    "text": "名称",
-                                    "bindKey": "name",
-                                    "desc":"",
-                                    "default":"省政府领导分工",
-                                    "placeholder":"请输入名称"
+                                    "label": "当前页",
+                                    "value": "current"
                                 },
                                 {
-                                    "type": "radio",
-                                    "layoutType": "inline",
-                                    "text": "跳转方式",
-                                    "desc":"用于设置是当页跳转还是弹出新窗口两种方式",
-                                    "bindKey": "jumpType",
-                                    "dictionary": [
-                                        {
-                                            "label": "当前页",
-                                            "value": "current"
-                                        },
-                                        {
-                                            "label": "新窗口",
-                                            "value": "new"
-                                        }
-                                    ],
-                                    "default": "current"
-                                },
-                                {
-                                    "type": "textarea",
-                                    "layoutType": "inline",
-                                    "text": "URL",
-                                    "bindKey": "shotUrl",
-                                    "desc":"",
-                                    "placeholder": "跳转链接"
-                                },
-                                {
-                                    "type": "uploadImage",
-                                    "layoutType": "inline",
-                                    "text": "背景图片",
-                                    "bindKey": "bgUrl",
-                                    "placeholder": "可输入图片地址或直接上传",
-                                    "dictionary":["/resource/idm/img/kjyy01.png","/resource/idm/img/kjyy02.png","/resource/idm/img/kjyy03.png"],
-                                    "ctrlAttrObject": {
-                                        "width": "",
-                                        "height": "",
-                                        "cropper": false
-                                    }
+                                    "label": "新窗口",
+                                    "value": "new"
                                 }
-                            ]
+                            ],
+                            "default": "current"
+                        },
+                        {
+                            "type": "textarea",
+                            "layoutType": "inline",
+                            "text": "URL",
+                            "bindKey": "shotUrl",
+                            "desc":"",
+                            "placeholder": "跳转链接"
+                        },
+                        {
+                            "type": "uploadImage",
+                            "layoutType": "inline",
+                            "text": "背景图片",
+                            "bindKey": "bgUrl",
+                            "placeholder": "可输入图片地址或直接上传",
+                            "dictionary":["/resource/idm/img/kjyy01.png","/resource/idm/img/kjyy02.png","/resource/idm/img/kjyy03.png"],
+                            "ctrlAttrObject": {
+                                "width": "",
+                                "height": "",
+                                "cropper": false
+                            }
                         }
                     ]
                 }
@@ -153,10 +150,25 @@
         },
         {
             "type": "group",
-            "text": "样式设置",
-            "desc": "点击？查看样式设置用法指南",
-            "helpUrl": "",
-            "children": [
+            "text": "外层样式设置",
+            "desc": "提供设置内容样式、数量等属性",
+            "children":[
+                {
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "图标颜色",
+                    "bindKey": "titleIconFontColor",
+                    "default": "",
+                    "display": "@[isShowTitle]"
+                },
+                {
+                    "type": "inputNumber",
+                    "layoutType": "inline",
+                    "text": "图标大小",
+                    "bindKey": "titleIconFontSize",
+                    "default": 14,
+                    "display": "@[isShowTitle]"
+                },
                 {
                     "type": "box",
                     "layoutType": "block",
@@ -376,6 +388,233 @@
                     "layoutType": "block",
                     "text": "标题文字",
                     "bindKey": "font"
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "text": "内层样式设置",
+            "desc": "提供设置内容样式、数量等属性",
+            "children":[
+                {
+                    "type": "box",
+                    "layoutType": "block",
+                    "text": "内外边距",
+                    "bindKey": "box2"
+                },
+                {
+                    "type": "inlineGroup",
+                    "text": "宽高",
+                    "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "block",
+                            "text": "宽",
+                            "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
+                            "bindKey": "width2",
+                            "width": "60px",
+                            "default": "auto"
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "block",
+                            "text": "高",
+                            "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
+                            "bindKey": "height2",
+                            "width": "60px",
+                            "default": "auto"
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "text": "背景设置",
+                    "desc": "点击？查看背景设置用法指南",
+                    "helpUrl": "",
+                    "children": [
+                        {
+                            "type": "colorPicker",
+                            "layoutType": "inline",
+                            "text": "背景色",
+                            "bindKey": "bgColor2",
+                            "placeholder": "请选择颜色",
+                            "default": {}
+                        },
+                        {
+                            "type": "uploadImage",
+                            "layoutType": "inline",
+                            "text": "背景图片",
+                            "bindKey": "bgImgUrl2",
+                            "placeholder": "可输入图片地址或直接上传"
+                        },
+                        {
+                            "type": "inputNumberUnit",
+                            "layoutType": "inline",
+                            "text": "横向偏移",
+                            "bindKey": "positionX2",
+                            "dictionary": [
+                                {
+                                    "label": "px",
+                                    "value": "px"
+                                },
+                                {
+                                    "label": "%",
+                                    "value": "%"
+                                },
+                                {
+                                    "label": "em",
+                                    "value": "em"
+                                }
+                            ],
+                            "display": "@[bgImgUrl2]"
+                        },
+                        {
+                            "type": "inputNumberUnit",
+                            "layoutType": "inline",
+                            "text": "纵向偏移",
+                            "bindKey": "positionY2",
+                            "dictionary": [
+                                {
+                                    "label": "px",
+                                    "value": "px"
+                                },
+                                {
+                                    "label": "%",
+                                    "value": "%"
+                                },
+                                {
+                                    "label": "em",
+                                    "value": "em"
+                                }
+                            ],
+                            "display": "@[bgImgUrl2]"
+                        },
+                        {
+                            "type": "radio",
+                            "layoutType": "block",
+                            "text": "背景大小",
+                            "bindKey": "bgSize2",
+                            "dictionary": [
+                                {
+                                    "label": "裁切显示",
+                                    "value": "cover"
+                                },
+                                {
+                                    "label": "完全显示",
+                                    "value": "contain"
+                                },
+                                {
+                                    "label": "自定义",
+                                    "value": "custom"
+                                }
+                            ],
+                            "display": "@[bgImgUrl2]"
+                        },
+                        {
+                            "type": "inputNumberUnit",
+                            "layoutType": "inline",
+                            "text": "宽度",
+                            "bindKey": "bgSizeWidth2",
+                            "dictionary": [
+                                {
+                                    "label": "px",
+                                    "value": "px"
+                                },
+                                {
+                                    "label": "%",
+                                    "value": "%"
+                                },
+                                {
+                                    "label": "em",
+                                    "value": "em"
+                                }
+                            ],
+                            "display": "@[bgSize2=='custom']"
+                        },
+                        {
+                            "type": "inputNumberUnit",
+                            "layoutType": "inline",
+                            "text": "高度",
+                            "bindKey": "bgSizeHeight2",
+                            "dictionary": [
+                                {
+                                    "label": "px",
+                                    "value": "px"
+                                },
+                                {
+                                    "label": "%",
+                                    "value": "%"
+                                },
+                                {
+                                    "label": "em",
+                                    "value": "em"
+                                }
+                            ],
+                            "display": "@[bgSize2=='custom']"
+                        },
+                        {
+                            "type": "radio",
+                            "layoutType": "block",
+                            "text": "平铺模式",
+                            "bindKey": "bgRepeat2",
+                            "dictionary": [
+                                {
+                                    "label": "双向重复",
+                                    "value": "repeat"
+                                },
+                                {
+                                    "label": "水平重复",
+                                    "value": "repeat-x"
+                                },
+                                {
+                                    "label": "垂直重复",
+                                    "value": "repeat-y"
+                                },
+                                {
+                                    "label": "不重复",
+                                    "value": "no-repeat"
+                                },
+                                {
+                                    "label": "继承",
+                                    "value": "inherit"
+                                }
+                            ],
+                            "display": "@[bgImgUrl2]"
+                        },
+                        {
+                            "type": "radio",
+                            "layoutType": "inline",
+                            "text": "背景模式",
+                            "bindKey": "bgAttachment2",
+                            "dictionary": [
+                                {
+                                    "label": "固定",
+                                    "value": "fixed"
+                                },
+                                {
+                                    "label": "滚动",
+                                    "value": "scroll"
+                                },
+                                {
+                                    "label": "继承",
+                                    "value": "inherit"
+                                }
+                            ],
+                            "display": "@[bgImgUrl2]"
+                        }
+                    ]
+                },
+                {
+                    "type": "border",
+                    "layoutType": "block",
+                    "text": "边框",
+                    "bindKey": "border2"
+                },
+                {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "标题文字",
+                    "bindKey": "font2"
                 }
             ]
         }

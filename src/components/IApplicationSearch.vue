@@ -69,7 +69,7 @@ export default {
 
             },
             search_text: '',
-            application_data: [],
+            application_data: [ ],
             is_loading: false
         }
     },
@@ -151,6 +151,8 @@ export default {
          */
         convertAttrToStyleObject() {
             var styleObject = {};
+            var styleObjectButton = {};
+            var styleObjectButtonDisabled = {};
             if (this.propData.bgSize && this.propData.bgSize == "custom") {
                 styleObject["background-size"] = (this.propData.bgSizeWidth ? this.propData.bgSizeWidth.inputVal + this.propData.bgSizeWidth.selectVal : "auto") + " " + (this.propData.bgSizeHeight ? this.propData.bgSizeHeight.inputVal + this.propData.bgSizeHeight.selectVal : "auto")
             } else if (this.propData.bgSize) {
@@ -270,10 +272,59 @@ export default {
                             styleObject["text-align"] = element.fontTextAlign;
                             styleObject["text-decoration"] = element.fontDecoration;
                             break;
+                        case "widthButton":
+                            styleObjectButton[key] = element;
+                            break;
+                        case "heightButton":
+                            styleObjectButton[key] = element;
+                            break;
+                        case "bgColorButton":
+                            if (element && element.hex8) {
+                                styleObjectButton["background-color"] = element.hex8;
+                            }
+                            break;
+                        case "fontButton":
+                            styleObjectButton["font-family"] = element.fontFamily;
+                            if (element.fontColors.hex8) {
+                                styleObjectButton["color"] = element.fontColors.hex8;
+                            }
+                            styleObjectButton["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
+                            styleObjectButton["font-style"] = element.fontStyle;
+                            styleObjectButton["font-size"] = element.fontSize + element.fontSizeUnit;
+                            styleObjectButton["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
+                            styleObjectButton["text-align"] = element.fontTextAlign;
+                            styleObjectButton["text-decoration"] = element.fontDecoration;
+                            break;
+                        case "widthButtonDisabled":
+                            styleObjectButtonDisabled[key] = element;
+                            break;
+                        case "heightButtonDisabled":
+                            styleObjectButtonDisabled[key] = element;
+                            break;
+                        case "bgColorButtonDisabled":
+                            if (element && element.hex8) {
+                                styleObjectButtonDisabled["background-color"] = element.hex8;
+                            }
+                            break;
+                        case "fontButtonDisabled":
+                            styleObjectButtonDisabled["font-family"] = element.fontFamily;
+                            if (element.fontColors.hex8) {
+                                styleObjectButtonDisabled["color"] = element.fontColors.hex8;
+                            }
+                            styleObjectButtonDisabled["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
+                            styleObjectButtonDisabled["font-style"] = element.fontStyle;
+                            styleObjectButtonDisabled["font-size"] = element.fontSize + element.fontSizeUnit;
+                            styleObjectButtonDisabled["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
+                            styleObjectButtonDisabled["text-align"] = element.fontTextAlign;
+                            styleObjectButtonDisabled["text-decoration"] = element.fontDecoration;
+                            break;
+
                     }
                 }
             }
             window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + ' .add', styleObjectButton);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + ' .add_disabled', styleObjectButtonDisabled);
             this.initData();
         },
         
@@ -307,6 +358,8 @@ export default {
                 this.showThisModuleHandle();
             } else if (object.type && object.type == "linkageHideModule") {
                 this.hideThisModuleHandle();
+            } else if ( messageObject.type && messageObject.type == "linkageReload" ) {
+                this.initData()
             }
         },
         /**
