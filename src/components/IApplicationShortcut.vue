@@ -135,7 +135,7 @@ export default {
                         item.key +
                         " #" +
                         (this.moduleObject.packageid || "module_demo") +
-                        " .idm_applicationcenter",
+                        " .idm_applicationshortcut",
                     styleObject
                 );
                 IDM.setStyleToPageHead(
