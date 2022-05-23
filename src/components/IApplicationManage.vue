@@ -162,6 +162,68 @@ export default {
     },
     destroyed() { },
     methods: {
+        /** * 主题颜色 */
+        convertThemeListAttrToStyleObject() {
+            const themeList = this.propData.themeList;
+            console.log(themeList,"themeList")
+            if (!themeList) {
+                return;
+            }
+            const themeNamePrefix =
+                IDM.setting &&
+                IDM.setting.applications &&
+                IDM.setting.applications.themeNamePrefix
+                ? IDM.setting.applications.themeNamePrefix
+                : "idm-theme-";
+            console.log(themeNamePrefix,"themeNamePrefix")
+            for (var i = 0; i < themeList.length; i++) {
+                var item = themeList[i];
+                let styleObject = {
+                    "background-color": item.minorColor ? item.minorColor.hex8 : "",
+                };
+                let fontStyleObject = {
+                    "color": item.mainColor ? item.mainColor.hex8 : "",
+                }
+                
+                IDM.setStyleToPageHead(
+                    "." +
+                        themeNamePrefix +
+                        item.key +
+                        " #" +
+                        (this.moduleObject.packageid || "module_demo") +
+                        " .idm_applicationmanage",
+                    styleObject
+                );
+                IDM.setStyleToPageHead(
+                    "." +
+                        themeNamePrefix +
+                        item.key +
+                        " #" +
+                        (this.moduleObject.packageid || "module_demo") +
+                        " .idm_applicationmanage",
+                    fontStyleObject
+                );
+                IDM.setStyleToPageHead(
+                    "." +
+                        themeNamePrefix +
+                        item.key +
+                        " #" +
+                        (this.moduleObject.packageid || "module_demo") +
+                        " .idm_applicationmanage .van-tab",
+                    fontStyleObject
+                );
+                IDM.setStyleToPageHead(
+                    "." +
+                        themeNamePrefix +
+                        item.key +
+                        " #" +
+                        (this.moduleObject.packageid || "module_demo") +
+                        " .idm_applicationmanage .van-tabs__line",
+                    styleObject
+                );
+                
+            }
+        },
         initDevelopData() {
             if ( this.moduleObject.env == 'develop' ) {
                 this.my_application_data = [
@@ -321,6 +383,7 @@ export default {
          * 把属性转换成样式对象
          */
         convertAttrToStyleObject() {
+            this.convertThemeListAttrToStyleObject()
             var styleObject = {};
             var styleObjectTitle = {};
             var fontStyleObject = {};
@@ -580,12 +643,12 @@ export default {
             .idm_applicationcenter_title_left_text{
                 font-family: PingFangSC-Medium;
                 font-size: 16px;
-                color: #333333;
+                // color: #333333;
                 line-height: 22px;
             }
         }
         .idm_applicationcenter_main{
-            background: white;
+            // background: white;
             .idm_applicationcenter_main_list{
                 position: relative;
                 text-align: center;
@@ -596,7 +659,7 @@ export default {
                 }
                 .idm_applicationcenter_main_list_name{
                     font-size: 12px;
-                    color: #333333;
+                    // color: #333333;
                     text-align: center;
                 }
                 .icon{
@@ -608,7 +671,7 @@ export default {
                     right: 0px;
                     text-align: center;
                     font-size: 12px;
-                    color: white;
+                    // color: white;
                     background: #E81B1B;
                     border-radius: 50%;
                 }

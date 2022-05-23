@@ -89,6 +89,60 @@ export default {
     },
     destroyed() { },
     methods: {
+        /** * 主题颜色 */
+        convertThemeListAttrToStyleObject() {
+            const themeList = this.propData.themeList;
+            console.log(themeList,"themeList")
+            if (!themeList) {
+                return;
+            }
+            const themeNamePrefix =
+                IDM.setting &&
+                IDM.setting.applications &&
+                IDM.setting.applications.themeNamePrefix
+                ? IDM.setting.applications.themeNamePrefix
+                : "idm-theme-";
+            console.log(themeNamePrefix,"themeNamePrefix")
+            for (var i = 0; i < themeList.length; i++) {
+                var item = themeList[i];
+                let styleObject = {
+                    "background-color": item.minorColor ? item.minorColor.hex8 : "",
+                };
+                let fontStyleObject = {
+                    "color": item.mainColor ? item.mainColor.hex8 : "",
+                }
+                let borderStyleObject = {
+                    "border-bottom": '1px solid ' + (item.mainColor ? item.mainColor.hex8 : ""),
+                }
+                IDM.setStyleToPageHead(
+                    "." +
+                        themeNamePrefix +
+                        item.key +
+                        " #" +
+                        (this.moduleObject.packageid || "module_demo") +
+                        " .idm_iapplicationsearch",
+                    styleObject
+                );
+                IDM.setStyleToPageHead(
+                    "." +
+                        themeNamePrefix +
+                        item.key +
+                        " #" +
+                        (this.moduleObject.packageid || "module_demo") +
+                        " .idm_iapplicationsearch",
+                    fontStyleObject
+                );
+                IDM.setStyleToPageHead(
+                    "." +
+                        themeNamePrefix +
+                        item.key +
+                        " #" +
+                        (this.moduleObject.packageid || "module_demo") +
+                        " .idm_iapplicationsearch_main .list",
+                    borderStyleObject
+                );
+            }
+        },
         initDevelopData() {
             if ( this.moduleObject.env == 'develop' ) {
                 this.application_data = [
@@ -150,6 +204,7 @@ export default {
          * 把属性转换成样式对象
          */
         convertAttrToStyleObject() {
+            this.convertThemeListAttrToStyleObject()
             var styleObject = {};
             var styleObjectButton = {};
             var styleObjectButtonDisabled = {};
@@ -273,10 +328,10 @@ export default {
                             styleObject["text-decoration"] = element.fontDecoration;
                             break;
                         case "widthButton":
-                            styleObjectButton[key] = element;
+                            styleObjectButton['width'] = element;
                             break;
                         case "heightButton":
-                            styleObjectButton[key] = element;
+                            styleObjectButton['height'] = element;
                             break;
                         case "bgColorButton":
                             if (element && element.hex8) {
@@ -296,10 +351,10 @@ export default {
                             styleObjectButton["text-decoration"] = element.fontDecoration;
                             break;
                         case "widthButtonDisabled":
-                            styleObjectButtonDisabled[key] = element;
+                            styleObjectButtonDisabled['width'] = element;
                             break;
                         case "heightButtonDisabled":
-                            styleObjectButtonDisabled[key] = element;
+                            styleObjectButtonDisabled['height'] = element;
                             break;
                         case "bgColorButtonDisabled":
                             if (element && element.hex8) {
