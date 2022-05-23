@@ -86,7 +86,7 @@ const todoData = {
     moduleName: '发文',
     readStatus: '1',
     readStatusText: '已读',
-    sendUserName: '李干杰',
+    sendUserName: '张三',
     time: '2022-04-21 09:23',
     title: '关于印发《山东省职业卫生技术服务机构乙级资质认可程序》的通知'
   },{
