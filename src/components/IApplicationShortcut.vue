@@ -107,6 +107,48 @@ export default {
     },
     destroyed() { },
     methods: {
+        /** * 主题颜色 */
+        convertThemeListAttrToStyleObject() {
+            const themeList = this.propData.themeList;
+            console.log(themeList,"themeList")
+            if (!themeList) {
+                return;
+            }
+            const themeNamePrefix =
+                IDM.setting &&
+                IDM.setting.applications &&
+                IDM.setting.applications.themeNamePrefix
+                ? IDM.setting.applications.themeNamePrefix
+                : "idm-theme-";
+            console.log(themeNamePrefix,"themeNamePrefix")
+            for (var i = 0; i < themeList.length; i++) {
+                var item = themeList[i];
+                let styleObject = {
+                    "background-color": item.minorColor ? item.minorColor.hex8 : "",
+                };
+                let fontStyleObject = {
+                    "color": item.mainColor ? item.mainColor.hex8 : "",
+                }
+                IDM.setStyleToPageHead(
+                    "." +
+                        themeNamePrefix +
+                        item.key +
+                        " #" +
+                        (this.moduleObject.packageid || "module_demo") +
+                        " .idm_applicationcenter",
+                    styleObject
+                );
+                IDM.setStyleToPageHead(
+                    "." +
+                        themeNamePrefix +
+                        item.key +
+                        " #" +
+                        (this.moduleObject.packageid || "module_demo") +
+                        " .idm_applicationcenter_main_list",
+                    fontStyleObject
+                );
+            }
+        },
         watchApplicationChange(value,old) {
             console.log('value',value)
             console.log('old',old)
@@ -281,6 +323,7 @@ export default {
          * 把属性转换成样式对象
          */
         convertAttrToStyleObject() {
+            this.convertThemeListAttrToStyleObject()
             var styleObject = {};
             var fontStyleObject = {};
             if (this.propData.bgSize && this.propData.bgSize == "custom") {
