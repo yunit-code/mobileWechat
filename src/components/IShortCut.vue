@@ -26,14 +26,48 @@
       </div>
       </div>
       <div class="idm_shortcut_cont">
-        <ul class="short-box">
-          <li v-for="(v,i) in propData.shortConfigList" :key="i" class="short-item"
-          :style="{width: `${100/propData.maxNumber}%`}">
-            <div class="short-bg" :style="{'backgroundImage': v.bgUrl ? 'url('+IDM.url.getWebPath(v.bgUrl)+')' : 'linear-gradient(to right,#f4b0b0,#f4acac,#f18c8b)', 'height': propData.shortItemHeight.inputVal+propData.shortItemHeight.selectVal}" @click="goUrl(v)">
-              <span>{{v.name}}</span>
-            </div>
-          </li>
-        </ul>
+        <template v-if="propData.shortCutStyle === 'default'">
+          <ul class="short-box">
+            <li v-for="(v,i) in propData.shortConfigList" :key="i" class="short-item"
+            :style="{width: `${100/propData.maxNumber}%`}">
+              <div class="short-bg" :style="{'backgroundImage': v.bgUrl ? 'url('+IDM.url.getWebPath(v.bgUrl)+')' : 'linear-gradient(to right,#f4b0b0,#f4acac,#f18c8b)', 'height': propData.shortItemHeight.inputVal+propData.shortItemHeight.selectVal}" @click="goUrl(v)">
+                <span>{{v.name}}</span>
+                <div v-if="v.showTodoNumber && v.todoNumber" class="number">{{ v.todoNumber }}</div>
+              </div>
+            </li>
+          </ul>
+        </template>
+        <template v-else-if="propData.shortCutStyle === 'default2'">
+          <van-grid :border="false" :column-num="propData.maxNumber">
+            <van-grid-item v-for="(v,i) in propData.shortConfigList" :key="i">
+              <div @click="goUrl(v)" class="idm_applicationcenter_main_list">
+                <div class="img_box">
+                  <img v-if="v.bgUrl" :src="IDM.url.getWebPath(v.bgUrl)">
+                  <svg-icon v-else icon-class="application" />
+                  <div v-if="v.showTodoNumber && v.todoNumber" class="number">{{ v.todoNumber }}</div>
+                </div>
+                <div class="idm_applicationcenter_main_list_name">{{ v.name }}</div>
+              </div>
+            </van-grid-item>
+          </van-grid>
+        </template>
+        <template v-else>
+          <van-grid :border="false" :column-num="propData.maxNumber">
+            <van-grid-item v-for="(v,i) in propData.shortConfigList" :key="i">
+              <div @click="goUrl(v)" class="idm_applicationcenter_main_list-three">
+                <div class="img_box">
+                  <img v-if="v.bgUrl" :src="IDM.url.getWebPath(v.bgUrl)">
+                  <svg-icon v-else icon-class="application" />
+                  <div v-if="v.showTodoNumber && v.todoNumber" class="number">{{ v.todoNumber }}</div>
+                </div>
+                <div class="idm_applicationcenter_main_list_name">
+                  <div class="empty-view"></div>
+                  <div class="tit">{{ v.name }}</div>
+                </div>
+              </div>
+            </van-grid-item>
+          </van-grid>
+        </template>
       </div>
     </div>
     
@@ -41,14 +75,23 @@
 </template>
 
 <script>
+import { Grid, GridItem, Icon } from 'vant';
+import 'vant/lib/grid/style';
+import 'vant/lib/icon/style';
 export default {
   name: 'IShortCut',
+  components: {
+    [Grid.name]: Grid,
+    [GridItem.name]: GridItem,
+    [Icon.name]: Icon
+  },
   data(){
     return {
       moduleObject:{},
       propData:this.$root.propData.compositeAttr||{
         isShowTitle: true,
-        shortItemHeight: {'inputVal':'72.5', 'selectVal': 'px'}
+        shortItemHeight: {'inputVal':'72.5', 'selectVal': 'px'},
+        shortCutStyle: "default"
       }
     }
   },
@@ -63,22 +106,29 @@ export default {
         isShowTitle: true,
         comTitle: '快捷方式',
         showType: 'else',
+        shortCutStyle: "default",
         maxNumber: 2,
-        shortItemHeight: '72.5px',
+        shortItemHeight: {'inputVal':'72.5', 'selectVal': 'px'},
         jumpType: 'new',
         shortConfigList:[
           {
             bgUrl: '',
             name: '省政府领导分工',
-            shotUrl: 'https://www.baidu.com/'
+            shotUrl: 'https://www.baidu.com/',
+            showTodoNumber: true,
+            todoNumber: 10
           },
           {
             bgUrl: '',
-            name: 'test1'
+            name: 'test1',
+            showTodoNumber: true,
+            todoNumber: 10
           },
           {
             bgUrl: '',
-            name: 'test2'
+            name: 'test2',
+            showTodoNumber: true,
+            todoNumber: 10
           }
         ]
       }
@@ -281,7 +331,6 @@ export default {
       if(this.propData.positionY2&&this.propData.positionY2.inputVal){
         styleObject["background-position-y"]=this.propData.positionY2.inputVal+this.propData.positionY2.selectVal;
       }
-      styleObject["font-size"] = '16px';
       styleObject["font-weight"]=800;
       styleObject["color"]='#333333';
       for (const key in this.propData) {
@@ -546,16 +595,110 @@ export default {
   }
   .idm_shortcut_cont {
     font-size: 15px;
+    ::v-deep .van-grid-item__content{
+      padding: 7px 3px;
+    }
+    .idm_applicationcenter_main_list{
+      position: relative;
+      text-align: center;
+      .img_box,img,svg{
+          width: 40px;
+          height: 40px;
+          margin: 0 auto 2.5px auto;
+      }
+      .img_box{
+          position: relative;
+      }
+      .number{
+          width: 15px;
+          height: 15px;
+          line-height: 15px;
+          position: absolute;
+          top: -7px;
+          right: -7px;
+          text-align: center;
+          font-size: 12px;
+          overflow: hidden;
+          color: white;
+          background: #E81B1B;
+          border-radius: 50%;
+      }
+    }
+    /* 样式三 */
+    .idm_applicationcenter_main_list-three {
+      position: relative;
+      .idm_applicationcenter_main_list_name {
+        width: 100%;
+        text-align: right;
+        background-color: #ffffff;
+        border-radius: 5px;
+        padding: 0px 10px;
+        display: flex;
+        margin-top: 10px;
+        .empty-view {
+          width: 40px;
+          height: 40px;
+        }
+        .tit {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+        }
+      }
+      .img_box,img,svg{
+          width: 40px;
+          height: 40px;
+          margin: 0 auto 2.5px auto;
+      }
+      .img_box {
+          width: 40px;
+          height: 40px;
+          margin: 0 auto 2.5px auto;
+          position: absolute;
+          bottom: 10px;
+          left: 10px;
+      }
+      .number{
+          width: 15px;
+          height: 15px;
+          line-height: 15px;
+          position: absolute;
+          top: -7px;
+          right: -7px;
+          text-align: center;
+          font-size: 12px;
+          overflow: hidden;
+          color: white;
+          background: #E81B1B;
+          border-radius: 50%;
+      }
+    }
   }
   .short-box{
     display: flex;
     flex-wrap: wrap;
     // margin: 0 -5px;
     .short-item{
-      // font-size: 15px;
+      position: relative;
       padding: 0 5px;
       text-align: center;
       margin-bottom: 10px;
+      .number {
+        width: 15px;
+        height: 15px;
+        line-height: 15px;
+        position: absolute;
+        top: -7px;
+        right: 5px;
+        text-align: center;
+        font-size: 12px;
+        overflow: hidden;
+        color: white;
+        background: #E81B1B;
+        border-radius: 50%;
+      }
     }
     .short-bg{
       border-radius: 6px;

@@ -57,6 +57,28 @@
                     "desc": "提供设置内容样式、数量等属性",
                     "children": [
                         {
+                            "type": "select",
+                            "layoutType": "inline",
+                            "text": "快捷方式样式",
+                            "bindKey": "shortCutStyle",
+                            "desc": "设置点击轮播图片时链接跳转方式",
+                            "dictionary": [
+                                {
+                                    "label": "样式一",
+                                    "value": "default"
+                                },
+                                {
+                                    "label": "样式二",
+                                    "value": "default2"
+                                },
+                                {
+                                    "label": "样式三",
+                                    "value": "default3"
+                                }
+                            ],
+                            "default": "default"
+                        },
+                        {
                             "type": "slider",
                             "layoutType": "inline",
                             "text": "每行展示",
@@ -85,7 +107,8 @@
                                     "label": "em",
                                     "value": "em"
                                 }
-                            ]
+                            ],
+                            "display": "@[shortCutStyle=='default']"
                         }
                     ]
                 },
@@ -137,12 +160,37 @@
                             "text": "背景图片",
                             "bindKey": "bgUrl",
                             "placeholder": "可输入图片地址或直接上传",
-                            "dictionary":["/resource/idm/img/kjyy01.png","/resource/idm/img/kjyy02.png","/resource/idm/img/kjyy03.png"],
+                            "dictionary":[
+                                "/resource/idm/img/6.png",
+                                "/resource/idm/img/12.png",
+                                "/resource/idm/img/14.png",
+                                "/resource/idm/img/19.png",
+                                "/resource/idm/img/bj.png",
+                                "/resource/idm/img/dywj.png",
+                                "/resource/idm/img/rcap.png",
+                                "/resource/idm/img/wdzx.png",
+                                "/resource/idm/img/wjjh.png",
+                                "/resource/idm/img/yqfk.png",
+                                "/resource/idm/img/zbzs.png",
+                                "/resource/idm/img/zxzys.png",
+                                "/resource/idm/img/zyzx.png",
+                                "/resource/idm/img/kjyy01.png",
+                                "/resource/idm/img/kjyy02.png",
+                                "/resource/idm/img/kjyy03.png"
+                            ],
                             "ctrlAttrObject": {
                                 "width": "",
                                 "height": "",
                                 "cropper": false
                             }
+                        },
+                        {
+                            "type": "switch",
+                            "layoutType": "inline",
+                            "text": "显示角标",
+                            "desc":"设置代办列表角标是否显示",
+                            "bindKey": "showTodoNumber",
+                            "default": false
                         }
                     ]
                 }
