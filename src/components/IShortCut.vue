@@ -16,7 +16,7 @@
       idm-container-index  组件的内部容器索引，不重复唯一且不变，必选
     -->
     <div class="com-box">
-      <div class="com-title">
+      <div class="com-title" v-if="propData.isShowTitle">
       <span style="margin-right: 5px">{{propData.comTitle}}</span>
       <div class="idm_applicationcenter_title_left_icon">
           <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm_filed_svg_icon" aria-hidden="true" >
@@ -25,14 +25,16 @@
           <svg-icon v-else icon-class="application-icon" />
       </div>
       </div>
-      <ul class="short-box">
-        <li v-for="(v,i) in propData.shortConfigList" :key="i" class="short-item"
-        :style="{width: `${100/propData.maxNumber}%`}">
-          <div class="short-bg" :style="{'backgroundImage': v.bgUrl ? 'url('+IDM.url.getWebPath(v.bgUrl)+')' : 'linear-gradient(to right,#f4b0b0,#f4acac,#f18c8b)', 'height': propData.shortItemHeight}" @click="goUrl(v)">
-            <span>{{v.name}}</span>
-          </div>
-        </li>
-      </ul>
+      <div class="idm_shortcut_cont">
+        <ul class="short-box">
+          <li v-for="(v,i) in propData.shortConfigList" :key="i" class="short-item"
+          :style="{width: `${100/propData.maxNumber}%`}">
+            <div class="short-bg" :style="{'backgroundImage': v.bgUrl ? 'url('+IDM.url.getWebPath(v.bgUrl)+')' : 'linear-gradient(to right,#f4b0b0,#f4acac,#f18c8b)', 'height': propData.shortItemHeight.inputVal+propData.shortItemHeight.selectVal}" @click="goUrl(v)">
+              <span>{{v.name}}</span>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
     
   </div>
@@ -45,7 +47,8 @@ export default {
     return {
       moduleObject:{},
       propData:this.$root.propData.compositeAttr||{
-        shortItemHeight: '72.5px'
+        isShowTitle: true,
+        shortItemHeight: {'inputVal':'72.5', 'selectVal': 'px'}
       }
     }
   },
@@ -54,8 +57,10 @@ export default {
   created() {
     this.moduleObject = this.$root.moduleObject
     this.convertAttrToStyleObject();
+    this.convertAttrToStyleObject2();
     if(this.moduleObject.env=="develop" || !IDM.env_dev){
       this.propData = {
+        isShowTitle: true,
         comTitle: '快捷方式',
         showType: 'else',
         maxNumber: 2,
@@ -92,8 +97,8 @@ export default {
     // 快捷方式跳转
     goUrl(v) {
       if (v.shotUrl) {
-        this.propData.jumpType === 'new' &&  window.open(IDM.url.getWebPath(v.shotUrl))
-        this.propData.jumpType === 'current' && this.moduleObject.env=="production" && (window.location.href=IDM.url.getWebPath(v.shotUrl))
+        v.jumpType === 'new' &&  window.open(IDM.url.getWebPath(v.shotUrl))
+        v.jumpType === 'current' && this.moduleObject.env=="production" && (window.location.href=IDM.url.getWebPath(v.shotUrl))
       }
     },
     /**
@@ -102,6 +107,7 @@ export default {
     propDataWatchHandle(propData){
       this.propData = propData.compositeAttr||{};
       this.convertAttrToStyleObject();
+      this.convertAttrToStyleObject2();
     },
     /**
      * 把属性转换成样式对象
@@ -256,6 +262,152 @@ export default {
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id,styleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_icon .idm_filed_svg_icon", styleObjectTitleIcon);
+      this.initData();
+    },
+    
+    /**
+     * 把属性转换成样式对象
+     */
+    convertAttrToStyleObject2(){
+      var styleObject = {};
+      if(this.propData.bgSize2&&this.propData.bgSize2=="custom"){
+        styleObject["background-size"]=(this.propData.bgSizeWidth2?this.propData.bgSizeWidth2.inputVal+this.propData.bgSizeWidth2.selectVal:"auto")+" "+(this.propData.bgSizeHeight2?this.propData.bgSizeHeight2.inputVal+this.propData.bgSizeHeight2.selectVal:"auto")
+      }else if(this.propData.bgSize2){
+        styleObject["background-size"]=this.propData.bgSize2;
+      }
+      if(this.propData.positionX2&&this.propData.positionX2.inputVal){
+        styleObject["background-position-x"]=this.propData.positionX2.inputVal+this.propData.positionX2.selectVal;
+      }
+      if(this.propData.positionY2&&this.propData.positionY2.inputVal){
+        styleObject["background-position-y"]=this.propData.positionY2.inputVal+this.propData.positionY2.selectVal;
+      }
+      styleObject["font-size"] = '16px';
+      styleObject["font-weight"]=800;
+      styleObject["color"]='#333333';
+      for (const key in this.propData) {
+        if (this.propData.hasOwnProperty.call(this.propData, key)) {
+          const element = this.propData[key];
+          if(!element&&element!==false&&element!=0){
+            continue;
+          }
+          switch (key) {
+            case "width2":
+            case "height2":
+              styleObject[key]=element;
+              break;
+            case "bgColor2":
+              if(element&&element.hex8){
+                styleObject["background-color"]=element.hex8;
+              }
+              break;
+            case "box2":
+              if(element.marginTopVal){
+                styleObject["margin-top"]=`${element.marginTopVal}`;
+              }
+              if(element.marginRightVal){
+                styleObject["margin-right"]=`${element.marginRightVal}`;
+              }
+              if(element.marginBottomVal){
+                styleObject["margin-bottom"]=`${element.marginBottomVal}`;
+              }
+              if(element.marginLeftVal){
+                styleObject["margin-left"]=`${element.marginLeftVal}`;
+              }
+              if(element.paddingTopVal){
+                styleObject["padding-top"]=`${element.paddingTopVal}`;
+              }
+              if(element.paddingRightVal){
+                styleObject["padding-right"]=`${element.paddingRightVal}`;
+              }
+              if(element.paddingBottomVal){
+                styleObject["padding-bottom"]=`${element.paddingBottomVal}`;
+              }
+              if(element.paddingLeftVal){
+                styleObject["padding-left"]=`${element.paddingLeftVal}`;
+              }
+              break;
+            case "bgImgUrl2":
+              styleObject["background-image"]=`url(${window.IDM.url.getWebPath(element)})`;
+              break;
+            case "positionX2":
+              //背景横向偏移
+              
+              break;
+            case "positionY2":
+              //背景纵向偏移
+              
+              break;
+            case "bgRepeat2":
+              //平铺模式
+                styleObject["background-repeat"]=element;
+              break;
+            case "bgAttachment2":
+              //背景模式
+                styleObject["background-attachment"]=element;
+              break;
+            case "border2":
+              if(element.border.top.width>0){
+                styleObject["border-top-width"]=element.border.top.width+element.border.top.widthUnit;
+                styleObject["border-top-style"]=element.border.top.style;
+                if(element.border.top.colors.hex8){
+                  styleObject["border-top-color"]=element.border.top.colors.hex8;
+                }
+              }
+              if(element.border.right.width>0){
+                styleObject["border-right-width"]=element.border.right.width+element.border.right.widthUnit;
+                styleObject["border-right-style"]=element.border.right.style;
+                if(element.border.right.colors.hex8){
+                  styleObject["border-right-color"]=element.border.right.colors.hex8;
+                }
+              }
+              if(element.border.bottom.width>0){
+                styleObject["border-bottom-width"]=element.border.bottom.width+element.border.bottom.widthUnit;
+                styleObject["border-bottom-style"]=element.border.bottom.style;
+                if(element.border.bottom.colors.hex8){
+                  styleObject["border-bottom-color"]=element.border.bottom.colors.hex8;
+                }
+              }
+              if(element.border.left.width>0){
+                styleObject["border-left-width"]=element.border.left.width+element.border.left.widthUnit;
+                styleObject["border-left-style"]=element.border.left.style;
+                if(element.border.left.colors.hex8){
+                  styleObject["border-left-color"]=element.border.left.colors.hex8;
+                }
+              }
+              
+              styleObject["border-top-left-radius"]=element.radius.leftTop.radius+element.radius.leftTop.radiusUnit;
+              styleObject["border-top-right-radius"]=element.radius.rightTop.radius+element.radius.rightTop.radiusUnit;
+              styleObject["border-bottom-left-radius"]=element.radius.leftBottom.radius+element.radius.leftBottom.radiusUnit;
+              styleObject["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
+              break;
+            case "font2":
+              styleObject["font-family"]=element.fontFamily;
+              if(element.fontColors.hex8){
+                styleObject["color"]=element.fontColors.hex8;
+              }
+              styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
+              styleObject["font-style"]=element.fontStyle;
+              styleObject["font-size"]=element.fontSize+element.fontSizeUnit;
+              styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
+              styleObject["text-align"]=element.fontTextAlign;
+              styleObject["text-decoration"]=element.fontDecoration;
+              break;
+            case "cardFont2":
+              styleObject["font-family"]=element.fontFamily;
+              if(element.fontColors.hex8){
+                styleObject["color"]=element.fontColors.hex8;
+              }
+              styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
+              styleObject["font-style"]=element.fontStyle;
+              styleObject["font-size"]=element.fontSize+element.fontSizeUnit;
+              styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
+              styleObject["text-align"]=element.fontTextAlign;
+              styleObject["text-decoration"]=element.fontDecoration;
+              break;
+          }
+        }
+      }
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_shortcut_cont", styleObject);
       this.initData();
     },
     /**
