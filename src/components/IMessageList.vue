@@ -38,7 +38,7 @@
           <div v-for="(item, index) in propData.messageTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.tabTitle}}</div>
         </div>
       </div>
-      <template v-if="!pageLoading">
+      <div v-if="!pageLoading" class="idm-message-list-box-container">
         <ul class="idm-message-list-box-list" v-if="propData.compStyle === 'styleFour' || propData.compStyle === 'styleOne'">
           <li class="d-flex align-c" v-for="(item, index) in messageData.list" :key="index" @click="handleClickItem(item)">
             <!-- <span class="idm-message-list-box-list-style-square" v-if="propData.compStyle === 'styleFour'"></span>
@@ -61,7 +61,7 @@
             </div>
           </li>
         </ul>
-      </template>
+      </div>
       <van-loading v-if="pageLoading" type="circular" vertical>加载中...</van-loading>
       <div v-if="!isFirst && ( !messageData.list || messageData.list.length === 0)" class="idm-message-list-box-empty">
         <van-empty :description="propData.emptyText || '数据为空'" image-size="60"/>
@@ -202,6 +202,7 @@ export default {
       let styleObjectTitleIcon = {}
       let titleFontStyleObj = {}
       let titleFontStyleActiveObj = {}
+      let subBoxStyleObj = {}
       if(this.propData.bgSize&&this.propData.bgSize=="custom"){
         styleObject["background-size"]=(this.propData.bgSizeWidth?this.propData.bgSizeWidth.inputVal+this.propData.bgSizeWidth.selectVal:"auto")+" "+(this.propData.bgSizeHeight?this.propData.bgSizeHeight.inputVal+this.propData.bgSizeHeight.selectVal:"auto")
       }else if(this.propData.bgSize){
@@ -285,6 +286,75 @@ export default {
               styleObject["border-bottom-left-radius"]=element.radius.leftBottom.radius+element.radius.leftBottom.radiusUnit;
               styleObject["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
               break;
+            case "subWidth":
+            case "subHeight":
+              subBoxStyleObj[key]=element;
+              break;
+            case "subBgColor":
+              if(element&&element.hex8){
+                subBoxStyleObj["background-color"]=element.hex8;
+              }
+              break;
+            case "subBox":
+              if(element.marginTopVal){
+                subBoxStyleObj["margin-top"]=`${element.marginTopVal}`;
+              }
+              if(element.marginRightVal){
+                subBoxStyleObj["margin-right"]=`${element.marginRightVal}`;
+              }
+              if(element.marginBottomVal){
+                subBoxStyleObj["margin-bottom"]=`${element.marginBottomVal}`;
+              }
+              if(element.marginLeftVal){
+                subBoxStyleObj["margin-left"]=`${element.marginLeftVal}`;
+              }
+              if(element.paddingTopVal){
+                subBoxStyleObj["padding-top"]=`${element.paddingTopVal}`;
+              }
+              if(element.paddingRightVal){
+                subBoxStyleObj["padding-right"]=`${element.paddingRightVal}`;
+              }
+              if(element.paddingBottomVal){
+                subBoxStyleObj["padding-bottom"]=`${element.paddingBottomVal}`;
+              }
+              if(element.paddingLeftVal){
+                subBoxStyleObj["padding-left"]=`${element.paddingLeftVal}`;
+              }
+              break;
+            case "subBorder":
+              if(element.border.top.width>0){
+                subBoxStyleObj["border-top-width"]=element.border.top.width+element.border.top.widthUnit;
+                subBoxStyleObj["border-top-style"]=element.border.top.style;
+                if(element.border.top.colors.hex8){
+                  subBoxStyleObj["border-top-color"]=element.border.top.colors.hex8;
+                }
+              }
+              if(element.border.right.width>0){
+                subBoxStyleObj["border-right-width"]=element.border.right.width+element.border.right.widthUnit;
+                subBoxStyleObj["border-right-style"]=element.border.right.style;
+                if(element.border.right.colors.hex8){
+                  subBoxStyleObj["border-right-color"]=element.border.right.colors.hex8;
+                }
+              }
+              if(element.border.bottom.width>0){
+                subBoxStyleObj["border-bottom-width"]=element.border.bottom.width+element.border.bottom.widthUnit;
+                subBoxStyleObj["border-bottom-style"]=element.border.bottom.style;
+                if(element.border.bottom.colors.hex8){
+                  subBoxStyleObj["border-bottom-color"]=element.border.bottom.colors.hex8;
+                }
+              }
+              if(element.border.left.width>0){
+                subBoxStyleObj["border-left-width"]=element.border.left.width+element.border.left.widthUnit;
+                subBoxStyleObj["border-left-style"]=element.border.left.style;
+                if(element.border.left.colors.hex8){
+                  subBoxStyleObj["border-left-color"]=element.border.left.colors.hex8;
+                }
+              }
+              subBoxStyleObj["border-top-left-radius"]=element.radius.leftTop.radius+element.radius.leftTop.radiusUnit;
+              subBoxStyleObj["border-top-right-radius"]=element.radius.rightTop.radius+element.radius.rightTop.radiusUnit;
+              subBoxStyleObj["border-bottom-left-radius"]=element.radius.leftBottom.radius+element.radius.leftBottom.radiusUnit;
+              subBoxStyleObj["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
+              break;
             case "titleIconFontColor":
                 styleObjectTitleIcon["fill"] = element.hex;
                 break
@@ -321,6 +391,9 @@ export default {
         }
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id,styleObject);
+      if(this.propData.showTab){
+        window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-container", subBoxStyleObj);
+      }
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-title .idm-message-list-box-title-icon", styleObjectTitleIcon);
       // 区分样式风格设置css
       if(this.propData.compStyle === 'styleFour'){

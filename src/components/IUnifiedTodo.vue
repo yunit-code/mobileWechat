@@ -206,6 +206,7 @@ export default {
       let emptyBoxHeightObj = {}
       let readIconObj = {}
       let noReadIconObj = {}
+      let subBoxStyleObj = {}
       if(this.propData.bgSize&&this.propData.bgSize=="custom"){
         styleObject["background-size"]=(this.propData.bgSizeWidth?this.propData.bgSizeWidth.inputVal+this.propData.bgSizeWidth.selectVal:"auto")+" "+(this.propData.bgSizeHeight?this.propData.bgSizeHeight.inputVal+this.propData.bgSizeHeight.selectVal:"auto")
       }else if(this.propData.bgSize){
@@ -258,6 +259,75 @@ export default {
               if(element.paddingLeftVal){
                 styleObject["padding-left"]=`${element.paddingLeftVal}`;
               }
+              break;
+            case "subWidth":
+            case "subHeight":
+              subBoxStyleObj[key]=element;
+              break;
+            case "subBgColor":
+              if(element&&element.hex8){
+                subBoxStyleObj["background-color"]=element.hex8;
+              }
+              break;
+            case "subBox":
+              if(element.marginTopVal){
+                subBoxStyleObj["margin-top"]=`${element.marginTopVal}`;
+              }
+              if(element.marginRightVal){
+                subBoxStyleObj["margin-right"]=`${element.marginRightVal}`;
+              }
+              if(element.marginBottomVal){
+                subBoxStyleObj["margin-bottom"]=`${element.marginBottomVal}`;
+              }
+              if(element.marginLeftVal){
+                subBoxStyleObj["margin-left"]=`${element.marginLeftVal}`;
+              }
+              if(element.paddingTopVal){
+                subBoxStyleObj["padding-top"]=`${element.paddingTopVal}`;
+              }
+              if(element.paddingRightVal){
+                subBoxStyleObj["padding-right"]=`${element.paddingRightVal}`;
+              }
+              if(element.paddingBottomVal){
+                subBoxStyleObj["padding-bottom"]=`${element.paddingBottomVal}`;
+              }
+              if(element.paddingLeftVal){
+                subBoxStyleObj["padding-left"]=`${element.paddingLeftVal}`;
+              }
+              break;
+            case "subBorder":
+              if(element.border.top.width>0){
+                subBoxStyleObj["border-top-width"]=element.border.top.width+element.border.top.widthUnit;
+                subBoxStyleObj["border-top-style"]=element.border.top.style;
+                if(element.border.top.colors.hex8){
+                  subBoxStyleObj["border-top-color"]=element.border.top.colors.hex8;
+                }
+              }
+              if(element.border.right.width>0){
+                subBoxStyleObj["border-right-width"]=element.border.right.width+element.border.right.widthUnit;
+                subBoxStyleObj["border-right-style"]=element.border.right.style;
+                if(element.border.right.colors.hex8){
+                  subBoxStyleObj["border-right-color"]=element.border.right.colors.hex8;
+                }
+              }
+              if(element.border.bottom.width>0){
+                subBoxStyleObj["border-bottom-width"]=element.border.bottom.width+element.border.bottom.widthUnit;
+                subBoxStyleObj["border-bottom-style"]=element.border.bottom.style;
+                if(element.border.bottom.colors.hex8){
+                  subBoxStyleObj["border-bottom-color"]=element.border.bottom.colors.hex8;
+                }
+              }
+              if(element.border.left.width>0){
+                subBoxStyleObj["border-left-width"]=element.border.left.width+element.border.left.widthUnit;
+                subBoxStyleObj["border-left-style"]=element.border.left.style;
+                if(element.border.left.colors.hex8){
+                  subBoxStyleObj["border-left-color"]=element.border.left.colors.hex8;
+                }
+              }
+              subBoxStyleObj["border-top-left-radius"]=element.radius.leftTop.radius+element.radius.leftTop.radiusUnit;
+              subBoxStyleObj["border-top-right-radius"]=element.radius.rightTop.radius+element.radius.rightTop.radiusUnit;
+              subBoxStyleObj["border-bottom-left-radius"]=element.radius.leftBottom.radius+element.radius.leftBottom.radiusUnit;
+              subBoxStyleObj["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
               break;
             case "bgImgUrl":
               styleObject["background-image"]=`url(${window.IDM.url.getWebPath(element)})`;
@@ -378,15 +448,59 @@ export default {
         }
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id,styleObject);
+      if(this.propData.showTitle) {
+        window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-overflow", subBoxStyleObj);
+      }
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-title-icon", styleObjectTitleIcon);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-title-font", titleFontStyleObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-content", todoFontStyleObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-hasRead", readFontStyleObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-empty", emptyBoxHeightObj);
-
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-icon-has-read", readIconObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-icon-no-read", noReadIconObj);
       this.initData();
+    },
+    /**
+     * 主题颜色
+     */
+    convertThemeListAttrToStyleObject() {
+      var themeList = this.propData.themeList;
+      if (!themeList) {
+        return;
+      }
+      const themeNamePrefix =
+        IDM.setting &&
+        IDM.setting.applications &&
+        IDM.setting.applications.themeNamePrefix
+          ? IDM.setting.applications.themeNamePrefix
+          : "idm-theme-";
+      for (var i = 0; i < themeList.length; i++) {
+        var item = themeList[i];
+        //item.key：为主题样式的key
+        //item.mainColor：主要颜色值
+        //item.minorColor：次要颜色值
+        // if(item.key!=IDM.theme.getCurrentThemeInfo()){
+        //     //此处比对是不渲染输出不用的样式，如果页面会刷新就可以把此处放开
+        //     continue;
+        // }
+        let cssObject_color_main = {
+          color: item.mainColor ? item.mainColor.hex8 : "",
+        };
+        IDM.setStyleToPageHead(
+          "." +
+            themeNamePrefix +
+            item.key +
+            " #" +
+            (this.moduleObject.packageid || "module_demo") +
+            " .ant-tabs-nav .ant-tabs-tab-active,."+
+            themeNamePrefix +
+            item.key +
+            " #" +
+            (this.moduleObject.packageid || "module_demo") +
+            " .ant-tabs-nav .ant-tabs-tab:hover",
+          cssObject_color_main
+        );
+      }
     },
     /**
      * 通用的url参数对象
