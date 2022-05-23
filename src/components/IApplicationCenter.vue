@@ -579,6 +579,8 @@ export default {
                 this.showThisModuleHandle();
             } else if (messageObject.type && messageObject.type == "linkageHideModule") {
                 this.hideThisModuleHandle();
+            } else if ( messageObject.type && messageObject.type == "linkageReload" ) {
+                this.initApplicationData()
             }
             // 配置了刷新KEY，消息类型是websocket，收到的消息对象有message并不为空
             if(this.propData.messageRefreshKey && messageObject.type === 'websocket' && messageObject.message){
@@ -632,6 +634,10 @@ export default {
 </script>
 <style lang="scss">
 .idm_applicationcenter {
+    font-size: 12px;
+    font-family: PingFangSC-Regular;
+    color: #333333;
+    text-align: center;
     border-radius: 10px;
     .idm_applicationcenter_title{
         padding: 10px 10px 7px 10px;
@@ -659,12 +665,6 @@ export default {
             }
             .img_box{
                 position: relative;
-            }
-            .idm_applicationcenter_main_list_name{
-                font-size: 12px;
-                font-family: PingFangSC-Regular;
-                color: #333333;
-                text-align: center;
             }
             .number{
                 width: 15px;

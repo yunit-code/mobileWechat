@@ -80,7 +80,22 @@
                             "layoutType": "inline",
                             "text": "应用图标",
                             "bindKey": "applicationIconUrl",
-                            "default": ""
+                            "default": "",
+                            "dictionary": [
+                                "/resource/idm/img/6.png",
+                                "/resource/idm/img/12.png",
+                                "/resource/idm/img/14.png",
+                                "/resource/idm/img/19.png",
+                                "/resource/idm/img/bj.png",
+                                "/resource/idm/img/dywj.png",
+                                "/resource/idm/img/rcap.png",
+                                "/resource/idm/img/wdzx.png",
+                                "/resource/idm/img/wjjh.png",
+                                "/resource/idm/img/yqfk.png",
+                                "/resource/idm/img/zbzs.png",
+                                "/resource/idm/img/zxzys.png",
+                                "/resource/idm/img/zyzx.png"
+                            ]
                         },
                         {
                             "type": "switch",
