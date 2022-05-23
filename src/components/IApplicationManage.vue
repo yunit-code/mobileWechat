@@ -179,7 +179,7 @@ export default {
             for (var i = 0; i < themeList.length; i++) {
                 var item = themeList[i];
                 let styleObject = {
-                    "background-color": item.minorColor ? item.minorColor.hex8 : "",
+                    "background": item.minorColor ? item.minorColor.hex8 : "",
                 };
                 let fontStyleObject = {
                     "color": item.mainColor ? item.mainColor.hex8 : "",
@@ -387,6 +387,7 @@ export default {
             var styleObject = {};
             var styleObjectTitle = {};
             var fontStyleObject = {};
+            var navStyleBackground = {}
             if (this.propData.bgSizeManage && this.propData.bgSizeManage == "custom") {
                 styleObject["background-size"] = (this.propData.bgSizeWidthManage ? this.propData.bgSizeWidthManage.inputVal + this.propData.bgSizeWidthManage.selectVal : "auto") + " " + (this.propData.bgSizeHeightManage ? this.propData.bgSizeHeightManage.inputVal + this.propData.bgSizeHeightManage.selectVal : "auto")
             } else if (this.propData.bgSizeManage) {
@@ -418,6 +419,7 @@ export default {
                         case "bgColorManage":
                             if (element && element.hex8) {
                                 styleObject["background-color"] = element.hex8;
+                                navStyleBackground["background-color"] = element.hex8;
                             }
                             break;
                         case "titleBgColor":
@@ -560,10 +562,14 @@ export default {
             }
             if ( this.is_pop_type ) {
                 window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop', styleObject);
+                window.IDM.setStyleToPageHead(this.moduleObject.id + ' .van-tabs__wrap', navStyleBackground);
+
                 window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop' + " .idm_applicationcenter_title_left_text", styleObjectTitle);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop' + " .idm_applicationcenter_main_list_name", fontStyleObject);
             } else {
                 window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
+                window.IDM.setStyleToPageHead(this.moduleObject.id + ' .van-tabs__wrap', navStyleBackground);
+                
                 window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_text", styleObjectTitle);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_main_list_name", fontStyleObject);
             }
