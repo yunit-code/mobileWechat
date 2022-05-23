@@ -203,6 +203,7 @@ export default {
       let titleFontStyleObj = {}
       let titleFontStyleActiveObj = {}
       let subBoxStyleObj = {}
+      let messageItemFontStyleObj = {}
       if(this.propData.bgSize&&this.propData.bgSize=="custom"){
         styleObject["background-size"]=(this.propData.bgSizeWidth?this.propData.bgSizeWidth.inputVal+this.propData.bgSizeWidth.selectVal:"auto")+" "+(this.propData.bgSizeHeight?this.propData.bgSizeHeight.inputVal+this.propData.bgSizeHeight.selectVal:"auto")
       }else if(this.propData.bgSize){
@@ -364,18 +365,18 @@ export default {
                 styleObjectTitleIcon["height"] = element + "px";
                 break
             case 'titleFontStyle':
-              titleFontStyleObj["font-family"] = element.fontFamily;
-              if (element.fontColors.hex8) {
-                  titleFontStyleObj["color"] = element.fontColors.hex8;
-              }
-              titleFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
-              titleFontStyleObj["font-style"] = element.fontStyle;
-              titleFontStyleObj["font-size"] = element.fontSize + element.fontSizeUnit;
-              titleFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
-              titleFontStyleObj["text-align"] = element.fontTextAlign;
-              titleFontStyleObj["text-decoration"] = element.fontDecoration;
-              break;
-              case 'titleFontStyleActive':
+                titleFontStyleObj["font-family"] = element.fontFamily;
+                if (element.fontColors.hex8) {
+                    titleFontStyleObj["color"] = element.fontColors.hex8;
+                }
+                titleFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
+                titleFontStyleObj["font-style"] = element.fontStyle;
+                titleFontStyleObj["font-size"] = element.fontSize + element.fontSizeUnit;
+                titleFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
+                titleFontStyleObj["text-align"] = element.fontTextAlign;
+                titleFontStyleObj["text-decoration"] = element.fontDecoration;
+                break;
+            case 'titleFontStyleActive':
                 titleFontStyleActiveObj["font-family"] = element.fontFamily;
                 if (element.fontColors.hex8) {
                     titleFontStyleActiveObj["color"] = element.fontColors.hex8;
@@ -386,6 +387,18 @@ export default {
                 titleFontStyleActiveObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
                 titleFontStyleActiveObj["text-align"] = element.fontTextAlign;
                 titleFontStyleActiveObj["text-decoration"] = element.fontDecoration;
+                break;
+            case 'messageItemFontStyle':
+                messageItemFontStyleObj["font-family"] = element.fontFamily;
+                if (element.fontColors.hex8) {
+                    messageItemFontStyleObj["color"] = element.fontColors.hex8;
+                }
+                messageItemFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
+                messageItemFontStyleObj["font-style"] = element.fontStyle;
+                messageItemFontStyleObj["font-size"] = element.fontSize + element.fontSizeUnit;
+                messageItemFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
+                messageItemFontStyleObj["text-align"] = element.fontTextAlign;
+                messageItemFontStyleObj["text-decoration"] = element.fontDecoration;
                 break;
             }
         }
@@ -402,6 +415,7 @@ export default {
         window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-title-font", titleFontStyleObj);
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-top-left .active", titleFontStyleActiveObj);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list-content", messageItemFontStyleObj);
       this.initData();
     },
     /**

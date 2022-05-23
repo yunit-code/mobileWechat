@@ -74,6 +74,7 @@ export default {
         width: "100%",
         height: "240px",
         limit: 5,
+        showBullet: true,
         imgBorderRadius: {
           inputVal: 8,
           selectVal: "px"
@@ -105,7 +106,7 @@ export default {
           loopedSlides: 100,                                        //循环个数
           slidesPerView: 'auto',                                    //预览slide个数
           effect: 'coverflow',                                      //特效组件
-          pagination: this.moduleObject.env === 'develop' ? '' :  { //指示器
+          pagination: this.moduleObject.env === 'develop' || !this.propData.showBullet ? '' :  { //指示器
             el: '.idm-banner-swiper-pagination',                    //指示器元素
             bulletClass : 'idm-banner-my-bullet',                   //指示器单个元素类名
             bulletActiveClass: 'idm-banner-my-bullet-active',       //指示器单个元素当前激活类名
@@ -146,6 +147,7 @@ export default {
     convertAttrToStyleObject() {
       var styleObject = {};
       let bannerItemStyleObj = {}
+      let bannerFontStyleObj = {}
       if (this.propData.bgSize && this.propData.bgSize == "custom") {
         styleObject["background-size"] =
           (this.propData.bgSizeWidth
@@ -281,38 +283,39 @@ export default {
                 element.radius.rightBottom.radius +
                 element.radius.rightBottom.radiusUnit;
               break;
-            case "font":
-              styleObject["font-family"] = element.fontFamily;
+            case "titleFontStyle":
+              bannerFontStyleObj["font-family"] = element.fontFamily;
               if (element.fontColors.hex8) {
-                styleObject["color"] = element.fontColors.hex8;
+                bannerFontStyleObj["color"] = element.fontColors.hex8;
               }
-              styleObject["font-weight"] =
+              bannerFontStyleObj["font-weight"] =
                 element.fontWeight && element.fontWeight.split(" ")[0];
-              styleObject["font-style"] = element.fontStyle;
-              styleObject["font-size"] =
+              bannerFontStyleObj["font-style"] = element.fontStyle;
+              bannerFontStyleObj["font-size"] =
                 element.fontSize + element.fontSizeUnit;
-              styleObject["line-height"] =
+              bannerFontStyleObj["line-height"] =
                 element.fontLineHeight +
                 (element.fontLineHeightUnit == "-"
                   ? ""
                   : element.fontLineHeightUnit);
-              styleObject["text-align"] = element.fontTextAlign;
-              styleObject["text-decoration"] = element.fontDecoration;
+              bannerFontStyleObj["text-align"] = element.fontTextAlign;
+              bannerFontStyleObj["text-decoration"] = element.fontDecoration;
               break;
             case 'imgBorderRadius':
               bannerItemStyleObj['border-radius'] = element.inputVal + element.selectVal;
               break;
             case "marginTop":
-              styleObject['margin-top'] = element.inputVal + element.selectVal;
+              bannerFontStyleObj['margin-top'] = element.inputVal + element.selectVal;
               break;
             case "marginBottom":
-              styleObject['margin-bottom'] = element.inputVal + element.selectVal;
+              bannerFontStyleObj['margin-bottom'] = element.inputVal + element.selectVal;
               break;
           }
         }
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + ' .idm-banner-box-swiper-item-container', bannerItemStyleObj);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + ' .idm-banner-box-swiper-text', bannerFontStyleObj);
       this.initData();
     },
     /**

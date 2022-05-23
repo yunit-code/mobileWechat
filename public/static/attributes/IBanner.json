@@ -28,6 +28,14 @@
                     "default": "广告轮播"
                 },
                 {
+                    "type": "switch",
+                    "layoutType": "inline",
+                    "text": "显示方块",
+                    "bindKey": "showBullet",
+                    "desc": "配置轮播分页器方块显示",
+                    "default": true
+                },
+                {
                     "type": "select",
                     "layoutType": "inline",
                     "text": "跳转方式",
@@ -198,6 +206,13 @@
                             "value": "em"
                         }
                     ]
+                },
+                {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "标题字体",
+                    "bindKey": "titleFontStyle",
+                    "desc":"设置轮播图片下方字体"
                 }
             ]
         },

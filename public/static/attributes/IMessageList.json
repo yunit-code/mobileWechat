@@ -284,6 +284,12 @@
                     }
                 },
                 {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "信息列表项字体样式设置",
+                    "bindKey": "messageItemFontStyle"
+                },
+                {
                     "type": "colorPicker",
                     "layoutType": "inline",
                     "text": "背景色",
