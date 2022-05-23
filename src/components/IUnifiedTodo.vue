@@ -34,7 +34,7 @@
         <div class="idm-unifie-todo-box-sub-title" :class="{'idm-unifie-todo-box-sub-no-read': true}">
           <div class="flex-1">
             <div class="idm-unifie-todo-box-sub-content" :class="getExpressData('data', propData.readExpression, item) ?'idm-unifie-todo-box-sub-hasRead' : ''">
-              <span v-if="item.moduleName">[{{item.moduleName}}]</span>{{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}
+              <span v-if="item.moduleName">【{{item.moduleName}}】</span>{{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}
             </div>
             <div class="idm-unifie-todo-box-sub-intr">
               <div class="d-flex align-c">
