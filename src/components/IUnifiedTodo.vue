@@ -79,7 +79,7 @@ const todoData = {
     readStatusText: '未读',
     sendUserName: '文档处',
     time: '2022-04-21 12:56',
-    title: '[发文] 关于扎实做好近期疫情防控有关工作的通知'
+    title: '关于扎实做好近期疫情防控有关工作的通知'
   },{
     jumpUrl: '',
     isHot: '-1',
@@ -88,7 +88,7 @@ const todoData = {
     readStatusText: '已读',
     sendUserName: '李干杰',
     time: '2022-04-21 09:23',
-    title: '[发文] 关于印发《山东省职业卫生技术服务机构乙级资质认可程序》的通知'
+    title: '关于印发《山东省职业卫生技术服务机构乙级资质认可程序》的通知'
   },{
     jumpUrl: '',
     isHot: '-1',
@@ -97,7 +97,7 @@ const todoData = {
     readStatusText: '已读',
     sendUserName: '文档处',
     time: '2022-04-21 08:56',
-    title: '[发文] 关于印发数字山东2021行动方案的通知'
+    title: '关于印发数字山东2021行动方案的通知'
   }],
   count: 2,
   moreUrl: ''
