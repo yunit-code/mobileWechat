@@ -36,6 +36,12 @@ mobilewechat@1.0.6
 - 标识：`showTitle`
 - 默认值： `true`显示
 
+#### 显示图标【showIcon】
+<font color="#CCCCCC">配置是否显示标题右侧图标，显示标题为true下生效</font>
+
+- 标识：`showIcon`
+- 默认值： `true`显示
+
 #### 显示更多【showMore】
 <font color="#CCCCCC">是否显示更多按钮/icon</font>
 

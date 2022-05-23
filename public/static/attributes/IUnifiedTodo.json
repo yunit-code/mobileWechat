@@ -55,6 +55,15 @@
                 {
                     "type": "switch",
                     "layoutType": "inline",
+                    "text": "显示图标",
+                    "bindKey": "showIcon",
+                    "desc": "配置是否显示标题右侧图标",
+                    "default": true,
+                    "display": "@[showTitle == true]"
+                },
+                {
+                    "type": "switch",
+                    "layoutType": "inline",
                     "text": "显示更多",
                     "bindKey": "showMore",
                     "default": true,

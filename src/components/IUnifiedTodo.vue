@@ -14,10 +14,12 @@
     <div class="idm-unifie-todo-box-title d-flex align-c just-b" v-if="propData.showTitle">
       <div class="d-flex align-c">
         <span class="idm-unifie-todo-box-title-font">{{propData.htmlTitle}}</span>
-        <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm-unifie-todo-box-title-icon" aria-hidden="true" >
-          <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
-        </svg>
-        <svg-icon v-else icon-class="threeLine" className="idm-unifie-todo-box-title-icon"></svg-icon>
+        <template v-if="propData.showIcon">
+          <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm-unifie-todo-box-title-icon" aria-hidden="true" >
+            <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
+          </svg>
+          <svg-icon v-else icon-class="threeLine" className="idm-unifie-todo-box-title-icon"></svg-icon>
+        </template>
       </div>
       <div v-if="propData.showMore" class="d-flex align-c"  @click="handleClickMore">
         <span v-if="propData.showTodoNumber">
@@ -122,6 +124,7 @@ export default {
           fontSizeUnit: "px",
           fontWeight: "800"
         },
+        showIcon: true,
         showTitle: true,
         showMore: true,
         showTodoNumber: false,
