@@ -15,7 +15,7 @@
       idm-ctrl-id：组件的id，这个必须不能为空
       idm-container-index  组件的内部容器索引，不重复唯一且不变，必选
     -->
-    <div class="drag-bar-wrapper" @touchstart="down"  @touchmove="move"  @touchend="end" :style="{position: (moduleObject.env === 'production' || !IDM.env_dev) && propData.fixed && 'fixed',...offset}">
+    <div v-if="accountList && accountList.length > 0" class="drag-bar-wrapper" @touchstart="down"  @touchmove="move"  @touchend="end" :style="{position: (moduleObject.env === 'production' || !IDM.env_dev) && propData.fixed && 'fixed',...offset}">
       <van-popover
         v-model="showPopover"
         trigger="click"
@@ -25,7 +25,7 @@
         @select="onSelect"
       >
         <template #reference>
-          <img v-if="propData.accountUrl && accountList" :src="IDM.url.getWebPath(propData.accountUrl)" alt="">
+          <img :style="{height: propData.imgHeight || '32px', width: propData.imgWidth || '32px'}" v-if="propData.accountUrl && accountList" :src="IDM.url.getWebPath(propData.accountUrl)" alt="">
           <span v-else style="display: inline-block;white-space: nowrap;">请上传或选择图标</span>
         </template>
       </van-popover>
