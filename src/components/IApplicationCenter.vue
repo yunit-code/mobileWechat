@@ -385,23 +385,21 @@ export default {
             if ( this.moduleObject.env == 'develop' ) {
                 return
             }
-            if ( this.propData.getApplicationMarkNumberUrl ) {
-                window.IDM.http.post(base_url + this.propData.getApplicationMarkNumberUrl,{
-                    id: sourceId
-                },{ 
-                    headers: {
-                        "Content-Type": "application/json;charset=UTF-8", 
+            window.IDM.http.post(base_url + '/ctrl/dataSource/getDatas',{
+                id: sourceId
+            },{ 
+                headers: {
+                    "Content-Type": "application/json;charset=UTF-8", 
+                }
+            }).then(result=>{
+                if ( result&&result.data&&result.data.type == 'success' && result.data.data ) {
+                    if ( !this.propData.dataFiled ) {
+                        this.$set(this.application_data[index], "todoNumber", result.data.data.count);
+                    } else {
+                        this.$set(this.application_data[index], "todoNumber", result.data.data[this.propData.dataFiled]);
                     }
-                }).then(result=>{
-                    if ( result&&result.data&&result.data.type == 'success' && result.data.data ) {
-                        if ( !this.propData.dataFiled ) {
-                            this.$set(this.application_data[index], "todoNumber", result.data.data.count);
-                        } else {
-                            this.$set(this.application_data[index], "todoNumber", result.data.data[this.propData.dataFiled]);
-                        }
-                    }
-                })
-            }
+                }
+            })
         },
 
         /** * 提供父级组件调用的刷新prop数据组件 */

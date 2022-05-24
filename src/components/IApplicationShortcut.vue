@@ -249,30 +249,27 @@ export default {
             }
         },
         getApplicationMarkNumberSubmit(index,sourceId) {
-            console.log('getApplicationMarkNumberUrl',this.propData.getApplicationMarkNumberUrl)
             if ( this.moduleObject.env == 'develop' ) {
                 return
             }
-            if ( this.propData.getApplicationMarkNumberUrl ) {
-                window.IDM.http.post(base_url + '/ctrl/dataSource/getDatas',{
-                    id: sourceId
-                },{
-                    headers: {
-                        "Content-Type": "application/json;charset=UTF-8",
-                    },
-                }).then(result=>{
-                    console.log('角标接口请求回参',result)
-                    if ( result&&result.data&&result.data.type == 'success' && result.data.data ) {
-                        if ( !this.propData.dataFiled ) {
-                            console.log(456)
-                            this.$set(this.application_data[index], "todoNumber", result.data.data.count);
-                        } else {
-                            console.log(123)
-                            this.$set(this.application_data[index], "todoNumber", result.data.data[this.propData.dataFiled]);
-                        }
+            window.IDM.http.post(base_url + '/ctrl/dataSource/getDatas',{
+                id: sourceId
+            },{
+                headers: {
+                    "Content-Type": "application/json;charset=UTF-8",
+                },
+            }).then(result=>{
+                console.log('角标接口请求回参',result)
+                if ( result&&result.data&&result.data.type == 'success' && result.data.data ) {
+                    if ( !this.propData.dataFiled ) {
+                        console.log(456)
+                        this.$set(this.application_data[index], "todoNumber", result.data.data.count);
+                    } else {
+                        console.log(123)
+                        this.$set(this.application_data[index], "todoNumber", result.data.data[this.propData.dataFiled]);
                     }
-                })
-            }
+                }
+            })
         },
         getApplicationName(item) {
             if ( item.applicationName ) {
