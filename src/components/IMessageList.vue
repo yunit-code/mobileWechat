@@ -140,6 +140,7 @@ export default {
   created() {
     this.moduleObject = this.$root.moduleObject
     this.convertAttrToStyleObject();
+    this.convertThemeListAttrToStyleObject()
   },
   methods:{
     /**
@@ -193,6 +194,7 @@ export default {
     propDataWatchHandle(propData){
       this.propData = propData.compositeAttr||{};
       this.convertAttrToStyleObject();
+      this.convertThemeListAttrToStyleObject()
     },
     /**
      * 把属性转换成样式对象
@@ -449,8 +451,8 @@ export default {
             themeNamePrefix +
             item.key +
             " #" +
-            (this.moduleObject.packageid || "module_demo")
-            + " .idm-message-list-box-top-left .active",
+            (this.moduleObject.packageid || "module_demo") +
+            " .idm-message-list-box-top-left .active",
           fontActiveColorObj
         );
       }
