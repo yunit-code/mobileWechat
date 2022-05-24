@@ -557,14 +557,14 @@ export default {
                 window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop', styleObject);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + ' .van-tabs__wrap', navStyleBackground);
 
-                window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop' + " .idm_applicationcenter_title_left_text", styleObjectTitle);
+                window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop' + " .idm_applicationcenter_title", styleObjectTitle);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop' + " .idm_applicationcenter_main_list_name", fontStyleObject);
             } else {
                 window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + ' .van-tabs__wrap', navStyleBackground);
                 
-                window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_text", styleObjectTitle);
-                window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_main_list_name", fontStyleObject);
+                window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationcenter_title", styleObjectTitle);
+                window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationcenter_main_list_name", fontStyleObject);
             }
             this.initData();
         },
