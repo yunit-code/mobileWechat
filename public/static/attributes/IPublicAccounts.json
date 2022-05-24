@@ -124,7 +124,8 @@
                     "text": "接口地址",
                     "bindKey": "customInterfaceUrl",
                     "desc": "用于获取数据源的接口地址，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}",
-                    "default": "/ctrl/dataSource/getDatas"
+                    "default": "/ctrl/dataSource/getDatas",
+                    "display": true
                 },
                 {
                     "type": "input",

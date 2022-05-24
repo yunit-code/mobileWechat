@@ -414,10 +414,10 @@ export default {
      *  isAcross:如果为true则代表发送来源是其他页面的组件，默认为false
      * } object 
      */
-    receiveBroadcastMessage(object){
-      console.log("组件收到消息",object)
-      if(object.type&&object.type=="linkageShowModule"){
-      }else if(object.type&&object.type=="linkageHideModule"){
+    receiveBroadcastMessage(messageObject){
+      console.log("组件收到消息",messageObject)
+      if (messageObject.type && messageObject.type == "linkageReload") {
+        this.reload();
       }
     },
     /**
