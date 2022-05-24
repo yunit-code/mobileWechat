@@ -12,8 +12,14 @@
         <div class="idm_applicationcenter">
             <div v-if="propData.showTitle" class="idm_applicationcenter_title flex_between">
                 <div class="idm_applicationcenter_title_left flex_start">
+                    <div v-if="propData.showTitleIcon && propData.titleIconPosition == 'left'" class="idm_applicationcenter_title_left_icon idm_applicationcenter_title_left_icon1">
+                        <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm_filed_svg_icon" aria-hidden="true" >
+                            <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
+                        </svg>
+                        <svg-icon v-else icon-class="application-icon" />
+                    </div>
                     <div class="idm_applicationcenter_title_left_text">{{ propData.title || '应用中心' }}</div>
-                    <div class="idm_applicationcenter_title_left_icon">
+                    <div v-if="propData.showTitleIcon && propData.titleIconPosition == 'right'" class="idm_applicationcenter_title_left_icon idm_applicationcenter_title_left_icon2">
                         <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm_filed_svg_icon" aria-hidden="true" >
                             <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
                         </svg>
@@ -169,7 +175,7 @@ export default {
                         item.key +
                         " #" +
                         (this.moduleObject.packageid || "module_demo") +
-                        " .idm_applicationcenter_title_left_icon .idm_filed_svg_icon",
+                        " .idm_applicationcenter_title_left_icon",
                     fontStyleObject
                 );
                 IDM.setStyleToPageHead(
@@ -824,6 +830,9 @@ export default {
     border-radius: 10px;
     .idm_applicationcenter_title{
         padding: 10px 10px 7px 10px;
+        .idm_applicationcenter_title_left_icon1{
+            margin-right: 5px;
+        }
         .idm_applicationcenter_title_left_text{
             margin-right: 5px;
             font-family: PingFangSC-Medium;
