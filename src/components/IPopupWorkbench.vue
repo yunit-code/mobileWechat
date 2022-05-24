@@ -131,10 +131,10 @@ export default {
           {
             key: "blue",
             mainColor: {
-              hex8: "blue",
+              hex8: "#3976c7ff",
             },
             minorColor: {
-              hex8: "blue",
+              hex8: "#ebedf0ff",
             },
           },
           {
