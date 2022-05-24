@@ -31,6 +31,9 @@
         <div class="idm-banner-swiper-pagination"></div>
       </div>
     </div>
+    <div class="idm-banner-box-mask" v-if="moduleObject.env === 'production' && (propData.dataType === 'dataSource' && !propData.dataSource)">
+      <span>！未绑定数据源</span>
+    </div>
   </div>
 </template>
 
@@ -350,11 +353,6 @@ export default {
             item.key +
             " #" +
             (this.moduleObject.packageid || "module_demo") +
-            " .ant-tabs-nav .ant-tabs-tab-active,."+
-            themeNamePrefix +
-            item.key +
-            " #" +
-            (this.moduleObject.packageid || "module_demo") +
             " .idm-banner-my-bullet",
           bulletBgColorObj
         );
@@ -540,6 +538,7 @@ export default {
 .idm-banner-box {
   padding: 0;
   overflow: hidden;
+  position: relative;
   &-swiper-container {
     position: relative;
     width: 100%;
@@ -569,6 +568,25 @@ export default {
     font-size: 14px;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+  }
+  &-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: rgba(0,0,0,.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+      padding: 6px 20px;
+      color: #e6a23c;
+      background: #fdf6ec;
+      border:1px solid #f5dab1;
+      border-radius: 4px;
+    }
   }
 }
 
@@ -608,7 +626,7 @@ export default {
   margin: 0 3px;
 }
 .idm-banner-my-bullet-active{
-  background-color:  #fff;
+  background-color:  #fff !important;
 }
 </style>
 <style lang="scss" scoped>

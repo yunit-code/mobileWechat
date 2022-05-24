@@ -62,6 +62,9 @@
     <div v-if="!isFirst && ( !todoData[listKey] || todoData[listKey].length === 0)" class="idm-unifie-todo-box-empty">
       <van-empty :description="propData.emptyText || '数据为空'" :image-size="60"/>
     </div>
+    <div class="idm-unifie-todo-box-mask" v-if="moduleObject.env === 'production' && ((propData.dataType === 'dataSource' && !propData.dataSource) || (propData.dataType === 'custom' && !propData.customGetTodoDataInterfaceUrl))">
+      <span>！未绑定数据源</span>
+    </div>
   </div>
 </template>
 
@@ -500,11 +503,6 @@ export default {
             item.key +
             " #" +
             (this.moduleObject.packageid || "module_demo") +
-            " .ant-tabs-nav .ant-tabs-tab-active,."+
-            themeNamePrefix +
-            item.key +
-            " #" +
-            (this.moduleObject.packageid || "module_demo") +
             " .idm-unifie-todo-box-title-icon",
           iconColorObj
         );
@@ -708,6 +706,7 @@ export default {
 .idm-unifie-todo-box{
   background-color: #fff;
   overflow: hidden;
+  position: relative;
   &-title{
     font: inherit;
     font-weight: 600;
@@ -804,6 +803,25 @@ export default {
     &-empty{
       overflow: hidden;
       height: 90px;
+    }
+  }
+  &-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: rgba(0,0,0,.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+      padding: 6px 20px;
+      color: #e6a23c;
+      background: #fdf6ec;
+      border:1px solid #f5dab1;
+      border-radius: 4px;
     }
   }
 }

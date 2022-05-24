@@ -210,7 +210,6 @@
             "desc": "点击？查看主题设置用法指南",
             "bindKey": "themeList",
             "tabText": "主题[index]",
-            "display": "@[false]",
             "children": [
                 {
                     "type": "input",
@@ -274,6 +273,7 @@
                     "text": "选中页签字体样式设置",
                     "bindKey": "titleFontStyleActive",
                     "display": "@[compStyle === 'styleFour' && showTab == true]",
+                    "desc": "设置主题时，字体颜色为主题颜色",
                     "default": {
                         "fontColors": {
                             "hex": "#000"

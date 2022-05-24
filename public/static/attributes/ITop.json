@@ -25,7 +25,7 @@
                     "layoutType": "inline",
                     "text": "用户信息",
                     "bindKey": "userInfo",
-                    "desc":"设置是否显示用户信息",
+                    "desc": "设置是否显示用户信息",
                     "default": true
                 },
                 {
@@ -51,7 +51,7 @@
                     "layoutType": "inline",
                     "text": "天气定位",
                     "bindKey": "weather",
-                    "desc":"设置是否显示天气信息",
+                    "desc": "设置是否显示天气信息",
                     "default": false
                 },
                 {
@@ -59,14 +59,14 @@
                     "layoutType": "inline",
                     "text": "设置",
                     "bindKey": "set",
-                    "desc":"设置是否显示设置图标",
+                    "desc": "设置是否显示设置图标",
                     "default": true
                 },
                 {
                     "type": "radio",
                     "layoutType": "inline",
                     "text": "跳转方式",
-                    "desc":"用于设置是当页跳转还是弹出新窗口两种方式",
+                    "desc": "用于设置是当页跳转还是弹出新窗口两种方式",
                     "bindKey": "jumpType",
                     "dictionary": [
                         {
@@ -85,7 +85,7 @@
                     "layoutType": "inline",
                     "text": "跳转Url",
                     "bindKey": "setUrl",
-                    "desc":"点击设置图标跳转页面",
+                    "desc": "点击设置图标跳转页面",
                     "display": "@[set]"
                 },
                 {
@@ -93,9 +93,53 @@
                     "layoutType": "inline",
                     "text": "图标大小",
                     "bindKey": "iconSize",
-                    "desc":"图标大小",
+                    "desc": "图标大小",
                     "display": "@[set]",
                     "default": 30
+                }
+            ]
+        },
+        {
+            "type": "table",
+            "text": "主题设置",
+            "desc": "点击？查看主题设置用法指南",
+            "bindKey": "themeList",
+            "tabText": "主题[index]",
+            "children": [
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "主题标识",
+                    "bindKey": "key",
+                    "desc": "用于设置主题的标识，此项需要搭配自定义开发切换主题的功能，例如：蓝色标识为blue，用户切换主题的时候存储到数据库中的标识为blue，则这里填写为blue",
+                    "default": "",
+                    "placeholder": "例如：blue"
+                },
+                {
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "主要颜色",
+                    "bindKey": "mainColor",
+                    "desc": "主题的主要颜色，应用于背景颜色",
+                    "placeholder": "请选择颜色",
+                    "display": "@[key]",
+                    "default": {
+                        "hex": "#4A90E2",
+                        "hex8": "#4A90E2FF"
+                    }
+                },
+                {
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "次要颜色",
+                    "bindKey": "minorColor",
+                    "desc": "主题的次要颜色，应用于文字颜色",
+                    "placeholder": "请选择颜色",
+                    "display": "@[key]",
+                    "default": {
+                        "hex": "#FFFFFF",
+                        "hex8": "#FFFFFFFF"
+                    }
                 }
             ]
         },
@@ -141,16 +185,6 @@
                     "desc": "点击？查看背景设置用法指南",
                     "helpUrl": "",
                     "children": [
-                        {
-                            "type": "colorPicker",
-                            "layoutType": "inline",
-                            "text": "背景色",
-                            "bindKey": "bgColor",
-                            "placeholder": "请选择颜色",
-                            "default": {
-                                "hex8": "#4A90E2FF"
-                            }
-                        },
                         {
                             "type": "uploadImage",
                             "layoutType": "inline",

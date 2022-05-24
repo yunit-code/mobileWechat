@@ -107,6 +107,7 @@ export default {
                 var item = themeList[i];
                 let styleObject = {
                     "background-color": item.minorColor ? item.minorColor.hex8 : "",
+                    "color": item.mainColor ? item.mainColor.hex8 : "",
                 };
                 let fontStyleObject = {
                     "color": item.mainColor ? item.mainColor.hex8 : "",
@@ -122,15 +123,6 @@ export default {
                         (this.moduleObject.packageid || "module_demo") +
                         " .idm_iapplicationsearch",
                     styleObject
-                );
-                IDM.setStyleToPageHead(
-                    "." +
-                        themeNamePrefix +
-                        item.key +
-                        " #" +
-                        (this.moduleObject.packageid || "module_demo") +
-                        " .idm_iapplicationsearch",
-                    fontStyleObject
                 );
                 IDM.setStyleToPageHead(
                     "." +
@@ -450,6 +442,7 @@ export default {
     width: auto;
     max-height: 100vh;
     position: relative;
+    overflow-y: auto;
     .search_box{
         
     }
