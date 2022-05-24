@@ -334,6 +334,7 @@ export default {
         },
         cancel() {
             this.is_edit = false;
+            this.initData()
             let urlObject = window.IDM.url.queryObject();
             let pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
             var clickNewFunction = this.propData.clickCancelFunction;
@@ -633,7 +634,7 @@ export default {
 <style lang="scss">
 .idm_applicationmanage {
     width: auto;
-    border-radius: 10px;
+    // border-radius: 10px;
     .idm_applicationmanage_block{
         margin-bottom: 5px;
         .idm_applicationcenter_title{
@@ -685,8 +686,8 @@ export default {
         // position: fixed;
         // bottom: 80px;
         margin-top: 40px;
-        padding: 0 20px;
-        background: white;
+        // padding: 0 20px;
+        // background: white;
         .button:nth-child(1){
             margin-right: 20px;
         }
@@ -702,7 +703,7 @@ export default {
             // bottom: 160px;
             // right: 20px;
             text-align: center;
-            background: #1989fa;
+            background: inherit;
             border-radius: 50%;
         }
     }
@@ -718,6 +719,9 @@ export default {
     }
     .loading_box_all{
         margin-top: 50px;
+    }
+    .van-tabs__nav{
+        background-color: inherit;
     }
 }
 </style>

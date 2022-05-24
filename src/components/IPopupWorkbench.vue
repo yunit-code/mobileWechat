@@ -596,6 +596,7 @@ export default {
     font-size: 16px;
     color: #3976c7;
     position: fixed;
+    z-index: 1000;
     top: 10px;
     background-color: #fff;
     .idm_filed_svg_icon {

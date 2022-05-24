@@ -286,7 +286,8 @@ export default {
               }
               styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
               styleObject["font-style"]=element.fontStyle;
-              styleObject["font-size"]=element.fontSize+element.fontSizeUnit;
+              const sizeResult = element.fontSize+element.fontSizeUnit;
+              styleObject["font-size"]= Boolean(sizeResult)?sizeResult:'16px';
               styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
               styleObject["text-align"]=element.fontTextAlign;
               styleObject["text-decoration"]=element.fontDecoration;
@@ -725,9 +726,9 @@ export default {
     // margin: 0 -5px;
     .short-item{
       position: relative;
-      padding: 0 5px;
+      padding: 5px;
       text-align: center;
-      margin-bottom: 10px;
+      // margin-bottom: 10px;
       .number {
         width: 15px;
         height: 15px;

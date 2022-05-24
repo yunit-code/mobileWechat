@@ -128,7 +128,6 @@ export default {
         /** * 主题颜色 */
         convertThemeListAttrToStyleObject() {
             const themeList = this.propData.themeList;
-            console.log(themeList,"themeList")
             if (!themeList) {
                 return;
             }
@@ -138,7 +137,6 @@ export default {
                 IDM.setting.applications.themeNamePrefix
                 ? IDM.setting.applications.themeNamePrefix
                 : "idm-theme-";
-            console.log(themeNamePrefix,"themeNamePrefix")
             for (var i = 0; i < themeList.length; i++) {
                 var item = themeList[i];
                 let styleObject = {
@@ -199,25 +197,20 @@ export default {
             this.convertAttrToStyleObject();
         },
         watchApplicationChange(value,old) {
-            console.log('value',value)
-            console.log('old',old)
             if ( (!value) || !value.length ) {
                 return
             }
             if ( value.length != old.length ) {
                 return
             }
-            console.log('555')
             if( value.length == old.length ) {
                 var is_sort_application = this.isSortApplication(value,old)
-                console.log('is_sort_application',is_sort_application)
                 for( let i = 0,maxi = value.length;i < maxi;i++ ) {
                     if ( value[i].selectApplication && value[i].selectApplication.value && !is_sort_application ) {
                         if ( (!old[i].selectApplication) || value[i].selectApplication.value != old[i].selectApplication.value ) {
                             value[i].applicationName = value[i].selectApplication.title;
                             value[i].applicationIconUrl = value[i].selectApplication.imageUrl;
                             value[i].applicationUrl = value[i].selectApplication.appUrl;
-                            console.log('更改属性值',value)
                             IDM.develop.externalMixAttributeChangeHandle({
                                 applicationList: JSON.parse(JSON.stringify(value))
                             },this.moduleObject.packageid,-1,false)
@@ -234,7 +227,6 @@ export default {
                 if ( value[i].selectApplication && value[i].selectApplication.value ) {
                     let is_change_application = this.isChangeSelectedApplication(value[i].selectApplication.value,old)
                     let is_have_in_selected = this.isHaveInSelectedApplication(value,value[i].selectApplication.value)
-                    console.log('is_change_application',is_change_application)
                     if ( (!is_change_application) || !is_change_application.length ) {
                         flag = false
                         return flag
@@ -358,13 +350,10 @@ export default {
             if ( this.moduleObject.env == 'develop' ) {
                 return
             }
-            console.log('isPopShowApplicationManage',this.propData)
             if ( this.propData.isPopShowApplicationManage ) {
-                console.log('弹框展示')
                 this.is_application_manage_show = true;
                 return
             } else {
-                console.log('跳转页面')
                 if ( this.propData.moreApplicationUrl ) {
                     if ( this.propData.moreApplicationJumpType == '_self' ) {
                         window.location.href = this.propData.moreApplicationUrl
@@ -881,6 +870,9 @@ export default {
 <style lang="scss">
 .van-grid-item__content{
     padding: 7px 3px;
+}
+.van-popup{
+    background-color: inherit;
 }
 
 .idm_filed_svg_icon {

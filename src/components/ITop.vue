@@ -8,6 +8,7 @@
   <div idm-ctrl="idm_module"
    :id="moduleObject.id" 
    :idm-ctrl-id="moduleObject.id" 
+   class="idm_top_box"
    >
     <!--
       组件内部容器
@@ -407,7 +408,9 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
+.idm_top_box{
+  background-color: #4A90E2FF;
   .top-bg{
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -443,4 +446,5 @@ export default {
       }
     }
   }
+}
 </style>

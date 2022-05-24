@@ -15,7 +15,7 @@
       idm-ctrl-id：组件的id，这个必须不能为空
       idm-container-index  组件的内部容器索引，不重复唯一且不变，必选
     -->
-    <div v-if="accountList && accountList.length > 0" class="drag-bar-wrapper" @touchstart="down"  @touchmove="move"  @touchend="end" :style="{position: (moduleObject.env === 'production' || !IDM.env_dev) && propData.fixed && 'fixed',...offset}">
+    <div v-if="accountList && accountList.length > 0" class="drag-bar-wrapper" @touchstart="down"  @touchmove="move"  @touchend="end" :style="{position: (moduleObject.env === 'production' || !IDM.env_dev) && propData.fixed && 'fixed',...offset}">    
       <van-popover
         v-model="showPopover"
         trigger="click"
@@ -23,14 +23,15 @@
         :actions="accountList"
         :close-on-click-action="false"
         @select="onSelect"
+        v-if="propData.dataSource"
       >
         <template #reference>
           <img :style="{height: propData.imgHeight || '32px', width: propData.imgWidth || '32px'}" v-if="propData.accountUrl && accountList" :src="IDM.url.getWebPath(propData.accountUrl)" alt="">
-          <span v-else style="display: inline-block;white-space: nowrap;">请上传或选择图标</span>
+          <span class="drag-bar-mask" v-else>请上传或选择图标！</span>
         </template>
       </van-popover>
+      <span class="drag-bar-mask" v-else>未绑定数据源！</span>
     </div>
-    
   </div>
 </template>
 
@@ -374,7 +375,7 @@ export default {
     initData() {
       let that = this;
       if (this.moduleObject.env == "production") {
-        this.propData.customInterfaceUrl &&
+        this.propData.dataSource && this.propData.customInterfaceUrl &&
           IDM.http
             .post(
               this.propData.customInterfaceUrl,
@@ -389,8 +390,7 @@ export default {
             )
             .done((res) => {
               if (res.type === "success") {
-                that.accountList &&
-                  res.data.map((item) => ({
+                that.accountList = res.data.map((item) => ({
                     ...item,
                     text: item.userName,
                   }));
@@ -455,6 +455,14 @@ export default {
 <style lang="scss" scoped>
   .drag-bar-wrapper{
     z-index: 99999;
+    .drag-bar-mask {
+        display: inline;
+        padding: 6px 20px;
+        color: #e6a23c;
+        background: #fdf6ec;
+        border:1px solid #f5dab1;
+        border-radius: 4px;
+      } 
   }
 
   .accout-icon{
