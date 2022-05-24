@@ -101,6 +101,8 @@ export default {
     this.moduleObject = this.$root.moduleObject
     this.convertAttrToStyleObject();
     this.convertAttrToStyleObject2();
+      // 主题
+      this.convertThemeListAttrToStyleObject();
     if(this.moduleObject.env=="develop" || !IDM.env_dev){
       this.propData = {
         isShowTitle: true,
@@ -158,6 +160,8 @@ export default {
       this.propData = propData.compositeAttr||{};
       this.convertAttrToStyleObject();
       this.convertAttrToStyleObject2();
+      // 主题
+      this.convertThemeListAttrToStyleObject();
     },
     /**
      * 把属性转换成样式对象
@@ -480,6 +484,8 @@ export default {
     reload(){
       //请求数据源
       this.initData();
+      // 主题
+      this.convertThemeListAttrToStyleObject();
     },
     /**
      * 加载动态数据
@@ -512,6 +518,43 @@ export default {
             that.propData.shortConfigList = resValue;
           }
           break;
+      }
+    },
+    /**
+     * 主题颜色
+     */
+    convertThemeListAttrToStyleObject() {
+      var themeList = this.propData.themeList;
+      if (!themeList) {
+        return;
+      }
+      const themeNamePrefix =
+        IDM.setting &&
+        IDM.setting.applications &&
+        IDM.setting.applications.themeNamePrefix
+          ? IDM.setting.applications.themeNamePrefix
+          : "idm-theme-";
+      for (var i = 0; i < themeList.length; i++) {
+        var item = themeList[i];
+        //item.key：为主题样式的key
+        //item.mainColor：主要颜色值
+        //item.minorColor：次要颜色值
+        // if(item.key!=IDM.theme.getCurrentThemeInfo()){
+        //     //此处比对是不渲染输出不用的样式，如果页面会刷新就可以把此处放开
+        //     continue;
+        // }
+        let iconColorObj = {
+          fill: item.mainColor ? item.mainColor.hex8 : "",
+        };
+        IDM.setStyleToPageHead(
+          "." +
+            themeNamePrefix +
+            item.key +
+            " #" +
+            (this.moduleObject.packageid || "module_demo") +
+            " .idm_filed_svg_icon",
+          iconColorObj
+        );
       }
     },
     /**
