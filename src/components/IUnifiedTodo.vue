@@ -725,6 +725,10 @@ export default {
     &-number{
       padding: 0 5px 0 0;
     }
+    &-font {
+      font-size: 16px;
+      color: #333;
+    }
   }
   &-overflow{
     overflow: hidden;
