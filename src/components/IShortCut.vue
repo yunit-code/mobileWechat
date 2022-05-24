@@ -35,8 +35,11 @@
         <template v-if="propData.shortCutStyle === 'default'">
           <ul class="short-box">
             <li v-for="(v,i) in propData.shortConfigList" :key="i" class="short-item"
-            :style="{width: `${100/propData.maxNumber}%`}">
-              <div class="short-bg" :style="{'backgroundImage': v.bgUrl ? 'url('+IDM.url.getWebPath(v.bgUrl)+')' : 'linear-gradient(to right,#f4b0b0,#f4acac,#f18c8b)', 'height': propData.shortItemHeight.inputVal+propData.shortItemHeight.selectVal}" @click="goUrl(v)">
+             v-proportion="0.25"
+              :style="{width: `${100/propData.maxNumber}%`}">
+              <div class="short-bg"
+               :style="v.styles"
+               @click="goUrl(v)">
                 <span>{{v.name}}</span>
                 <div v-if="v.showTodoNumber && v.todoNumber" class="number">{{ v.todoNumber }}</div>
               </div>
