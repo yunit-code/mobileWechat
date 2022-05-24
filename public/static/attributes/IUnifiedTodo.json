@@ -95,6 +95,7 @@
                         {
                             "type": "colorPicker",
                             "layoutType": "inline",
+                            "desc": "没有配置主题下生效，配置了主题，则显示主题颜色",
                             "text": "图标颜色",
                             "bindKey": "titleIconFontColor",
                             "default": ""

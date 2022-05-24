@@ -603,7 +603,7 @@ export default {
   margin: 0 3px;
 }
 .idm-banner-my-bullet-active{
-  background-color:  #fff;
+  background-color:  #fff !important;
 }
 </style>
 <style lang="scss" scoped>
