@@ -725,9 +725,9 @@ export default {
     // margin: 0 -5px;
     .short-item{
       position: relative;
-      padding: 0 5px;
+      padding: 5px;
       text-align: center;
-      margin-bottom: 10px;
+      // margin-bottom: 10px;
       .number {
         width: 15px;
         height: 15px;

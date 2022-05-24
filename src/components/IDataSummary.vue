@@ -53,22 +53,6 @@ export default {
       tempSummaryConfigList: []
     }
   },
-  watch: {
-    'propData.showRows': function(value,old) {
-      this.changeLines()
-    },
-    'propData.summaryConfigList': {
-      handler(value) {
-          if ( this.propData.summaryConfigList && this.propData.summaryConfigList.length ) {
-              this.tempSummaryConfigList = JSON.parse(JSON.stringify(this.propData.summaryConfigList))
-          } else {
-              this.tempSummaryConfigList = [];
-          }
-          this.changeLines()
-      },
-      deep: true
-    },
-  },
   props: {
   },
   created() {
@@ -522,6 +506,12 @@ export default {
           }
         })
       }
+      if ( this.propData.summaryConfigList && this.propData.summaryConfigList.length ) {
+        this.tempSummaryConfigList = JSON.parse(JSON.stringify(this.propData.summaryConfigList))
+      } else {
+        this.tempSummaryConfigList = [];
+      }
+      this.changeLines()
     },
     /**
      * 组件通信：接收消息的方法
@@ -610,9 +600,9 @@ export default {
     // margin: 0 -5px;
     flex-wrap: wrap;
     .summary-item{
-      padding: 0 5px;
+      padding: 5px;
       text-align: center;
-      margin-bottom: 10px;
+      // margin-bottom: 10px;
     }
     .summary-bg{
       border-radius: 6px;
