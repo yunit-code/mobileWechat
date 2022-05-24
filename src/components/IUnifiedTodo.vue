@@ -399,7 +399,7 @@ export default {
               styleObject["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
               break;
             case "titleIconFontColor":
-                styleObjectTitleIcon["fill"] = element.hex;
+                styleObjectTitleIcon["fill"] = element.hex + ' !important';
                 break
             case "titleIconFontSize":
                 styleObjectTitleIcon["font-size"] = element + "px";

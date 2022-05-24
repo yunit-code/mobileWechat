@@ -383,7 +383,7 @@ export default {
             case 'titleFontStyleActive':
                 titleFontStyleActiveObj["font-family"] = element.fontFamily;
                 if (element.fontColors.hex8) {
-                    titleFontStyleActiveObj["color"] = element.fontColors.hex8;
+                    titleFontStyleActiveObj["color"] = element.fontColors.hex8 + ' !important';
                 }
                 titleFontStyleActiveObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                 titleFontStyleActiveObj["font-style"] = element.fontStyle;

@@ -117,7 +117,7 @@
                 {
                     "type": "group",
                     "text": "标题图标",
-                    "desc": "设置标题图标属性，如设置主题时，则依主题颜色为准",
+                    "desc": "设置标题图标属性，颜色会覆盖主题色",
                     "display": "@[showTitle == true && showIcon == true]",
                     "helpUrl": "",
                     "children": [
@@ -131,7 +131,7 @@
                         {
                             "type": "colorPicker",
                             "layoutType": "inline",
-                            "desc": "没有配置主题下生效，配置了主题，则显示主题颜色",
+                            "desc": "设置图标颜色，会覆盖主题色",
                             "text": "图标颜色",
                             "bindKey": "titleIconFontColor",
                             "default": ""
