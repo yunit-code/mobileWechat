@@ -40,6 +40,7 @@
 <script>
 import Swiper from "swiper";
 import "swiper/css/swiper.min.css";
+import { getDatasInterfaceUrl } from '@/api/config'
 const data = {
   value: [{
     jumpUrl: '/dreamweb/',
@@ -399,9 +400,8 @@ export default {
           return
         }
       }
-      this.propData.customInterfaceUrl &&
       window.IDM.http
-        .post(this.propData.customInterfaceUrl, {
+        .post(getDatasInterfaceUrl, {
           type: 'picture',
           id: this.propData.dataSource && this.propData.dataSource.value,
           limit: this.propData.limit,

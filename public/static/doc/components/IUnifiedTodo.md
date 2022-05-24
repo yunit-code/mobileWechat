@@ -266,29 +266,6 @@ mobilewechat@1.0.6
 - 标识：`dataSource`
 - 默认值：`/ctrl/dataSource/getDatasourceByGroup`
 
-##### 数据接口【customInterfaceUrl】
-通过自定义数据接口获取数据
-- 标识：`customInterfaceUrl`
-- 默认值：`/ctrl/dataSource/getDatas`
-- 返回数据默认格式:
-```json
-"res": "200",
-"message: "success",
-"data" : {
-    "value": [
-        {
-          "jumpUrl": "/14",
-          "isHot": true,
-          "readStatus": 1,
-          "readStatusText": "已读",
-          "sendUserName": "文档处",
-          "time": "2022-05-09 09:00",
-          "title": "标题标题标题，这是标题，这是他标题，
-        }
-    ],
-    "moreUrl": "更多跳转地址"
-}
-```
 
 ##### 自定义数据接口【customGetTodoDataInterfaceUrl】
 根据接口返回数据显示消息标题字段

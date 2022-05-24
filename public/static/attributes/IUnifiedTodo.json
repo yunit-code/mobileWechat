@@ -320,15 +320,6 @@
                 {
                     "type": "input",
                     "layoutType": "inline",
-                    "text": "已读判断",
-                    "desc":"已读判断表达式,不需要根据已读变化直接为空即可，表达式结果为true则显示，false则不显示，此处填写表达式，更多详细用法点击查看",
-                    "bindKey": "readExpression",
-                    "placeholder":"readStatus 或者 readStatus=='1'",
-                    "default": "readStatus == '1'"
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
                     "text": "空白文字",
                     "desc": "无数据时，提示文字",
                     "bindKey": "emptyText",
@@ -457,13 +448,20 @@
                 }
             ]
         },
-        
-        
         {
             "type": "group",
             "text": "高级",
             "desc": "点击？查看高级设置用法指南",
             "children": [
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "已读判断",
+                    "desc":"已读判断表达式,不需要根据已读变化直接为空即可，表达式结果为true则显示，false则不显示，此处填写表达式，更多详细用法点击查看",
+                    "bindKey": "readExpression",
+                    "placeholder":"readStatus 或者 readStatus=='1'",
+                    "default": "readStatus == '1'"
+                },
                 {
                     "type": "radio",
                     "styleType": "radio",
@@ -489,15 +487,6 @@
                     "text": "数据源",
                     "bindKey": "dataSource",
                     "dataSourceUrl":"/ctrl/dataSource/getDatasourceByGroup",
-                    "display": "@[dataType === 'dataSource']"
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "数据接口",
-                    "bindKey": "customInterfaceUrl",
-                    "default": "/ctrl/dataSource/getDatas",
-                    "desc": "用于获取数据源的接口地址，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}",
                     "display": "@[dataType === 'dataSource']"
                 },
                 {

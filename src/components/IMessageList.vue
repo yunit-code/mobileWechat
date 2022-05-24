@@ -74,6 +74,13 @@
 </template>
 
 <script>
+
+import { Icon, Loading, Empty } from 'vant';
+import 'vant/lib/icon/style';
+import 'vant/lib/loading/style';
+import 'vant/lib/empty/style';
+
+import { getDatasInterfaceUrl } from '@/api/config'
 const messageData = {
     list:[{
       title: "营商环境优，引得“近邻”来",
@@ -100,10 +107,6 @@ const messageData = {
     total:"99"
   }
 
-import { Icon, Loading, Empty } from 'vant';
-import 'vant/lib/icon/style';
-import 'vant/lib/loading/style';
-import 'vant/lib/empty/style';
 export default {
   name: 'IMessageList',
   components: {
@@ -500,7 +503,7 @@ export default {
       }
       this.pageLoading = true
       // 获取数据源
-      this.propData.customInterfaceUrl&&window.IDM.http.post(this.propData.customInterfaceUrl,{
+      window.IDM.http.post(getDatasInterfaceUrl, {
         id: this.propData.dataSource && this.propData.dataSource.value,
         tabKey: item.tabKey || this.propData.messageTitleList[this.defaultIndex] && this.propData.messageTitleList[this.defaultIndex].tabKey,
         limit: this.propData.limit,

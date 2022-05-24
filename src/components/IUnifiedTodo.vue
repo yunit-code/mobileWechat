@@ -76,6 +76,8 @@
 
 <script>
 import { Icon, Loading, Empty } from 'vant';
+import { getDatasInterfaceUrl } from '@/api/config'
+
 import 'vant/lib/icon/style';
 import 'vant/lib/loading/style';
 import 'vant/lib/empty/style';
@@ -547,7 +549,7 @@ export default {
         return
       }
       this.pageLoading = true
-      let requestUrl = this.propData.customInterfaceUrl
+      let requestUrl = getDatasInterfaceUrl
       if(this.propData.dataType === 'custom'){
         requestUrl =  this.propData.customGetTodoDataInterfaceUrl
         this.countKey = 'total'
