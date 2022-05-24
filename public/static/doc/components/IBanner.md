@@ -56,9 +56,16 @@ mobilewechat@1.0.7
 - 标识: `marginTop`
 - 默认值: `0`
 
-#### 下外边距【】
+#### 下外边距【marginBottom】
 - 标识: `marginBottom`
 - 默认值: `0`
+
+#### 标题文字【titleFontStyle】
+设置组件的标题文字的字体样式，可设置文字的字体、字重、样式、字体颜色、大小、行高、对齐、修饰等。
+
+- 标识：`titleFontStyle`
+
+- 默认值：空
 
 ### 高级
 <font color="#CCCCCC">用于对组件高级设置的属性的分组。</font>

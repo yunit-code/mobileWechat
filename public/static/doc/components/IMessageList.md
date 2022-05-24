@@ -142,6 +142,13 @@ mobilewechat@1.0.6
   "fontSizeUnit": "px"
 }
 ```
+
+#### 信息列表项字体样式设置【messageItemFontStyle】
+<font color="#CCCCCC">设置信息列表项字体样式</font>
+
+- 标识：`messageItemFontStyle`
+- 默认值：''
+
 #### 背景色【bgColor】
 设置组件的整体背景颜色
 - 标识：`bgColor`
