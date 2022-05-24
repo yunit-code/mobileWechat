@@ -179,7 +179,8 @@ export default {
             for (var i = 0; i < themeList.length; i++) {
                 var item = themeList[i];
                 let styleObject = {
-                    "background": item.minorColor ? item.minorColor.hex8 : "",
+                    "color": item.mainColor ? item.mainColor.hex8 : "",
+                    "background-color": item.minorColor ? item.minorColor.hex8 : "",
                 };
                 let fontStyleObject = {
                     "color": item.mainColor ? item.mainColor.hex8 : "",
@@ -193,15 +194,6 @@ export default {
                         (this.moduleObject.packageid || "module_demo") +
                         " .idm_applicationmanage",
                     styleObject
-                );
-                IDM.setStyleToPageHead(
-                    "." +
-                        themeNamePrefix +
-                        item.key +
-                        " #" +
-                        (this.moduleObject.packageid || "module_demo") +
-                        " .idm_applicationmanage",
-                    fontStyleObject
                 );
                 IDM.setStyleToPageHead(
                     "." +
