@@ -92,19 +92,35 @@
                     "default":"_self"
                 },
                 {
-                    "type": "iconSelect",
+                    "type": "switch",
                     "layoutType": "inline",
-                    "text": "自定义图标",
-                    "bindKey": "titleIcon",
+                    "text": "显示图标",
+                    "desc":"配置是否显示标题右侧图标",
+                    "bindKey": "showIcon",
+                    "default": "true",
                     "display":"@[isShowTitleBar]"
                 },
                 {
-                    "type": "inputNumber",
-                    "layoutType": "inline",
-                    "text": "图标大小",
-                    "bindKey": "titleIconSize",
-                    "default": "14",
-                    "display":"@[isShowTitleBar]"
+                    "type": "group",
+                    "text": "标题图标设置",
+                    "desc": "点击？查看样式设置用法指南",
+                    "display": "@[isShowTitleBar&&showIcon]",
+                    "helpUrl": "",
+                    "children": [
+                        {
+                            "type": "iconSelect",
+                            "layoutType": "inline",
+                            "text": "自定义图标",
+                            "bindKey": "titleIcon"
+                        },
+                        {
+                            "type": "inputNumber",
+                            "layoutType": "inline",
+                            "text": "图标大小",
+                            "bindKey": "titleIconSize",
+                            "default": "14"
+                        }
+                    ]
                 }
             ]
         },
