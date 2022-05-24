@@ -37,6 +37,26 @@
                     "display": "@[isShowTitle]"
                 },
                 {
+                    "type": "radio",
+                    "styleType": "radio",
+                    "layoutType": "inline",
+                    "text": "图标位置",
+                    "desc": "设置组件标题图标位置",
+                    "bindKey": "titleIconPosition",
+                    "display": "@[isShowTitle]",
+                    "dictionary": [
+                        {
+                            "label": "左边",
+                            "value": "left"
+                        },
+                        {
+                            "label": "右边",
+                            "value": "right"
+                        }
+                    ],
+                    "default": "right"
+                },
+                {
                     "type": "iconSelect",
                     "layoutType": "inline",
                     "text": "标题图标",
@@ -153,51 +173,9 @@
             ]
         },
         {
-            "type": "table",
-            "text": "主题设置",
-            "desc": "点击？查看主题设置用法指南",
-            "bindKey": "themeList",
-            "tabText": "主题[index]",
-            "children": [
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "主题标识",
-                    "bindKey": "key",
-                    "desc":"用于设置主题的标识，此项需要搭配自定义开发切换主题的功能，例如：蓝色标识为blue，用户切换主题的时候存储到数据库中的标识为blue，则这里填写为blue",
-                    "default":"",
-                    "placeholder":"例如：blue"
-                },{
-                    "type": "colorPicker",
-                    "layoutType": "inline",
-                    "text": "主要颜色",
-                    "bindKey": "mainColor",
-                    "desc":"主题的主要颜色",
-                    "placeholder": "请选择颜色",
-                    "display":"@[key]",
-                    "default": {
-                        "hex": "#1890FF",
-                        "hex8": "#1890FFFF"
-                    }
-                },{
-                    "type": "colorPicker",
-                    "layoutType": "inline",
-                    "text": "次要颜色",
-                    "bindKey": "minorColor",
-                    "desc":"主题的次要颜色",
-                    "placeholder": "请选择颜色",
-                    "display":"@[key]",
-                    "default": {
-                        "hex": "#e6f7ff",
-                        "hex8": "#e6f7ffFF"
-                    }
-                }
-            ]
-        },
-        {
             "type": "group",
-            "text": "外层样式设置",
-            "desc": "点击？查看样式设置用法指南",
+            "text": "标题容器样式设置",
+            "desc": "提供标题样式等属性配置",
             "helpUrl": "",
             "children": [
                 {
@@ -444,8 +422,8 @@
         },
         {
             "type": "group",
-            "text": "内层样式设置",
-            "desc": "提供设置内容样式、数量等属性",
+            "text": "内容容器样式设置",
+            "desc": "提供设置内容样式等属性配置",
             "children":[
                 {
                     "type": "box",
@@ -666,6 +644,48 @@
                     "layoutType": "block",
                     "text": "标题文字",
                     "bindKey": "font2"
+                }
+            ]
+        },
+        {
+            "type": "table",
+            "text": "主题设置",
+            "desc": "点击？查看主题设置用法指南",
+            "bindKey": "themeList",
+            "tabText": "主题[index]",
+            "children": [
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "主题标识",
+                    "bindKey": "key",
+                    "desc":"用于设置主题的标识，此项需要搭配自定义开发切换主题的功能，例如：蓝色标识为blue，用户切换主题的时候存储到数据库中的标识为blue，则这里填写为blue",
+                    "default":"",
+                    "placeholder":"例如：blue"
+                },{
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "主要颜色",
+                    "bindKey": "mainColor",
+                    "desc":"主题的主要颜色",
+                    "placeholder": "请选择颜色",
+                    "display":"@[key]",
+                    "default": {
+                        "hex": "#1890FF",
+                        "hex8": "#1890FFFF"
+                    }
+                },{
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "次要颜色",
+                    "bindKey": "minorColor",
+                    "desc":"主题的次要颜色",
+                    "placeholder": "请选择颜色",
+                    "display":"@[key]",
+                    "default": {
+                        "hex": "#e6f7ff",
+                        "hex8": "#e6f7ffFF"
+                    }
                 }
             ]
         }

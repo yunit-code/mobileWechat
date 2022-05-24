@@ -24,6 +24,10 @@ mobileWechat@1.0.8
 用于设置title
 - 标识：`标题【comTitle】`
 - 默认值：`快捷方式`
+#### 标题【titleIconPosition】
+用于设置title
+- 标识：`图标位置【titleIconPosition】`
+- 默认值：`右侧`
 #### 最多显示【maxNumber】
 用于设置组件展示多少卡片
 - 标识：`最多显示【maxNumber】`
@@ -72,7 +76,7 @@ mobileWechat@1.0.8
 用于设置卡片的背景图
 - 标识：`背景图片【bgUrl】`
 - 默认值：`渐变色`
-### 外层样式设置
+### 标题容器样式设置
 #### 内外边距【box】
 设置组件的最外围的外边距和内边距
 - 标识：`box`
@@ -185,7 +189,7 @@ mobileWechat@1.0.8
 - 标识：`数字文字【numFont】`
 
 - 默认值：空
-### 内层样式设置
+### 内容容器样式设置
 #### 背景设置
 ##### 背景色【bgColor】
 设置组件的整体背景颜色
@@ -349,41 +353,10 @@ mobileWechat@1.0.8
 - 标识：`font`
 
 - 默认值：空
-### 高级
-#### 数据源【selectApplication】
-设置组件获取动态数据接口参数。
 
-- 标识：`数据源【selectApplication】`
 
-- 默认值：空
-#### 接口地址【customInterfaceUrl】
-设置组件获取动态数据的接口路径。
-参数
-``` json
-{
-	"id":"数据源ID",
-}
-```
-接口返回格式
-``` json
-{
-    "code":"200",
-    "type":"success",
-    "message":"操作成功",
-    "data":{
-        "inbox":{
-            "name":"待办",
-            "count":"13",
-            "jumpUrl":"跳转地址"
-        },
-        "toread":{
-            "name":"待阅",
-            "count":"22",
-            "jumpUrl":"跳转地址"
-        }
-    }
-```
+### 主题设置【themeList】
+用于设置组件的主题样式表，此处可跟随自身主题进行随意设置，此属性是一个表结构集合的形式属性。
+- 标识：`themeList`
 
-- 标识：`接口地址【customInterfaceUrl】`
-
-- 默认值：空
+- 默认值：`[]`

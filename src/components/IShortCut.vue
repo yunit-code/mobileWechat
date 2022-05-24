@@ -17,13 +17,19 @@
     -->
     <div class="com-box">
       <div class="com-title" v-if="propData.isShowTitle">
-      <span style="margin-right: 5px">{{propData.comTitle}}</span>
-      <div class="idm_applicationcenter_title_left_icon">
-          <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm_filed_svg_icon" aria-hidden="true" >
-              <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
-          </svg>
-          <svg-icon v-else icon-class="application-icon" />
-      </div>
+        <div class="idm_applicationcenter_title_left_icon" v-if="propData.titleIconPosition === 'left'" style="margin-right: 5px">
+            <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm_filed_svg_icon" aria-hidden="true" >
+                <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
+            </svg>
+            <svg-icon v-else icon-class="application-icon" />
+        </div>
+        <span style="margin-right: 5px">{{propData.comTitle}}</span>
+        <div class="idm_applicationcenter_title_left_icon" v-if="propData.titleIconPosition === 'right'" style="margin-left: 5px">
+            <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm_filed_svg_icon" aria-hidden="true" >
+                <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
+            </svg>
+            <svg-icon v-else icon-class="application-icon" />
+        </div>
       </div>
       <div class="idm_shortcut_cont">
         <template v-if="propData.shortCutStyle === 'default'">
@@ -55,10 +61,19 @@
           <van-grid :border="false" :column-num="propData.maxNumber">
             <van-grid-item v-for="(v,i) in propData.shortConfigList" :key="i">
               <div @click="goUrl(v)" class="idm_applicationcenter_main_list-three">
-                <div class="img_box">
-                  <img v-if="v.bgUrl" :src="IDM.url.getWebPath(v.bgUrl)">
+                <!-- <div class="img_box"> -->
+                  <div class="img_box">
+                    <div class="two">
+                      <div class="three">
+                        <img v-if="v.bgUrl" :src="IDM.url.getWebPath(v.bgUrl)">
+                        <svg-icon v-else icon-class="application" />
+                        <div v-if="v.showTodoNumber && v.todoNumber" class="number">{{ v.todoNumber }}</div>
+                      </div>
+                    </div>
+                  <!-- </div> -->
+                  <!-- <img v-if="v.bgUrl" :src="IDM.url.getWebPath(v.bgUrl)">
                   <svg-icon v-else icon-class="application" />
-                  <div v-if="v.showTodoNumber && v.todoNumber" class="number">{{ v.todoNumber }}</div>
+                  <div v-if="v.showTodoNumber && v.todoNumber" class="number">{{ v.todoNumber }}</div> -->
                 </div>
                 <div class="idm_applicationcenter_main_list_name">
                   <div class="empty-view"></div>
@@ -75,6 +90,7 @@
 </template>
 
 <script>
+import { base_url } from '../api/config.js'
 import { Grid, GridItem, Icon } from 'vant';
 import 'vant/lib/grid/style';
 import 'vant/lib/icon/style';
@@ -520,6 +536,38 @@ export default {
           }
           break;
       }
+      this.getApplicationMarkNumber();
+    },
+    getApplicationMarkNumber() {
+        console.log('propData.shortConfigList',this.propData.shortConfigList)
+        for( let i = 0,maxi = this.propData.shortConfigList.length;i < maxi;i++ ) {
+          const item = this.propData.shortConfigList[i];
+            if ( item.showTodoNumber ) {
+              this.getApplicationMarkNumberSubmit(i,this.item[i].sourceId)
+            }
+        }
+    },
+    getApplicationMarkNumberSubmit(index,sourceId) {
+        console.log('getApplicationMarkNumberUrl',this.propData.getApplicationMarkNumberUrl)
+        if ( this.moduleObject.env == 'develop' ) {
+            return
+        }
+        window.IDM.http.post(base_url + '/ctrl/dataSource/getDatas',{
+          id: sourceId || 1
+        },{
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+        }).then(result=>{
+            console.log('角标接口请求回参',result)
+            if ( result&&result.data&&result.data.type == 'success' && result.data.data ) {
+                if ( !this.propData.dataFiled ) {
+                    this.$set(this.propData.shortConfigList[index], "todoNumber", result.data.data.count);
+                } else {
+                    this.$set(this.propData.shortConfigList[index], "todoNumber", result.data.data[this.propData.dataFiled]);
+                }
+            }
+        })
     },
     /**
      * 主题颜色
@@ -691,18 +739,43 @@ export default {
           text-align: center;
         }
       }
-      .img_box,img,svg{
-          width: 40px;
-          height: 40px;
-          margin: 0 auto 2.5px auto;
+      // .img_box,img,svg{
+      //     width: 40px;
+      //     height: 40px;
+      //     margin: 0 auto 2.5px auto;
+      // }
+      // .img_box {
+      //     width: 40px;
+      //     height: 40px;
+      //     margin: 0 auto 2.5px auto;
+      //     position: absolute;
+      //     bottom: 10px;
+      //     left: 10px;
+      // }
+      .img_box{
+        position: absolute;
+        bottom: 15px;
+        left: 5px;
+        width: 45px;
+        height: 50px;
+        overflow: hidden;
+        transform: rotate(120deg);
+        img,svg{
+          width: 100%;
+          height: 100%;
+        }
       }
-      .img_box {
-          width: 40px;
-          height: 40px;
-          margin: 0 auto 2.5px auto;
-          position: absolute;
-          bottom: 10px;
-          left: 10px;
+      .two{
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          transform: rotate(-60deg);
+      }
+      .three{
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          transform: rotate(-60deg);
       }
       .number{
           width: 15px;
