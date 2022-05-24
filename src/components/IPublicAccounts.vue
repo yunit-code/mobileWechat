@@ -36,9 +36,14 @@
 </template>
 
 <script>
-import { base_url } from '../api/config.js'
 import { Popover } from 'vant';
 import 'vant/lib/popover/style';
+const placementObj = {
+  'leftTop': 'bottom-start',
+  'rightTop': 'bottom-end',
+  'leftBottom': 'top-start',
+  'rightBottom': 'top-end'
+};
 export default {
   name: 'IPublicAccounts',
   components: {
@@ -47,7 +52,7 @@ export default {
   data(){
     return {
       showPopover: false,
-      placement: 'bottom',
+      placement: placementObj[this.$root.propData.compositeAttr?.coordinates || 'leftBottom'],
       flags: false,
       position: { x: 0, y: 0 },
       nx: "",
@@ -61,7 +66,7 @@ export default {
       propData:this.$root.propData.compositeAttr||{
         accountUrl: '',
         fixed: true,
-        coordinates: 'leftTop',
+        coordinates: 'leftBottom',
         offsetX: '20',
         offsetY: '20',
         changeInterfaceUrl: '/ctrl/virtualAccount/switchAccount'
@@ -194,11 +199,11 @@ export default {
       console.log(action,index)
       this.showPopover = true;
       if(this.moduleObject.env=="production"){
-        const params = {userId: action.userId, userName: action.userName}
-        this.propData.changeInterfaceUrl&&window.IDM.http.get(base_url + this.propData.changeInterfaceUrl,params)
-        .then((res) => {
+        const params = {id: action.userId, orgId: action.orgId, isVirtual: action.isVirtual, switchType: '1'}
+        this.propData.changeInterfaceUrl&&window.IDM.http.get(this.propData.changeInterfaceUrl,params)
+        .done((res) => {
           //res.data
-          if ( res.data && res.data.type == 'success' ) {
+          if ( res.type == 'success' ) {
             // this.accountList.forEach((v) => {
             //   v.className = ''
             // })
