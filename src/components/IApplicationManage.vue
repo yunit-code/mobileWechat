@@ -10,9 +10,9 @@
         <!-- 组件内部容器 增加class="drag_container" 必选 idm-ctrl-id：组件的id，这个必须不能为空 idm-container-index  组件的内部容器索引，不重复唯一且不变，必选 -->
         <div class="idm_applicationmanage">
             <div class="idm_applicationmanage_block">
-                <div class="idm_applicationcenter_title flex_between">
+                <div class="idm_applicationmanage_title flex_between">
                     <div class="idm_applicationcenter_title_left">
-                        <div class="idm_applicationcenter_title_left_text">我的应用</div>
+                        <div class="idm_applicationmanage_title_left_text">我的应用</div>
                     </div>
                     <div @click="manageApplication" class="idm_applicationcenter_title_right">管理</div>
                 </div>
@@ -20,16 +20,16 @@
                     <van-loading vertical>加载中...</van-loading>
                 </div>
                 <div v-else class="block">
-                    <div v-if="my_application_data && my_application_data.length" class="idm_applicationcenter_main">
+                    <div v-if="my_application_data && my_application_data.length" class="idm_applicationmanage_main">
                         <van-grid :border="false" :column-num="5">
                             <van-grid-item v-for="(item,index) in my_application_data" :key="item.value">
-                                <div class="idm_applicationcenter_main_list">
+                                <div class="idm_applicationmanage_main_list">
                                     <div v-if="item.imageUrl">
                                         <img :src="item.imageUrl">
                                     </div>
                                     <svg-icon v-else icon-class="application" />
 
-                                    <div class="idm_applicationcenter_main_list_name">{{ item.title || ('应用' + index + 1) }}</div>
+                                    <div class="idm_applicationmanage_main_list_name">{{ item.title || ('应用' + index + 1) }}</div>
                                     <van-icon @click="deleteApplication(item,index)" v-if="is_edit" class="icon" name="minus" color="#fff" />
                                 </div>
                             </van-grid-item>
@@ -45,27 +45,27 @@
             </div>
             
             <div class="idm_applicationmanage_block">
-                <div class="idm_applicationcenter_title flex_between">
+                <div class="idm_applicationmanage_title flex_between">
                     <div class="idm_applicationcenter_title_left">
-                        <div class="idm_applicationcenter_title_left_text">全部应用</div>
+                        <div class="idm_applicationmanage_title_left_text">全部应用</div>
                     </div>
                 </div>
                 <div v-if="is_loading_all_application" class="loading_box loading_box_all">
                     <van-loading vertical>加载中...</van-loading>
                 </div>
                 <div v-else class="block">
-                    <div v-if="application_data && application_data.length" class="idm_applicationcenter_main">
+                    <div v-if="application_data && application_data.length" class="idm_applicationmanage_main">
                         <van-tabs>
                             <van-tab v-for="(item,index) in application_data" :key="item.value" :title="item.title">
                                 <van-grid :border="false" :column-num="5">
                                     <van-grid-item v-for="(item1,index1) in item.children" :key="item1.value">
-                                        <div class="idm_applicationcenter_main_list">
+                                        <div class="idm_applicationmanage_main_list">
                                             <div v-if="item1.imageUrl">
                                                 <img :src="item1.imageUrl">
                                             </div>
                                             <svg-icon v-else icon-class="application" />
 
-                                            <div class="idm_applicationcenter_main_list_name">{{ item1.title || ('应用' + index1 + 1) }}</div>
+                                            <div class="idm_applicationmanage_main_list_name">{{ item1.title || ('应用' + index1 + 1) }}</div>
                                             <div v-if="is_edit">
                                                 <van-icon v-if="isHaveInMyApplication(item1)" class="icon icon_disabled" name="plus" color="#fff" />
                                                 <van-icon @click="addApplication(item1)" v-else class="icon" name="plus" color="#fff" />
@@ -557,14 +557,14 @@ export default {
                 window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop', styleObject);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + ' .van-tabs__wrap', navStyleBackground);
 
-                window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop' + " .idm_applicationcenter_title", styleObjectTitle);
-                window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop' + " .idm_applicationcenter_main_list_name", fontStyleObject);
+                window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop' + " .idm_applicationmanage_title", styleObjectTitle);
+                window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop' + " .idm_applicationmanage_main_list_name", fontStyleObject);
             } else {
                 window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + ' .van-tabs__wrap', navStyleBackground);
                 
-                window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationcenter_title", styleObjectTitle);
-                window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationcenter_main_list_name", fontStyleObject);
+                window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationmanage_title", styleObjectTitle);
+                window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationmanage_main_list_name", fontStyleObject);
             }
             this.initData();
         },
@@ -637,18 +637,18 @@ export default {
     // border-radius: 10px;
     .idm_applicationmanage_block{
         margin-bottom: 5px;
-        .idm_applicationcenter_title{
+        .idm_applicationmanage_title{
             padding: 10px 10px 10px 10px;
-            .idm_applicationcenter_title_left_text{
+            .idm_applicationmanage_title_left_text{
                 font-family: PingFangSC-Medium;
                 font-size: 16px;
                 // color: #333333;
                 line-height: 22px;
             }
         }
-        .idm_applicationcenter_main{
+        .idm_applicationmanage_main{
             // background: white;
-            .idm_applicationcenter_main_list{
+            .idm_applicationmanage_main_list{
                 position: relative;
                 text-align: center;
                 img,svg{
@@ -656,7 +656,7 @@ export default {
                     height: 40px;
                     margin: 0 auto 2.5px auto;
                 }
-                .idm_applicationcenter_main_list_name{
+                .idm_applicationmanage_main_list_name{
                     font-size: 12px;
                     // color: #333333;
                     text-align: center;
