@@ -45,7 +45,7 @@ const data = {
     jumpUrl: '/dreamweb/',
     image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp7.itc.cn%2Fimages01%2F20200903%2F9f80293e09644046a408f8be7359d4ff.jpeg&refer=http%3A%2F%2Fp7.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654761049&t=b2726a52f403b5d4dcca968820d55109",
     title:
-      "李干杰主持召开省政府常务会议 研究",
+      "主持召开省政府常务会议研究",
   },
   {
     jumpUrl: '/dreamweb/',
