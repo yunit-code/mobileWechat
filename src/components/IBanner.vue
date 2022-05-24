@@ -350,11 +350,6 @@ export default {
             item.key +
             " #" +
             (this.moduleObject.packageid || "module_demo") +
-            " .ant-tabs-nav .ant-tabs-tab-active,."+
-            themeNamePrefix +
-            item.key +
-            " #" +
-            (this.moduleObject.packageid || "module_demo") +
             " .idm-banner-my-bullet",
           bulletBgColorObj
         );

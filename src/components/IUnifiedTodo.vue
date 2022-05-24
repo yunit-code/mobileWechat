@@ -500,11 +500,6 @@ export default {
             item.key +
             " #" +
             (this.moduleObject.packageid || "module_demo") +
-            " .ant-tabs-nav .ant-tabs-tab-active,."+
-            themeNamePrefix +
-            item.key +
-            " #" +
-            (this.moduleObject.packageid || "module_demo") +
             " .idm-unifie-todo-box-title-icon",
           iconColorObj
         );

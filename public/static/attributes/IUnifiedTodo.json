@@ -81,7 +81,7 @@
                 {
                     "type": "group",
                     "text": "标题图标设置",
-                    "desc": "点击？查看样式设置用法指南",
+                    "desc": "设置标题右侧图标属性，如设置主题时，则依主题颜色为准",
                     "display": "@[showTitle == true && showIcon == true]",
                     "helpUrl": "",
                     "children": [
@@ -213,7 +213,6 @@
             "desc": "点击？查看主题设置用法指南",
             "bindKey": "themeList",
             "tabText": "主题[index]",
-            "display": "@[false]",
             "children": [
                 {
                     "type": "input",
