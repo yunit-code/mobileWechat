@@ -206,17 +206,15 @@ export default {
      * 请求数据
      */
     requsetList() {
-      let url = this.propData.customInterfaceUrl;
       let dataSource = this.propData.dataSource
-      if (!url || !dataSource) {
+      if (!dataSource) {
         this.isLoading = false;
         return;
       }
       const startDate = this.currentList[0][0].realDate;
       const endDate = this.currentList[2][this.currentList[2].length - 1]
         .realDate;
-      const sub = url.indexOf("?") === -1 ? "?" : "&";
-      url = `${url}${sub}id=${dataSource.value}`;
+      let url = `ctrl/dataSource/getDatas?id=${dataSource.value}`;
       IDM.http
         .post(url, {
           startDate,

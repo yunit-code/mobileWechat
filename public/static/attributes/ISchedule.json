@@ -796,16 +796,9 @@
                     "type": "treeSelect",
                     "layoutType": "inline",
                     "text": "数据源",
+                    "desc": "用于选择日程提醒的数据源",
                     "bindKey": "dataSource",
                     "dataSourceUrl":"ctrl/dataSource/getDatasourceByGroup"
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "数据接口",
-                    "bindKey": "customInterfaceUrl",
-                    "desc": "通过接口获取日程",
-                    "default": "ctrl/dataSource/getDatas"
                 },
                 {
                     "type": "textarea",
