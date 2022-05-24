@@ -79,9 +79,45 @@
                     "display": "@[showTitle == true]"
                 },
                 {
+                    "type": "slider",
+                    "layoutType": "block",
+                    "text": "显示数量",
+                    "bindKey": "limit",
+                    "default": "3"
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "text": "标题容器样式",
+            "desc": "点击？查看样式设置用法指南",
+            "display": "@[showTitle == true]",
+            "helpUrl": "",
+            "children": [
+                {
+                    "type": "radio",
+                    "styleType": "radio",
+                    "layoutType": "inline",
+                    "text": "图标位置",
+                    "desc": "设置组件标题图标位置",
+                    "bindKey": "titleIconPosition",
+                    "display": "@[showIcon == true]",
+                    "dictionary": [
+                        {
+                            "label": "左边",
+                            "value": "left"
+                        },
+                        {
+                            "label": "右边",
+                            "value": "right"
+                        }
+                    ],
+                    "default": "right"
+                },
+                {
                     "type": "group",
-                    "text": "标题图标设置",
-                    "desc": "设置标题右侧图标属性，如设置主题时，则依主题颜色为准",
+                    "text": "标题图标",
+                    "desc": "设置标题图标属性，如设置主题时，则依主题颜色为准",
                     "display": "@[showTitle == true && showIcon == true]",
                     "helpUrl": "",
                     "children": [
@@ -109,6 +145,120 @@
                         }
                     ]
                 },
+                {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "标题字体",
+                    "bindKey": "titleFontStyle",
+                    "default":  {
+                        "fontColors": {
+                            "hex8": "#333333"
+                        },
+                        "fontSize": 16,
+                        "fontSizeUnit": "px",
+                        "fontWeight": "800"
+                    },
+                    "display": "@[showTitle == true]"
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "text": "外层容器样式",
+            "desc": "点击？查看样式设置用法指南",
+            "helpUrl": "",
+            "children": [
+                {
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "背景色",
+                    "bindKey": "bgColor",
+                    "placeholder": "请选择颜色",
+                    "default": {}
+                },
+                {
+                    "type": "inlineGroup",
+                    "text": "宽高",
+                    "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "block",
+                            "text": "宽",
+                            "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
+                            "bindKey": "width",
+                            "width": "60px",
+                            "default": "auto"
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "block",
+                            "text": "高",
+                            "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
+                            "bindKey": "height",
+                            "width": "60px",
+                            "default": "auto"
+                        }
+                    ]
+                },
+                {
+                    "type": "box",
+                    "layoutType": "block",
+                    "text": "内外边距",
+                    "bindKey": "box",
+                    "default": {
+                        "marginTopVal": "",
+                        "marginRightVal": "",
+                        "marginBottomVal": "",
+                        "marginLeftVal": "",
+                        "paddingTopVal": "10px",
+                        "paddingRightVal": "10px",
+                        "paddingBottomVal": "10px",
+                        "paddingLeftVal": "10px"
+                    }
+                },
+                {
+                    "type": "border",
+                    "layoutType": "block",
+                    "text": "边框",
+                    "bindKey": "border"
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "text": "内层容器样式",
+            "desc": "点击？查看样式设置用法指南",
+            "helpUrl": "",
+            "children": [
+                {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "默认字体",
+                    "bindKey": "todoFontStyle",
+                    "default": {
+                        "fontColors": {
+                            "hex": "#000000"
+                        },
+                        "fontSize": 15,
+                        "fontSizeUnit": "px",
+                        "fontWeight": "500"
+                    }
+                },
+                {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "已读字体",
+                    "bindKey": "readFontStyle",
+                    "default": {
+                        "fontColors": {
+                            "hex": "#999999"
+                        },
+                        "fontSize": 15,
+                        "fontSizeUnit": "px",
+                        "fontWeight": "500"
+                    }
+                },
+                
                 {
                     "type": "group",
                     "text": "已读图标设置",
@@ -169,16 +319,26 @@
                 },
                 {
                     "type": "input",
-                    "layoutType": "block",
-                    "text": "空白列表提示文字",
+                    "layoutType": "inline",
+                    "text": "已读判断",
+                    "desc":"已读判断表达式,不需要根据已读变化直接为空即可，表达式结果为true则显示，false则不显示，此处填写表达式，更多详细用法点击查看",
+                    "bindKey": "readExpression",
+                    "placeholder":"readStatus 或者 readStatus=='1'",
+                    "default": "readStatus == '1'"
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "空白文字",
+                    "desc": "无数据时，提示文字",
                     "bindKey": "emptyText",
                     "default": "数据为空"
                 },
                 {
                     "type": "inputNumberUnit",
-                    "layoutType": "block",
-                    "text": "空白列表提示高度",
-                    "desc": "列表为空时，显示空白数据高度，设置过小则显示不全，推荐90px",
+                    "layoutType": "inline",
+                    "text": "空白高度",
+                    "desc": "无数据时，显示空白数据高度，设置过小则显示不全，推荐90px",
                     "bindKey": "emptyBoxHeight",
                     "dictionary": [
                         {
@@ -199,178 +359,6 @@
                         "selectVal": "px"
                     }
                 },
-                {
-                    "type": "slider",
-                    "layoutType": "block",
-                    "text": "显示数量",
-                    "bindKey": "limit",
-                    "default": "3"
-                }
-            ]
-        },
-        {
-            "type": "table",
-            "text": "主题设置",
-            "desc": "点击？查看主题设置用法指南",
-            "bindKey": "themeList",
-            "tabText": "主题[index]",
-            "children": [
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "主题标识",
-                    "bindKey": "key",
-                    "desc":"用于设置主题的标识，此项需要搭配自定义开发切换主题的功能，例如：蓝色标识为blue，用户切换主题的时候存储到数据库中的标识为blue，则这里填写为blue",
-                    "default":"",
-                    "placeholder":"例如：blue"
-                },{
-                    "type": "colorPicker",
-                    "layoutType": "inline",
-                    "text": "主要颜色",
-                    "bindKey": "mainColor",
-                    "desc":"主题的主要颜色",
-                    "placeholder": "请选择颜色",
-                    "display":"@[key]",
-                    "default": {
-                        "hex": "#1890FF",
-                        "hex8": "#1890FFFF"
-                    }
-                },{
-                    "type": "colorPicker",
-                    "layoutType": "inline",
-                    "text": "次要颜色",
-                    "bindKey": "minorColor",
-                    "desc":"主题的次要颜色",
-                    "placeholder": "请选择颜色",
-                    "display":"@[key]",
-                    "default": {
-                        "hex": "#e6f7ff",
-                        "hex8": "#e6f7ffFF"
-                    }
-                }
-            ]
-        },
-        {
-            "type": "group",
-            "text": "样式设置",
-            "desc": "点击？查看样式设置用法指南",
-            "helpUrl": "",
-            "children": [
-                {
-                    "type": "font",
-                    "layoutType": "block",
-                    "text": "标题字体",
-                    "bindKey": "titleFontStyle",
-                    "default":  {
-                        "fontColors": {
-                            "hex8": "#333333"
-                        },
-                        "fontSize": 16,
-                        "fontSizeUnit": "px",
-                        "fontWeight": "800"
-                    },
-                    "display": "@[showTitle == true]"
-                },
-                {
-                    "type": "font",
-                    "layoutType": "block",
-                    "text": "默认待办字体",
-                    "bindKey": "todoFontStyle",
-                    "default": {
-                        "fontColors": {
-                            "hex": "#000000"
-                        },
-                        "fontSize": 15,
-                        "fontSizeUnit": "px",
-                        "fontWeight": "500"
-                    }
-                },
-                {
-                    "type": "font",
-                    "layoutType": "block",
-                    "text": "已读文字字体",
-                    "bindKey": "readFontStyle",
-                    "default": {
-                        "fontColors": {
-                            "hex": "#999999"
-                        },
-                        "fontSize": 15,
-                        "fontSizeUnit": "px",
-                        "fontWeight": "500"
-                    }
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "已读判断",
-                    "desc":"已读判断表达式,不需要根据已读变化直接为空即可，表达式结果为true则显示，false则不显示，此处填写表达式，更多详细用法点击查看",
-                    "bindKey": "readExpression",
-                    "placeholder":"readStatus 或者 readStatus=='1'",
-                    "default": "readStatus == '1'"
-                },
-                {
-                    "type": "colorPicker",
-                    "layoutType": "inline",
-                    "text": "背景色",
-                    "bindKey": "bgColor",
-                    "placeholder": "请选择颜色",
-                    "default": {}
-                },
-                {
-                    "type": "inlineGroup",
-                    "text": "宽高",
-                    "children": [
-                        {
-                            "type": "input",
-                            "layoutType": "block",
-                            "text": "宽",
-                            "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
-                            "bindKey": "width",
-                            "width": "60px",
-                            "default": "auto"
-                        },
-                        {
-                            "type": "input",
-                            "layoutType": "block",
-                            "text": "高",
-                            "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
-                            "bindKey": "height",
-                            "width": "60px",
-                            "default": "auto"
-                        }
-                    ]
-                },
-                {
-                    "type": "box",
-                    "layoutType": "block",
-                    "text": "内外边距",
-                    "bindKey": "box",
-                    "default": {
-                        "marginTopVal": "",
-                        "marginRightVal": "",
-                        "marginBottomVal": "",
-                        "marginLeftVal": "",
-                        "paddingTopVal": "10px",
-                        "paddingRightVal": "10px",
-                        "paddingBottomVal": "10px",
-                        "paddingLeftVal": "10px"
-                    }
-                },
-                {
-                    "type": "border",
-                    "layoutType": "block",
-                    "text": "边框",
-                    "bindKey": "border"
-                }
-            ]
-        },
-        {
-            "type": "group",
-            "text": "内层样式设置",
-            "desc": "点击？查看样式设置用法指南",
-            "helpUrl": "",
-            "display": "@[showTitle == true]",
-            "children": [
                 {
                     "type": "colorPicker",
                     "layoutType": "inline",
@@ -427,6 +415,50 @@
                 }
             ]
         },
+        {
+            "type": "table",
+            "text": "主题设置",
+            "desc": "点击？查看主题设置用法指南",
+            "bindKey": "themeList",
+            "tabText": "主题[index]",
+            "children": [
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "主题标识",
+                    "bindKey": "key",
+                    "desc":"用于设置主题的标识，此项需要搭配自定义开发切换主题的功能，例如：蓝色标识为blue，用户切换主题的时候存储到数据库中的标识为blue，则这里填写为blue",
+                    "default":"",
+                    "placeholder":"例如：blue"
+                },{
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "主要颜色",
+                    "bindKey": "mainColor",
+                    "desc":"主题的主要颜色",
+                    "placeholder": "请选择颜色",
+                    "display":"@[key]",
+                    "default": {
+                        "hex": "#1890FF",
+                        "hex8": "#1890FFFF"
+                    }
+                },{
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "次要颜色",
+                    "bindKey": "minorColor",
+                    "desc":"主题的次要颜色",
+                    "placeholder": "请选择颜色",
+                    "display":"@[key]",
+                    "default": {
+                        "hex": "#e6f7ff",
+                        "hex8": "#e6f7ffFF"
+                    }
+                }
+            ]
+        },
+        
+        
         {
             "type": "group",
             "text": "高级",

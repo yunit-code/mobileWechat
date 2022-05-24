@@ -13,13 +13,19 @@
    class="idm-unifie-todo-box in-box">
     <div class="idm-unifie-todo-box-title d-flex align-c just-b" v-if="propData.showTitle">
       <div class="d-flex align-c">
-        <span class="idm-unifie-todo-box-title-font">{{propData.htmlTitle}}</span>
-        <template v-if="propData.showIcon">
+        <div v-if="propData.showIcon && propData.titleIconPosition == 'left'" class="idm-unifie-todo-box-left-icon">
           <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm-unifie-todo-box-title-icon" aria-hidden="true" >
             <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
           </svg>
           <svg-icon v-else icon-class="threeLine" className="idm-unifie-todo-box-title-icon"></svg-icon>
-        </template>
+        </div>
+        <span class="idm-unifie-todo-box-title-font">{{propData.htmlTitle}}</span>
+        <div v-if="propData.showIcon && propData.titleIconPosition == 'right'" class="idm-unifie-todo-box-right-icon">
+          <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm-unifie-todo-box-title-icon" aria-hidden="true" >
+            <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
+          </svg>
+          <svg-icon v-else icon-class="threeLine" className="idm-unifie-todo-box-title-icon"></svg-icon>
+        </div>
       </div>
       <div v-if="propData.showMore" class="d-flex align-c"  @click="handleClickMore">
         <span v-if="propData.showTodoNumber">
@@ -62,7 +68,7 @@
     <div v-if="!isFirst && ( !todoData[listKey] || todoData[listKey].length === 0)" class="idm-unifie-todo-box-empty">
       <van-empty :description="propData.emptyText || '数据为空'" :image-size="60"/>
     </div>
-    <div class="idm-unifie-todo-box-mask" v-if="moduleObject.env === 'production' && ((propData.dataType === 'dataSource' && !propData.dataSource) || (propData.dataType === 'custom' && !propData.customGetTodoDataInterfaceUrl))">
+    <div class="idm-unifie-todo-box-mask" v-if="moduleObject.env === 'develop' && ((propData.dataType === 'dataSource' && !propData.dataSource) || (propData.dataType === 'custom' && !propData.customGetTodoDataInterfaceUrl))">
       <span>！未绑定数据源</span>
     </div>
   </div>
@@ -130,6 +136,7 @@ export default {
           fontSizeUnit: "px",
           fontWeight: "800"
         },
+        titleIconPosition: 'right',
         showIcon: true,
         showTitle: true,
         showMore: true,
@@ -707,6 +714,12 @@ export default {
   background-color: #fff;
   overflow: hidden;
   position: relative;
+  &-left-icon{
+    margin: 0 8px 0 0;
+  }
+  &-right-icon{
+    margin: 0 0 0 8px;
+  }
   &-title{
     font: inherit;
     font-weight: 600;
@@ -716,7 +729,6 @@ export default {
     &-icon{
       width: 18px;
       height: 18px;
-      margin: 0 0 0 8px;
     }
     & &-more{
       font-size: 22px;

@@ -31,7 +31,7 @@
         <div class="idm-banner-swiper-pagination"></div>
       </div>
     </div>
-    <div class="idm-banner-box-mask" v-if="moduleObject.env === 'production' && (propData.dataType === 'dataSource' && !propData.dataSource)">
+    <div class="idm-banner-box-mask" v-if="moduleObject.env === 'develop' && (propData.dataType === 'dataSource' && !propData.dataSource)">
       <span>！未绑定数据源</span>
     </div>
   </div>

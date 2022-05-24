@@ -66,7 +66,7 @@
       <div v-if="!isFirst && ( !messageData.list || messageData.list.length === 0)" class="idm-message-list-box-empty">
         <van-empty :description="propData.emptyText || '数据为空'" image-size="60"/>
       </div>
-      <div class="idm-message-list-parent-box-mask" v-if="moduleObject.env === 'production' && !propData.dataSource">
+      <div class="idm-message-list-parent-box-mask" v-if="moduleObject.env === 'develop' && !propData.dataSource">
         <span>！未绑定数据源</span>
       </div>
     </div>
