@@ -25,6 +25,10 @@ mobileWechat@1.0.7
 用于设置title
 - 标识：`标题【comTitle】`
 - 默认值：`快捷方式`
+#### 标题【titleIconPosition】
+用于设置title
+- 标识：`图标位置【titleIconPosition】`
+- 默认值：`右侧`
 ##### 标题图标【titleIconClass】
 用于设置title图标
 - 标识：`标题【titleIconClass】`
@@ -61,7 +65,7 @@ mobileWechat@1.0.7
 用于设置卡片的背景图
 - 标识：`背景图片【bgUrl】`
 - 默认值：`渐变色`
-### 外层样式设置
+### 标题容器样式设置
 #### 图标颜色
 设置组件的title图标的颜色
 - 标识：`titleIconFontColor`
@@ -235,7 +239,7 @@ mobileWechat@1.0.7
 - 标识：`font`
 
 - 默认值：空
-### 内层样式设置
+### 内容容器样式设置
 #### 背景设置
 ##### 背景色【bgColor】
 设置组件的整体背景颜色
@@ -399,3 +403,42 @@ mobileWechat@1.0.7
 - 标识：`font`
 
 - 默认值：空
+
+### 主题设置【themeList】
+用于设置组件的主题样式表，此处可跟随自身主题进行随意设置，此属性是一个表结构集合的形式属性。
+- 标识：`themeList`
+
+- 默认值：`[]`
+
+### 高级
+#### 角标接口设置
+##### 数据接口
+应用显示角标选项打开的时候，用于获取应用右上角角标数据的接口地址
+
+- 标识：`getApplicationMarkNumberUrl`
+- 默认值：`/ctrl/dataSource/getDatas`
+- 接口返回格式需要按照以下要求：
+``` json
+{
+    "code":"200",
+    "type":"success",
+    "message":"操作成功",
+    "metadata":null,
+    "token":"",
+    "data": {
+        "count": 5, //应用角标显示值
+    }
+}
+```
+
+##### 角标字段【dataFiled】
+应用显示角标选项打开的时候，根据应用右上角角标接口返回数据格式指定结果集的字段，若它的值为{data:{count:5}}，则这里应该填写count
+
+- 标识：`dataFiled`
+- 默认值：`count`
+
+##### 刷新KEY【messageRefreshKey】
+根据组件接受到的消息KEY来刷新数据，可配置多个，以英文逗号分开
+
+- 标识：`messageRefreshKey`
+- 默认值：``
