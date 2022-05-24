@@ -610,9 +610,9 @@ export default {
     // margin: 0 -5px;
     flex-wrap: wrap;
     .summary-item{
-      padding: 0 5px;
+      padding: 5px;
       text-align: center;
-      margin-bottom: 10px;
+      // margin-bottom: 10px;
     }
     .summary-bg{
       border-radius: 6px;
