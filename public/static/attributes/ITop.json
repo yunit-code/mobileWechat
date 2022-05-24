@@ -100,53 +100,55 @@
             ]
         },
         {
+            "type": "table",
+            "text": "主题设置",
+            "desc": "点击？查看主题设置用法指南",
+            "bindKey": "themeList",
+            "tabText": "主题[index]",
+            "children": [
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "主题标识",
+                    "bindKey": "key",
+                    "desc": "用于设置主题的标识，此项需要搭配自定义开发切换主题的功能，例如：蓝色标识为blue，用户切换主题的时候存储到数据库中的标识为blue，则这里填写为blue",
+                    "default": "",
+                    "placeholder": "例如：blue"
+                },
+                {
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "主要颜色",
+                    "bindKey": "mainColor",
+                    "desc": "主题的主要颜色，应用于背景颜色",
+                    "placeholder": "请选择颜色",
+                    "display": "@[key]",
+                    "default": {
+                        "hex": "#4A90E2",
+                        "hex8": "#4A90E2FF"
+                    }
+                },
+                {
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "次要颜色",
+                    "bindKey": "minorColor",
+                    "desc": "主题的次要颜色，应用于文字颜色",
+                    "placeholder": "请选择颜色",
+                    "display": "@[key]",
+                    "default": {
+                        "hex": "#FFFFFF",
+                        "hex8": "#FFFFFFFF"
+                    }
+                }
+            ]
+        },
+        {
             "type": "group",
             "text": "样式设置",
             "desc": "点击？查看样式设置用法指南",
             "helpUrl": "",
             "children": [
-                {
-                    "type": "table",
-                    "text": "主题设置",
-                    "desc": "点击？查看主题设置用法指南",
-                    "bindKey": "themeList",
-                    "tabText": "主题[index]",
-                    "children": [
-                        {
-                            "type": "input",
-                            "layoutType": "inline",
-                            "text": "主题标识",
-                            "bindKey": "key",
-                            "desc": "用于设置主题的标识，此项需要搭配自定义开发切换主题的功能，例如：蓝色标识为blue，用户切换主题的时候存储到数据库中的标识为blue，则这里填写为blue",
-                            "default": "",
-                            "placeholder": "例如：blue"
-                        },
-                        {
-                            "type": "colorPicker",
-                            "layoutType": "inline",
-                            "text": "主要颜色",
-                            "bindKey": "mainColor",
-                            "desc": "主题的主要颜色，应用于背景颜色",
-                            "placeholder": "请选择颜色",
-                            "display": "@[key]",
-                            "default": {
-                                "hex8": "#4A90E2FF"
-                            }
-                        },
-                        {
-                            "type": "colorPicker",
-                            "layoutType": "inline",
-                            "text": "次要颜色",
-                            "bindKey": "minorColor",
-                            "desc": "主题的次要颜色，应用于文字颜色",
-                            "placeholder": "请选择颜色",
-                            "display": "@[key]",
-                            "default": {
-                                "hex8": "#FFFFFFFF"
-                            }
-                        }
-                    ]
-                },
                 {
                     "type": "box",
                     "layoutType": "block",
