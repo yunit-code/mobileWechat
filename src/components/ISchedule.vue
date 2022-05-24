@@ -117,7 +117,7 @@
         />
       </div>
     </div>
-    <div class="i-schedule-mask" v-if="moduleObject.env === 'production' && !propData.dataSource">
+    <div class="i-schedule-mask" v-if="!propData.dataSource">
       <span>！未绑定数据源</span>
     </div>
   </div>
