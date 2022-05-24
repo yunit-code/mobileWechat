@@ -112,12 +112,19 @@
             "desc": "点击？查看高级设置用法指南",
             "children": [
                 {
+                    "type": "treeSelect",
+                    "layoutType": "inline",
+                    "text": "数据源",
+                    "bindKey": "dataSource",
+                    "dataSourceUrl": "/ctrl/dataSource/getDatasourceByGroup"
+                },
+                {
                     "type": "input",
-                    "layoutType": "block",
-                    "text": "虚拟账号接口地址",
+                    "layoutType": "inline",
+                    "text": "接口地址",
                     "bindKey": "customInterfaceUrl",
                     "desc": "用于获取数据源的接口地址，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}",
-                    "default": "/ctrl/virtualAccount/getVirtualAccountList"
+                    "default": "/ctrl/dataSource/getDatas"
                 },
                 {
                     "type": "input",

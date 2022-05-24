@@ -371,20 +371,33 @@ export default {
     /**
      * 加载动态数据
      */
-    initData(){
+    initData() {
       let that = this;
-      if(this.moduleObject.env=="production"){
-        this.propData.customInterfaceUrl&&window.IDM.http.get(base_url + this.propData.customInterfaceUrl)
-        .then((res) => {
-          //res.data
-          console.log(res)
-          if ( res.data && res.data.type == 'success' ) {
-            that.accountList = res.data.data
-            that.accountList && that.accountList.forEach((v, i) => {
-              v.text = v.userName
-            })
-          }
-        })
+      if (this.moduleObject.env == "production") {
+        this.propData.customInterfaceUrl &&
+          IDM.http
+            .post(
+              this.propData.customInterfaceUrl,
+              {
+                id: this.propData.dataSource && this.propData.dataSource.value,
+              },
+              {
+                headers: {
+                  "Content-Type": "application/json;charset=UTF-8",
+                },
+              }
+            )
+            .done((res) => {
+              if (res.type === "success") {
+                that.accountList &&
+                  res.data.map((item) => ({
+                    ...item,
+                    text: item.userName,
+                  }));
+              } else {
+                IDM.message.error(res.message);
+              }
+            });
       }
     },
     /**
