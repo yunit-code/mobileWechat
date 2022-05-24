@@ -389,8 +389,7 @@ export default {
             )
             .done((res) => {
               if (res.type === "success") {
-                that.accountList &&
-                  res.data.map((item) => ({
+                that.accountList = res.data.map((item) => ({
                     ...item,
                     text: item.userName,
                   }));

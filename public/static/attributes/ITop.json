@@ -66,15 +66,15 @@
                     "type": "radio",
                     "layoutType": "inline",
                     "text": "跳转方式",
-                    "desc": "用于设置是当页跳转还是弹出新窗口两种方式",
+                    "desc": "设置跳转方式",
                     "bindKey": "jumpType",
                     "dictionary": [
                         {
-                            "label": "当前页",
+                            "label": "当前页跳转",
                             "value": "current"
                         },
                         {
-                            "label": "新窗口",
+                            "label": "新窗口打开",
                             "value": "new"
                         }
                     ],
