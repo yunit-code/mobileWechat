@@ -64,7 +64,6 @@ export default {
         coordinates: 'leftTop',
         offsetX: '20',
         offsetY: '20',
-        customInterfaceUrl: '/ctrl/virtualAccount/getVirtualAccountList',
         changeInterfaceUrl: '/ctrl/virtualAccount/switchAccount'
       }
     }
@@ -377,12 +376,13 @@ export default {
      * 加载动态数据
      */
     initData() {
-      let that = this;
+      const that = this;
+      const customInterfaceUrl = '/ctrl/dataSource/getDatas';
       if (this.moduleObject.env == "production") {
-        this.propData.dataSource && this.propData.customInterfaceUrl &&
+        this.propData.dataSource &&
           IDM.http
             .post(
-              this.propData.customInterfaceUrl,
+              customInterfaceUrl,
               {
                 id: this.propData.dataSource && this.propData.dataSource.value,
               },
