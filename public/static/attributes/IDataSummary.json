@@ -418,7 +418,15 @@
                     "type": "font",
                     "layoutType": "block",
                     "text": "标题文字",
-                    "bindKey": "font"
+                    "bindKey": "font",
+                    "default":  {
+                        "fontColors": {
+                            "hex8": "#333333"
+                        },
+                        "fontSize": 16,
+                        "fontSizeUnit": "px",
+                        "fontWeight": "800"
+                    }
                 },
                 {
                     "type": "font",
