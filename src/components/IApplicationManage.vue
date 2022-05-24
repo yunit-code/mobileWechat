@@ -334,6 +334,7 @@ export default {
         },
         cancel() {
             this.is_edit = false;
+            this.initData()
             let urlObject = window.IDM.url.queryObject();
             let pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
             var clickNewFunction = this.propData.clickCancelFunction;
