@@ -142,7 +142,11 @@ mobilewechat@1.0.8
 - 标识：`fontManage`
 - 默认值：空
 
+### 主题设置【themeList】
+用于设置组件的主题样式表，此处可跟随自身主题进行随意设置，此属性是一个表结构集合的形式属性。
+- 标识：`themeList`
 
+- 默认值：`[]`
 
 ### 高级
 #### 我的应用【getMyApplicationUrl】

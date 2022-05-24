@@ -488,6 +488,7 @@ export default {
         padding: 20px 0;
         text-align: center;
     }
+    
 }
 
 </style>
