@@ -127,16 +127,38 @@ export default {
         dataFiled: "title",
         menuWidth: "80%",
         iconSize: "24px",
+        themeList: [
+          {
+            key: "blue",
+            mainColor: {
+              hex8: "blue",
+            },
+            minorColor: {
+              hex8: "blue",
+            },
+          },
+          {
+            key: "red",
+            mainColor: {
+              hex8: "red",
+            },
+            minorColor: {
+              hex8: "red",
+            },
+          },
+        ],
       },
       visible: false,
       selectedKey: "",
       activeKey: "",
+      // [{key: '1', pageId: '1', title: '测试用例1'}, {key: '2', pageId: '2', title: '测试用例2'}]
       menuList: [],
     };
   },
   created() {
     this.moduleObject = this.$root.moduleObject;
     this.convertAttrToStyleObject();
+    this.convertThemeListAttrToStyleObject();
     this.getMenuList();
   },
   methods: {
@@ -146,6 +168,7 @@ export default {
     propDataWatchHandle(propData) {
       this.propData = propData.compositeAttr || {};
       this.convertAttrToStyleObject();
+      this.convertThemeListAttrToStyleObject();
     },
     addClass(key) {
       this.activeKey = key;
@@ -487,6 +510,81 @@ export default {
         titleStyleObject
       );
     },
+    /**
+     * 主题颜色
+     */
+    convertThemeListAttrToStyleObject() {
+      var themeList = this.propData.themeList;
+      if (!themeList) {
+        return;
+      }
+      const themeNamePrefix =
+        IDM.setting &&
+        IDM.setting.applications &&
+        IDM.setting.applications.themeNamePrefix
+          ? IDM.setting.applications.themeNamePrefix
+          : "idm-theme-";
+      for (var i = 0; i < themeList.length; i++) {
+        var item = themeList[i];
+        //item.key：为主题样式的key
+        //item.mainColor：主要颜色值
+        //item.minorColor：次要颜色值
+        // if(item.key!=IDM.theme.getCurrentThemeInfo()){
+        //     //此处比对是不渲染输出不用的样式，如果页面会刷新就可以把此处放开
+        //     continue;
+        // }
+        const cssObject_color_main = {
+          color: item.mainColor ? item.mainColor.hex8 : "",
+        };
+        const cssObject_background_minor = {
+          "background-color": item.minorColor ? item.minorColor.hex8 : "",
+        };
+        const cssObject_boderColor_minor = {
+          "border-bottom-color": item.minorColor ? item.minorColor.hex8 : "",
+        };
+        IDM.setStyleToPageHead(
+          "." +
+            themeNamePrefix +
+            item.key +
+            " #" +
+            (this.moduleObject.packageid || "module_demo") +
+            " .hover_button",
+          cssObject_color_main
+        );
+        IDM.setStyleToPageHead(
+          "." +
+            themeNamePrefix +
+            item.key +
+            " #idm_popupWorkbench_popup" +
+            " .hover_button",
+          cssObject_color_main
+        );
+        IDM.setStyleToPageHead(
+          "." +
+            themeNamePrefix +
+            item.key +
+            " #idm_popupWorkbench_popup" +
+            " .van-cell.cell_selected .van-cell__title div",
+          cssObject_color_main
+        );
+        IDM.setStyleToPageHead(
+          "." +
+            themeNamePrefix +
+            item.key +
+            " #idm_popupWorkbench_popup" +
+            " .van-cell.cell_selected",
+          cssObject_background_minor
+        );
+        IDM.setStyleToPageHead(
+          "." +
+            themeNamePrefix +
+            item.key +
+            " #idm_popupWorkbench_popup" +
+            " .van-cell :after",
+          cssObject_boderColor_minor
+        );
+      }
+    },
   },
 };
 </script>
@@ -528,7 +626,7 @@ export default {
     }
     .van-cell {
       background-color: transparent;
-      ::after {
+      :after {
         position: absolute;
         box-sizing: border-box;
         content: " ";
