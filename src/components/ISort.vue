@@ -12,7 +12,7 @@
     :title="propData.htmlTitle"
     class="i-sort-outer"
   >
-  <div class="i-sort-tip">
+  <div class="i-sort-tip" v-if="propData.showTip === undefined ? true : propData.showTip">
     {{ propData.tipText || '你可以通过拖拽对功能组件进行排序，点击置顶图标快速置顶重要组件，点击隐藏图标隐藏当前组件。'}}
   </div>
   <div class="i-sort-header">

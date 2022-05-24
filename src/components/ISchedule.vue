@@ -16,17 +16,18 @@
       <div class="i-schedule-header-main">
         <div class="i-schedule-header-tit">
           <span>{{ propData.title || "日程提醒" }}</span>
-          <svg
-            v-show="propData.showIcon === undefined ? true : propData.showIcon"
-            v-if="propData.titleIcon && propData.titleIcon.length > 0"
-            class="idm_filed_svg_icon"
-            aria-hidden="true"
-          >
-            <use
-              :xlink:href="`#${propData.titleIcon && propData.titleIcon[0]}`"
-            ></use>
-          </svg>
-          <svg-icon v-else icon-class="application-icon" />
+          <template v-if="propData.showIcon === undefined ? true : propData.showIcon">
+            <svg
+              v-if="propData.titleIcon && propData.titleIcon.length > 0"
+              class="idm_filed_svg_icon"
+              aria-hidden="true"
+            >
+              <use
+                :xlink:href="`#${propData.titleIcon && propData.titleIcon[0]}`"
+              ></use>
+            </svg>
+            <svg-icon v-else icon-class="application-icon" />
+          </template>
         </div>
         <div class="i-schedule-header-date">{{ nowDate }}</div>
       </div>
@@ -388,7 +389,11 @@ export default {
           switch (key) {
             case "width":
             case "height":
-              styleObject[key] = element;
+              innerCardStyleObject[key] = element;
+              break;
+            case "innerWidth":
+            case "innerHeight":
+              innerCardStyleObject[key] = element;
               break;
             case "bgColor":
               if (element && element.hex8) {
@@ -677,15 +682,19 @@ export default {
               titleStyleObject["text-align"] = element.fontTextAlign;
               titleStyleObject["text-decoration"] = element.fontDecoration;
               break;
+            case "titleIconColor":
+              iconStyleObject["fill"] = element.hex8 + '!important';
+              break;
             case "titleIconSize":
               iconStyleObject["font-size"] = element + "px";
               iconStyleObject["width"] = element + "px";
               iconStyleObject["height"] = element + "px";
               break;
+            case "titleIconPosition":
+              titleStyleObject["flex-direction"] = element === "right" ? 'row' : 'row-reverse'
           }
         }
       }
-      // if(key == "titleFont")
       window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
       window.IDM.setStyleToPageHead(
         this.moduleObject.id + " .i-schedule-header-tit",
@@ -696,7 +705,7 @@ export default {
         innerCardStyleObject
       );
       window.IDM.setStyleToPageHead(
-        this.moduleObject.id + " .idm_filed_svg_icon",
+        this.moduleObject.id + " .i-schedule-header-tit .idm_filed_svg_icon",
         iconStyleObject
       );
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .van-empty", emptyStyleObject);
@@ -937,6 +946,9 @@ export default {
         color: #333333;
         font-style: normal;
         text-decoration: none;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
 
         .idm_filed_svg_icon {
           font-size: 14px;
