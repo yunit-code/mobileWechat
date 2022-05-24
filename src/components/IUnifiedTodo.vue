@@ -715,9 +715,13 @@ export default {
   overflow: hidden;
   position: relative;
   &-left-icon{
+    display: flex;
+    align-items: center;
     margin: 0 8px 0 0;
   }
   &-right-icon{
+    display: flex;
+    align-items: center;
     margin: 0 0 0 8px;
   }
   &-title{
