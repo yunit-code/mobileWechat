@@ -70,7 +70,6 @@
             "desc": "点击？查看主题设置用法指南",
             "bindKey": "themeList",
             "tabText": "主题[index]",
-            "display": "@[false]",
             "children": [
                 {
                     "type": "input",

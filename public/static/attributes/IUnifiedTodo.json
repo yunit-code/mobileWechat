@@ -81,7 +81,7 @@
                 {
                     "type": "group",
                     "text": "标题图标设置",
-                    "desc": "点击？查看样式设置用法指南",
+                    "desc": "设置标题右侧图标属性，如设置主题时，则依主题颜色为准",
                     "display": "@[showTitle == true && showIcon == true]",
                     "helpUrl": "",
                     "children": [
@@ -95,6 +95,7 @@
                         {
                             "type": "colorPicker",
                             "layoutType": "inline",
+                            "desc": "没有配置主题下生效，配置了主题，则显示主题颜色",
                             "text": "图标颜色",
                             "bindKey": "titleIconFontColor",
                             "default": ""
@@ -213,7 +214,6 @@
             "desc": "点击？查看主题设置用法指南",
             "bindKey": "themeList",
             "tabText": "主题[index]",
-            "display": "@[false]",
             "children": [
                 {
                     "type": "input",

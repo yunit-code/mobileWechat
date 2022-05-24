@@ -350,11 +350,6 @@ export default {
             item.key +
             " #" +
             (this.moduleObject.packageid || "module_demo") +
-            " .ant-tabs-nav .ant-tabs-tab-active,."+
-            themeNamePrefix +
-            item.key +
-            " #" +
-            (this.moduleObject.packageid || "module_demo") +
             " .idm-banner-my-bullet",
           bulletBgColorObj
         );
@@ -608,7 +603,7 @@ export default {
   margin: 0 3px;
 }
 .idm-banner-my-bullet-active{
-  background-color:  #fff;
+  background-color:  #fff !important;
 }
 </style>
 <style lang="scss" scoped>
