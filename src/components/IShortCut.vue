@@ -537,8 +537,36 @@ export default {
           break;
       }
       this.getApplicationMarkNumber();
+      if(this.propData.shortCutStyle === 'default'&&this.propData.shortConfigList) {
+        this.propData.shortConfigList.forEach(item=> {
+          const styles = {}
+          // if(item.positionX&&item.positionX.inputVal){
+          //   item.styles["backgroundPosition"]= `${item.positionX.selectVal&&item.positionX.inputVal?item.positionX.inputVal+ item.positionX.selectVal:'0%'} ${item.positionY.selectVal&&item.positionY.inputVal?item.positionY.inputVal+ item.positionY.selectVal:'0%'}`;
+          // }
+          // if(item.positionY&&item.positionY.inputVal){
+          //   item.styles["backgroundPosition"]= `${item.positionX.selectVal&&item.positionX.inputVal?item.positionX.inputVal+ item.positionX.selectVal:'0%'} ${item.positionY.selectVal&&item.positionY.inputVal?item.positionY.inputVal+ item.positionY.selectVal:'0%'}`;
+          // }
+          if(item.bgUrl) {
+            styles["backgroundImage"]=`url(${window.IDM.url.getWebPath(item.bgUrl)})`;
+          }else {
+            styles["backgroundImage"]= 'linear-gradient(to right,#f4b0b0,#f4acac,#f18c8b)';
+          }
+          if(item.bgSizeWidth||item.bgSizeHeight) {
+            styles["backgroundSize"]=(item.bgSizeWidth&&item.bgSizeWidth.selectVal?item.bgSizeWidth.inputVal+item.bgSizeWidth.selectVal:"auto")+" "+(item.bgSizeHeight&&item.bgSizeHeight.selectVal?item.bgSizeHeight.inputVal+item.bgSizeHeight.selectVal:"auto")
+          }
+          if(item.bgRepeat){
+            styles["backgroundRepeat"]= item.bgRepeat;
+          }
+          if(item.bgAttachment) {
+            styles["backgroundAttachment"]= item.bgAttachment;
+          }
+          styles['height'] = this.propData.shortItemHeight.inputVal+this.propData.shortItemHeight.selectVal,
+          this.$set(item,'styles',styles);
+        })
+      }
     },
     getApplicationMarkNumber() {
+      if(this.propData.shortConfigList) {
         console.log('propData.shortConfigList',this.propData.shortConfigList)
         for( let i = 0,maxi = this.propData.shortConfigList.length;i < maxi;i++ ) {
           const item = this.propData.shortConfigList[i];
@@ -546,6 +574,7 @@ export default {
               this.getApplicationMarkNumberSubmit(i,this.item[i].sourceId)
             }
         }
+      }
     },
     getApplicationMarkNumberSubmit(index,sourceId) {
         console.log('getApplicationMarkNumberUrl',this.propData.getApplicationMarkNumberUrl)
