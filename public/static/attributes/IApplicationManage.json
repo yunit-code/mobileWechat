@@ -17,8 +17,8 @@
         },
         {
             "type": "group",
-            "text": "标题样式设置",
-            "desc": "点击？查看样式设置用法指南",
+            "text": "标题容器样式",
+            "desc": "点击？查看标题容器样式设置用法指南",
             "helpUrl": "",
             "children": [
                 {
@@ -52,32 +52,24 @@
                     ]
                 },
                 {
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "背景色",
+                    "bindKey": "titleBgColor",
+                    "placeholder": "请选择颜色",
+                    "default": {}
+                },
+                {
                     "type": "font",
                     "layoutType": "block",
                     "text": "文字",
                     "bindKey": "titleFontManage"
-                },
-                {
-                    "type": "group",
-                    "text": "背景设置",
-                    "desc": "点击？查看背景设置用法指南",
-                    "helpUrl": "",
-                    "children": [
-                        {
-                            "type": "colorPicker",
-                            "layoutType": "inline",
-                            "text": "背景色",
-                            "bindKey": "titleBgColor",
-                            "placeholder": "请选择颜色",
-                            "default": {}
-                        }
-                    ]
                 }
             ]
         },
         {
             "type": "group",
-            "text": "样式设置",
+            "text": "内层容器样式",
             "desc": "点击？查看样式设置用法指南",
             "helpUrl": "",
             "children": [

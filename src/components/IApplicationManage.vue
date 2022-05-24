@@ -667,7 +667,7 @@ export default {
                     line-height: 15px;
                     position: absolute;
                     top: -7px;
-                    right: 0px;
+                    right: 4px;
                     text-align: center;
                     font-size: 12px;
                     // color: white;
@@ -703,7 +703,7 @@ export default {
             // bottom: 160px;
             // right: 20px;
             text-align: center;
-            background: inherit;
+            background: #1989fa;
             border-radius: 50%;
         }
     }

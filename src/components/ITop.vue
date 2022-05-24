@@ -296,7 +296,7 @@ export default {
             themeNamePrefix +
             item.key +
             " #" +
-            (this.moduleObject.packageid || "module_demo"),
+            (this.moduleObject.packageid || "module_demo") + " .idm_top_box",
           cssObject_background_main
         );
         IDM.setStyleToPageHead(

@@ -38,6 +38,13 @@
                 {
                     "type": "switch",
                     "layoutType": "inline",
+                    "text": "显示图标",
+                    "bindKey": "showTitleIcon",
+                    "default": true
+                },
+                {
+                    "type": "switch",
+                    "layoutType": "inline",
                     "text": "我的应用",
                     "desc":"设置组件是否是我的应用模块",
                     "bindKey": "isMyApplication",
@@ -110,33 +117,7 @@
                     "bindKey": "showRows",
                     "default": 2
                 },
-                {
-                    "type": "group",
-                    "text": "标题图标设置",
-                    "children": [
-                        {
-                            "type": "iconSelect",
-                            "layoutType": "inline",
-                            "text": "标题图标",
-                            "bindKey": "titleIconClass",
-                            "default": ""
-                        },
-                        {
-                            "type": "colorPicker",
-                            "layoutType": "inline",
-                            "text": "图标颜色",
-                            "bindKey": "titleIconFontColor",
-                            "default": ""
-                        },
-                        {
-                            "type": "inputNumber",
-                            "layoutType": "inline",
-                            "text": "图标大小",
-                            "bindKey": "titleIconFontSize",
-                            "default": 14
-                        }
-                    ]
-                },
+                
                 {
                     "type": "table",
                     "text": "应用配置",
@@ -235,127 +216,173 @@
         },
         {
             "type": "group",
-            "text": "样式设置",
-            "desc": "点击？查看样式设置用法指南",
+            "text": "标题容器样式",
+            "desc": "点击？查看标题容器样式设置用法指南",
             "helpUrl": "",
+            "display": "@[showTitle]",
             "children": [
                 {
-                    "type": "group",
-                    "text": "外层卡片样式设置",
-                    "desc": "点击？查看样式设置用法指南",
-                    "helpUrl": "",
-                    "children": [
+                    "type": "radio",
+                    "styleType": "radio",
+                    "layoutType": "inline",
+                    "text": "图标位置",
+                    "desc": "设置组件标题图标位置",
+                    "bindKey": "titleIconPosition",
+                    "display": "@[showTitleIcon]",
+                    "dictionary": [
                         {
-                            "type": "box",
-                            "layoutType": "block",
-                            "text": "内外边距",
-                            "bindKey": "box"
+                            "label": "左边",
+                            "value": "left"
                         },
                         {
-                            "type": "inlineGroup",
-                            "text": "宽高",
-                            "children": [
-                                {
-                                    "type": "input",
-                                    "layoutType": "block",
-                                    "text": "宽",
-                                    "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
-                                    "bindKey": "width",
-                                    "width": "60px",
-                                    "default": "auto"
-                                },
-                                {
-                                    "type": "input",
-                                    "layoutType": "block",
-                                    "text": "高",
-                                    "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
-                                    "bindKey": "height",
-                                    "width": "60px",
-                                    "default": "auto"
-                                }
-                            ]
-                        },
-                        {
-                            "type": "colorPicker",
-                            "layoutType": "inline",
-                            "text": "背景色",
-                            "bindKey": "bgColor",
-                            "placeholder": "请选择颜色",
-                            "default": {}
-                        },
-                        {
-                            "type": "border",
-                            "layoutType": "block",
-                            "text": "边框",
-                            "bindKey": "border"
+                            "label": "右边",
+                            "value": "right"
                         }
-
-                    ]
+                    ],
+                    "default": "right"
                 },
                 {
                     "type": "group",
-                    "text": "内层卡片样式设置",
-                    "desc": "点击？查看样式设置用法指南",
-                    "helpUrl": "",
+                    "text": "标题图标设置",
+                    "display": "@[showTitleIcon]",
                     "children": [
                         {
-                            "type": "box",
-                            "layoutType": "block",
-                            "text": "内外边距",
-                            "bindKey": "boxInner"
-                        },
-                        {
-                            "type": "inlineGroup",
-                            "text": "宽高",
-                            "children": [
-                                {
-                                    "type": "input",
-                                    "layoutType": "block",
-                                    "text": "宽",
-                                    "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
-                                    "bindKey": "widthInner",
-                                    "width": "60px",
-                                    "default": "auto"
-                                },
-                                {
-                                    "type": "input",
-                                    "layoutType": "block",
-                                    "text": "高",
-                                    "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
-                                    "bindKey": "heightInner",
-                                    "width": "60px",
-                                    "default": "auto"
-                                }
-                            ]
+                            "type": "iconSelect",
+                            "layoutType": "inline",
+                            "text": "标题图标",
+                            "bindKey": "titleIconClass",
+                            "default": ""
                         },
                         {
                             "type": "colorPicker",
                             "layoutType": "inline",
-                            "text": "背景色",
-                            "bindKey": "bgColorInner",
-                            "placeholder": "请选择颜色",
-                            "default": {}
+                            "text": "图标颜色",
+                            "bindKey": "titleIconFontColor",
+                            "default": ""
                         },
                         {
-                            "type": "border",
-                            "layoutType": "block",
-                            "text": "边框",
-                            "bindKey": "borderInner"
+                            "type": "inputNumber",
+                            "layoutType": "inline",
+                            "text": "图标大小",
+                            "bindKey": "titleIconFontSize",
+                            "default": 14
                         }
-
                     ]
                 },
                 {
                     "type": "font",
                     "layoutType": "block",
                     "text": "标题字体",
-                    "bindKey": "titleFont",
-                    "display": "@[showTitle]"
+                    "bindKey": "titleFont"
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "text": "外层容器样式",
+            "desc": "点击？查看外层容器样式设置用法指南",
+            "helpUrl": "",
+            "children": [
+                {
+                    "type": "box",
+                    "layoutType": "block",
+                    "text": "内外边距",
+                    "bindKey": "box"
+                },
+                {
+                    "type": "inlineGroup",
+                    "text": "宽高",
+                    "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "block",
+                            "text": "宽",
+                            "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
+                            "bindKey": "width",
+                            "width": "60px",
+                            "default": "auto"
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "block",
+                            "text": "高",
+                            "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
+                            "bindKey": "height",
+                            "width": "60px",
+                            "default": "auto"
+                        }
+                    ]
+                },
+                {
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "背景色",
+                    "bindKey": "bgColor",
+                    "placeholder": "请选择颜色",
+                    "default": {}
+                },
+                {
+                    "type": "border",
+                    "layoutType": "block",
+                    "text": "边框",
+                    "bindKey": "border"
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "text": "内层容器样式",
+            "desc": "点击？查看内层容器样式设置用法指南",
+            "helpUrl": "",
+            "children": [
+                {
+                    "type": "box",
+                    "layoutType": "block",
+                    "text": "内外边距",
+                    "bindKey": "boxInner"
+                },
+                {
+                    "type": "inlineGroup",
+                    "text": "宽高",
+                    "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "block",
+                            "text": "宽",
+                            "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
+                            "bindKey": "widthInner",
+                            "width": "60px",
+                            "default": "auto"
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "block",
+                            "text": "高",
+                            "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
+                            "bindKey": "heightInner",
+                            "width": "60px",
+                            "default": "auto"
+                        }
+                    ]
+                },
+                {
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "背景色",
+                    "bindKey": "bgColorInner",
+                    "placeholder": "请选择颜色",
+                    "default": {}
+                },
+                {
+                    "type": "border",
+                    "layoutType": "block",
+                    "text": "边框",
+                    "bindKey": "borderInner"
                 },
                 {
                     "type": "font",
                     "layoutType": "block",
-                    "text": "默认组件字体",
+                    "text": "字体",
                     "bindKey": "font"
                 }
             ]
@@ -448,7 +475,7 @@
                     "text": "刷新KEY",
                     "bindKey": "messageRefreshKey",
                     "desc": "根据组件接受到的消息KEY来刷新数据，可配置多个，以英文逗号分开",
-                    "default": "info",
+                    "default": "",
                     "placeholder": "示例：inbox,info,toread"
                 }
             ]
@@ -460,7 +487,7 @@
             "children": [
                 {
                     "type": "group",
-                    "text": "标题样式设置",
+                    "text": "标题容器样式",
                     "desc": "点击？查看样式设置用法指南",
                     "helpUrl": "",
                     "children": [
@@ -501,26 +528,18 @@
                             "bindKey": "titleFontManage"
                         },
                         {
-                            "type": "group",
-                            "text": "背景设置",
-                            "desc": "点击？查看背景设置用法指南",
-                            "helpUrl": "",
-                            "children": [
-                                {
-                                    "type": "colorPicker",
-                                    "layoutType": "inline",
-                                    "text": "背景色",
-                                    "bindKey": "titleBgColor",
-                                    "placeholder": "请选择颜色",
-                                    "default": {}
-                                }
-                            ]
+                            "type": "colorPicker",
+                            "layoutType": "inline",
+                            "text": "背景色",
+                            "bindKey": "titleBgColor",
+                            "placeholder": "请选择颜色",
+                            "default": {}
                         }
                     ]
                 },
                 {
                     "type": "group",
-                    "text": "样式设置",
+                    "text": "内层容器样式",
                     "desc": "点击？查看样式设置用法指南",
                     "helpUrl": "",
                     "children": [

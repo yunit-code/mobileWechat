@@ -160,17 +160,21 @@ export default {
         }
         item_box.style.left = this.nx + "px";
         item_box.style.top = this.ny + "px";
-        if((this.maxW - this.nx) > 66 && this.nx > 66 && this.ny > 132 ) {
-          this.placement = 'top'
+        item_box.style.right = "unset"
+        item_box.style.bottom = "unset"
+        if(this.ny > IDM.getClientWH().height/2 ) {
+          if (this.nx < IDM.getClientWH().width/2) {
+            this.placement = 'top-start'
+          } else {
+            this.placement = 'top-end'
+          }
         }
-        if((this.maxW - this.nx) < 66 ) {
-          this.placement = 'left'
-        }
-        if(this.nx < 66 ) {
-          this.placement = 'right'
-        }
-        if(this.ny < 132 ) {
-          this.placement = 'bottom'
+        if(this.ny < IDM.getClientWH().height/2 ) {
+          if (this.nx < IDM.getClientWH().width/2) {
+            this.placement = 'bottom-start'
+          } else {
+            this.placement = 'bottom-end'
+          } 
         }
         this.showPopover = false;
         document.addEventListener(
@@ -456,7 +460,8 @@ export default {
   .drag-bar-wrapper{
     z-index: 99999;
     .drag-bar-mask {
-        display: inline;
+        display: inline-block;
+        white-space: nowrap;
         padding: 6px 20px;
         color: #e6a23c;
         background: #fdf6ec;
