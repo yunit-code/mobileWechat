@@ -35,7 +35,6 @@
         <template v-if="propData.shortCutStyle === 'default'">
           <ul class="short-box">
             <li v-for="(v,i) in propData.shortConfigList" :key="i" class="short-item"
-             v-proportion="0.25"
               :style="{width: `${100/propData.maxNumber}%`}">
               <div class="short-bg"
                :style="v.styles"
