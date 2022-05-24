@@ -29,12 +29,6 @@ mobilewechat@1.0.6
 - _blank:新开窗口跳转
 - 默认值：`_self`
 
-#### 组件样式【compStyle】
-<font color="#CCCCCC">可灵活选择多个组件样式，总共4种样式</font>
-
-- 标识：`compStyle`
-- 默认值： `styleFour`样式四
-
 #### 显示页签【showTab】
 <font color="#CCCCCC">是否显示显示页签，不显示则默认取第一个</font>
 
@@ -47,22 +41,47 @@ mobilewechat@1.0.6
 - 标识：`showMore`
 - 默认值： `true`显示
 
-#### 标题图标【titleIconClass】
-<font color="#CCCCCC">当前组件标题右侧图标选择</font>
+#### 显示数量【limit】
+- 标识: `limit`
+- limit: 图片显示数量限制
+- 默认值: `5 `(最大值，如果总数量没有达到默认值，则显示总数量，例如：设置了5，总共4个，则显示4)
 
-- 标识：`titleIconClass`
-- 默认值： ``
 
-#### 图标颜色【titleIconFontColor】
-<font color="#CCCCCC">当前组件标题右侧图标颜色选择</font>
+### 标题容器样式
+设置组件标题容器内所含元素样式
 
-- 标识：`titleIconFontColor`
-- 默认值： ``
-#### 图标大小【titleIconFontSize】
-<font color="#CCCCCC">当前组件标题右侧图标大小设置</font>
+#### 页签字体【titleFontStyle】
+<font color="#CCCCCC">设置页签字体样式</font>
 
-- 标识：`titleIconFontSize`
-- 默认值： `18px`
+- 标识：`titleFontStyle`
+- 默认值：
+```json
+"default": {
+  "fontColors": {
+      "hex": "#333333"
+  },
+  "fontSize": 16,
+  "fontSizeUnit": "px"
+}
+```
+
+
+#### 选中页签字体【titleFontStyleActive】
+<font color="#CCCCCC">设置选中页签字体样式，设置的字体颜色会覆盖主题颜色</font>
+
+- 标识：`titleFontStyleActive`
+- 默认值：
+```json
+"default": {
+  "fontColors": {
+      "hex": "#000"
+  },
+  "fontSize": 16,
+  "fontWeight": "500",
+  "fontSizeUnit": "px"
+}
+```
+
 
 #### 页签配置【messageTitleList】
 <font color="#CCCCCC">信息页签配置，添加完后默认不显示，需要手动打开显示switch</font>
@@ -92,68 +111,8 @@ mobilewechat@1.0.6
 ]
 ```
 
-
-#### 空白列表提示文字【emptyText】
-<font color="#CCCCCC">设置待办列表为空时，空白数据提示文字</font>
-
-- 标识：`emptyText`
-- 默认值： ''
-
-#### 空白列表提示高度【emptyBoxHeight】
-<font color="#CCCCCC">设置待办列表为空时，空白数据提示内容高度</font>
-
-- 标识：`emptyBoxHeight`
-- 默认值： ''
-
-#### 内容显示数量【limit】
-- 标识: `limit`
-- limit: 图片显示数量限制
-- 默认值: `5 `(最大值，如果总数量没有达到默认值，则显示总数量，例如：设置了5，总共4个，则显示4)
-
-### 主题设置【themeList】
-用于设置组件的主题样式表，此处可跟随自身主题进行随意设置，此属性是一个表结构集合的形式属性。
-- 标识：`themeList`
-
-- 默认值：`[]`
-
-### 样式设置
-组件内部样式设置
-#### 标题字体样式设置【titleFontStyle】
-<font color="#CCCCCC">设置标题字体样式，样式四时设置页签字体样式，其他样式设置标题字体样式</font>
-
-- 标识：`titleFontStyle`
-- 默认值：
-```json
-"default": {
-  "fontColors": {
-      "hex": "#333333"
-  },
-  "fontSize": 16,
-  "fontSizeUnit": "px"
-}
-```
-
-#### 选中页签字体样式设置【titleFontStyleActive】
-<font color="#CCCCCC">设置选中页签字体样式设置，样式四是生效</font>
-
-- 标识：`titleFontStyleActive`
-- 默认值：
-```json
-"default": {
-  "fontColors": {
-      "hex": "#000"
-  },
-  "fontSize": 16,
-  "fontWeight": "500",
-  "fontSizeUnit": "px"
-}
-```
-
-#### 信息列表项字体样式设置【messageItemFontStyle】
-<font color="#CCCCCC">设置信息列表项字体样式</font>
-
-- 标识：`messageItemFontStyle`
-- 默认值：''
+### 外层容器样式
+设置组件外层容器样式
 
 #### 背景色【bgColor】
 设置组件的整体背景颜色
@@ -197,8 +156,16 @@ mobilewechat@1.0.6
 - 标识：`border`
 - 默认值： ''
 
-### 内层样式设置
-设置组件内层样式，显示组件标题时生效
+
+### 内层容器样式
+设置组件内层容器样式
+
+#### 信息字体样式设置【messageItemFontStyle】
+<font color="#CCCCCC">设置信息列表项字体样式</font>
+
+- 标识：`messageItemFontStyle`
+- 默认值：''
+
 
 #### 背景色【subBgColor】
 设置组件的内层背景颜色
@@ -241,6 +208,23 @@ mobilewechat@1.0.6
 
 - 标识：`border`
 - 默认值： ''
+
+#### 空白提示文字【emptyText】
+<font color="#CCCCCC">设置待办列表为空时，空白数据提示文字</font>
+
+- 标识：`emptyText`
+- 默认值： ''
+
+#### 空白提示高度【emptyBoxHeight】
+<font color="#CCCCCC">设置待办列表为空时，空白数据提示内容高度</font>
+
+- 标识：`emptyBoxHeight`
+- 默认值： ''
+
+### 主题设置【themeList】
+用于设置组件的主题样式表，此处可跟随自身主题进行随意设置，此属性是一个表结构集合的形式属性。
+- 标识：`themeList`
+- 默认值：`[]`
 
 ### 高级
 <font color="#CCCCCC">用于对组件高级设置的属性的分组。</font>
