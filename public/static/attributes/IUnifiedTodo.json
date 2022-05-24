@@ -80,7 +80,7 @@
                 },
                 {
                     "type": "slider",
-                    "layoutType": "block",
+                    "layoutType": "inline",
                     "text": "显示数量",
                     "bindKey": "limit",
                     "default": "3"

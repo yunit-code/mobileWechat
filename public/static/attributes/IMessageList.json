@@ -123,8 +123,8 @@
                 },
                 {
                     "type": "slider",
-                    "layoutType": "block",
-                    "text": "内容显示数量",
+                    "layoutType": "inline",
+                    "text": "显示数量",
                     "bindKey": "limit",
                     "default": "3"
                 }

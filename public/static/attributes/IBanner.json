@@ -25,7 +25,8 @@
                     "layoutType": "inline",
                     "text": "标题",
                     "bindKey": "htmlTitle",
-                    "default": "广告轮播"
+                    "default": "广告轮播",
+                    "display": "@[false]"
                 },
                 {
                     "type": "switch",
@@ -173,7 +174,6 @@
                 }
             ]
         },
-        
         {
             "type": "table",
             "text": "主题设置",
