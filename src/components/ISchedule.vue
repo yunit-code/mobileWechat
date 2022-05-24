@@ -17,6 +17,7 @@
         <div class="i-schedule-header-tit">
           <span>{{ propData.title || "日程提醒" }}</span>
           <svg
+            v-show="propData.showIcon === undefined ? true : propData.showIcon"
             v-if="propData.titleIcon && propData.titleIcon.length > 0"
             class="idm_filed_svg_icon"
             aria-hidden="true"

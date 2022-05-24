@@ -129,18 +129,18 @@
                             "placeholder":"请输入名称"
                         },
                         {
-                            "type": "radio",
+                            "type": "select",
                             "layoutType": "inline",
                             "text": "跳转方式",
-                            "desc":"用于设置是当页跳转还是弹出新窗口两种方式",
                             "bindKey": "jumpType",
+                            "desc": "设置组件点击链接跳转方式",
                             "dictionary": [
                                 {
-                                    "label": "当前页",
+                                    "label": "当前页跳转",
                                     "value": "current"
                                 },
                                 {
-                                    "label": "新窗口",
+                                    "label": "新窗口打开",
                                     "value": "new"
                                 }
                             ],
