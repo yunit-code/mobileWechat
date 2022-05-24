@@ -66,7 +66,9 @@
       <div v-if="!isFirst && ( !messageData.list || messageData.list.length === 0)" class="idm-message-list-box-empty">
         <van-empty :description="propData.emptyText || '数据为空'" image-size="60"/>
       </div>
-      
+      <div class="idm-message-list-parent-box-mask" v-if="moduleObject.env === 'production' && !propData.dataSource">
+        <span>！未绑定数据源</span>
+      </div>
     </div>
   </div>
 </template>
@@ -644,6 +646,7 @@ export default {
 
 <style lang="scss">
 .idm-message-list-parent-box{
+  position: relative;
   .idm-message-list-box{
     overflow: hidden;
     &-title{
@@ -815,6 +818,25 @@ export default {
   &-empty{
     overflow: hidden;
     height: 90px;
+  }
+  &-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: rgba(0,0,0,.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+      padding: 6px 20px;
+      color: #e6a23c;
+      background: #fdf6ec;
+      border:1px solid #f5dab1;
+      border-radius: 4px;
+    }
   }
 }
 

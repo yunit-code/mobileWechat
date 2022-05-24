@@ -16,7 +16,7 @@
       idm-container-index  组件的内部容器索引，不重复唯一且不变，必选
     -->
     <div class="com-box">
-      <div class="com-title" draggable="true">
+      <div class="com-title" draggable="true" v-if="propData.isShowTitle">
       <span style="margin-right: 5px">{{propData.comTitle}}</span>
       <div class="idm_applicationcenter_title_left_icon">
           <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm_filed_svg_icon" aria-hidden="true" >
@@ -25,40 +25,66 @@
           <svg-icon v-else icon-class="application-icon" />
       </div>
       </div>
-      <ul class="summary-box">
-        <li v-for="(v,i) in propData.summaryConfigList && propData.summaryConfigList.slice(0, propData.maxNumber)" :key="i" class="summary-item"
-        style="width: 50%">
-          <div class="summary-bg" :style="{backgroundImage: v.bgUrl ? 'url('+IDM.url.getWebPath(v.bgUrl)+')' : 'linear-gradient(to right,#f4b0b0,#f4acac,#f18c8b)'}" v-proportion="0.5">
-            <div style="marginBottom: 5px" class="summary-name">{{IDM.express.replace("@[data."+v.dataFiled+".name]",data,true)}}</div>
-            <div class="summary-num">{{IDM.express.replace("@[data."+v.dataFiled+".count]",data,true)}}</div>
-          </div>
-        </li>
-      </ul>
+      <div class="idm_shortcut_cont">
+        <ul class="summary-box">
+          <li v-for="(v,i) in tempSummaryConfigList" :key="i" class="summary-item"
+          :style="{width: `${100/propData.showColumn}%`}">
+            <div class="summary-bg" :style="{backgroundImage: v.bgUrl ? 'url('+IDM.url.getWebPath(v.bgUrl)+')' : 'linear-gradient(to right,#f4b0b0,#f4acac,#f18c8b)', 'height': propData.shortItemHeight.inputVal+propData.shortItemHeight.selectVal}">
+              <!-- <div style="marginBottom: 5px" class="summary-name">{{v.name?v.name:IDM.express.replace("@[data."+v.dataFiled+".name]",data,true)}}</div> -->
+              <!-- <div class="summary-num">{{v.count?v.count:IDM.express.replace("@[data."+v.dataFiled+".count]",data,true)}}</div> -->
+              <div style="marginBottom: 5px" class="summary-name">{{v.name}}</div>
+              <div class="summary-num">{{v.count}}</div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
     
   </div>
 </template>
 
 <script>
-import { base_url } from '../api/config.js'
 export default {
   name: 'IDataSummary',
   data(){
     return {
       moduleObject:{},
-      propData:this.$root.propData.compositeAttr||{}
+      propData:this.$root.propData.compositeAttr||{},
+      tempSummaryConfigList: []
     }
+  },
+  watch: {
+    'propData.showRows': function(value,old) {
+      this.changeLines()
+    },
+    'propData.summaryConfigList': {
+      handler(value) {
+          if ( this.propData.summaryConfigList && this.propData.summaryConfigList.length ) {
+              this.tempSummaryConfigList = JSON.parse(JSON.stringify(this.propData.summaryConfigList))
+          } else {
+              this.tempSummaryConfigList = [];
+          }
+          this.changeLines()
+      },
+      deep: true
+    },
   },
   props: {
   },
   created() {
     this.moduleObject = this.$root.moduleObject
     this.convertAttrToStyleObject();
+    this.convertAttrToStyleObject2();
+    // 主题
+    this.convertThemeListAttrToStyleObject();
     if(this.moduleObject.env=="develop" || !IDM.env_dev){
       this.propData = {
         comTitle: '数据汇总',
-        maxNumber: 4,
+        showColumn: 2,
+        showRows: 2,
+        shortItemHeight: {'inputVal':'72.5', 'selectVal': 'px'},
         customInterfaceUrl: '/ctrl/dataSource/getDatas',
+        isShowTitle: true,
         summaryConfigList:[
           {
             name: '省政府领导分工',
@@ -79,12 +105,20 @@ export default {
   },
   destroyed() {},
   methods:{
+    changeLines() {
+      if ( this.tempSummaryConfigList && (this.tempSummaryConfigList.length > this.propData.showRows * this.propData.showColumn) ) {
+        this.tempSummaryConfigList.splice(this.propData.showRows * this.propData.showColumn)
+      }
+    },
     /**
      * 提供父级组件调用的刷新prop数据组件
      */
     propDataWatchHandle(propData){
       this.propData = propData.compositeAttr||{};
       this.convertAttrToStyleObject();
+      this.convertAttrToStyleObject2();
+      // 主题
+      this.convertThemeListAttrToStyleObject();
     },
     /**
      * 把属性转换成样式对象
@@ -261,6 +295,151 @@ export default {
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .summary-num", styleObjectNum);
       this.initData();
     },
+    
+    /**
+     * 把属性转换成样式对象
+     */
+    convertAttrToStyleObject2(){
+      var styleObject = {};
+      if(this.propData.bgSize2&&this.propData.bgSize2=="custom"){
+        styleObject["background-size"]=(this.propData.bgSizeWidth2?this.propData.bgSizeWidth2.inputVal+this.propData.bgSizeWidth2.selectVal:"auto")+" "+(this.propData.bgSizeHeight2?this.propData.bgSizeHeight2.inputVal+this.propData.bgSizeHeight2.selectVal:"auto")
+      }else if(this.propData.bgSize2){
+        styleObject["background-size"]=this.propData.bgSize2;
+      }
+      if(this.propData.positionX2&&this.propData.positionX2.inputVal){
+        styleObject["background-position-x"]=this.propData.positionX2.inputVal+this.propData.positionX2.selectVal;
+      }
+      if(this.propData.positionY2&&this.propData.positionY2.inputVal){
+        styleObject["background-position-y"]=this.propData.positionY2.inputVal+this.propData.positionY2.selectVal;
+      }
+      styleObject["font-weight"]=800;
+      styleObject["color"]='#333333';
+      for (const key in this.propData) {
+        if (this.propData.hasOwnProperty.call(this.propData, key)) {
+          const element = this.propData[key];
+          if(!element&&element!==false&&element!=0){
+            continue;
+          }
+          switch (key) {
+            case "width2":
+            case "height2":
+              styleObject[key]=element;
+              break;
+            case "bgColor2":
+              if(element&&element.hex8){
+                styleObject["background-color"]=element.hex8;
+              }
+              break;
+            case "box2":
+              if(element.marginTopVal){
+                styleObject["margin-top"]=`${element.marginTopVal}`;
+              }
+              if(element.marginRightVal){
+                styleObject["margin-right"]=`${element.marginRightVal}`;
+              }
+              if(element.marginBottomVal){
+                styleObject["margin-bottom"]=`${element.marginBottomVal}`;
+              }
+              if(element.marginLeftVal){
+                styleObject["margin-left"]=`${element.marginLeftVal}`;
+              }
+              if(element.paddingTopVal){
+                styleObject["padding-top"]=`${element.paddingTopVal}`;
+              }
+              if(element.paddingRightVal){
+                styleObject["padding-right"]=`${element.paddingRightVal}`;
+              }
+              if(element.paddingBottomVal){
+                styleObject["padding-bottom"]=`${element.paddingBottomVal}`;
+              }
+              if(element.paddingLeftVal){
+                styleObject["padding-left"]=`${element.paddingLeftVal}`;
+              }
+              break;
+            case "bgImgUrl2":
+              styleObject["background-image"]=`url(${window.IDM.url.getWebPath(element)})`;
+              break;
+            case "positionX2":
+              //背景横向偏移
+              
+              break;
+            case "positionY2":
+              //背景纵向偏移
+              
+              break;
+            case "bgRepeat2":
+              //平铺模式
+                styleObject["background-repeat"]=element;
+              break;
+            case "bgAttachment2":
+              //背景模式
+                styleObject["background-attachment"]=element;
+              break;
+            case "border2":
+              if(element.border.top.width>0){
+                styleObject["border-top-width"]=element.border.top.width+element.border.top.widthUnit;
+                styleObject["border-top-style"]=element.border.top.style;
+                if(element.border.top.colors.hex8){
+                  styleObject["border-top-color"]=element.border.top.colors.hex8;
+                }
+              }
+              if(element.border.right.width>0){
+                styleObject["border-right-width"]=element.border.right.width+element.border.right.widthUnit;
+                styleObject["border-right-style"]=element.border.right.style;
+                if(element.border.right.colors.hex8){
+                  styleObject["border-right-color"]=element.border.right.colors.hex8;
+                }
+              }
+              if(element.border.bottom.width>0){
+                styleObject["border-bottom-width"]=element.border.bottom.width+element.border.bottom.widthUnit;
+                styleObject["border-bottom-style"]=element.border.bottom.style;
+                if(element.border.bottom.colors.hex8){
+                  styleObject["border-bottom-color"]=element.border.bottom.colors.hex8;
+                }
+              }
+              if(element.border.left.width>0){
+                styleObject["border-left-width"]=element.border.left.width+element.border.left.widthUnit;
+                styleObject["border-left-style"]=element.border.left.style;
+                if(element.border.left.colors.hex8){
+                  styleObject["border-left-color"]=element.border.left.colors.hex8;
+                }
+              }
+              
+              styleObject["border-top-left-radius"]=element.radius.leftTop.radius+element.radius.leftTop.radiusUnit;
+              styleObject["border-top-right-radius"]=element.radius.rightTop.radius+element.radius.rightTop.radiusUnit;
+              styleObject["border-bottom-left-radius"]=element.radius.leftBottom.radius+element.radius.leftBottom.radiusUnit;
+              styleObject["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
+              break;
+            case "font2":
+              styleObject["font-family"]=element.fontFamily;
+              if(element.fontColors.hex8){
+                styleObject["color"]=element.fontColors.hex8;
+              }
+              styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
+              styleObject["font-style"]=element.fontStyle;
+              styleObject["font-size"]=element.fontSize+element.fontSizeUnit;
+              styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
+              styleObject["text-align"]=element.fontTextAlign;
+              styleObject["text-decoration"]=element.fontDecoration;
+              break;
+            case "cardFont2":
+              styleObject["font-family"]=element.fontFamily;
+              if(element.fontColors.hex8){
+                styleObject["color"]=element.fontColors.hex8;
+              }
+              styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
+              styleObject["font-style"]=element.fontStyle;
+              styleObject["font-size"]=element.fontSize+element.fontSizeUnit;
+              styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
+              styleObject["text-align"]=element.fontTextAlign;
+              styleObject["text-decoration"]=element.fontDecoration;
+              break;
+          }
+        }
+      }
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_shortcut_cont", styleObject);
+      this.initData();
+    },
     /**
      * 通用的url参数对象
      * 所有地址的url参数转换
@@ -282,6 +461,45 @@ export default {
     reload(){
       //请求数据源
       this.initData();
+      // 主题
+      this.convertThemeListAttrToStyleObject();
+    },
+    /**
+     * 主题颜色
+     */
+    convertThemeListAttrToStyleObject() {
+      var themeList = this.propData.themeList;
+      if (!themeList) {
+        return;
+      }
+      const themeNamePrefix =
+        IDM.setting &&
+        IDM.setting.applications &&
+        IDM.setting.applications.themeNamePrefix
+          ? IDM.setting.applications.themeNamePrefix
+          : "idm-theme-";
+      for (var i = 0; i < themeList.length; i++) {
+        var item = themeList[i];
+        //item.key：为主题样式的key
+        //item.mainColor：主要颜色值
+        //item.minorColor：次要颜色值
+        // if(item.key!=IDM.theme.getCurrentThemeInfo()){
+        //     //此处比对是不渲染输出不用的样式，如果页面会刷新就可以把此处放开
+        //     continue;
+        // }
+        let iconColorObj = {
+          fill: item.mainColor ? item.mainColor.hex8 : "",
+        };
+        IDM.setStyleToPageHead(
+          "." +
+            themeNamePrefix +
+            item.key +
+            " #" +
+            (this.moduleObject.packageid || "module_demo") +
+            " .idm_filed_svg_icon",
+          iconColorObj
+        );
+      }
     },
     /**
      * 加载动态数据
@@ -290,9 +508,9 @@ export default {
       let that = this;
       if(this.moduleObject.env=="production"){
         var params = {
-          id: this.propData.selectApplication.value
+          id: this.propData.dataSource && this.propData.selectApplication.value
         }
-        this.propData.selectApplication&&this.propData.customInterfaceUrl&&window.IDM.http.post(base_url + this.propData.customInterfaceUrl, params, {
+        this.propData.selectApplication&&this.propData.customInterfaceUrl&&window.IDM.http.post(this.propData.customInterfaceUrl, params, {
           headers: {
             'Content-Type': 'application/json'
           },
@@ -384,9 +602,12 @@ export default {
       }
     }
   }
+  .idm_shortcut_cont {
+    font-size: 15px;
+  }
   .summary-box{
     display: flex;
-    margin: 0 -5px;
+    // margin: 0 -5px;
     flex-wrap: wrap;
     .summary-item{
       padding: 0 5px;
