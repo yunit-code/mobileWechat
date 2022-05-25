@@ -159,7 +159,7 @@
                     "text": "图片宽度",
                     "desc": "填写应用图片的宽度，单位%，比如70%、80%、90%、100%等等",
                     "bindKey": "applicationImgWidth",
-                    "default": "77%"
+                    "default": "70%"
                 },
                 {
                     "type": "font",

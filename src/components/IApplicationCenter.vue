@@ -856,10 +856,10 @@ export default {
             text-align: center;
             img,svg{
                 width: 100%;
-                margin: 0 auto 2.5px auto;
             }
             .img_box{
-                width: 77%;
+                width: 70%;
+                margin: 0 auto 2.5px auto;
                 position: relative;
             }
             .number{
