@@ -22,6 +22,52 @@
             "helpUrl": "",
             "children": [
                 {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "文字",
+                    "bindKey": "font"
+                },
+                {
+                    "type": "group",
+                    "text": "操作按钮样式",
+                    "children": [
+                        {
+                            "type": "colorPicker",
+                            "layoutType": "inline",
+                            "text": "背景色",
+                            "bindKey": "bgColorButton",
+                            "placeholder": "请选择颜色",
+                            "default": {}
+                        },
+                        {
+                            "type": "font",
+                            "layoutType": "block",
+                            "text": "文字",
+                            "bindKey": "fontButton"
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "text": "操作按钮样式(已添加)",
+                    "children": [
+                        {
+                            "type": "colorPicker",
+                            "layoutType": "inline",
+                            "text": "背景色",
+                            "bindKey": "bgColorButtonDisabled",
+                            "placeholder": "请选择颜色",
+                            "default": {}
+                        },
+                        {
+                            "type": "font",
+                            "layoutType": "block",
+                            "text": "文字",
+                            "bindKey": "fontButtonDisabled"
+                        }
+                    ]
+                },
+                {
                     "type": "box",
                     "layoutType": "block",
                     "text": "内外边距",
@@ -64,100 +110,6 @@
                     "layoutType": "block",
                     "text": "边框",
                     "bindKey": "border"
-                },
-                {
-                    "type": "font",
-                    "layoutType": "block",
-                    "text": "文字",
-                    "bindKey": "font"
-                },
-                {
-                    "type": "group",
-                    "text": "操作按钮样式",
-                    "children": [
-                        {
-                            "type": "inlineGroup",
-                            "text": "宽高",
-                            "children": [
-                                {
-                                    "type": "input",
-                                    "layoutType": "block",
-                                    "text": "宽",
-                                    "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
-                                    "bindKey": "widthButton",
-                                    "width": "60px",
-                                    "default": "45px"
-                                },
-                                {
-                                    "type": "input",
-                                    "layoutType": "block",
-                                    "text": "高",
-                                    "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
-                                    "bindKey": "heightButton",
-                                    "width": "60px",
-                                    "default": "30px"
-                                }
-                            ]
-                        },
-                        {
-                            "type": "colorPicker",
-                            "layoutType": "inline",
-                            "text": "背景色",
-                            "bindKey": "bgColorButton",
-                            "placeholder": "请选择颜色",
-                            "default": {}
-                        },
-                        {
-                            "type": "font",
-                            "layoutType": "block",
-                            "text": "文字",
-                            "bindKey": "fontButton"
-                        }
-                    ]
-                },
-                {
-                    "type": "group",
-                    "text": "操作按钮样式(已添加)",
-                    "children": [
-                        {
-                            "type": "inlineGroup",
-                            "text": "宽高",
-                            "children": [
-                                {
-                                    "type": "input",
-                                    "layoutType": "block",
-                                    "text": "宽",
-                                    "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
-                                    "bindKey": "widthButtonDisabled",
-                                    "width": "60px",
-                                    "default": "45px"
-                                },
-                                {
-                                    "type": "input",
-                                    "layoutType": "block",
-                                    "text": "高",
-                                    "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
-                                    "bindKey": "heightButtonDisabled",
-                                    "width": "60px",
-                                    "default": "30px"
-                                }
-                            ]
-                        },
-                        {
-                            "type": "colorPicker",
-                            "layoutType": "inline",
-                            "text": "背景色",
-                            "bindKey": "bgColorButtonDisabled",
-                            "placeholder": "请选择颜色",
-                            "default": {}
-                        },
-                        {
-                            "type": "font",
-                            "layoutType": "block",
-                            "text": "文字",
-                            "bindKey": "fontButtonDisabled"
-                        }
-                    ]
                 }
             ]
         },
