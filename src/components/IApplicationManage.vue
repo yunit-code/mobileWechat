@@ -24,9 +24,10 @@
                         <van-grid :border="false" :column-num="5">
                             <van-grid-item v-for="(item,index) in my_application_data" :key="item.value">
                                 <div class="idm_applicationmanage_main_list">
-                                    <div class="img_box">
-                                        <img :src="item.imageUrl ? item.imageUrl : '../assets/rcap.png'">
+                                   <div v-if="item.imageUrl" class="img_box">
+                                        <img :src="item.imageUrl">
                                     </div>
+                                    <svg-icon v-else icon-class="application" />
                                     <div class="idm_applicationmanage_main_list_name">{{ item.title || ('应用' + index + 1) }}</div>
                                     <van-icon @click="deleteApplication(item,index)" v-if="is_edit" class="icon" name="minus" color="#fff" />
                                 </div>
@@ -58,10 +59,10 @@
                                 <van-grid :border="false" :column-num="5">
                                     <van-grid-item v-for="(item1,index1) in item.children" :key="item1.value">
                                         <div class="idm_applicationmanage_main_list">
-                                            <div class="img_box">
-                                                <img :src="item.imageUrl ? item.imageUrl : '../assets/rcap.png'">
+                                            <div v-if="item.imageUrl" class="img_box">
+                                                <img :src="item.imageUrl">
                                             </div>
-
+                                            <svg-icon v-else icon-class="application" />
                                             <div class="idm_applicationmanage_main_list_name">{{ item1.title || ('应用' + index1 + 1) }}</div>
                                             <div v-if="is_edit">
                                                 <van-icon v-if="isHaveInMyApplication(item1)" class="icon icon_disabled" name="plus" color="#fff" />

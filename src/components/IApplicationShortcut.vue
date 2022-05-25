@@ -16,7 +16,7 @@
                             <div @click="toApplication(item)" class="idm_applicationcenter_main_list">
                                 <div class="img_box">
                                     <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
-                                    <img v-else src="../assets/rcap.png">
+                                    <svg-icon v-else icon-class="application" />
                                     <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
                                 </div>
                                 <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
@@ -29,7 +29,7 @@
                         <span @click="toApplication(item)" v-for="(item,index) in application_data" :key="index" class="swiper_block_list">
                             <div class="img_box">
                                 <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
-                                <img v-else src="../assets/rcap.png">
+                                <svg-icon v-else icon-class="application" />
                                 <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
                             </div>
                             <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
@@ -327,9 +327,14 @@ export default {
             let adaptationBase = this.propData.adaptationBase || 414;
             let adaptationPercent = this.propData.adaptationPercent || 1;
             let percent = ( ( clientWidth/adaptationBase - 1 ) * ( adaptationPercent - 1 ) + 1 )
+            console.log('clientWidth',clientWidth)
+            console.log('adaptationBase',adaptationBase)
+            console.log('adaptationPercent',adaptationPercent)
+            console.log('percent',percent)
             if ( this.moduleObject.env == 'develop' ) {
                 return data
             } else {
+                console.log('result',data * percent)
                 return data * percent
             }
         },
@@ -460,13 +465,16 @@ export default {
                             break;
                         case "applicationImgWidth":
                             imgStyleObject['width'] = this.translatePxToAdaptation(element) + 'px'
+                            imgStyleObject['height'] = this.translatePxToAdaptation(element) + 'px'
                     }
                 }
             }
             window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationshortcut .idm_applicationcenter_main_list_name", fontStyleObject);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationshortcut .idm_applicationcenter_main_list .img_box", imgStyleObject);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationshortcut .idm_applicationcenter_main_list svg", imgStyleObject);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationshortcut .swiper_block_list .img_box", imgStyleObject);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationshortcut .swiper_block_list svg", imgStyleObject);
             this.reload();
         },
         /**
@@ -615,10 +623,11 @@ export default {
             position: relative;
             text-align: center;
             img,svg{
-                width: 100%;
+                width: 40px;
+                height: 40px;
             }
             .img_box{
-                width: 70%;
+                width: 40px;
                 margin: 0 auto 2.5px auto;
                 position: relative;
             }
@@ -656,7 +665,7 @@ export default {
                     width: 100%;
                 }
                 .img_box{
-                    width: 70%;
+                    width: 40px;
                     margin: 0 auto 2.5px auto;
                     position: relative;
                 }

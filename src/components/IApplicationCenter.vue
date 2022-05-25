@@ -40,7 +40,7 @@
                             <div @click="toApplication(item)" class="idm_applicationcenter_main_list">
                                 <div class="img_box">
                                     <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
-                                    <img v-else src="../assets/rcap.png">
+                                    <svg-icon v-else icon-class="application" />
                                     <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
                                 </div>
                                 <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
@@ -419,7 +419,9 @@ export default {
             let clientWidth = document.body.clientWidth;
             let adaptationBase = this.propData.adaptationBase || 414;
             let adaptationPercent = this.propData.adaptationPercent || 1;
+            
             let percent = ( ( clientWidth/adaptationBase - 1 ) * ( adaptationPercent - 1 ) + 1 )
+            console.log('percent',percent)
             if ( this.moduleObject.env == 'develop' ) {
                 return data
             } else {
@@ -578,6 +580,7 @@ export default {
                             break
                         case "applicationImgWidth":
                             imgStyleObject['width'] = this.translatePxToAdaptation(element) + 'px'
+                            imgStyleObject['height'] = this.translatePxToAdaptation(element) + 'px'
                     }
                 }
             }
@@ -586,6 +589,7 @@ export default {
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_icon .idm_filed_svg_icon", styleObjectTitleIcon);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_main_list_name", fontStyleObject);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter .idm_applicationcenter_main_list .img_box", imgStyleObject);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter .idm_applicationcenter_main_list svg", imgStyleObject);
             this.initApplicationData()
         },
         convertAttrToStyleObjectInner() {
@@ -869,7 +873,8 @@ export default {
             position: relative;
             text-align: center;
             img,svg{
-                width: 100%;
+                width: 40px;
+                height: 40px;
             }
             .img_box{
                 width: 40px;
