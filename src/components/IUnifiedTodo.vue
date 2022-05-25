@@ -630,7 +630,7 @@ export default {
         case 'websocket':
           if(this.propData.messageRefreshKey && messageObject.message){
             const messageData = typeof messageObject.message === 'string' && JSON.parse(messageObject.message) || messageObject.message
-            const arr = this.propData.messageRefreshKey.split(',')
+            const arr = Array.isArray(this.propData.messageRefreshKey) ? this.propData.messageRefreshKey : [this.propData.messageRefreshKey]
             if(messageData.badgeType && arr.includes(messageData.badgeType)){
               this.initData()
             }
