@@ -16,7 +16,7 @@
                             <div @click="toApplication(item)" class="idm_applicationcenter_main_list">
                                 <div class="img_box">
                                     <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
-                                    <svg-icon v-else icon-class="application" />
+                                    <img v-else src="../assets/rcap.png">
                                     <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
                                 </div>
                                 <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
@@ -29,7 +29,7 @@
                         <span @click="toApplication(item)" v-for="(item,index) in application_data" :key="index" class="swiper_block_list">
                             <div class="img_box">
                                 <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
-                                <svg-icon v-else icon-class="application" />
+                                <img v-else src="../assets/rcap.png">
                                 <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
                             </div>
                             <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
