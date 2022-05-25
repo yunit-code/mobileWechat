@@ -23,7 +23,6 @@ mobilewechat@1.0.6
 - 标识：`htmlTitle`
 - 默认值： 待办事项
 
-
 #### 跳转方式【jumpStyle】
 > 点击事件跳转方式
 - _self:当前页跳转
@@ -48,12 +47,28 @@ mobilewechat@1.0.6
 - 标识：`showMore`
 - 默认值： `true`显示
 
+
 #### 显示角标【showTodoNumber】
 <font color="#CCCCCC">是否待办数量，在显示更多为true的前提下，设置组件右上角待办数量，为false时显示省略号</font>
 
 - 标识：`showTodoNumber`
 - 默认值： `false`隐藏
 
+#### 显示数量【limit】
+<font color="#CCCCCC">当前组件待办默认显示数量</font>
+
+- 标识：`limit`
+- 默认值： `3`
+
+
+### 标题容器样式
+设置组件标题容器样式
+
+#### 图标位置【titleIconPosition】
+<font color="#CCCCCC">当前组件标题图标位置选择</font>
+
+- 标识：`titleIconPosition`
+- 默认值： `right`右边
 
 #### 标题图标【titleIconClass】
 <font color="#CCCCCC">当前组件标题右侧图标选择</font>
@@ -72,39 +87,7 @@ mobilewechat@1.0.6
 - 标识：`titleIconFontSize`
 - 默认值： `18`
 
-#### 未读图标【noReadIcon】
-<font color="#CCCCCC">设置待办项未读状态时图标</font>
-
-- 标识：`noReadIcon`
-- 默认值： ''
-
-#### 空白列表提示文字【emptyText】
-<font color="#CCCCCC">设置待办列表为空时，空白数据提示文字</font>
-
-- 标识：`emptyText`
-- 默认值： ''
-
-#### 空白列表提示高度【emptyBoxHeight】
-<font color="#CCCCCC">设置待办列表为空时，空白数据提示内容高度</font>
-
-- 标识：`emptyBoxHeight`
-- 默认值： ''
-
-#### 显示数量【limit】
-<font color="#CCCCCC">当前组件标题，用来增加组件辨识度</font>
-
-- 标识：`htmlTitle`
-- 默认值： `紧急待办`
-
-### 主题设置【themeList】
-用于设置组件的主题样式表，此处可跟随自身主题进行随意设置，此属性是一个表结构集合的形式属性。
-- 标识：`themeList`
-
-- 默认值：`[]`
-
-### 样式设置
-设置组件外部样式
-#### 标题字体样式设置【titleFontStyle】
+#### 标题字体【titleFontStyle】
 <font color="#CCCCCC">设置标题字体样式</font>
 
 - 标识：`titleFontStyle`
@@ -118,43 +101,8 @@ mobilewechat@1.0.6
   "fontSizeUnit": "px"
 }
 ```
-
-#### 默认待办字体【todoFontStyle】
-<font color="#CCCCCC">设置默认待办字体样式</font>
-
-- 标识：`todoFontStyle`
-- 默认值：
-```json
-"default": {
-  "fontColors": {
-      "hex": "#000000"
-  },
-  "fontSize": 15,
-  "fontSizeUnit": "px",
-  "fontWeight": "500"
-}
-```
-#### 已读文字【readFontStyle】
-<font color="#CCCCCC">设置已读文字字体样式</font>
-
-- 标识：`readFontStyle`
-- 默认值：
-```json
-"default": {
-  "fontColors": {
-      "hex": "#999999"
-  },
-  "fontSize": 15,
-  "fontSizeUnit": "px",
-  "fontWeight": "500"
-}
-```
-
-#### 已读判断【readExpression】
-<font color="#CCCCCC">已读判断表达式，满足结果为true时设置已读，反之未读</font>
-
-- 标识：`readExpression`
-- 默认值：`readStatus == '1'`
+### 外层容器样式
+设置组件外层容器样式
 
 #### 背景色【bgColor】
 设置组件的整体背景颜色
@@ -197,8 +145,85 @@ mobilewechat@1.0.6
 - 标识：`border`
 - 默认值： ''
 
-### 内层样式设置
-设置组件内层样式，显示组件标题时生效
+### 内层容器样式
+设置组件内层容器样式
+#### 默认待办字体【todoFontStyle】
+<font color="#CCCCCC">设置默认待办字体样式</font>
+
+- 标识：`todoFontStyle`
+- 默认值：
+```json
+"default": {
+  "fontColors": {
+      "hex": "#000000"
+  },
+  "fontSize": 15,
+  "fontSizeUnit": "px",
+  "fontWeight": "500"
+}
+```
+#### 已读字体【readFontStyle】
+<font color="#CCCCCC">设置已读文字字体样式</font>
+
+- 标识：`readFontStyle`
+- 默认值：
+```json
+"default": {
+  "fontColors": {
+      "hex": "#999999"
+  },
+  "fontSize": 15,
+  "fontSizeUnit": "px",
+  "fontWeight": "500"
+}
+```
+#### 已读图标【readIcon】
+<font color="#CCCCCC">设置待办项已读状态时图标</font>
+
+- 标识：`readIcon`
+- 默认值： `['idm-icon-xuanze']`
+
+#### 已读图标颜色【readIconColor】
+<font color="#CCCCCC">设置待办项已读状态时图标颜色</font>
+
+- 标识：`readIconColor`
+- 默认值： ``
+
+#### 已读图标大小【readIconSize】
+<font color="#CCCCCC">设置待办项已读状态时图标大小</font>
+
+- 标识：`readIconSize`
+- 默认值： `18`
+
+#### 未读图标【noReadIcon】
+<font color="#CCCCCC">设置待办项未读状态时图标</font>
+
+- 标识：`noReadIcon`
+- 默认值： ''
+#### 未读图标颜色【noReadIconColor】
+<font color="#CCCCCC">设置待办项未读状态时图标颜色</font>
+
+- 标识：`noReadIconColor`
+- 默认值： ``
+
+#### 未读图标大小【noReadIconSize】
+<font color="#CCCCCC">设置待办项未读状态时图标大小</font>
+
+- 标识：`noReadIconSize`
+- 默认值： `18`
+
+#### 空白文字【emptyText】
+<font color="#CCCCCC">设置待办列表为空时，空白数据提示文字</font>
+
+- 标识：`emptyText`
+- 默认值： ''
+
+#### 空白高度【emptyBoxHeight】
+<font color="#CCCCCC">设置待办列表为空时，空白数据提示内容高度</font>
+
+- 标识：`emptyBoxHeight`
+- 默认值： `90px`
+
 
 #### 背景色【subBgColor】
 设置组件的内层背景颜色
@@ -242,8 +267,22 @@ mobilewechat@1.0.6
 - 标识：`border`
 - 默认值： ''
 
+
+### 主题设置【themeList】
+用于设置组件的主题样式表，此处可跟随自身主题进行随意设置，此属性是一个表结构集合的形式属性。
+- 标识：`themeList`
+
+- 默认值：`[]`
+
 ### 高级
 <font color="#CCCCCC">用于对组件高级设置的属性的分组。</font>
+
+
+#### 已读判断【readExpression】
+<font color="#CCCCCC">已读判断表达式，满足结果为true时设置已读，反之未读</font>
+
+- 标识：`readExpression`
+- 默认值：`readStatus == '1'`
 
 ##### 设置待办数据来源【dataType】
 根据接口返回数据显示消息标题字段
