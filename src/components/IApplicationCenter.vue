@@ -57,7 +57,10 @@
             </div>
 
             <van-popup id="application_manage_pop" v-model="is_application_manage_show" overlay-class="application_manage_pop" @close="closeApplicationManage" closeable round>
-                <IApplicationManage :is_pop_type="true" :datas="propData"></IApplicationManage>
+                <IApplicationManage :datas="propData" @openApplicationSearch="openApplicationSearch"></IApplicationManage>
+            </van-popup>
+            <van-popup id="application_search_pop" v-model="is_application_search_show" overlay-class="application_search_pop" @close="closeApplicationSearch" closeable round>
+                <IApplicationSearch :datas="propData"></IApplicationSearch>
             </van-popup>
         </div>
     </div>
@@ -72,6 +75,7 @@ import 'vant/lib/popup/style';
 import 'vant/lib/empty/style';
 import 'vant/lib/loading/style';
 import IApplicationManage from './IApplicationManage.vue'
+import IApplicationSearch from './IApplicationSearch.vue'
 export default {
     name: 'IApplicationCenter',
     components: {
@@ -81,7 +85,8 @@ export default {
         [Popup.name]: Popup,
         [Empty.name]: Empty,
         [Loading.name]: Loading,
-        IApplicationManage
+        IApplicationManage,
+        IApplicationSearch
     },
     data() {
         return {
@@ -94,6 +99,7 @@ export default {
             ],
             have_power_application_data_ids: [],//用户有权限的app
             is_application_manage_show: false,
+            is_application_search_show: false,
             is_loading: false
         }
     },
@@ -131,6 +137,14 @@ export default {
     },
     destroyed() { },
     methods: {
+        openApplicationSearch() {
+            this.is_application_manage_show = false;
+            this.is_application_search_show = true;
+        },
+        closeApplicationSearch() {
+            this.is_application_search_show = false;
+            this.convertAttrToStyleObject();
+        },
         /** * 主题颜色 */
         convertThemeListAttrToStyleObject() {
             const themeList = this.propData.themeList;
@@ -356,18 +370,7 @@ export default {
             if ( this.moduleObject.env == 'develop' ) {
                 return
             }
-            if ( this.propData.isPopShowApplicationManage ) {
-                this.is_application_manage_show = true;
-                return
-            } else {
-                if ( this.propData.moreApplicationUrl ) {
-                    if ( this.propData.moreApplicationJumpType == '_self' ) {
-                        window.location.href = this.propData.moreApplicationUrl
-                    } else {
-                        window.open(this.propData.moreApplicationUrl,this.propData.moreApplicationJumpType);
-                    }
-                }  
-            }
+            this.is_application_manage_show = true;
         },
         changeLines() {
             if ( this.application_data && (this.application_data.length > this.propData.showRows * this.propData.showColumn) ) {
@@ -792,6 +795,8 @@ export default {
                 this.hideThisModuleHandle();
             } else if ( messageObject.type && messageObject.type == "linkageReload" ) {
                 this.initApplicationData()
+            } else if ( messageObject.type && messageObject.type == "pageResize" ) {
+                this.convertAttrToStyleObject()
             }
             // 配置了刷新KEY，消息类型是websocket，收到的消息对象有message并不为空
             if(this.propData.messageRefreshKey && this.propData.messageRefreshKey.length && messageObject.type === 'websocket' && messageObject.message){
@@ -921,6 +926,9 @@ export default {
         height: 90vh !important;
         overflow-y: auto;
         padding: 40px 0 20px 0;
+    }
+    .application_search_pop{
+        z-index: 10000;
     }
     .loading_box{
         padding: 20px 0;

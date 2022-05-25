@@ -200,30 +200,6 @@
                             "default": "1.2"
                         }
                     ]
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "全部应用",
-                    "desc": "用于获取全部应用数据的接口地址",
-                    "bindKey": "getAllApplicationUrl",
-                    "default": "/ctrl/tencentApp/queryAppByGrant"
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "添加应用",
-                    "desc": "用于添加应用的接口地址",
-                    "bindKey": "addApplicationUrl",
-                    "default": "/ctrl/tencentApp/setFavoriteApp"
-                },
-                {
-                    "type": "actionSelect",
-                    "layoutType": "block",
-                    "text": "点击[取消]时动作",
-                    "bindKey": "clickCancelFunction",
-                    "desc": "点击取消的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
-                    "multiple": true
                 }
             ]
         }

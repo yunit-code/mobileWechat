@@ -25,7 +25,7 @@
                             <van-grid-item v-for="(item,index) in my_application_data" :key="item.value">
                                 <div class="idm_applicationmanage_main_list">
                                    <div class="img_box">
-                                        <img v-if="tem.imageUrl" :src="item.imageUrl">
+                                        <img v-if="item.imageUrl" :src="item.imageUrl">
                                         <svg-icon v-else icon-class="application" />
                                         <van-icon @click="deleteApplication(item,index)" v-if="is_edit" class="icon" name="minus" color="#fff" />
                                     </div>
@@ -132,22 +132,13 @@ export default {
             is_loading_all_application: false
         }
     },
-    props: [ 'is_pop_type','datas' ],
+    props: [ 'datas' ],
     created() {
         this.moduleObject = this.$root.moduleObject
-        if ( this.is_pop_type ) {
-            this.propData = {
-                ...this.datas
-            }
-        } else if ( this.$root && this.$root.propData && this.$root.propData.compositeAttr )  {
-            this.propData = {
-                ...this.$root.propData.compositeAttr
-            }
-        } else {
-            this.propData = { }
+        this.propData = {
+            ...this.datas
         }
         console.log('moduleObject',this.moduleObject)
-        console.log('is_pop_type',this.is_pop_type)
         console.log('propData',this.propData)
         this.initDevelopData()
         this.convertAttrToStyleObject();
@@ -163,7 +154,7 @@ export default {
     methods: {
         /** * 主题颜色 */
         convertThemeListAttrToStyleObject() {
-            const themeList = this.propData.themeList;
+            const themeList = this.propData.themeListManage;
             console.log(themeList,"themeList")
             if (!themeList) {
                 return;
@@ -263,88 +254,60 @@ export default {
             if ( this.moduleObject.env == 'develop' ) {
                 return
             }
-            console.log('propData',this.propData)
-            if ( this.propData.getMyApplicationUrlManage ) {
-                this.is_loading_my_application = true;
-                window.IDM.http.get(base_url + this.propData.getMyApplicationUrlManage)
-                    .then((res) => {
-                        this.is_loading_my_application = false;
-                        if ( res.data && res.data.type == 'success' ) {
-                            this.my_application_data = res.data.data
-                        }
-                    }).catch(function (error) {
-                        this.is_loading_my_application = false;
+            this.is_loading_my_application = true;
+            window.IDM.http.get(base_url + '/ctrl/tencentApp/queryMyFavorite')
+                .then((res) => {
+                    this.is_loading_my_application = false;
+                    if ( res.data && res.data.type == 'success' ) {
+                        this.my_application_data = res.data.data
+                    }
+                }).catch(function (error) {
+                    this.is_loading_my_application = false;
                     });
-            }
         },
         getAllApplicatinData() {
             if ( this.moduleObject.env == 'develop' ) {
                 return
             }
-            if ( this.propData.getAllApplicationUrl ) {
-                this.is_loading_all_application = true;
-                window.IDM.http.post(base_url + this.propData.getAllApplicationUrl)
-                    .then((res) => {
-                        this.is_loading_all_application = false;
-                        if ( res.data && res.data.type == 'success' ) {
-                            this.application_data = res.data.data
-                        }
-                    }).catch(function (error) {
-                        this.is_loading_all_application = false;
-                    });
-            }
+            this.is_loading_all_application = true;
+            window.IDM.http.post(base_url + '/ctrl/tencentApp/queryAppGroupByGrant')
+                .then((res) => {
+                    this.is_loading_all_application = false;
+                    if ( res.data && res.data.type == 'success' ) {
+                        this.application_data = res.data.data
+                    }
+                }).catch(function (error) {
+                    this.is_loading_all_application = false;
+                });
         },
         save() {
             if ( this.moduleObject.env == 'develop' ) {
                 return
             }
-            if ( this.propData.saveMyApplicationUrl ) {
-                let appId_arr = [];
-                let appId = '';
-                this.my_application_data.forEach((item) => {
-                    appId_arr.push(item.value)
-                })
-                appId = appId_arr.join(',')
-                window.IDM.http.post(base_url + this.propData.saveMyApplicationUrl,{
-                    appId: appId
-                }).then((res) => {
-                    if ( res.data && res.data.type == 'success' ) {
-                        Toast.success('添加应用成功');
-                        this.is_edit = false;
-                    }
-                }).catch(function (error) {
+            let appId_arr = [];
+            let appId = '';
+            this.my_application_data.forEach((item) => {
+                appId_arr.push(item.value)
+            })
+            appId = appId_arr.join(',')
+            window.IDM.http.post(base_url + '/ctrl/tencentApp/batchSetFavoriteApp',{
+                appId: appId
+            }).then((res) => {
+                if ( res.data && res.data.type == 'success' ) {
+                    Toast.success('添加应用成功');
+                    this.is_edit = false;
+                }
+            }).catch(function (error) {
 
-                });
-            }
+            });
         },
         search() {
-            // this.save()
             this.is_edit = false;
-            if ( this.moduleObject.env == 'develop' ) {
-                return
-            }
-            if ( this.propData.clickSearchUrl ) {
-                if ( this.propData.clickSearchJumpType == '_self' ) {
-                    window.location.href = this.propData.clickSearchUrl
-                } else {
-                    window.open(this.propData.clickSearchUrl,this.propData.clickSearchJumpType);
-                }
-            }            
+            this.$emit('openApplicationSearch')
         },
         cancel() {
             this.is_edit = false;
             this.initData()
-            let urlObject = window.IDM.url.queryObject();
-            let pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
-            var clickNewFunction = this.propData.clickCancelFunction;
-            clickNewFunction && clickNewFunction.forEach(item=>{
-                window[item.name]&&window[item.name].call(this,{
-                    urlData:urlObject,
-                    pageId,
-                    customParam:item.param,
-                    _this:this
-                });
-            })
         },
         manageApplication() {
             this.is_edit = true;
@@ -379,9 +342,9 @@ export default {
                 return 
             }
             let clientWidth = document.body.clientWidth;
-            let adaptationBase = this.propData.adaptationBase || 414;
-            let adaptationPercent = this.propData.adaptationPercent || 1;
-            let percent = ( ( clientWidth/adaptationBase - 1 ) * ( adaptationPercent - 1 ) + 1 )
+            let adaptationBaseManage = this.propData.adaptationBaseManage || 414;
+            let adaptationPercentManage = this.propData.adaptationPercentManage || 1;
+            let percent = ( ( clientWidth/adaptationBaseManage - 1 ) * ( adaptationPercentManage - 1 ) + 1 )
             if ( this.moduleObject.env == 'develop' ) {
                 return data
             } else {
@@ -571,25 +534,15 @@ export default {
                     }
                 }
             }
-            if ( this.is_pop_type ) {
-                window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop', styleObject);
-                window.IDM.setStyleToPageHead(this.moduleObject.id + ' .van-tabs__wrap', navStyleBackground);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop', styleObject);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + ' .van-tabs__wrap', navStyleBackground);
 
-                window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop' + " .idm_applicationmanage_title", styleObjectTitle);
-                window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop' + " .idm_applicationmanage_main_list_name", fontStyleObject);
-                window.IDM.setStyleToPageHead(this.moduleObject.id + " #application_manage_pop .idm_applicationmanage_main_list .img_box", imgStyleObject);
-                window.IDM.setStyleToPageHead(this.moduleObject.id + " #application_manage_pop .idm_applicationmanage_main_list img", imgStyleObject);
-                window.IDM.setStyleToPageHead(this.moduleObject.id + " #application_manage_pop .idm_applicationmanage_main_list svg", imgStyleObject);
-            } else {
-                window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
-                window.IDM.setStyleToPageHead(this.moduleObject.id + ' .van-tabs__wrap', navStyleBackground);
-                
-                window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationmanage_title", styleObjectTitle);
-                window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationmanage_main_list_name", fontStyleObject);
-                window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationmanage_main_list .img_box", imgStyleObject);
-                window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationmanage_main_list img", imgStyleObject);
-                window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationmanage_main_list svg", imgStyleObject);
-            }
+            window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop' + " .idm_applicationmanage_title", styleObjectTitle);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop' + " .idm_applicationmanage_main_list_name", fontStyleObject);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + " #application_manage_pop .idm_applicationmanage_main_list .img_box", imgStyleObject);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + " #application_manage_pop .idm_applicationmanage_main_list img", imgStyleObject);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + " #application_manage_pop .idm_applicationmanage_main_list svg", imgStyleObject);
+            
             this.initData();
         },
        
@@ -678,6 +631,7 @@ export default {
                 .img_box{
                     width: 40px;
                     position: relative;
+                    margin: 0 auto 2.5px auto;
                 }
                 img,svg{
                     width: 40px;
@@ -692,8 +646,8 @@ export default {
                     height: 15px;
                     line-height: 15px;
                     position: absolute;
-                    top: -7px;
-                    right: 4px;
+                    top: -6px;
+                    right: -4px;
                     text-align: center;
                     font-size: 12px;
                     // color: white;

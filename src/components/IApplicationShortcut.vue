@@ -554,6 +554,8 @@ export default {
                 this.hideThisModuleHandle();
             } else if ( messageObject.type && messageObject.type == "linkageReload" ) {
                 this.initApplicationData()
+            } else if ( messageObject.type && messageObject.type == "pageResize" ) {
+                this.convertAttrToStyleObject()
             }
             // 配置了刷新KEY，消息类型是websocket，收到的消息对象有message并不为空
             if(this.propData.messageRefreshKey && this.propData.messageRefreshKey.length && messageObject.type === 'websocket' && messageObject.message){

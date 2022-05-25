@@ -65,18 +65,18 @@ export default {
     data() {
         return {
             moduleObject: {},
-            propData: this.$root.propData.compositeAttr || {
-
-            },
+            propData: { },
             search_text: '',
             application_data: [ ],
             is_loading: false
         }
     },
-    props: {
-    },
+    props: [ 'datas' ],
     created() {
-        this.moduleObject = this.$root.moduleObject
+        this.moduleObject = this.$root.moduleObject;
+        this.propData = {
+            ...this.datas
+        }
         this.initDevelopData()
         this.convertAttrToStyleObject();
     },
@@ -91,7 +91,7 @@ export default {
     methods: {
         /** * 主题颜色 */
         convertThemeListAttrToStyleObject() {
-            const themeList = this.propData.themeList;
+            const themeList = this.propData.themeListSearch;
             console.log(themeList,"themeList")
             if (!themeList) {
                 return;
@@ -145,11 +145,11 @@ export default {
             }
         },
         getApplicationList() {
-            if ( this.moduleObject.env == 'develop' || !this.propData.getAllApplicationUrl ) {
+            if ( this.moduleObject.env == 'develop' ) {
                 return
             }
             this.is_loading = true;
-            window.IDM.http.post(base_url + this.propData.getAllApplicationUrl,{
+            window.IDM.http.post(base_url + '/ctrl/tencentApp/queryAppByGrant',{
                 appName: this.search_text
             }).then(result=>{
                 this.is_loading = false;
@@ -164,10 +164,10 @@ export default {
             })
         },
         add(item,index) {
-            if ( this.moduleObject.env == 'develop' || !this.propData.addApplicationUrl ) {
+            if ( this.moduleObject.env == 'develop' ) {
                 return
             }
-            window.IDM.http.post(base_url + this.propData.addApplicationUrl,{
+            window.IDM.http.post(base_url + '/ctrl/tencentApp/setFavoriteApp',{
                 appId: item.value,
                 type: '1'
             }).then(result=>{
@@ -200,9 +200,9 @@ export default {
                 return 
             }
             let clientWidth = document.body.clientWidth;
-            let adaptationBase = this.propData.adaptationBase || 414;
-            let adaptationPercent = this.propData.adaptationPercent || 1;
-            let percent = ( ( clientWidth/adaptationBase - 1 ) * ( adaptationPercent - 1 ) + 1 )
+            let adaptationBaseSearch = this.propData.adaptationBaseSearch || 414;
+            let adaptationPercentSearch = this.propData.adaptationPercentSearch || 1;
+            let percent = ( ( clientWidth/adaptationBaseSearch - 1 ) * ( adaptationPercentSearch - 1 ) + 1 )
             if ( this.moduleObject.env == 'develop' ) {
                 return data
             } else {
@@ -214,17 +214,6 @@ export default {
             var styleObject = {};
             var styleObjectButton = {};
             var styleObjectButtonDisabled = {};
-            if (this.propData.bgSize && this.propData.bgSize == "custom") {
-                styleObject["background-size"] = (this.propData.bgSizeWidth ? this.propData.bgSizeWidth.inputVal + this.propData.bgSizeWidth.selectVal : "auto") + " " + (this.propData.bgSizeHeight ? this.propData.bgSizeHeight.inputVal + this.propData.bgSizeHeight.selectVal : "auto")
-            } else if (this.propData.bgSize) {
-                styleObject["background-size"] = this.propData.bgSize;
-            }
-            if (this.propData.positionX && this.propData.positionX.inputVal) {
-                styleObject["background-position-x"] = this.propData.positionX.inputVal + this.propData.positionX.selectVal;
-            }
-            if (this.propData.positionY && this.propData.positionY.inputVal) {
-                styleObject["background-position-y"] = this.propData.positionY.inputVal + this.propData.positionY.selectVal;
-            }
             for (const key in this.propData) {
                 if (this.propData.hasOwnProperty.call(this.propData, key)) {
                     const element = this.propData[key];
@@ -232,16 +221,18 @@ export default {
                         continue;
                     }
                     switch (key) {
-                        case "width":
-                        case "height":
-                            styleObject[key] = element;
+                        case "widthSearch":
+                            styleObject['width'] = element;
                             break;
-                        case "bgColor":
+                        case "heightSearch":
+                            styleObject['height'] = element;
+                            break;
+                        case "bgColorSearch":
                             if (element && element.hex8) {
                                 styleObject["background-color"] = element.hex8;
                             }
                             break;
-                        case "box":
+                        case "boxSearch":
                             if (element.marginTopVal) {
                                 styleObject["margin-top"] = `${element.marginTopVal}`;
                             }
@@ -267,26 +258,7 @@ export default {
                                 styleObject["padding-left"] = `${element.paddingLeftVal}`;
                             }
                             break;
-                        case "bgImgUrl":
-                            styleObject["background-image"] = `url(${window.IDM.url.getWebPath(element)})`;
-                            break;
-                        case "positionX":
-                            //背景横向偏移
-
-                            break;
-                        case "positionY":
-                            //背景纵向偏移
-
-                            break;
-                        case "bgRepeat":
-                            //平铺模式
-                            styleObject["background-repeat"] = element;
-                            break;
-                        case "bgAttachment":
-                            //背景模式
-                            styleObject["background-attachment"] = element;
-                            break;
-                        case "border":
+                        case "borderSearch":
                             if (element.border.top.width > 0) {
                                 styleObject["border-top-width"] = element.border.top.width + element.border.top.widthUnit;
                                 styleObject["border-top-style"] = element.border.top.style;
@@ -321,7 +293,7 @@ export default {
                             styleObject["border-bottom-left-radius"] = element.radius.leftBottom.radius + element.radius.leftBottom.radiusUnit;
                             styleObject["border-bottom-right-radius"] = element.radius.rightBottom.radius + element.radius.rightBottom.radiusUnit;
                             break;
-                        case "font":
+                        case "fontSearch":
                             styleObject["font-family"] = element.fontFamily;
                             if (element.fontColors.hex8) {
                                 styleObject["color"] = element.fontColors.hex8;
@@ -371,9 +343,9 @@ export default {
                     }
                 }
             }
-            window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
-            window.IDM.setStyleToPageHead(this.moduleObject.id + ' .add', styleObjectButton);
-            window.IDM.setStyleToPageHead(this.moduleObject.id + ' .add_disabled', styleObjectButtonDisabled);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_search_pop', styleObject);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_search_pop .idm_iapplicationsearch .add', styleObjectButton);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_search_pop .idm_iapplicationsearch .add_disabled', styleObjectButtonDisabled);
             this.initData();
         },
         

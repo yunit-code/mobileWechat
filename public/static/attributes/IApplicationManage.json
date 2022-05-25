@@ -366,64 +366,6 @@
                             "default": "1.2"
                         }
                     ]
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "我的应用",
-                    "desc": "用于获取用户设置的我的应用数据的接口地址",
-                    "bindKey": "getMyApplicationUrlManage",
-                    "default": "/ctrl/tencentApp/queryMyFavorite"
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "全部应用",
-                    "desc": "用于获取用户所有有权限的应用数据的接口地址",
-                    "bindKey": "getAllApplicationUrl",
-                    "default": "/ctrl/tencentApp/queryAppGroupByGrant"
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "保存接口",
-                    "desc": "用户保存所设置的我的应用数据的接口地址",
-                    "bindKey": "saveMyApplicationUrl",
-                    "default": "/ctrl/tencentApp/batchSetFavoriteApp"
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "搜索地址",
-                    "desc": "点击搜索按钮时页面跳转的地址",
-                    "bindKey": "clickSearchUrl",
-                    "default": ""
-                },
-                {
-                    "type": "select",
-                    "layoutType": "inline",
-                    "text": "跳转方式",
-                    "bindKey": "clickSearchJumpType",
-                    "desc": "点击搜索按钮时页面跳转的方式",
-                    "dictionary": [
-                        {
-                            "label": "当前页跳转",
-                            "value": "_self"
-                        },
-                        {
-                            "label": "新窗口打开",
-                            "value": "_blank"
-                        }
-                    ],
-                    "default": "_self"
-                },
-                {
-                    "type": "actionSelect",
-                    "layoutType": "block",
-                    "text": "点击[取消]时动作",
-                    "bindKey": "clickCancelFunction",
-                    "desc": "点击取消的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
-                    "multiple": true
                 }
             ]
         }
