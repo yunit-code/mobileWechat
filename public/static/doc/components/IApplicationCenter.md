@@ -19,8 +19,16 @@ mobilewechat@1.0.8
 ### 基本属性
 <font color="#CCCCCC">此章节主要用于存放设置组件所需要的一些基本信息的属性，以达到组件具备使用的基础条件</font>
 
+#### 显示标题【showTitle】
+- showTitle: 是否是我的应用组件
+- 默认值: `打开`
+
 #### 标题【title】
 <font color="#CCCCCC">当前组件标题，用来增加组件辨识度</font>
+
+#### 显示图标【showTitleIcon】
+- showTitleIcon: 是否是我的应用组件
+- 默认值: `打开`
 
 #### 我的应用【isMyApplication】
 - isMyApplication: 是否是我的应用组件
@@ -84,13 +92,33 @@ mobilewechat@1.0.8
 > 是否展示应用的角标，可对单个应用进行单独的配置
 - 默认值: `否`
 
-### 标题样式设置
-#### 文字【titleFont】
-设置组件标题的文字的字体样式，可设置文字的字体、字重、样式、字体颜色、大小、行高、对齐、修饰等。
+### 标题容器样式
+#### 图标位置【titleIconPosition】
+设置组件标题图标的展示位置，可选择标题前展示或标题后展示
+- 标识：`titleIconPosition`
+- 默认值：`右边`
 
+#### 标题图标设置
+##### 标题图标【titleIconClass】
+选择标题要展示的图标
+- 标识：`titleIconClass`
+- 默认值：``
+
+##### 图标颜色【titleIconFontColor】
+选择标题要展示的图标的颜色
+- 标识：`titleIconFontColor`
+- 默认值：``
+
+##### 图标大小【titleIconFontSize】
+选择标题要展示的图标的大小
+- 标识：`titleIconFontSize`
+- 默认值：`14`
+
+#### 字体【titleFont】
+设置组件标题的文字的字体样式，可设置文字的字体、字重、样式、字体颜色、大小、行高、对齐、修饰等。
 - 标识：`titleFont`
 
-### 样式设置
+### 外层容器样式
 #### 内外边距【box】
 设置组件的最外围的外边距和内边距
 - 标识：`box`
@@ -98,9 +126,6 @@ mobilewechat@1.0.8
 
 #### 宽高
 <font color="#CCCCCC">用于对容器的宽高进行行内分组，此处建议都设置为auto。</font>
-##### 宽【width】
-组件的宽度，填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等，不过此处建议设置为<font color="#FF0000">`auto`</font>
-- 标识：`width`
 
 ##### 宽【width】
 组件的宽度，填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等，不过此处建议设置为<font color="#FF0000">`auto`</font>
@@ -112,80 +137,45 @@ mobilewechat@1.0.8
 - 标识：`height`
 - 默认值：`auto`
 
-#### 背景设置
-##### 背景色【bgColor】
+#### 背景色【bgColor】
 设置组件的整体背景颜色
 - 标识：`bgColor`
-- 默认值：`auto`
-
-##### 背景图片【bgImgUrl】
-设置组件的整体背景图片，此处可以填写图片地址，也可直接上传图片，上传成功后都是会把地址回填到文本框中，地址是会经过[IDM.url.getWebPath](https://yunit-code.github.io/zh/coreapi/api.html#getwebpath)转换的，地址可填写的前缀方式可以点击[此处](https://yunit-code.github.io/zh/coreapi/api.html#getwebpath)参考。
-- 标识：`bgImgUrl`
 - 默认值：空
 
-##### 横向偏移【positionX】
-设置背景图片的横向偏移值，请参考 [background-position-x](https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-position-x)
-- 标识：`positionX`
-- 默认值：空
-
-##### 纵向偏移【positionY】
-设置背景图片的纵向偏移值，请参考 [background-position-y](https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-position-y)
-- 标识：`positionY`
-- 默认值：空
-
-##### 背景大小【bgSize】
-设置背景图片的背景类型，目前有以下三种方式提供选择：
-1. **裁剪显示：** 缩放背景图片以完全覆盖背景区，可能背景图片部分看不见。
-2. **完全显示：** 缩放背景图片以完全装入背景区，可能背景区部分空白。
-3. **自定义：** 自定义设定宽度和高度值
-- 标识：`bgSize`
-- 默认值：空
-
-🍹更深刻的含义请参考 [background-size](https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-size)
-##### 宽度【bgSizeWidth】
-设置背景图片的背景宽度值
-- 标识：`bgSizeWidth`
-- 默认值：空
-
-🍹更深刻的含义请参考 [background-size](https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-size)
-##### 高度【bgSizeHeight】
-设置背景图片的背景高度值
-- 标识：`bgSizeHeight`
-- 默认值：空
-
-🍹更深刻的含义请参考 [background-size](https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-size)
-##### 平铺模式【bgRepeat】
-设置背景图片的背景平铺模式，目前有以下五种方式提供选择：
-1. **双向重复：** 图片不够覆盖的时候X、Y轴都会重复显示
-2. **水平重复：** 图片不够覆盖的时候X轴都会重复显示
-3. **垂直重复：** 图片不够覆盖的时候Y轴都会重复显示
-4. **不重复：** 图片不够覆盖的时候不重复显示
-5. **继承：** 继承父容器属性
-
-- 标识：`bgRepeat`
-- 默认值：空
-
-🍹更深刻的含义请参考 [background-repeat](https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-repeat)
-##### 背景模式【bgAttachment】
-设置背景图像的位置是在视口内固定，或者随着包含它的区块滚动，目前有以下三种方式提供选择：
-1. **固定：** 此关键属性值表示背景相对于视口固定。即使一个元素拥有滚动机制，背景也不会随着元素的内容滚动。
-2. **滚动：** 此关键属性值表示背景相对于元素本身固定， 而不是随着它的内容滚动（对元素边框是有效的）。
-3. **继承：** 继承父容器属性
-
-- 标识：`bgAttachment`
-- 默认值：空
-
-🍹更深刻的含义请参考 [background-attachment](https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-attachment)
 #### 边框【border】
-设置组件的最外层的边框和圆角，可点击中间加号统一设置四边或四角，也可单独一边一边设置不同的边框或圆角样式。
-
+设置组件的整体边框样式
 - 标识：`border`
 - 默认值：空
 
-#### 文字【font】
-设置组件的文字的字体样式，可设置文字的字体、字重、样式、字体颜色、大小、行高、对齐、修饰等。
-
+### 内层容器样式
+#### 字体【font】
+设置组件内层的文字的字体样式，可设置文字的字体、字重、样式、字体颜色、大小、行高、对齐、修饰等。
 - 标识：`font`
+
+#### 内外边距【boxInner】
+设置组件的内层容器的外边距和内边距
+- 标识：`boxInner`
+- 默认值：空
+
+#### 宽高
+##### 宽【widthInner】
+组件内层容器的宽度，填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等，不过此处建议设置为<font color="#FF0000">`auto`</font>
+- 标识：`widthInner`
+- 默认值：`auto`
+
+##### 高【heightInner】
+组件内层容器的高度，填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等，不过此处建议设置为<font color="#FF0000">`auto`</font>
+- 标识：`heightInner`
+- 默认值：`auto`
+
+#### 背景色【bgColorInner】
+设置组件内层容器的背景颜色
+- 标识：`bgColorInner`
+- 默认值：``
+
+#### 边框【borderInner】
+设置组件内层容器的边框和圆角，可点击中间加号统一设置四边或四角，也可单独一边一边设置不同的边框或圆角样式。
+- 标识：`borderInner`
 - 默认值：空
 
 ### 主题设置【themeList】
@@ -195,27 +185,7 @@ mobilewechat@1.0.8
 - 默认值：`[]`
 
 ### 高级
-#### 角标接口设置
-##### 数据接口
-应用显示角标选项打开的时候，用于获取应用右上角角标数据的接口地址
-
-- 标识：`getApplicationMarkNumberUrl`
-- 默认值：`/ctrl/dataSource/getDatas`
-- 接口返回格式需要按照以下要求：
-``` json
-{
-    "code":"200",
-    "type":"success",
-    "message":"操作成功",
-    "metadata":null,
-    "token":"",
-    "data": {
-        "count": 5, //应用角标显示值
-    }
-}
-```
-
-##### 角标字段【dataFiled】
+#### 角标字段【dataFiled】
 应用显示角标选项打开的时候，根据应用右上角角标接口返回数据格式指定结果集的字段，若它的值为{data:{count:5}}，则这里应该填写count
 
 - 标识：`dataFiled`
@@ -255,36 +225,27 @@ mobilewechat@1.0.8
 
 
 ### 应用管理配置
-#### 标题样式设置
+#### 标题容器样式
+##### 字体【titleFontManage】
+设置组件标题的文字的字体样式，可设置文字的字体、字重、样式、字体颜色、大小、行高、对齐、修饰等。
+- 标识：`titleFontManage`
+
+##### 背景色【titleBgColor】
+设置组件标题的最外围的外边距和内边距
+- 标识：`titleBgColor`
+- 默认值：空
+
 ##### 内外边距【titleBox】
 设置组件标题的最外围的外边距和内边距
 - 标识：`titleBox`
 - 默认值：空
 
-##### 宽高
-<font color="#CCCCCC">用于对容器标题的宽高进行行内分组，此处建议都设置为auto。</font>
+#### 内层容器样式
+##### 字体【fontManage】
+设置组件的文字的字体样式，可设置文字的字体、字重、样式、字体颜色、大小、行高、对齐、修饰等。
+- 标识：`fontManage`
 
-###### 宽【titleWidth】
-组件标题的宽度，填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等，不过此处建议设置为<font color="#FF0000">`auto`</font>
-- 标识：`titleWidth`
-- 默认值：`auto`
-
-###### 高【titleHeight】
-组件标题的高度，填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等，不过此处建议设置为<font color="#FF0000">`auto`</font>
-- 标识：`height`
-- 默认值：`auto`
-
-##### 文字【titleFontManage】
-设置组件标题的文字的字体样式，可设置文字的字体、字重、样式、字体颜色、大小、行高、对齐、修饰等。
-
-##### 背景设置
-###### 背景色【titleBgColor】
-设置组件标题的整体背景颜色
-- 标识：`titleBgColor`
-- 默认值：`auto`
-
-#### 样式设置
-##### 内外边距【box】
+##### 内外边距【boxManage】
 设置组件的最外围的外边距和内边距
 - 标识：`boxManage`
 - 默认值：空
@@ -353,19 +314,12 @@ mobilewechat@1.0.8
 - 默认值：空
 
 🍹更深刻的含义请参考 [background-attachment](https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-attachment)
+
 ##### 边框【borderManage】
 设置组件的最外层的边框和圆角，可点击中间加号统一设置四边或四角，也可单独一边一边设置不同的边框或圆角样式。
 
 - 标识：`borderManage`
 - 默认值：空
-
-##### 文字【fontManage】
-设置组件的文字的字体样式，可设置文字的字体、字重、样式、字体颜色、大小、行高、对齐、修饰等。
-
-- 标识：`fontManage`
-- 默认值：空
-
-
 
 #### 高级
 ##### 我的应用【getMyApplicationUrl】

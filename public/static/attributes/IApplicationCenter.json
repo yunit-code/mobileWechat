@@ -395,13 +395,30 @@
             "tabText": "主题[index]",
             "children": [
                 {
-                    "type": "input",
+                    "type": "select",
                     "layoutType": "inline",
                     "text": "主题标识",
                     "bindKey": "key",
-                    "desc":"用于设置主题的标识，此项需要搭配自定义开发切换主题的功能，例如：蓝色标识为blue，用户切换主题的时候存储到数据库中的标识为blue，则这里填写为blue",
-                    "default":"",
-                    "placeholder":"例如：blue"
+                    "desc":"用于设置主题的标识，此项需要搭配自定义开发切换主题的功能，例如：蓝色标识为blue，用户切换主题的时候存储到数据库中的标识为blue，则这里选择blue",
+                    "default":"blue",
+                    "placeholder":"例如：blue",
+                    "ctrlAttrObject": {
+                        "mode": "combobox"
+                    },
+                    "dictionary": [
+                        {
+                            "label": "blue",
+                            "value": "blue"
+                        },
+                        {
+                            "label": "red",
+                            "value": "red"
+                        },
+                        {
+                            "label": "green",
+                            "value": "green"
+                        }
+                    ]
                 },
                 {
                     "type": "colorPicker",
@@ -455,13 +472,27 @@
                     "display": "@[isMyApplication]"
                 },
                 {
-                    "type": "textarea",
-                    "layoutType": "block",
+                    "type": "select",
+                    "layoutType": "inline",
                     "text": "刷新KEY",
                     "bindKey": "messageRefreshKey",
-                    "desc": "根据组件接受到的消息KEY来刷新数据，可配置多个，以英文逗号分开",
+                    "desc": "根据组件接受到的消息KEY来刷新数据，可选择多个",
                     "default": "",
-                    "placeholder": "示例：inbox,info,toread"
+                    "placeholder": "请选择刷新KEY",
+                    "multiple": true,
+                    "ctrlAttrObject": {
+                        "mode": "tags"
+                    },
+                    "dictionary": [
+                        {
+                            "label": "info",
+                            "value": "info"
+                        },
+                        {
+                            "label": "inbox",
+                            "value": "inbox"
+                        }
+                    ]
                 }
             ]
         },
@@ -477,15 +508,9 @@
                     "helpUrl": "",
                     "children": [
                         {
-                            "type": "box",
-                            "layoutType": "block",
-                            "text": "内外边距",
-                            "bindKey": "titleBox"
-                        },
-                        {
                             "type": "font",
                             "layoutType": "block",
-                            "text": "文字",
+                            "text": "字体",
                             "bindKey": "titleFontManage"
                         },
                         {
@@ -495,6 +520,12 @@
                             "bindKey": "titleBgColor",
                             "placeholder": "请选择颜色",
                             "default": {}
+                        },
+                        {
+                            "type": "box",
+                            "layoutType": "block",
+                            "text": "内外边距",
+                            "bindKey": "titleBox"
                         }
                     ]
                 },
@@ -504,6 +535,12 @@
                     "desc": "点击？查看样式设置用法指南",
                     "helpUrl": "",
                     "children": [
+                        {
+                            "type": "font",
+                            "layoutType": "block",
+                            "text": "字体",
+                            "bindKey": "fontManage"
+                        },
                         {
                             "type": "box",
                             "layoutType": "block",
@@ -696,12 +733,6 @@
                             "layoutType": "block",
                             "text": "边框",
                             "bindKey": "borderManage"
-                        },
-                        {
-                            "type": "font",
-                            "layoutType": "block",
-                            "text": "文字",
-                            "bindKey": "fontManage"
                         }
                     ]
                 },

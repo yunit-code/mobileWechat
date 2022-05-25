@@ -531,9 +531,9 @@ export default {
                 this.initApplicationData()
             }
             // 配置了刷新KEY，消息类型是websocket，收到的消息对象有message并不为空
-            if(this.propData.messageRefreshKey && messageObject.type === 'websocket' && messageObject.message){
+            if(this.propData.messageRefreshKey && this.propData.messageRefreshKey.length && messageObject.type === 'websocket' && messageObject.message){
                 const messageData = typeof messageObject.message === 'string' && JSON.parse(messageObject.message) || messageObject.message
-                const arr = this.propData.messageRefreshKey.split(',')
+                const arr = this.propData.messageRefreshKey || [];
                 if(messageData.badgeType && arr.includes(messageData.badgeType)){
                     this.getApplicationMarkNumber()
                 }
