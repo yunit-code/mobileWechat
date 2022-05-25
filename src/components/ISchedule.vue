@@ -165,10 +165,20 @@ export default {
     /**
      * 组件通信：接收消息的方法
      */
-    receiveBroadcastMessage(object) {
-      console.log("组件收到消息", object);
-      if(object.type === "linkageReload"){
-        this.init()
+    receiveBroadcastMessage(messageObject) {
+      switch(messageObject.type) {
+        case 'websocket':
+          if(this.propData.messageRefreshKey && messageObject.message){
+            const messageData = typeof messageObject.message === 'string' && JSON.parse(messageObject.message) || messageObject.message
+            const arr = Array.isArray(this.propData.messageRefreshKey) ? this.propData.messageRefreshKey : [this.propData.messageRefreshKey]
+            if(messageData.badgeType && arr.includes(messageData.badgeType)){
+              this.requsetList()
+            }
+          }
+          break;
+        case 'linkageReload':
+          this.requsetList()
+          break;
       }
     },
     /**
