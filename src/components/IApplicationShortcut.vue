@@ -600,7 +600,7 @@ export default {
         .idm_applicationcenter_main_list{
             position: relative;
             text-align: center;
-            .img,svg{
+            img,svg{
                 width: 100%;
                 margin: 0 auto 2.5px auto;
             }
@@ -638,13 +638,13 @@ export default {
                 position: relative;
                 text-align: center;
                 flex-shrink: 0;
+                img,svg{
+                    width: 100%;
+                }
                 .img_box{
                     width: 70%;
                     margin: 0 auto 2.5px auto;
                     position: relative;
-                    img,svg{
-                        width: 100%;
-                    }
                 }
                 .number{
                     width: 15px;
