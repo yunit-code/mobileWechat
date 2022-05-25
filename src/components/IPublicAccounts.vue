@@ -119,9 +119,8 @@ export default {
         ? (window[this.moduleObject.packageid] = this)
         : null;
     });
-    if (this.propData.fixed === false) {
-      let item_box = document.querySelector(".drag-bar-wrapper");
-      console.log(item_box.offsetTop, IDM.getClientWH().height/2)
+    if (!this.propData.fixed) {
+      let item_box = document.querySelector('#' + this.moduleObject.packageid || "module_demo");
       if(item_box.offsetTop > IDM.getClientWH().height/2 ) {
         this.placement = 'top-start'
       } else {
