@@ -323,6 +323,8 @@ export default {
             this.convertThemeListAttrToStyleObject()
             var styleObject = {};
             var fontStyleObject = {};
+            var imgStyleObject = {};
+
             if (this.propData.bgSize && this.propData.bgSize == "custom") {
                 styleObject["background-size"] = (this.propData.bgSizeWidth ? this.propData.bgSizeWidth.inputVal + this.propData.bgSizeWidth.selectVal : "auto") + " " + (this.propData.bgSizeHeight ? this.propData.bgSizeHeight.inputVal + this.propData.bgSizeHeight.selectVal : "auto")
             } else if (this.propData.bgSize) {
@@ -442,11 +444,15 @@ export default {
                             fontStyleObject["text-align"] = element.fontTextAlign;
                             fontStyleObject["text-decoration"] = element.fontDecoration;
                             break;
+                        case "applicationImgWidth":
+                            imgStyleObject['width'] = element
                     }
                 }
             }
             window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
-            window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_main_list_name", fontStyleObject);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationshortcut .idm_applicationcenter_main_list_name", fontStyleObject);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationshortcut .idm_applicationcenter_main_list .img_box", imgStyleObject);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationshortcut .swiper_block_list .img_box", imgStyleObject);
             this.reload();
         },
         /**
@@ -594,12 +600,12 @@ export default {
         .idm_applicationcenter_main_list{
             position: relative;
             text-align: center;
-            .img_box,img,svg{
-                width: 40px;
-                height: 40px;
+            .img,svg{
+                width: 100%;
                 margin: 0 auto 2.5px auto;
             }
             .img_box{
+                width: 77%;
                 position: relative;
             }
             .number{
@@ -632,13 +638,13 @@ export default {
                 position: relative;
                 text-align: center;
                 flex-shrink: 0;
-                .img_box,img,svg{
-                    width: 40px;
-                    height: 40px;
-                    margin: 0 auto 2.5px auto;
-                }
                 .img_box{
+                    width: 70%;
+                    margin: 0 auto 2.5px auto;
                     position: relative;
+                    img,svg{
+                        width: 100%;
+                    }
                 }
                 .number{
                     width: 15px;

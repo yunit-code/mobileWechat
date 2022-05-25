@@ -420,6 +420,8 @@ export default {
             var styleObjectTitle = {};
             var fontStyleObject = {};
             var styleObjectTitleIcon = {};
+            var imgStyleObject = {};
+
             if (this.propData.bgSize && this.propData.bgSize == "custom") {
                 styleObject["background-size"] = (this.propData.bgSizeWidth ? this.propData.bgSizeWidth.inputVal + this.propData.bgSizeWidth.selectVal : "auto") + " " + (this.propData.bgSizeHeight ? this.propData.bgSizeHeight.inputVal + this.propData.bgSizeHeight.selectVal : "auto")
             } else if (this.propData.bgSize) {
@@ -560,6 +562,8 @@ export default {
                             styleObjectTitleIcon["width"] = element + "px";
                             styleObjectTitleIcon["height"] = element + "px";
                             break
+                        case "applicationImgWidth":
+                            imgStyleObject['width'] = element
                     }
                 }
             }
@@ -567,6 +571,7 @@ export default {
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_text", styleObjectTitle);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_icon .idm_filed_svg_icon", styleObjectTitleIcon);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_main_list_name", fontStyleObject);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter .idm_applicationcenter_main_list .img_box", imgStyleObject);
             this.initApplicationData()
         },
         convertAttrToStyleObjectInner() {
@@ -679,6 +684,7 @@ export default {
                             styleObject["border-bottom-left-radius"] = element.radius.leftBottom.radius + element.radius.leftBottom.radiusUnit;
                             styleObject["border-bottom-right-radius"] = element.radius.rightBottom.radius + element.radius.rightBottom.radiusUnit;
                             break;
+                        
                         
                     }
                 }
@@ -848,12 +854,12 @@ export default {
         .idm_applicationcenter_main_list{
             position: relative;
             text-align: center;
-            .img_box,img,svg{
-                width: 40px;
-                height: 40px;
+            img,svg{
+                width: 100%;
                 margin: 0 auto 2.5px auto;
             }
             .img_box{
+                width: 77%;
                 position: relative;
             }
             .number{
