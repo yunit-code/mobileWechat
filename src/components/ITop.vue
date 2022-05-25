@@ -16,7 +16,7 @@
       idm-ctrl-id：组件的id，这个必须不能为空
       idm-container-index  组件的内部容器索引，不重复唯一且不变，必选
     -->
-     <div class="top-bg" v-proportion="0.36">
+     <div class="top-bg">
         <div class="top-set">
           <svg-icon v-show="propData.set" @click.native="goUrl" icon-class="isort-set" class="svg" :style="{fontSize: propData.iconSize + 'px'}"/>
         </div>
@@ -412,6 +412,8 @@ export default {
 .idm_top_box{
   background-color: #4A90E2FF;
   .top-bg{
+    height: 100%;
+    overflow: hidden;
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-position: center;
