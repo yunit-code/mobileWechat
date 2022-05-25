@@ -24,16 +24,16 @@
           <div class="user-info" v-if="propData.userInfo">
             <img class="default-logo" :src="logo ? logo : IDM.url.getModuleAssetsWebPath(require('../assets/default_headpic.jpeg'),moduleObject)" alt="">
             <div>
-              <div>{{userName}}</div>
-              <div>{{userUnit}}</div>
+              <div class="text">{{userName}}</div>
+              <div class="text">{{userUnit}}</div>
             </div>      
           </div>
           <div class="weather-info" v-if="propData.weather">
-            <div>
+            <div class="text">
               <img v-if="weatherLogo" :src="weatherLogo" alt="">
               {{temperature | temperature}}
             </div>
-            <div>{{city}}</div>
+            <div class="text">{{city}}</div>
           </div>
         </div>
       </div>
@@ -261,7 +261,7 @@ export default {
         }
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id,styleObject);
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .top-bg .top-content",fontStyleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .top-bg .top-content .text",fontStyleObject);
       this.initData();
     },
     /**
