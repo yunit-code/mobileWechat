@@ -68,6 +68,7 @@
                     "text": "放置坐标",
                     "bindKey": "coordinates",
                     "desc": "放置坐标",
+                    "display": "@[fixed == true]",
                     "dictionary": [
                         {
                             "label": "左上角",

@@ -119,6 +119,15 @@ export default {
         ? (window[this.moduleObject.packageid] = this)
         : null;
     });
+    if (this.propData.fixed === false) {
+      let item_box = document.querySelector(".drag-bar-wrapper");
+      if(item_box.offsetTop > IDM.getClientWH().height/2 ) {
+        this.placement = 'top-start'
+      } else {
+        this.placement = 'bottom-start'
+      }
+    }
+    
   },
   destroyed() {},
   methods:{
@@ -172,8 +181,7 @@ export default {
           } else {
             this.placement = 'top-end'
           }
-        }
-        if(this.ny < IDM.getClientWH().height/2 ) {
+        } else {
           if (this.nx < IDM.getClientWH().width/2) {
             this.placement = 'bottom-start'
           } else {
