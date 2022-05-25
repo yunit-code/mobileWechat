@@ -15,11 +15,19 @@
     <template v-if="propData.compStyle !== 'styleFour'">
       <div class="idm-message-list-box-title d-flex align-c just-b">
         <div class="d-flex align-c">
+          <div class="idm-message-list-box-title-left-icon" v-if="propData.showIcon && propData.titleIconPosition == 'left'">
+            <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm-message-list-box-title-icon" aria-hidden="true" >
+              <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
+            </svg>
+            <svg-icon v-else icon-class="threeLine" className="idm-message-list-box-title-icon"></svg-icon>
+          </div>
           <span class="idm-message-list-box-title-font">{{propData.htmlTitle}}</span>
-          <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm-message-list-box-title-icon" aria-hidden="true" >
-            <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
-          </svg>
-          <svg-icon v-else icon-class="threeLine" className="idm-message-list-box-title-icon"></svg-icon>
+          <div class="idm-message-list-box-title-right-icon" v-if="propData.showIcon && propData.titleIconPosition == 'right'">
+            <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm-message-list-box-title-icon" aria-hidden="true" >
+              <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
+            </svg>
+            <svg-icon v-else icon-class="threeLine" className="idm-message-list-box-title-icon"></svg-icon>
+          </div>
         </div>
         <div class="idm-message-list-box-title-right" v-if="propData.showMore" @click="handleClickMore">
           <span v-if="propData.showTotalNumber">{{messageData.total}}</span> <span v-else>更多</span> <van-icon name="arrow" />
@@ -61,11 +69,11 @@
             </div>
           </li>
         </ul>
+        <div v-if="!isFirst && ( !messageData.list || messageData.list.length === 0)" class="idm-message-list-box-empty">
+          <van-empty :description="propData.emptyText || '数据为空'" image-size="60"/>
+        </div>
       </div>
       <van-loading v-if="pageLoading" type="circular" vertical>加载中...</van-loading>
-      <div v-if="!isFirst && ( !messageData.list || messageData.list.length === 0)" class="idm-message-list-box-empty">
-        <van-empty :description="propData.emptyText || '数据为空'" image-size="60"/>
-      </div>
       <div class="idm-message-list-parent-box-mask" v-if="moduleObject.env === 'develop' && !propData.dataSource">
         <span>！未绑定数据源</span>
       </div>
@@ -79,6 +87,7 @@ import { Icon, Loading, Empty } from 'vant';
 import 'vant/lib/icon/style';
 import 'vant/lib/loading/style';
 import 'vant/lib/empty/style';
+import { getComputedSize } from '@/utils/adaptationScreen'
 
 import { getDatasInterfaceUrl } from '@/api/config'
 const messageData = {
@@ -208,6 +217,7 @@ export default {
       var styleObject = {};
       let styleObjectTitleIcon = {}
       let titleFontStyleObj = {}
+      let tabFontStyleObj = {}
       let titleFontStyleActiveObj = {}
       let subBoxStyleObj = {}
       let messageItemFontStyleObj = {}
@@ -367,9 +377,9 @@ export default {
                 styleObjectTitleIcon["fill"] = element.hex;
                 break
             case "titleIconFontSize":
-                styleObjectTitleIcon["font-size"] = element + "px";
-                styleObjectTitleIcon["width"] = element + "px";
-                styleObjectTitleIcon["height"] = element + "px";
+                styleObjectTitleIcon["font-size"] = getComputedSize.call(this,element) + "px";
+                styleObjectTitleIcon["width"] = getComputedSize.call(this,element) + "px";
+                styleObjectTitleIcon["height"] = getComputedSize.call(this,element) + "px";
                 break
             case 'titleFontStyle':
                 titleFontStyleObj["font-family"] = element.fontFamily;
@@ -378,10 +388,22 @@ export default {
                 }
                 titleFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                 titleFontStyleObj["font-style"] = element.fontStyle;
-                titleFontStyleObj["font-size"] = element.fontSize + element.fontSizeUnit;
+                titleFontStyleObj["font-size"] =  getComputedSize.call(this, element.fontSize) + element.fontSizeUnit;
                 titleFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
                 titleFontStyleObj["text-align"] = element.fontTextAlign;
                 titleFontStyleObj["text-decoration"] = element.fontDecoration;
+                break;
+            case 'tabFontStyle':
+                tabFontStyleObj["font-family"] = element.fontFamily;
+                if (element.fontColors.hex8) {
+                    tabFontStyleObj["color"] = element.fontColors.hex8;
+                }
+                tabFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
+                tabFontStyleObj["font-style"] = element.fontStyle;
+                tabFontStyleObj["font-size"] =  getComputedSize.call(this, element.fontSize) + element.fontSizeUnit;
+                tabFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
+                tabFontStyleObj["text-align"] = element.fontTextAlign;
+                tabFontStyleObj["text-decoration"] = element.fontDecoration;
                 break;
             case 'titleFontStyleActive':
                 titleFontStyleActiveObj["font-family"] = element.fontFamily;
@@ -390,7 +412,7 @@ export default {
                 }
                 titleFontStyleActiveObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                 titleFontStyleActiveObj["font-style"] = element.fontStyle;
-                titleFontStyleActiveObj["font-size"] = element.fontSize + element.fontSizeUnit;
+                titleFontStyleActiveObj["font-size"] = getComputedSize.call(this, element.fontSize) + element.fontSizeUnit;
                 titleFontStyleActiveObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
                 titleFontStyleActiveObj["text-align"] = element.fontTextAlign;
                 titleFontStyleActiveObj["text-decoration"] = element.fontDecoration;
@@ -402,7 +424,7 @@ export default {
                 }
                 messageItemFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                 messageItemFontStyleObj["font-style"] = element.fontStyle;
-                messageItemFontStyleObj["font-size"] = element.fontSize + element.fontSizeUnit;
+                messageItemFontStyleObj["font-size"] = getComputedSize.call(this, element.fontSize) + element.fontSizeUnit;
                 messageItemFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
                 messageItemFontStyleObj["text-align"] = element.fontTextAlign;
                 messageItemFontStyleObj["text-decoration"] = element.fontDecoration;
@@ -415,14 +437,22 @@ export default {
         window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-container", subBoxStyleObj);
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-title .idm-message-list-box-title-icon", styleObjectTitleIcon);
-      // 区分样式风格设置css
-      if(this.propData.compStyle === 'styleFour'){
-        window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-top-left", titleFontStyleObj);
-      }else{
-        window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-title-font", titleFontStyleObj);
-      }
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-top-left", tabFontStyleObj);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-top2-left", tabFontStyleObj);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-title-font", titleFontStyleObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-top-left .active", titleFontStyleActiveObj);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-top2-left .active", titleFontStyleActiveObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list-content", messageItemFontStyleObj);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list2-title", messageItemFontStyleObj);
+
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list2-left-img", {
+        'width': getComputedSize.call(this, 80) + 'px',
+        'height': getComputedSize.call(this, 70) + 'px'
+      });
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list2-left-img2", {
+        'width': getComputedSize.call(this, 60) + 'px',
+        'height': getComputedSize.call(this, 60) + 'px'
+      });
       this.initData();
     },
     /**
@@ -458,6 +488,15 @@ export default {
             " #" +
             (this.moduleObject.packageid || "module_demo") +
             " .idm-message-list-box-top-left .active",
+          fontActiveColorObj
+        );
+        IDM.setStyleToPageHead(
+          "." +
+            themeNamePrefix +
+            item.key +
+            " #" +
+            (this.moduleObject.packageid || "module_demo") +
+            " .idm-message-list-box-top2-left .active",
           fontActiveColorObj
         );
       }
@@ -654,7 +693,17 @@ export default {
     overflow: hidden;
     &-title{
       padding: 0 0 10px 0;
-      font: inherit;
+      color: #333;
+      font-weight: 800;
+      &-left-icon{
+        display: flex;
+        align-items: center;
+        margin: 0 8px 0 0;
+      }
+      &-right-icon{
+        display: flex;
+        align-items: center;
+      }
       &-icon{
         font-size: 14px;
         width: 14px;
@@ -695,6 +744,7 @@ export default {
         .active{
           color: #000;
           font-weight: 500;
+          font-weight: 800;
         }
       }
       &-more{
@@ -720,6 +770,8 @@ export default {
           margin: 0 4px;
           color: #000;
           padding: 2px 15px;
+          display: flex;
+          align-items: center;
           &:last-child{
             
           }
@@ -728,6 +780,7 @@ export default {
           color: rgb(61, 140, 243);
           font-weight: 500;
           background-color: transparent;
+          font-weight: 800;
         }
       }
       &-more{

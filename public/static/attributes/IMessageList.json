@@ -52,7 +52,6 @@
                     "text": "组件样式",
                     "bindKey": "compStyle",
                     "desc": "设置组件显示风格",
-                    "display": "@[false]",
                     "dictionary": [
                         {
                             "label": "样式一",
@@ -92,34 +91,19 @@
                 {
                     "type": "switch",
                     "layoutType": "inline",
+                    "text": "显示图标",
+                    "bindKey": "showIcon",
+                    "desc": "配置是否显示标题图标",
+                    "default": true,
+                    "display": "@[compStyle !== 'styleFour']"
+                },
+                {
+                    "type": "switch",
+                    "layoutType": "inline",
                     "text": "显示角标",
                     "bindKey": "showTotalNumber",
                     "default": false,
                     "display": "@[compStyle !== 'styleFour']"
-                },
-                {
-                    "type": "iconSelect",
-                    "layoutType": "inline",
-                    "text": "标题图标",
-                    "bindKey": "titleIconClass",
-                    "default": "",
-                    "display": "@[compStyle != 'styleFour']"
-                },
-                {
-                    "type": "colorPicker",
-                    "layoutType": "inline",
-                    "text": "图标颜色",
-                    "bindKey": "titleIconFontColor",
-                    "default": "",
-                    "display": "@[compStyle != 'styleFour']"
-                },
-                {
-                    "type": "inputNumber",
-                    "layoutType": "inline",
-                    "text": "图标大小",
-                    "bindKey": "titleIconFontSize",
-                    "default": 18,
-                    "display": "@[compStyle != 'styleFour']"
                 },
                 {
                     "type": "slider",
@@ -134,14 +118,61 @@
             "type": "group",
             "text": "标题容器样式",
             "desc": "点击？查看样式设置用法指南",
+            "display": "@[compStyle !== 'styleFour']",
             "helpUrl": "",
             "children": [
                 {
+                    "type": "radio",
+                    "styleType": "radio",
+                    "layoutType": "inline",
+                    "text": "图标位置",
+                    "desc": "设置组件标题图标位置",
+                    "bindKey": "titleIconPosition",
+                    "display": "@[compStyle !== 'styleFour']",
+                    "dictionary": [
+                        {
+                            "label": "左边",
+                            "value": "left"
+                        },
+                        {
+                            "label": "右边",
+                            "value": "right"
+                        }
+                    ],
+                    "default": "right"
+                },
+                {
+                    "type": "group",
+                    "text": "标题图标",
+                    "display": "@[compStyle != 'styleFour']",
+                    "children": [
+                        {
+                            "type": "iconSelect",
+                            "layoutType": "inline",
+                            "text": "标题图标",
+                            "bindKey": "titleIconClass"
+                        },
+                        {
+                            "type": "colorPicker",
+                            "layoutType": "inline",
+                            "text": "图标颜色",
+                            "bindKey": "titleIconFontColor"
+                        },
+                        {
+                            "type": "inputNumber",
+                            "layoutType": "inline",
+                            "text": "图标大小",
+                            "bindKey": "titleIconFontSize",
+                            "default": 18
+                        }
+                    ]
+                },
+                {
                     "type": "font",
                     "layoutType": "inline",
-                    "text": "页签字体",
+                    "text": "标题字体",
                     "bindKey": "titleFontStyle",
-                    "desc": "设置页签字体样式",
+                    "desc": "设置标题字体样式",
                     "default": {
                         "fontColors": {
                             "hex": "#333333"
@@ -149,67 +180,7 @@
                         "fontSize": 16,
                         "fontSizeUnit": "px"
                     },
-                    "display": "@[showTab == true]"
-                },
-                {
-                    "type": "font",
-                    "layoutType": "block",
-                    "text": "选中页签字体",
-                    "bindKey": "titleFontStyleActive",
-                    "display": "@[compStyle === 'styleFour' && showTab == true]",
-                    "desc": "设置主题时，字体颜色为主题颜色",
-                    "default": {
-                        "fontColors": {
-                            "hex": "#000"
-                        },
-                        "fontSize": 16,
-                        "fontWeight": "500",
-                        "fontSizeUnit": "px"
-                    }
-                },
-                {
-                    "type": "table",
-                    "layoutType": "inline",
-                    "text": "页签配置",
-                    "desc": "配置信息页签信息，如不显示页签，则取第一个页签数据展示信息列表",
-                    "bindKey": "messageTitleList",
-                    "tabText": "页签[index]",
-                    "openGroup": true,
-                    "children": [
-                        {
-                            "type": "input",
-                            "layoutType": "inline",
-                            "text": "显示名称",
-                            "bindKey": "tabTitle",
-                            "default":"页签名称",
-                            "placeholder":"请输入名称"
-                        },
-                        {
-                            "type": "input",
-                            "layoutType": "inline",
-                            "text": "页签标识",
-                            "bindKey": "tabKey",
-                            "desc": "设置当前页签标识，用来获取对应页签数据，例如：今日信息 - todayInfos，工作动态 - workDynamics",
-                            "default": ""
-                        },
-                        {
-                            "type": "input",
-                            "layoutType": "inline",
-                            "text": "更多链接",
-                            "bindKey": "moreListLink",
-                            "desc": "此设置用于点击更多时候跳转链接，如果设置了链接地址则内置的根据数据跳转链接则失效",
-                            "display": "@[showMore == true && showTab == true]"
-                        },
-                        {
-                            "type": "switch",
-                            "layoutType": "inline",
-                            "text": "默认选中",
-                            "bindKey": "isActive",
-                            "desc": "设置此页签是否默认选中，如设置了多个则默认选中第一个",
-                            "default": false,
-                            "display": "@[showTab == true]"
-                        }
-                    ]
+                    "display": "@[compStyle !== 'styleFour']"
                 }
             ]
         },
@@ -281,6 +252,81 @@
             "desc": "点击？查看样式设置用法指南",
             "helpUrl": "",
             "children": [
+                
+                {
+                    "type": "font",
+                    "layoutType": "inline",
+                    "text": "页签字体",
+                    "bindKey": "tabFontStyle",
+                    "desc": "设置页签字体样式",
+                    "default": {
+                        "fontColors": {
+                            "hex": "#333333"
+                        },
+                        "fontSize": 16,
+                        "fontSizeUnit": "px"
+                    },
+                    "display": "@[showTab == true]"
+                },
+                {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "选中页签字体",
+                    "bindKey": "titleFontStyleActive",
+                    "desc": "设置选中页签字体颜色",
+                    "default": {
+                        "fontColors": {
+                            "hex": "#000"
+                        },
+                        "fontSize": 16,
+                        "fontWeight": "800",
+                        "fontSizeUnit": "px"
+                    }
+                },
+                {
+                    "type": "table",
+                    "layoutType": "inline",
+                    "text": "页签配置",
+                    "desc": "配置信息页签信息，如不显示页签，则取第一个页签数据展示信息列表",
+                    "bindKey": "messageTitleList",
+                    "tabText": "页签[index]",
+                    "openGroup": true,
+                    "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "显示名称",
+                            "bindKey": "tabTitle",
+                            "default":"页签名称",
+                            "placeholder":"请输入名称"
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "页签标识",
+                            "bindKey": "tabKey",
+                            "desc": "设置当前页签标识，用来获取对应页签数据，例如：今日信息 - todayInfos，工作动态 - workDynamics",
+                            "default": ""
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "更多链接",
+                            "bindKey": "moreListLink",
+                            "desc": "此设置用于点击更多时候跳转链接，如果设置了链接地址则内置的根据数据跳转链接则失效",
+                            "display": "@[showMore == true && showTab == true]"
+                        },
+                        {
+                            "type": "switch",
+                            "layoutType": "inline",
+                            "text": "默认选中",
+                            "bindKey": "isActive",
+                            "desc": "设置此页签是否默认选中，如设置了多个则默认选中第一个",
+                            "default": false,
+                            "display": "@[showTab == true]"
+                        }
+                    ]
+                },
                 {
                     "type": "font",
                     "layoutType": "block",
@@ -363,10 +409,6 @@
                         {
                             "label": "%",
                             "value": "%"
-                        },
-                        {
-                            "label": "em",
-                            "value": "em"
                         }
                     ],
                     "default": {
@@ -441,6 +483,29 @@
             "text": "高级",
             "desc": "点击？查看高级设置用法指南",
             "children": [
+                {
+                    "type": "group",
+                    "text": "适配设置",
+                    "desc":"通过设置属性来适配移动端页面尺寸",
+                    "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "基准值",
+                            "desc": "此属性用于标记当前组件在显示效果最完美情况下的宽度大小（px），例如：此组件显示效果最佳宽度为414px，则此处设置为414即可，如果此组件最佳效果为当前配置的屏幕宽（px）的一半则只需要除以2即可。",
+                            "bindKey": "baseSize",
+                            "default": 400
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "适配比例",
+                            "desc": "与基准值配合使用，如果在实际预览屏幕宽为基准值的两倍，则此组件所有可适配的内容都会基于此处设置的适配比例相对应的进行放大缩小，例如此处设置1.2，则会相对应的放大至1.2倍",
+                            "bindKey": "adaptationRatio",
+                            "default": 1.2
+                        }
+                    ]
+                },
                 {
                     "type": "treeSelect",
                     "layoutType": "inline",

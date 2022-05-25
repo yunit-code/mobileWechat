@@ -41,6 +41,7 @@
 import Swiper from "swiper";
 import "swiper/css/swiper.min.css";
 import { getDatasInterfaceUrl } from '@/api/config'
+import { getComputedSize } from '@/utils/adaptationScreen'
 const data = {
   value: [{
     jumpUrl: '/dreamweb/',
@@ -292,11 +293,9 @@ export default {
               if (element.fontColors.hex8) {
                 bannerFontStyleObj["color"] = element.fontColors.hex8;
               }
-              bannerFontStyleObj["font-weight"] =
-                element.fontWeight && element.fontWeight.split(" ")[0];
+              bannerFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
               bannerFontStyleObj["font-style"] = element.fontStyle;
-              bannerFontStyleObj["font-size"] =
-                element.fontSize + element.fontSizeUnit;
+              bannerFontStyleObj["font-size"] = getComputedSize.call(element.fontSize) + element.fontSizeUnit;
               bannerFontStyleObj["line-height"] =
                 element.fontLineHeight +
                 (element.fontLineHeightUnit == "-"
