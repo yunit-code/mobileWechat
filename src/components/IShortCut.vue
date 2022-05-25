@@ -109,6 +109,7 @@ export default {
       propData:this.$root.propData.compositeAttr||{
         isShowTitle: true,
         shortItemHeight: {'inputVal':'72.5', 'selectVal': 'px'},
+        shortItemWidth: {'inputVal':100, 'selectVal': '%'},
         shortCutStyle: "default"
       }
     }
@@ -129,6 +130,7 @@ export default {
         shortCutStyle: "default",
         maxNumber: 2,
         shortItemHeight: {'inputVal':'72.5', 'selectVal': 'px'},
+        shortItemWidth: {'inputVal':100, 'selectVal': '%'},
         jumpType: 'new',
         shortConfigList:[
           {
@@ -562,7 +564,8 @@ export default {
           if(item.bgAttachment) {
             styles["backgroundAttachment"]= item.bgAttachment;
           }
-          styles['height'] = this.propData.shortItemHeight.inputVal+this.propData.shortItemHeight.selectVal,
+          styles['width'] = this.propData.shortItemWidth.inputVal+this.propData.shortItemWidth.selectVal;
+          styles['height'] = this.propData.shortItemHeight.inputVal+this.propData.shortItemHeight.selectVal;
           this.$set(item,'styles',styles);
         })
       }
@@ -832,6 +835,8 @@ export default {
       position: relative;
       padding: 5px;
       text-align: center;
+      display: flex;
+      justify-content: center;
       // margin-bottom: 10px;
       .number {
         width: 15px;
