@@ -147,6 +147,7 @@ export default {
       currentIndex: new Date().getDay() - 1,
       currentList: [],
       scheduleList: [],
+      pageScale:1,
     };
   },
   props: {},
@@ -172,14 +173,30 @@ export default {
             const messageData = typeof messageObject.message === 'string' && JSON.parse(messageObject.message) || messageObject.message
             const arr = Array.isArray(this.propData.messageRefreshKey) ? this.propData.messageRefreshKey : [this.propData.messageRefreshKey]
             if(messageData.badgeType && arr.includes(messageData.badgeType)){
-              this.requsetList()
+              this.requsetList();
             }
           }
           break;
         case 'linkageReload':
-          this.requsetList()
+          this.requsetList();
+          break;
+        case 'pageResize':
+          this.convertAttrToStyleObject();
           break;
       }
+    },
+    /**
+     * 适配页面
+     */
+    getScale(){
+      let scale = 1;
+      if(this.moduleObject.env === "production" && this.propData.baseValue && this.propData.adaptationRatio){
+        const base = this.propData.baseValue
+        const ratio = this.propData.adaptationRatio
+        const width = window.outerWidth
+        scale = ((width / base - 1) * (ratio - 1) + 1)
+      }
+      return scale
     },
     /**
      * 初始化数据
@@ -329,11 +346,16 @@ export default {
      * 把属性转换成样式对象
      */
     convertAttrToStyleObject() {
+      
       var styleObject = {};
       var titleStyleObject = {};
       var innerCardStyleObject = {};
       var iconStyleObject = {};
       var emptyStyleObject = {};
+
+      const scale  = this.getScale();
+      styleObject['--i-schedule-scale'] = scale
+
       if (this.propData.bgSize && this.propData.bgSize == "custom") {
         styleObject["background-size"] =
           (this.propData.bgSizeWidth
@@ -397,7 +419,7 @@ export default {
           switch (key) {
             case "width":
             case "height":
-              innerCardStyleObject[key] = element;
+              styleObject[key] = element;
               break;
             case "innerWidth":
             case "innerHeight":
@@ -694,9 +716,9 @@ export default {
               iconStyleObject["fill"] = element.hex8 + '!important';
               break;
             case "titleIconSize":
-              iconStyleObject["font-size"] = element + "px";
-              iconStyleObject["width"] = element + "px";
-              iconStyleObject["height"] = element + "px";
+              iconStyleObject["font-size"] = (element * scale) + "px";
+              iconStyleObject["width"] = (element * scale) + "px";
+              iconStyleObject["height"] = (element * scale) + "px";
               break;
             case "titleIconPosition":
               titleStyleObject["flex-direction"] = element === "right" ? 'row' : 'row-reverse'
@@ -923,16 +945,16 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+$scale: var(--i-schedule-scale);
 .i-schedule-outer {
   width: auto;
   box-sizing: border-box;
-  padding: 14px 10px;
+  padding: calc(10px * #{ $scale }) calc(14px * #{ $scale });
   font-family: PingFangSC-Regular;
-  font-size: 14px;
   color: #333333;
   background-color: #fff;
   position: relative;
-
+  font-size: calc(14px * #{ $scale });
   ul,
   li {
     padding: 0;
@@ -942,14 +964,14 @@ export default {
 
   .i-schedule-header {
     display: flex;
-    height: 40px;
-    line-height: 40px;
+    height: calc(40px * #{ $scale });
+    line-height: calc(40px * #{ $scale });
     justify-content: space-between;
 
     .i-schedule-header-main {
       display: flex;
       .i-schedule-header-tit {
-        margin-left: 6px;
+        margin-left: calc(6px * #{ $scale });
         font-family: PingFangSC-Regular;
         color: #333333;
         font-style: normal;
@@ -957,17 +979,18 @@ export default {
         display: flex;
         align-items: center;
         flex-direction: row;
+        font-size: calc(16px * #{ $scale });
 
         .idm_filed_svg_icon {
-          font-size: 14px;
-          width: 14px;
+          font-size: calc(14px * #{ $scale });
+          width: calc(14px * #{ $scale });
           fill: currentColor;
           vertical-align: -0.15em;
           outline: none;
         }
       }
       .i-schedule-header-date {
-        margin-left: 10px;
+        margin-left: calc(10px * #{ $scale });
       }
     }
 
@@ -978,11 +1001,11 @@ export default {
 
   .i-schedule-content {
     background-color: #fff;
-    border-radius: 10px;
-    padding: 10px 14px;
+    border-radius: calc(10px * #{ $scale });
+    padding: calc(10px * #{ $scale }) calc(14px * #{ $scale });
 
     ::v-deep .van-loading {
-      min-height: 210px;
+      min-height: calc(210px * #{ $scale });
       justify-content: center;
     }
 
@@ -990,9 +1013,9 @@ export default {
       position: relative;
       overflow: hidden;
       .swiper-wrapper {
-        height: 68px;
+        height: calc(68px * #{ $scale });
         .swiper-slide {
-          padding: 10px;
+          padding: calc(10px * #{ $scale });
           display: flex;
           flex-flow: row nowrap;
           justify-content: space-between;
@@ -1001,10 +1024,9 @@ export default {
           background-color: transparent;
 
           li {
-            // color: #333;
-            font-size: 14px;
+            font-size: calc(14px * #{ $scale });
             text-align: center;
-            width: 25px;
+            width: calc(25px * #{ $scale });
             &.holiday {
               p {
                 opacity: 0.5;
@@ -1018,29 +1040,29 @@ export default {
             }
 
             p {
-              font-size: 14px;
+              font-size: calc(14px * #{ $scale });
               opacity: 0.6;
             }
 
             span {
-              margin-top: 5px;
+              margin-top: calc(5px * #{ $scale });
               display: inline-block;
             }
 
             .date-num.active {
-              width: 18px;
-              height: 18px;
-              line-height: 18px;
+              width: calc(18px * #{ $scale });
+              height: calc(18px * #{ $scale });
+              line-height: calc(18px * #{ $scale });
               text-align: center;
               background: #1890FF;
               color: #ffffff;
               border-radius: 50%;
-              font-size: 14px;
+              font-size: calc(14px * #{ $scale });
             }
 
             .today {
               display: inline-block;
-              margin-top: 6px;
+              margin-top: calc(6px * #{ $scale });
               transform: scale(1.5);
 
               &.active {
@@ -1053,12 +1075,13 @@ export default {
     }
 
     .i-schedule-content-note {
-      border-top: 1px solid #eee;
-      padding-top: 14px;
+      border-top: calc(1px * #{ $scale }) solid #eee;
+      padding-top: calc(14px * #{ $scale });
       min-height: 20vh;
       
       ::v-deep .ant-tabs {
         color: currentColor;
+        font-size: inherit;
 
         .ant-tabs-bar {
           display: none;
@@ -1073,12 +1096,12 @@ export default {
 
           p {
             position: relative;
-            height: 100px;
+            height: calc(100px * #{ $scale });
 
             &.active::before {
               content: "";
-              width: 5px;
-              height: 5px;
+              width: calc(5px * #{ $scale });
+              height: calc(5px * #{ $scale });
               border-radius: 50%;
               background-color: #1890FF;
               position: absolute;
@@ -1091,14 +1114,14 @@ export default {
 
         .i-schedule-content-note-right {
           flex: 10;
-          border-left: 1px solid #eee;
-          padding-left: 14px;
+          border-left: calc(1px * #{ $scale }) solid #eee;
+          padding-left: calc(14px * #{ $scale });
           overflow: hidden;
 
           .schedule-item {
             position: relative;
-            height: 100px;
-            padding: 0 10px 10px;
+            height: calc(100px * #{ $scale });
+            padding: 0 calc(10px * #{ $scale }) calc(10px * #{ $scale });
 
             & > div {
               white-space: nowrap;
@@ -1107,14 +1130,13 @@ export default {
             }
 
             .schedule-item-name {
-              // color: #000;
-              padding-bottom: 8px;
+              padding-bottom: calc(8px * #{ $scale });
             }
             .schedule-item-addr {
-              // color: #666;
+              opacity: .8;
             }
             .schedule-item-time {
-              // color: #aaa;
+              opacity: .6;
             }
           }
         }
@@ -1134,11 +1156,11 @@ export default {
     justify-content: center;
     align-items: center;
     span {
-      padding: 6px 20px;
+      padding: calc(6px * #{ $scale }) calc(20px * #{ $scale });;
       color: #e6a23c;
       background: #fdf6ec;
-      border:1px solid #f5dab1;
-      border-radius: 4px;
+      border:calc(1px * #{ $scale }) solid #f5dab1;
+      border-radius: calc(4px * #{ $scale });;
     }
   }
 }

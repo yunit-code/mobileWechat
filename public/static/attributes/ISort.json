@@ -412,51 +412,20 @@
             "desc": "点击？查看高级设置用法指南",
             "children": [
                 {
-                    "type": "input",
+                    "type": "inputNumber",
                     "layoutType": "inline",
-                    "text": "默认列表",
-                    "bindKey": "componentListUrl",
-                    "desc":"获取当前页面默认一级组件列表,pageid为当前页面id",
-                    "default": "/ctrl/idm/api/fetchPageSettingData"
+                    "text": "基准值",
+                    "desc": "此属性用于标记当前组件在显示效果最完美情况下的宽度大小（px），例如：此组件显示效果最佳宽度为414px，则此处设置为414即可，如果此组件最佳效果为当前配置的屏幕宽（px）的一半则只需要除以2即可。",
+                    "bindKey": "baseValue",
+                    "default": "414"
                 },
                 {
-                    "type": "input",
+                    "type": "inputNumber",
                     "layoutType": "inline",
-                    "text": "个性列表",
-                    "bindKey": "userCustomizationUrl",
-                    "desc":"获取当前页面用户个性化一级组件列表,pageid为当前页面id",
-                    "default": "/ctrl/idm/api/fetchUserCustomization"
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "保存接口",
-                    "bindKey": "saveUserCustomizationUrl",
-                    "desc":"用户保存排序后的数据",
-                    "default": "/ctrl/idm/api/saveUserCustomization"
-                },
-                {
-                    "type": "select",
-                    "layoutType": "inline",
-                    "text": "刷新KEY",
-                    "bindKey": "messageRefreshKey",
-                    "desc": "根据组件接受到的消息KEY来刷新数据",
-                    "default": "",
-                    "multiple": true,
-                    "placeholder": "示例：inbox,info",
-                    "ctrlAttrObject": {
-                        "mode": "tags"
-                    },
-                    "dictionary": [
-                        {
-                            "label": "inbox",
-                            "value": "inbox"
-                        },
-                        {
-                            "label": "info",
-                            "value": "info"
-                        }
-                    ]
+                    "text": "适配比例",
+                    "desc": "与基准值配合使用，如果在实际预览屏幕宽为基准值的两倍，则此组件所有可适配的内容都会基于此处设置的适配比例相对应的进行放大缩小，例如此处设置1.2，则会相对应的放大至1.2倍",
+                    "bindKey": "adaptationRatio",
+                    "default": "1.2"
                 }
             ]
         }

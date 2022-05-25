@@ -91,17 +91,11 @@ export default {
      */
     receiveBroadcastMessage(messageObject) {
       switch(messageObject.type) {
-        case 'websocket':
-          if(this.propData.messageRefreshKey && messageObject.message){
-            const messageData = typeof messageObject.message === 'string' && JSON.parse(messageObject.message) || messageObject.message
-            const arr = Array.isArray(this.propData.messageRefreshKey) ? this.propData.messageRefreshKey : [this.propData.messageRefreshKey]
-            if(messageData.badgeType && arr.includes(messageData.badgeType)){
-              this.initData()
-            }
-          }
-          break;
         case 'linkageReload':
           this.initData()
+          break;
+         case 'pageResize':
+          this.convertAttrToStyleObject();
           break;
       }
     },
@@ -188,9 +182,8 @@ export default {
      * 取用户定制化数据
      */
     requestUserCustomization(defaultList) {
-      const temp = this.propData.userCustomizationUrl;
       const pageid = IDM.url.queryObject(window.location.href)[this.propData.pageid];
-      const url = temp.indexOf("?") === -1 ?`${temp}?pageid=${pageid}&version=${this.pageVersion}`:`${temp}&pageid=${pageid}&version=${this.pageVersion}`
+      const url = `/ctrl/idm/api/fetchUserCustomization?pageid=${pageid}&version=${this.pageVersion}`;
       IDM.http
         .get(url)
         .done((res) => {
@@ -217,9 +210,8 @@ export default {
      * 取页面默认数据
      */
     requestDefaultCustomization() {
-      const temp = this.propData.componentListUrl;
       const pageid = IDM.url.queryObject(window.location.href)[this.propData.pageid];
-      const url = temp.indexOf("?") === -1 ?`${temp}?pageid=${pageid}&version=&savetype=`:`${temp}&pageid=${pageid}&version=&savetype=`
+      const url = `/ctrl/idm/api/fetchPageSettingData?pageid=${pageid}&version=&savetype=`;
       IDM.http
         .get(url)
         .done((res) => {
@@ -264,6 +256,7 @@ export default {
      */
     dragEnd() {
       const { id, comName,packageid } = this.pageInfo;
+      const url = "/ctrl/idm/api/saveUserCustomization";
       const customData = {
         id,
         comName,
@@ -271,7 +264,7 @@ export default {
         children: this.listData,
       };
       IDM.http
-        .post(this.propData.saveUserCustomizationUrl, {
+        .post(url, {
           pageid: this.pageId,
           version: this.pageVersion,
           customData: JSON.stringify(customData),
@@ -279,11 +272,11 @@ export default {
         .done((res) => {
           res = res?res.data:{};
           if (res.code !== "200") {
-            this.failRequest(this.propData.saveUserCustomizationUrl);
+            this.failRequest(url);
           }
         })
         .error((response) => {
-          this.failRequest(this.propData.saveUserCustomizationUrl);
+          this.failRequest(url);
         });
     },
     /**
@@ -302,6 +295,10 @@ export default {
       var tipStyleObject = {};
       var cardStyleObject = {};
       var emptyStyleObject = {};
+
+      const scale  = this.getScale();
+      styleObject['--i-sort-scale'] = scale
+
       if (this.propData.bgSize && this.propData.bgSize == "custom") {
         styleObject["background-size"] =
           (this.propData.bgSizeWidth
@@ -519,6 +516,19 @@ export default {
       // this.initData();
     },
     /**
+     * 适配页面
+     */
+    getScale(){
+      let scale = 1;
+      if(this.moduleObject.env === "production" && this.propData.baseValue && this.propData.adaptationRatio){
+        const base = this.propData.baseValue
+        const ratio = this.propData.adaptationRatio
+        const width = window.outerWidth
+        scale = ((width / base - 1) * (ratio - 1) + 1)
+      }
+      return scale
+    },
+    /**
      * 置顶
      */
     toppingClick(index) {
@@ -536,48 +546,49 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+$scale: var(--i-sort-scale);
 .i-sort-outer {
   width: auto;
   box-sizing: border-box;
   font-family: PingFangSC-Regular;
-  font-size: 16px;
+  font-size: calc(16px * #{ $scale });
   color: #333333;
 
   .i-sort-tip {
     background-color: #e6f7ff;
     color: #1890FF;
-    padding: 14px;
-    font-size: 14px;
+    padding: calc(14px * #{ $scale });
+    font-size: calc(14px * #{ $scale });
   }
 
   .i-sort-header {
     background-color: #fff;
-    padding: 14px;
-    margin-bottom: 14px;
+    padding: calc(14px * #{ $scale });
+    margin-bottom: calc(14px * #{ $scale });
     color: #888;
-    font-size: 14px;
+    font-size: calc(14px * #{ $scale });
   }
 
   ::v-deep .van-loading {
-    min-height: 210px;
+    min-height: calc(210px * #{ $scale });
     justify-content: center;
   }
 
   .i-sort-drag {
-    padding: 0 14px;
+    padding: 0 calc(14px * #{ $scale });
   }
 
   .i-sort-item {
     display: flex;
-    height: 50px;
-    line-height: 50px;
-    margin-bottom: 14px;
-    border-radius: 10px;
+    height: calc(50px * #{ $scale });
+    line-height: calc(50px * #{ $scale });
+    margin-bottom: calc(14px * #{ $scale });
+    border-radius: calc(10px * #{ $scale });
     background-color: #fff;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
+    box-shadow: 0 calc(2px * #{ $scale }) calc(4px * #{ $scale }) 0 rgba(0,0,0,.1);
 
     .i-sort-item-handle {
-      width: 40px;
+      width: calc(40px * #{ $scale });
       height: 100%;
       text-align: center;
     }
@@ -590,7 +601,7 @@ export default {
     }
 
     .i-sort-item-operation {
-      width: 80px;
+      width: calc(80px * #{ $scale });
       height: 100%;
       text-align: center;
       display: flex;
@@ -599,7 +610,7 @@ export default {
       span {
         display: inline-block;
         height: 100%;
-        width: 30px;
+        width: calc(30px * #{ $scale });
       }
     }
   }
