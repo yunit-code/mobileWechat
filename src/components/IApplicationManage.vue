@@ -24,11 +24,9 @@
                         <van-grid :border="false" :column-num="5">
                             <van-grid-item v-for="(item,index) in my_application_data" :key="item.value">
                                 <div class="idm_applicationmanage_main_list">
-                                    <div v-if="item.imageUrl">
-                                        <img :src="item.imageUrl">
+                                    <div class="img_box">
+                                        <img :src="item.imageUrl ? item.imageUrl : '../assets/rcap.png'">
                                     </div>
-                                    <svg-icon v-else icon-class="application" />
-
                                     <div class="idm_applicationmanage_main_list_name">{{ item.title || ('应用' + index + 1) }}</div>
                                     <van-icon @click="deleteApplication(item,index)" v-if="is_edit" class="icon" name="minus" color="#fff" />
                                 </div>
@@ -60,10 +58,9 @@
                                 <van-grid :border="false" :column-num="5">
                                     <van-grid-item v-for="(item1,index1) in item.children" :key="item1.value">
                                         <div class="idm_applicationmanage_main_list">
-                                            <div v-if="item1.imageUrl">
-                                                <img :src="item1.imageUrl">
+                                            <div class="img_box">
+                                                <img :src="item.imageUrl ? item.imageUrl : '../assets/rcap.png'">
                                             </div>
-                                            <svg-icon v-else icon-class="application" />
 
                                             <div class="idm_applicationmanage_main_list_name">{{ item1.title || ('应用' + index1 + 1) }}</div>
                                             <div v-if="is_edit">
@@ -375,12 +372,28 @@ export default {
         /**
          * 把属性转换成样式对象
          */
+        translatePxToAdaptation(data) {
+            if ( (!data) && data !== 0 ) {
+                return 
+            }
+            let clientWidth = document.body.clientWidth;
+            let adaptationBase = this.propData.adaptationBase || 414;
+            let adaptationPercent = this.propData.adaptationPercent || 1;
+            let percent = ( ( clientWidth/adaptationBase - 1 ) * ( adaptationPercent - 1 ) + 1 )
+            if ( this.moduleObject.env == 'develop' ) {
+                return data
+            } else {
+                return data * percent
+            }
+        },
         convertAttrToStyleObject() {
             this.convertThemeListAttrToStyleObject()
             var styleObject = {};
             var styleObjectTitle = {};
             var fontStyleObject = {};
-            var navStyleBackground = {}
+            var navStyleBackground = {};
+            var imgStyleObject = {};
+
             if (this.propData.bgSizeManage && this.propData.bgSizeManage == "custom") {
                 styleObject["background-size"] = (this.propData.bgSizeWidthManage ? this.propData.bgSizeWidthManage.inputVal + this.propData.bgSizeWidthManage.selectVal : "auto") + " " + (this.propData.bgSizeHeightManage ? this.propData.bgSizeHeightManage.inputVal + this.propData.bgSizeHeightManage.selectVal : "auto")
             } else if (this.propData.bgSizeManage) {
@@ -533,8 +546,8 @@ export default {
                             }
                             fontStyleObject["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                             fontStyleObject["font-style"] = element.fontStyle;
-                            fontStyleObject["font-size"] = element.fontSize + element.fontSizeUnit;
-                            fontStyleObject["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
+                            fontStyleObject["font-size"] = this.translatePxToAdaptation(element.fontSize) + element.fontSizeUnit;
+                            fontStyleObject["line-height"] = this.translatePxToAdaptation(element.fontLineHeight) + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
                             fontStyleObject["text-align"] = element.fontTextAlign;
                             fontStyleObject["text-decoration"] = element.fontDecoration;
                             break;
@@ -545,11 +558,13 @@ export default {
                             }
                             styleObjectTitle["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                             styleObjectTitle["font-style"] = element.fontStyle;
-                            styleObjectTitle["font-size"] = element.fontSize + element.fontSizeUnit;
-                            styleObjectTitle["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
+                            styleObjectTitle["font-size"] = this.translatePxToAdaptation(element.fontSize) + element.fontSizeUnit;
+                            styleObjectTitle["line-height"] = this.translatePxToAdaptation(element.fontLineHeight) + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
                             styleObjectTitle["text-align"] = element.fontTextAlign;
                             styleObjectTitle["text-decoration"] = element.fontDecoration;
                             break;
+                        case "applicationImgWidthManage":
+                            imgStyleObject['width'] = this.translatePxToAdaptation(element) + 'px'
                     }
                 }
             }
@@ -559,12 +574,14 @@ export default {
 
                 window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop' + " .idm_applicationmanage_title", styleObjectTitle);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop' + " .idm_applicationmanage_main_list_name", fontStyleObject);
+                window.IDM.setStyleToPageHead(this.moduleObject.id + " #application_manage_pop .idm_applicationmanage_main_list img", imgStyleObject);
             } else {
                 window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + ' .van-tabs__wrap', navStyleBackground);
                 
                 window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationmanage_title", styleObjectTitle);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationmanage_main_list_name", fontStyleObject);
+                window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationmanage_main_list img", imgStyleObject);
             }
             this.initData();
         },
@@ -653,8 +670,6 @@ export default {
                 text-align: center;
                 img,svg{
                     width: 40px;
-                    height: 40px;
-                    margin: 0 auto 2.5px auto;
                 }
                 .idm_applicationmanage_main_list_name{
                     font-size: 12px;

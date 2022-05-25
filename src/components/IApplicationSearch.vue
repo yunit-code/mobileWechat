@@ -195,6 +195,20 @@ export default {
         /**
          * 把属性转换成样式对象
          */
+        translatePxToAdaptation(data) {
+            if ( (!data) && data !== 0 ) {
+                return 
+            }
+            let clientWidth = document.body.clientWidth;
+            let adaptationBase = this.propData.adaptationBase || 414;
+            let adaptationPercent = this.propData.adaptationPercent || 1;
+            let percent = ( ( clientWidth/adaptationBase - 1 ) * ( adaptationPercent - 1 ) + 1 )
+            if ( this.moduleObject.env == 'develop' ) {
+                return data
+            } else {
+                return data * percent
+            }
+        },
         convertAttrToStyleObject() {
             this.convertThemeListAttrToStyleObject()
             var styleObject = {};
@@ -314,16 +328,10 @@ export default {
                             }
                             styleObject["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                             styleObject["font-style"] = element.fontStyle;
-                            styleObject["font-size"] = element.fontSize + element.fontSizeUnit;
-                            styleObject["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
+                            styleObject["font-size"] = this.translatePxToAdaptation(element.fontSize) + element.fontSizeUnit;
+                            styleObject["line-height"] = this.translatePxToAdaptation(element.fontLineHeight) + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
                             styleObject["text-align"] = element.fontTextAlign;
                             styleObject["text-decoration"] = element.fontDecoration;
-                            break;
-                        case "widthButton":
-                            styleObjectButton['width'] = element;
-                            break;
-                        case "heightButton":
-                            styleObjectButton['height'] = element;
                             break;
                         case "bgColorButton":
                             if (element && element.hex8) {
@@ -337,16 +345,10 @@ export default {
                             }
                             styleObjectButton["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                             styleObjectButton["font-style"] = element.fontStyle;
-                            styleObjectButton["font-size"] = element.fontSize + element.fontSizeUnit;
-                            styleObjectButton["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
+                            styleObjectButton["font-size"] = this.translatePxToAdaptation(element.fontSize) + element.fontSizeUnit;
+                            styleObjectButton["line-height"] = this.translatePxToAdaptation(element.fontLineHeight) + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
                             styleObjectButton["text-align"] = element.fontTextAlign;
                             styleObjectButton["text-decoration"] = element.fontDecoration;
-                            break;
-                        case "widthButtonDisabled":
-                            styleObjectButtonDisabled['width'] = element;
-                            break;
-                        case "heightButtonDisabled":
-                            styleObjectButtonDisabled['height'] = element;
                             break;
                         case "bgColorButtonDisabled":
                             if (element && element.hex8) {
@@ -360,8 +362,8 @@ export default {
                             }
                             styleObjectButtonDisabled["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                             styleObjectButtonDisabled["font-style"] = element.fontStyle;
-                            styleObjectButtonDisabled["font-size"] = element.fontSize + element.fontSizeUnit;
-                            styleObjectButtonDisabled["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
+                            styleObjectButtonDisabled["font-size"] = this.translatePxToAdaptation(element.fontSize) + element.fontSizeUnit;
+                            styleObjectButtonDisabled["line-height"] = this.translatePxToAdaptation(element.fontLineHeight) + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
                             styleObjectButtonDisabled["text-align"] = element.fontTextAlign;
                             styleObjectButtonDisabled["text-decoration"] = element.fontDecoration;
                             break;
@@ -460,19 +462,18 @@ export default {
             }
             .list_right{
                 span{
-                    width: 45px;
-                    height: 30px;
-                    line-height: 30px;
                     text-align: center;
                     display: inline-block;
                     font-size: 12px;
                     border-radius: 4px;
                 }
                 .add{
+                    padding: 5px 12px;
                     color: #1890ff;
                     background: #e6f7ff;
                 }
                 .add_disabled{
+                    padding: 5px 12px;
                     color: #999;
                     background: ghostwhite;
                 }
