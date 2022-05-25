@@ -14,7 +14,6 @@
     "swiper": "^5.3.6",
     "vant": "^2.12.47",
     "vue": "^2.6.11",
-    "vue-proportion-directive": "^1.1.0",
     "vuedraggable": "^2.24.3"
   },
   "devDependencies": {

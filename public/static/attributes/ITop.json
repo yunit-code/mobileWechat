@@ -33,18 +33,18 @@
                     "layoutType": "block",
                     "text": "用户名显示字段",
                     "bindKey": "userFiled",
-                    "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData且它的值为{data:{username:'test',userUnit: '单位'}}，则这里应该填写data.username",
-                    "default": "data.username",
-                    "placeholder": "示例：data.username"
+                    "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData且它的值为{username:'test',userUnit: '单位'}，则这里应该填写username",
+                    "default": "username",
+                    "placeholder": "示例：username"
                 },
                 {
                     "type": "textarea",
                     "layoutType": "block",
                     "text": "单位显示字段",
                     "bindKey": "unitFiled",
-                    "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData且它的值为{data:{userUnit: '单位'}}，则这里应该填写data.userUnit",
-                    "default": "data.userUnit",
-                    "placeholder": "示例：data.userUnit"
+                    "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData且它的值为{username:'test',userUnit: '单位'}，则这里应该填写userUnit",
+                    "default": "userUnit",
+                    "placeholder": "示例：userUnit"
                 },
                 {
                     "type": "switch",
