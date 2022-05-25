@@ -41,7 +41,6 @@
 import Swiper from "swiper";
 import "swiper/css/swiper.min.css";
 import { getDatasInterfaceUrl } from '@/api/config'
-import { getComputedSize } from '@/utils/adaptationScreen'
 const data = {
   value: [{
     jumpUrl: '/dreamweb/',
@@ -295,7 +294,7 @@ export default {
               }
               bannerFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
               bannerFontStyleObj["font-style"] = element.fontStyle;
-              bannerFontStyleObj["font-size"] = getComputedSize.call(element.fontSize) + element.fontSizeUnit;
+              bannerFontStyleObj["font-size"] = element.fontSize + element.fontSizeUnit;
               bannerFontStyleObj["line-height"] =
                 element.fontLineHeight +
                 (element.fontLineHeightUnit == "-"
@@ -484,9 +483,8 @@ export default {
      *  isAcross:如果为true则代表发送来源是其他页面的组件，默认为false
      * } object
      */
-    receiveBroadcastMessage(object) {
-      console.log("组件收到消息", object);
-      
+    receiveBroadcastMessage(messageObject) {
+      console.log("组件收到消息",messageObject)
     },
     /**
      * 组件通信：发送消息的方法

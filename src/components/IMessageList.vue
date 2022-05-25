@@ -621,8 +621,13 @@ export default {
       //     this.initData(this.propData.messageTitleList[this.defaultIndex], this.defaultIndex)
       //   }
       // }
-      if(messageObject.type === 'linkageReload') {
-        this.initData(this.propData.messageTitleList[this.defaultIndex], this.defaultIndex)
+      switch(messageObject.type) {
+        case 'linkageReload':
+          this.initData(this.propData.messageTitleList[this.defaultIndex], this.defaultIndex)
+          break;
+        case 'pageResize':
+          this.convertAttrToStyleObject()
+          break;
       }
       console.log("组件收到消息",messageObject)
     },
