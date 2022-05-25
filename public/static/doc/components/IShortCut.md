@@ -42,8 +42,12 @@ mobileWechat@1.0.7
 用于设置每行展示多少卡片
 - 标识：`每行展示【maxNumber】`
 - 默认值：`3`
+##### 每项宽度【shortItemWidth】
+用于设置每项宽度
+- 标识：`每项宽度【shortItemWidth】`
+- 默认值：`100%`
 ##### 每项高度【shortItemHeight】
-用于设置每行展示多少卡片
+用于设置每项高度
 - 标识：`每项高度【shortItemHeight】`
 - 默认值：`72.5px`
 #### 快捷方式配置【子表】【shortConfigList】
@@ -436,9 +440,3 @@ mobileWechat@1.0.7
 
 - 标识：`dataFiled`
 - 默认值：`count`
-
-##### 刷新KEY【messageRefreshKey】
-根据组件接受到的消息KEY来刷新数据，可配置多个，以英文逗号分开
-
-- 标识：`messageRefreshKey`
-- 默认值：``
