@@ -99,6 +99,28 @@
                 {
                     "type": "inputNumberUnit",
                     "layoutType": "inline",
+                    "text": "每项宽度",
+                    "bindKey": "shortItemWidth",
+                    "default": {"inputVal":100, "selectVal": "%"},
+                    "dictionary": [
+                        {
+                            "label": "px",
+                            "value": "px"
+                        },
+                        {
+                            "label": "%",
+                            "value": "%"
+                        },
+                        {
+                            "label": "em",
+                            "value": "em"
+                        }
+                    ],
+                    "display": "@[shortCutStyle=='default']"
+                },
+                {
+                    "type": "inputNumberUnit",
+                    "layoutType": "inline",
                     "text": "每项高度",
                     "bindKey": "shortItemHeight",
                     "default": {"inputVal":72.5, "selectVal": "px"},

@@ -50,6 +50,12 @@
             "helpUrl": "",
             "children": [
                 {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "文字",
+                    "bindKey": "fontManage"
+                },
+                {
                     "type": "box",
                     "layoutType": "block",
                     "text": "内外边距",
@@ -262,12 +268,6 @@
                     "layoutType": "block",
                     "text": "边框",
                     "bindKey": "borderManage"
-                },
-                {
-                    "type": "font",
-                    "layoutType": "block",
-                    "text": "文字",
-                    "bindKey": "fontManage"
                 }
             ]
         },

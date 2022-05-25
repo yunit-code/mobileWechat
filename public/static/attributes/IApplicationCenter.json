@@ -336,6 +336,12 @@
             "helpUrl": "",
             "children": [
                 {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "字体",
+                    "bindKey": "font"
+                },
+                {
                     "type": "box",
                     "layoutType": "block",
                     "text": "内外边距",
@@ -378,12 +384,6 @@
                     "layoutType": "block",
                     "text": "边框",
                     "bindKey": "borderInner"
-                },
-                {
-                    "type": "font",
-                    "layoutType": "block",
-                    "text": "字体",
-                    "bindKey": "font"
                 }
             ]
         },
