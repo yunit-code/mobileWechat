@@ -566,6 +566,7 @@ export default {
                             break;
                         case "applicationImgWidthManage":
                             imgStyleObject['width'] = this.translatePxToAdaptation(element) + 'px'
+                            imgStyleObject['height'] = this.translatePxToAdaptation(element) + 'px'
                     }
                 }
             }
@@ -576,6 +577,7 @@ export default {
                 window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop' + " .idm_applicationmanage_title", styleObjectTitle);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop' + " .idm_applicationmanage_main_list_name", fontStyleObject);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + " #application_manage_pop .idm_applicationmanage_main_list img", imgStyleObject);
+                window.IDM.setStyleToPageHead(this.moduleObject.id + " #application_manage_pop .idm_applicationmanage_main_list svg", imgStyleObject);
             } else {
                 window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + ' .van-tabs__wrap', navStyleBackground);
@@ -583,6 +585,7 @@ export default {
                 window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationmanage_title", styleObjectTitle);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationmanage_main_list_name", fontStyleObject);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationmanage_main_list img", imgStyleObject);
+                window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationmanage_main_list svg", imgStyleObject);
             }
             this.initData();
         },

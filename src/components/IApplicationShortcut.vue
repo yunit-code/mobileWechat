@@ -472,8 +472,10 @@ export default {
             window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationshortcut .idm_applicationcenter_main_list_name", fontStyleObject);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationshortcut .idm_applicationcenter_main_list .img_box", imgStyleObject);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationshortcut .idm_applicationcenter_main_list .img_box img", imgStyleObject);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationshortcut .idm_applicationcenter_main_list svg", imgStyleObject);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationshortcut .swiper_block_list .img_box", imgStyleObject);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationshortcut .swiper_block_list .img_box img", imgStyleObject);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationshortcut .swiper_block_list svg", imgStyleObject);
             this.reload();
         },
