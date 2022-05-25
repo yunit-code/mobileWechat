@@ -136,7 +136,8 @@ export default {
      * 把属性转换成样式对象
      */
     convertAttrToStyleObject(){
-      var styleObject = {};
+      let styleObject = {};
+      let fontStyleObject = {};
       if(this.propData.bgSize&&this.propData.bgSize=="custom"){
         styleObject["background-size"]=(this.propData.bgSizeWidth?this.propData.bgSizeWidth.inputVal+this.propData.bgSizeWidth.selectVal:"auto")+" "+(this.propData.bgSizeHeight?this.propData.bgSizeHeight.inputVal+this.propData.bgSizeHeight.selectVal:"auto")
       }else if(this.propData.bgSize){
@@ -245,21 +246,22 @@ export default {
               styleObject["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
               break;
             case "font":
-              styleObject["font-family"]=element.fontFamily;
+              fontStyleObject["font-family"]=element.fontFamily;
               if(element.fontColors.hex8){
-                styleObject["color"]=element.fontColors.hex8;
+                fontStyleObject["color"]=element.fontColors.hex8;
               }
-              styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
-              styleObject["font-style"]=element.fontStyle;
-              styleObject["font-size"]=element.fontSize+element.fontSizeUnit;
-              styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
-              styleObject["text-align"]=element.fontTextAlign;
-              styleObject["text-decoration"]=element.fontDecoration;
+              fontStyleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
+              fontStyleObject["font-style"]=element.fontStyle;
+              fontStyleObject["font-size"]=element.fontSize+element.fontSizeUnit;
+              fontStyleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
+              fontStyleObject["text-align"]=element.fontTextAlign;
+              fontStyleObject["text-decoration"]=element.fontDecoration;
               break;
           }
         }
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id,styleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .top-bg .top-content",fontStyleObject);
       this.initData();
     },
     /**
