@@ -35,7 +35,7 @@
         <ul class="summary-box">
           <li v-for="(v,i) in tempSummaryConfigList" :key="i" class="summary-item"
           :style="{width: `${100/propData.showColumn}%`}">
-            <div class="summary-bg" :style="{backgroundImage: v.bgUrl ? 'url('+IDM.url.getWebPath(v.bgUrl)+')' : 'linear-gradient(to right,#f4b0b0,#f4acac,#f18c8b)', 'height': propData.shortItemHeight.inputVal+propData.shortItemHeight.selectVal}">
+            <div class="summary-bg" :style="v.styles">
               <!-- <div style="marginBottom: 5px" class="summary-name">{{v.name?v.name:IDM.express.replace("@[data."+v.dataFiled+".name]",data,true)}}</div> -->
               <!-- <div class="summary-num">{{v.count?v.count:IDM.express.replace("@[data."+v.dataFiled+".count]",data,true)}}</div> -->
               <div style="marginBottom: 5px" class="summary-name">{{v.name}}</div>
@@ -56,7 +56,9 @@ export default {
     return {
       moduleObject:{},
       propData:this.$root.propData.compositeAttr||{},
-      tempSummaryConfigList: []
+      tempSummaryConfigList: [],
+      // 页面适配比例
+      pageRatio: 1
     }
   },
   props: {
@@ -99,6 +101,32 @@ export default {
       if ( this.tempSummaryConfigList && (this.tempSummaryConfigList.length > this.propData.showRows * this.propData.showColumn) ) {
         this.tempSummaryConfigList.splice(this.propData.showRows * this.propData.showColumn)
       }
+      this.tempSummaryConfigList.forEach(item=> {
+        const styles = {}
+        // if(item.positionX&&item.positionX.inputVal){
+        //   item.styles["backgroundPosition"]= `${item.positionX.selectVal&&item.positionX.inputVal?item.positionX.inputVal+ item.positionX.selectVal:'0%'} ${item.positionY.selectVal&&item.positionY.inputVal?item.positionY.inputVal+ item.positionY.selectVal:'0%'}`;
+        // }
+        // if(item.positionY&&item.positionY.inputVal){
+        //   item.styles["backgroundPosition"]= `${item.positionX.selectVal&&item.positionX.inputVal?item.positionX.inputVal+ item.positionX.selectVal:'0%'} ${item.positionY.selectVal&&item.positionY.inputVal?item.positionY.inputVal+ item.positionY.selectVal:'0%'}`;
+        // }
+        if(item.bgUrl) {
+          styles["backgroundImage"]=`url(${window.IDM.url.getWebPath(item.bgUrl)})`;
+        }else {
+          styles["backgroundImage"]= 'linear-gradient(to right,#f4b0b0,#f4acac,#f18c8b)';
+        }
+        if(this.moduleObject.env!=="develop"){
+          if(document.documentElement.clientWidth > 650) {
+            styles['height'] = `80px`;
+          }else {
+            styles['height'] = `${this.propData.shortItemHeight.inputVal*this.pageRatio}${this.propData.shortItemHeight.selectVal}`;
+          }
+        }else {
+          styles['height'] = `${this.propData.shortItemHeight.inputVal*this.pageRatio}${this.propData.shortItemHeight.selectVal}`;
+        }
+        // styles['width'] = this.propData.shortItemWidth.inputVal+this.propData.shortItemWidth.selectVal;
+        // styles['height'] = this.propData.shortItemHeight.inputVal+this.propData.shortItemHeight.selectVal;
+        this.$set(item,'styles',styles);
+      })
     },
     /**
      * 提供父级组件调用的刷新prop数据组件
@@ -114,6 +142,19 @@ export default {
      * 把属性转换成样式对象
      */
     convertAttrToStyleObject(){
+      /**
+       *@Description: 屏幕适配
+       *pClientWidth 当前设备宽度
+       *screenAdaptiveRatio 适配比例
+       *screenReferValue 屏幕基准值
+      */
+      if(this.moduleObject.env!=="develop"){
+        const pClientWidth = document.documentElement.clientWidth;
+        this.pageRatio = 1;
+        if(pClientWidth && this.propData.screenReferValue && (pClientWidth - this.propData.screenReferValue) >= this.propData.screenReferValue) {
+          this.pageRatio = this.propData.screenAdaptiveRatio || 1;
+        }
+      }
       var styleObject = {};
       var styleObjectTitleIcon = {};
       var styleObjectSumTitle = {};
@@ -129,12 +170,14 @@ export default {
       if(this.propData.positionY&&this.propData.positionY.inputVal){
         styleObject["background-position-y"]=this.propData.positionY.inputVal+this.propData.positionY.selectVal;
       }
-      styleObject["font-size"] = '16px';
+      styleObject["font-size"] = `${16*this.pageRatio}px`;
       styleObject["font-weight"]=800;
       styleObject["color"]='#333333';
-      styleObjectSumTitle["font-size"] = '15px';
+      // styleObjectSumTitle["font-size"] = '15px';
+      styleObjectSumTitle["font-size"] = `${15*this.pageRatio}px`;
       styleObjectSumTitle["color"]='#ffffff';
-      styleObjectNum["font-size"] = '15px';
+      // styleObjectNum["font-size"] = '15px';
+      styleObjectNum["font-size"] = `${15*this.pageRatio}px`;
       styleObjectNum["color"]='#ffffff';
       for (const key in this.propData) {
         if (this.propData.hasOwnProperty.call(this.propData, key)) {
@@ -239,8 +282,9 @@ export default {
               }
               styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
               styleObject["font-style"]=element.fontStyle;
-              const sizeResult = element.fontSize+element.fontSizeUnit;
-              styleObject["font-size"]= Boolean(sizeResult)?sizeResult:'16px';
+              // const sizeResult = element.fontSize+element.fontSizeUnit;
+              // styleObject["font-size"]= Boolean(sizeResult)?sizeResult:'16px';
+              styleObject["font-size"]= `${element.fontSize*this.pageRatio}${element.fontSizeUnit}`;
               styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
               styleObject["text-align"]=element.fontTextAlign;
               styleObject["text-decoration"]=element.fontDecoration;
@@ -249,9 +293,12 @@ export default {
               styleObjectTitleIcon["color"] = element.hex;
               break
             case "titleIconFontSize":
-              styleObjectTitleIcon["font-size"] = element + "px";
-              styleObjectTitleIcon["width"] = element + "px";
-              styleObjectTitleIcon["height"] = element + "px";
+              // styleObjectTitleIcon["font-size"] = element + "px";
+              // styleObjectTitleIcon["width"] = element + "px";
+              // styleObjectTitleIcon["height"] = element + "px";
+              styleObjectTitleIcon["font-size"]= `${element*this.pageRatio}px`;
+              styleObjectTitleIcon["width"] = `${element*this.pageRatio}px`;
+              styleObjectTitleIcon["height"] = `${element*this.pageRatio}px`;
               break
             case "sumFont":
               styleObjectSumTitle["font-family"]=element.fontFamily;
@@ -260,7 +307,7 @@ export default {
               }
               styleObjectSumTitle["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
               styleObjectSumTitle["font-style"]=element.fontStyle;
-              styleObjectSumTitle["font-size"]=element.fontSize+element.fontSizeUnit;
+              styleObjectSumTitle["font-size"]=`${element.fontSize*this.pageRatio}${element.fontSizeUnit}`;
               styleObjectSumTitle["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
               styleObjectSumTitle["text-align"]=element.fontTextAlign;
               styleObjectSumTitle["text-decoration"]=element.fontDecoration;
@@ -272,7 +319,7 @@ export default {
               }
               styleObjectNum["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
               styleObjectNum["font-style"]=element.fontStyle;
-              styleObjectNum["font-size"]=element.fontSize+element.fontSizeUnit;
+              styleObjectNum["font-size"]=`${element.fontSize*this.pageRatio}${element.fontSizeUnit}`;
               styleObjectNum["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
               styleObjectNum["text-align"]=element.fontTextAlign;
               styleObjectNum["text-decoration"]=element.fontDecoration;
@@ -408,19 +455,7 @@ export default {
               }
               styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
               styleObject["font-style"]=element.fontStyle;
-              styleObject["font-size"]=element.fontSize+element.fontSizeUnit;
-              styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
-              styleObject["text-align"]=element.fontTextAlign;
-              styleObject["text-decoration"]=element.fontDecoration;
-              break;
-            case "cardFont2":
-              styleObject["font-family"]=element.fontFamily;
-              if(element.fontColors.hex8){
-                styleObject["color"]=element.fontColors.hex8;
-              }
-              styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
-              styleObject["font-style"]=element.fontStyle;
-              styleObject["font-size"]=element.fontSize+element.fontSizeUnit;
+              styleObject["font-size"]= `${element.fontSize*this.pageRatio}${element.fontSizeUnit}`;
               styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
               styleObject["text-align"]=element.fontTextAlign;
               styleObject["text-decoration"]=element.fontDecoration;
@@ -534,6 +569,9 @@ export default {
       console.log("组件收到消息",object)
       if(object.type&&object.type=="linkageShowModule"){
       }else if(object.type&&object.type=="linkageHideModule"){
+      }else if(object.type&&object.type=== "pageResize"){
+        this.convertAttrToStyleObject();
+        this.convertAttrToStyleObject2();
       }
     },
     /**

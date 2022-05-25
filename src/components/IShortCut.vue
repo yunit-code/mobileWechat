@@ -92,7 +92,6 @@
 </template>
 
 <script>
-import { base_url } from '../api/config.js'
 import { Grid, GridItem, Icon } from 'vant';
 import 'vant/lib/grid/style';
 import 'vant/lib/icon/style';
@@ -111,7 +110,9 @@ export default {
         shortItemHeight: {'inputVal':'72.5', 'selectVal': 'px'},
         shortItemWidth: {'inputVal':100, 'selectVal': '%'},
         shortCutStyle: "default"
-      }
+      },
+      // 页面适配比例
+      pageRatio: 1
     }
   },
   props: {
@@ -187,6 +188,19 @@ export default {
      * 把属性转换成样式对象
      */
     convertAttrToStyleObject(){
+      /**
+       *@Description: 屏幕适配
+       *pClientWidth 当前设备宽度
+       *screenAdaptiveRatio 适配比例
+       *screenReferValue 屏幕基准值
+      */
+      if(this.moduleObject.env!=="develop"){
+        const pClientWidth = document.documentElement.clientWidth;
+        this.pageRatio = 1;
+        if(pClientWidth && this.propData.screenReferValue && (pClientWidth - this.propData.screenReferValue) >= this.propData.screenReferValue) {
+          this.pageRatio = this.propData.screenAdaptiveRatio || 1;
+        }
+      }
       var styleObject = {};
       var styleObjectTitleIcon = {};
       if(this.propData.bgSize&&this.propData.bgSize=="custom"){
@@ -200,8 +214,8 @@ export default {
       if(this.propData.positionY&&this.propData.positionY.inputVal){
         styleObject["background-position-y"]=this.propData.positionY.inputVal+this.propData.positionY.selectVal;
       }
-      styleObject["font-size"] = '16px';
-      styleObject["font-weight"]=800;
+      styleObject["font-size"] = `${16*this.pageRatio}px`;
+      // styleObject["font-weight"]=800;
       styleObject["color"]='#333333';
       for (const key in this.propData) {
         if (this.propData.hasOwnProperty.call(this.propData, key)) {
@@ -306,8 +320,7 @@ export default {
               }
               styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
               styleObject["font-style"]=element.fontStyle;
-              const sizeResult = element.fontSize+element.fontSizeUnit;
-              styleObject["font-size"]= Boolean(sizeResult)?sizeResult:'16px';
+              styleObject["font-size"]= `${element.fontSize*this.pageRatio}${element.fontSizeUnit}`;
               styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
               styleObject["text-align"]=element.fontTextAlign;
               styleObject["text-decoration"]=element.fontDecoration;
@@ -319,7 +332,7 @@ export default {
               }
               styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
               styleObject["font-style"]=element.fontStyle;
-              styleObject["font-size"]=element.fontSize+element.fontSizeUnit;
+              styleObject["font-size"]= `${element.fontSize*this.pageRatio}${element.fontSizeUnit}`;
               styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
               styleObject["text-align"]=element.fontTextAlign;
               styleObject["text-decoration"]=element.fontDecoration;
@@ -328,9 +341,9 @@ export default {
                 styleObjectTitleIcon["color"] = element.hex;
                 break
             case "titleIconFontSize":
-                styleObjectTitleIcon["font-size"] = element + "px";
-                styleObjectTitleIcon["width"] = element + "px";
-                styleObjectTitleIcon["height"] = element + "px";
+                styleObjectTitleIcon["font-size"]= `${element*this.pageRatio}px`;
+                styleObjectTitleIcon["width"] = `${element*this.pageRatio}px`;
+                styleObjectTitleIcon["height"] = `${element*this.pageRatio}px`;
                 break
           }
         }
@@ -461,19 +474,7 @@ export default {
               }
               styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
               styleObject["font-style"]=element.fontStyle;
-              styleObject["font-size"]=element.fontSize+element.fontSizeUnit;
-              styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
-              styleObject["text-align"]=element.fontTextAlign;
-              styleObject["text-decoration"]=element.fontDecoration;
-              break;
-            case "cardFont2":
-              styleObject["font-family"]=element.fontFamily;
-              if(element.fontColors.hex8){
-                styleObject["color"]=element.fontColors.hex8;
-              }
-              styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
-              styleObject["font-style"]=element.fontStyle;
-              styleObject["font-size"]=element.fontSize+element.fontSizeUnit;
+              styleObject["font-size"]= `${element.fontSize*this.pageRatio}${element.fontSizeUnit}`;
               styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
               styleObject["text-align"]=element.fontTextAlign;
               styleObject["text-decoration"]=element.fontDecoration;
@@ -564,8 +565,23 @@ export default {
           if(item.bgAttachment) {
             styles["backgroundAttachment"]= item.bgAttachment;
           }
-          styles['width'] = this.propData.shortItemWidth.inputVal+this.propData.shortItemWidth.selectVal;
-          styles['height'] = this.propData.shortItemHeight.inputVal+this.propData.shortItemHeight.selectVal;
+          // if(this.pageRatio!=1) {
+          //   styles['height'] = `80px`;
+          // }else {
+          //   styles['height'] = `${this.propData.shortItemHeight.inputVal*this.pageRatio}${this.propData.shortItemHeight.selectVal}`;
+          // }
+          if(this.moduleObject.env!=="develop"){
+            if(document.documentElement.clientWidth > 650) {
+              styles['height'] = `80px`;
+            }else {
+              styles['height'] = `${this.propData.shortItemHeight.inputVal*this.pageRatio}${this.propData.shortItemHeight.selectVal}`;
+            }
+          }else {
+            styles['height'] = `${this.propData.shortItemHeight.inputVal*this.pageRatio}${this.propData.shortItemHeight.selectVal}`;
+          }
+          styles['width'] = `${this.propData.shortItemWidth.inputVal*this.pageRatio}${this.propData.shortItemWidth.selectVal}`;
+          // styles['width'] = this.propData.shortItemWidth.inputVal+this.propData.shortItemWidth.selectVal;
+          // styles['height'] = this.propData.shortItemHeight.inputVal+this.propData.shortItemHeight.selectVal;
           this.$set(item,'styles',styles);
         })
       }
@@ -576,17 +592,17 @@ export default {
         for( let i = 0,maxi = this.propData.shortConfigList.length;i < maxi;i++ ) {
           const item = this.propData.shortConfigList[i];
             if ( item.showTodoNumber ) {
-              this.getApplicationMarkNumberSubmit(i,this.item[i].sourceId)
+              this.getApplicationMarkNumberSubmit(item,item.sourceId)
             }
         }
       }
     },
-    getApplicationMarkNumberSubmit(index,sourceId) {
-        console.log('getApplicationMarkNumberUrl',this.propData.getApplicationMarkNumberUrl)
+    getApplicationMarkNumberSubmit(item,sourceId) {
+        console.log('getApplicationMarkNumberUrl',item.getApplicationMarkNumberUrl)
         if ( this.moduleObject.env == 'develop' ) {
             return
         }
-        window.IDM.http.post(base_url + '/ctrl/dataSource/getDatas',{
+        window.IDM.http.post(item.getApplicationMarkNumberUrl,{
           id: sourceId || 1
         },{
           headers: {
@@ -595,10 +611,10 @@ export default {
         }).then(result=>{
             console.log('角标接口请求回参',result)
             if ( result&&result.data&&result.data.type == 'success' && result.data.data ) {
-                if ( !this.propData.dataFiled ) {
-                    this.$set(this.propData.shortConfigList[index], "todoNumber", result.data.data.count);
+                if ( !item.dataFiled ) {
+                    this.$set(item, "todoNumber", result.data.data.count);
                 } else {
-                    this.$set(this.propData.shortConfigList[index], "todoNumber", result.data.data[this.propData.dataFiled]);
+                    this.$set(item, "todoNumber", result.data.data[item.dataFiled]);
                 }
             }
         })
@@ -654,6 +670,9 @@ export default {
       console.log("组件收到消息",object)
       if(object.type&&object.type=="linkageShowModule"){
       }else if(object.type&&object.type=="linkageHideModule"){
+      }else if(object.type&&object.type=== "pageResize"){
+        this.convertAttrToStyleObject();
+        this.convertAttrToStyleObject2();
       }
     },
     /**
