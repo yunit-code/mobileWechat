@@ -319,6 +319,20 @@ export default {
         /**
          * 把属性转换成样式对象
          */
+        translatePxToAdaptation(data) {
+            if ( (!data) && data !== 0 ) {
+                return 
+            }
+            let clientWidth = document.body.clientWidth;
+            let adaptationBase = this.propData.adaptationBase || 414;
+            let adaptationPercent = this.propData.adaptationPercent || 1;
+            let percent = ( ( clientWidth/adaptationBase - 1 ) * ( adaptationPercent - 1 ) + 1 )
+            if ( this.moduleObject.env == 'develop' ) {
+                return data
+            } else {
+                return data * percent
+            }
+        },
         convertAttrToStyleObject() {
             this.convertThemeListAttrToStyleObject()
             var styleObject = {};
@@ -439,13 +453,13 @@ export default {
                             }
                             fontStyleObject["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                             fontStyleObject["font-style"] = element.fontStyle;
-                            fontStyleObject["font-size"] = element.fontSize + element.fontSizeUnit;
-                            fontStyleObject["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
+                            fontStyleObject["font-size"] = this.translatePxToAdaptation(element.fontSize) + element.fontSizeUnit;
+                            fontStyleObject["line-height"] = this.translatePxToAdaptation(element.fontLineHeight) + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
                             fontStyleObject["text-align"] = element.fontTextAlign;
                             fontStyleObject["text-decoration"] = element.fontDecoration;
                             break;
                         case "applicationImgWidth":
-                            imgStyleObject['width'] = element
+                            imgStyleObject['width'] = this.translatePxToAdaptation(element) + 'px'
                     }
                 }
             }
