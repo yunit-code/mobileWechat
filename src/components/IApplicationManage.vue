@@ -24,12 +24,12 @@
                         <van-grid :border="false" :column-num="5">
                             <van-grid-item v-for="(item,index) in my_application_data" :key="item.value">
                                 <div class="idm_applicationmanage_main_list">
-                                   <div v-if="item.imageUrl" class="img_box">
-                                        <img :src="item.imageUrl">
+                                   <div class="img_box">
+                                        <img v-if="tem.imageUrl" :src="item.imageUrl">
+                                        <svg-icon v-else icon-class="application" />
+                                        <van-icon @click="deleteApplication(item,index)" v-if="is_edit" class="icon" name="minus" color="#fff" />
                                     </div>
-                                    <svg-icon v-else icon-class="application" />
                                     <div class="idm_applicationmanage_main_list_name">{{ item.title || ('应用' + index + 1) }}</div>
-                                    <van-icon @click="deleteApplication(item,index)" v-if="is_edit" class="icon" name="minus" color="#fff" />
                                 </div>
                             </van-grid-item>
                         </van-grid>
@@ -59,15 +59,16 @@
                                 <van-grid :border="false" :column-num="5">
                                     <van-grid-item v-for="(item1,index1) in item.children" :key="item1.value">
                                         <div class="idm_applicationmanage_main_list">
-                                            <div v-if="item.imageUrl" class="img_box">
-                                                <img :src="item.imageUrl">
+                                            <div class="img_box">
+                                                <img v-if="item1.imageUrl" :src="item1.imageUrl">
+                                                <svg-icon v-else icon-class="application" />
+                                                <div v-if="is_edit">
+                                                    <van-icon v-if="isHaveInMyApplication(item1)" class="icon icon_disabled" name="plus" color="#fff" />
+                                                    <van-icon @click="addApplication(item1)" v-else class="icon" name="plus" color="#fff" />
+                                                </div>
                                             </div>
-                                            <svg-icon v-else icon-class="application" />
                                             <div class="idm_applicationmanage_main_list_name">{{ item1.title || ('应用' + index1 + 1) }}</div>
-                                            <div v-if="is_edit">
-                                                <van-icon v-if="isHaveInMyApplication(item1)" class="icon icon_disabled" name="plus" color="#fff" />
-                                                <van-icon @click="addApplication(item1)" v-else class="icon" name="plus" color="#fff" />
-                                            </div>
+                                            
                                         </div>
                                     </van-grid-item>
                                 </van-grid>
@@ -576,6 +577,7 @@ export default {
 
                 window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop' + " .idm_applicationmanage_title", styleObjectTitle);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_manage_pop' + " .idm_applicationmanage_main_list_name", fontStyleObject);
+                window.IDM.setStyleToPageHead(this.moduleObject.id + " #application_manage_pop .idm_applicationmanage_main_list .img_box", imgStyleObject);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + " #application_manage_pop .idm_applicationmanage_main_list img", imgStyleObject);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + " #application_manage_pop .idm_applicationmanage_main_list svg", imgStyleObject);
             } else {
@@ -584,6 +586,7 @@ export default {
                 
                 window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationmanage_title", styleObjectTitle);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationmanage_main_list_name", fontStyleObject);
+                window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationmanage_main_list .img_box", imgStyleObject);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationmanage_main_list img", imgStyleObject);
                 window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationmanage .idm_applicationmanage_main_list svg", imgStyleObject);
             }
@@ -672,6 +675,10 @@ export default {
             .idm_applicationmanage_main_list{
                 position: relative;
                 text-align: center;
+                .img_box{
+                    width: 40px;
+                    position: relative;
+                }
                 img,svg{
                     width: 40px;
                 }

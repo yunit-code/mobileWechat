@@ -468,12 +468,14 @@ export default {
                     border-radius: 4px;
                 }
                 .add{
-                    padding: 5px 12px;
+                    width: 60px;
+                    padding: 5px 0px;
                     color: #1890ff;
                     background: #e6f7ff;
                 }
                 .add_disabled{
-                    padding: 5px 12px;
+                    width: 60px;
+                    padding: 5px 0px;
                     color: #999;
                     background: ghostwhite;
                 }

@@ -327,14 +327,9 @@ export default {
             let adaptationBase = this.propData.adaptationBase || 414;
             let adaptationPercent = this.propData.adaptationPercent || 1;
             let percent = ( ( clientWidth/adaptationBase - 1 ) * ( adaptationPercent - 1 ) + 1 )
-            console.log('clientWidth',clientWidth)
-            console.log('adaptationBase',adaptationBase)
-            console.log('adaptationPercent',adaptationPercent)
-            console.log('percent',percent)
             if ( this.moduleObject.env == 'develop' ) {
                 return data
             } else {
-                console.log('result',data * percent)
                 return data * percent
             }
         },
