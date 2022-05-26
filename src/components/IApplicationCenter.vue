@@ -882,7 +882,8 @@ export default {
             flex-grow: 0;
             padding: 7px 0 7px 0;
             &::-webkit-scrollbar { 
-                width: 0 !important 
+                width: 0 !important;
+                height: 0 !important;
             }
             .swiper_block_list{
                 width: 20%;
