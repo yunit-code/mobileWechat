@@ -294,14 +294,6 @@
           ]
         },
         {
-          "type": "input",
-          "layoutType": "inline",
-          "text": "数据接口",
-          "bindKey": "dataSourceUrl",
-          "default": "/ctrl/customizePortal/loadAllPage?groupId=wxgzt",
-          "desc": "用于获取工作台列表的接口地址，请按照统一标准的返回格式"
-        },
-        {
           "type": "textarea",
           "layoutType": "inline",
           "text": "显示字段",
@@ -309,14 +301,6 @@
           "desc": "根据接口返回数据格式指定结果集中的字段，填写data下数组对象中的字段即可",
           "default": "title",
           "placeholder": "示例：text 或者 title"
-        },
-        {
-          "type": "input",
-          "layoutType": "inline",
-          "text": "切换接口",
-          "bindKey": "changeUrl",
-          "default": "/ctrl/customizePortal/savePage",
-          "desc": "用于调用切换工作台的后台接口，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}"
         }
       ]
     }

@@ -68,8 +68,7 @@ export default {
         fixed: true,
         coordinates: 'leftBottom',
         offsetX: '20',
-        offsetY: '20',
-        changeInterfaceUrl: '/ctrl/virtualAccount/switchAccount'
+        offsetY: '20'
       }
     }
   },
@@ -207,8 +206,9 @@ export default {
       console.log(action,index)
       this.showPopover = true;
       if(this.moduleObject.env=="production"){
+        const changeInterfaceUrl = '/ctrl/virtualAccount/switchAccount'
         const params = {id: action.userId, orgId: action.orgId, isVirtual: action.isVirtual, switchType: '1'}
-        this.propData.changeInterfaceUrl&&window.IDM.http.get(this.propData.changeInterfaceUrl,params)
+        window.IDM.http.get(changeInterfaceUrl,params)
         .done((res) => {
           //res.data
           if ( res.type == 'success' ) {

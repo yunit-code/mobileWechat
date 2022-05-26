@@ -190,14 +190,14 @@ export default {
     onCellChange(item) {
       if (
         this.moduleObject.env === "develop" ||
-        !this.propData.changeUrl ||
         this.selectedKey == item.key
       ) {
         return false;
       }
+      const changeUrl = '/ctrl/customizePortal/savePage'
       const layerIndex = IDM.layer.load();
       IDM.http
-        .post(this.propData.changeUrl, { pageId: item.pageId })
+        .post(changeUrl, { pageId: item.pageId })
         .done((res) => {
           IDM.layer.close(layerIndex);
           if (res.type === "success") {
@@ -212,9 +212,10 @@ export default {
         .error((error) => {});
     },
     getMenuList() {
-      if (this.moduleObject.env === "develop" || !this.propData.dataSourceUrl) {
+      if (this.moduleObject.env === "develop") {
         return false;
       }
+      const dataSourceUrl = '/ctrl/customizePortal/loadAllPage?groupId=wxgzt'
       const pageId =
         window.IDM.broadcast && window.IDM.broadcast.pageModule
           ? window.IDM.broadcast.pageModule.id
@@ -225,7 +226,7 @@ export default {
       this.menuList = [];
       // const layerIndex = IDM.layer.load();
       IDM.http
-        .get(this.propData.dataSourceUrl)
+        .get(dataSourceUrl)
         .done((res) => {
           // IDM.layer.close(layerIndex);
           if (res.type === "success") {
