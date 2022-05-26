@@ -728,7 +728,7 @@ export default {
         }
       }
       const screenReferValue = this.propData.screenReferValue || 414;
-      const screenAdaptiveRatio = 1.6;
+      const screenAdaptiveRatio = 1.4;
       return e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 )
     },
   }
