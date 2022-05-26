@@ -426,7 +426,7 @@ export default {
             }
         },
         translatePxToAdaptation(data) {
-            translatePxToAdaptationApi(data,this.propData.adaptationBase,this.propData.adaptationPercent,this.clientWidth)
+            return translatePxToAdaptationApi(data,this.propData.adaptationBase,this.propData.adaptationPercent,this.clientWidth)
         },
         convertAttrToStyleObject() {
             this.convertAttrToStyleObjectInner()

@@ -348,7 +348,7 @@ export default {
             }
         },
         translatePxToAdaptation(data) {
-            translatePxToAdaptationApi(data,this.propData.adaptationBaseManage,this.propData.adaptationPercentManage,this.clientWidth)
+            return translatePxToAdaptationApi(data,this.propData.adaptationBaseManage,this.propData.adaptationPercentManage,this.clientWidth)
         },
         convertAttrToStyleObject() {
             this.convertThemeListAttrToStyleObject()
