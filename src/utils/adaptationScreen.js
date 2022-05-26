@@ -12,11 +12,11 @@ export const getComputedSize = function (initSize) {
   const FINAL_RESULT = initSize * ((WINDOW_WIDTH / BASE_SIZE - 1) * (ADAPTATION_RATIO - 1) + 1)
   if(!WINDOW_WIDTH || !BASE_SIZE || !ADAPTATION_RATIO || window.isNaN(FINAL_RESULT)) {
     console.error(`
+      In ${this.$options.name} Calculate's params error
       WINDOW_WIDTH      ---->  ${WINDOW_WIDTH}
       BASE_SIZE         ---->  ${BASE_SIZE}
       ADAPTATION_RATIO  ---->  ${ADAPTATION_RATIO}
       FINAL_RESULT      ---->  ${FINAL_RESULT}
-      "Calculate's params error"
     `)
     return initSize
   }
