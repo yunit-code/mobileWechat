@@ -377,7 +377,11 @@
                     "type": "font",
                     "layoutType": "block",
                     "text": "文字",
-                    "bindKey": "font"
+                    "bindKey": "font",
+                    "default":  {
+                        "fontSize": 18,
+                        "fontSizeUnit": "px"
+                    }
                 }
             ]
         },

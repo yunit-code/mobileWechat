@@ -18,7 +18,7 @@
     -->
      <div class="top-bg">
         <div class="top-set">
-          <svg-icon v-show="propData.set" @click.native="goUrl" icon-class="isort-set" class="svg" :style="{fontSize: translatePxToAdaptation(propData.iconSize) + 'px'}"/>
+          <svg-icon v-show="propData.set" @click.native="goUrl" icon-class="isort-set" class="svg" :style="{fontSize: propData.iconSize + 'px'}"/>
         </div>
         <div class="top-content">
           <div class="user-info" v-if="propData.userInfo">
