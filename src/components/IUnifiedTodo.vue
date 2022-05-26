@@ -481,6 +481,7 @@ export default {
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-icon-no-read", noReadIconObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-intr", {'font-size': getComputedSize.call(this, 14) + 'px'});
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-icon", {'font-size': getComputedSize.call(this, 15) + 'px'});
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-content", {'font-size': getComputedSize.call(this, 15) + 'px'});
       this.initData();
     },
     /**
