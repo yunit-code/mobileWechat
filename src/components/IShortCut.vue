@@ -111,8 +111,8 @@ export default {
         shortItemWidth: {'inputVal':100, 'selectVal': '%'},
         shortCutStyle: "default"
       },
-      // 页面适配比例
-      pageRatio: 1
+      // 当前设备宽度
+      currentEquipWidth: ""
     }
   },
   props: {
@@ -188,19 +188,7 @@ export default {
      * 把属性转换成样式对象
      */
     convertAttrToStyleObject(){
-      /**
-       *@Description: 屏幕适配
-       *pClientWidth 当前设备宽度
-       *screenAdaptiveRatio 适配比例
-       *screenReferValue 屏幕基准值
-      */
-      if(this.moduleObject.env!=="develop"){
-        const pClientWidth = document.documentElement.clientWidth;
-        this.pageRatio = 1;
-        if(pClientWidth && this.propData.screenReferValue && (pClientWidth - this.propData.screenReferValue) >= this.propData.screenReferValue) {
-          this.pageRatio = this.propData.screenAdaptiveRatio || 1;
-        }
-      }
+      
       var styleObject = {};
       var styleObjectTitleIcon = {};
       if(this.propData.bgSize&&this.propData.bgSize=="custom"){
@@ -214,7 +202,7 @@ export default {
       if(this.propData.positionY&&this.propData.positionY.inputVal){
         styleObject["background-position-y"]=this.propData.positionY.inputVal+this.propData.positionY.selectVal;
       }
-      styleObject["font-size"] = `${16*this.pageRatio}px`;
+      styleObject["font-size"] = `${this.funScreenAdaptation(16)}px`;
       // styleObject["font-weight"]=800;
       styleObject["color"]='#333333';
       for (const key in this.propData) {
@@ -320,7 +308,7 @@ export default {
               }
               styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
               styleObject["font-style"]=element.fontStyle;
-              styleObject["font-size"]= `${element.fontSize*this.pageRatio}${element.fontSizeUnit}`;
+              styleObject["font-size"]= `${this.funScreenAdaptation(element.fontSize)}${element.fontSizeUnit}`;
               styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
               styleObject["text-align"]=element.fontTextAlign;
               styleObject["text-decoration"]=element.fontDecoration;
@@ -332,7 +320,7 @@ export default {
               }
               styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
               styleObject["font-style"]=element.fontStyle;
-              styleObject["font-size"]= `${element.fontSize*this.pageRatio}${element.fontSizeUnit}`;
+              styleObject["font-size"]= `${this.funScreenAdaptation(element.fontSize)}${element.fontSizeUnit}`;
               styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
               styleObject["text-align"]=element.fontTextAlign;
               styleObject["text-decoration"]=element.fontDecoration;
@@ -341,9 +329,9 @@ export default {
                 styleObjectTitleIcon["color"] = element.hex;
                 break
             case "titleIconFontSize":
-                styleObjectTitleIcon["font-size"]= `${element*this.pageRatio}px`;
-                styleObjectTitleIcon["width"] = `${element*this.pageRatio}px`;
-                styleObjectTitleIcon["height"] = `${element*this.pageRatio}px`;
+                styleObjectTitleIcon["font-size"]= `${this.funScreenAdaptation(element)}px`;
+                styleObjectTitleIcon["width"] = `${this.funScreenAdaptation(element)}px`;
+                styleObjectTitleIcon["height"] = `${this.funScreenAdaptation(element)}px`;
                 break
           }
         }
@@ -474,7 +462,7 @@ export default {
               }
               styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
               styleObject["font-style"]=element.fontStyle;
-              styleObject["font-size"]= `${element.fontSize*this.pageRatio}${element.fontSizeUnit}`;
+              styleObject["font-size"]= `${this.funScreenAdaptation(element.fontSize)}${element.fontSizeUnit}`;
               styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
               styleObject["text-align"]=element.fontTextAlign;
               styleObject["text-decoration"]=element.fontDecoration;
@@ -565,21 +553,12 @@ export default {
           if(item.bgAttachment) {
             styles["backgroundAttachment"]= item.bgAttachment;
           }
-          // if(this.pageRatio!=1) {
-          //   styles['height'] = `80px`;
-          // }else {
-          //   styles['height'] = `${this.propData.shortItemHeight.inputVal*this.pageRatio}${this.propData.shortItemHeight.selectVal}`;
-          // }
-          if(this.moduleObject.env!=="develop"){
-            if(document.documentElement.clientWidth > 650) {
-              styles['height'] = `80px`;
-            }else {
-              styles['height'] = `${this.propData.shortItemHeight.inputVal*this.pageRatio}${this.propData.shortItemHeight.selectVal}`;
-            }
+          if(this.currentEquipWidth > 650) {
+            styles['height'] = `80px`;
           }else {
-            styles['height'] = `${this.propData.shortItemHeight.inputVal*this.pageRatio}${this.propData.shortItemHeight.selectVal}`;
+            styles['height'] = `${this.funScreenAdaptation(this.propData.shortItemHeight.inputVal)}${this.propData.shortItemHeight.selectVal}`;
           }
-          styles['width'] = `${this.propData.shortItemWidth.inputVal*this.pageRatio}${this.propData.shortItemWidth.selectVal}`;
+          styles['width'] = `${this.propData.shortItemWidth.inputVal}${this.propData.shortItemWidth.selectVal}`;
           // styles['width'] = this.propData.shortItemWidth.inputVal+this.propData.shortItemWidth.selectVal;
           // styles['height'] = this.propData.shortItemHeight.inputVal+this.propData.shortItemHeight.selectVal;
           this.$set(item,'styles',styles);
@@ -671,6 +650,7 @@ export default {
       if(object.type&&object.type=="linkageShowModule"){
       }else if(object.type&&object.type=="linkageHideModule"){
       }else if(object.type&&object.type=== "pageResize"){
+        this.currentEquipWidth = object.message.width;
         this.convertAttrToStyleObject();
         this.convertAttrToStyleObject2();
       }
@@ -707,7 +687,22 @@ export default {
         // this.propData.fontContent = this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data);
         this.$set(this.propData,"shortConfigList",object.data);
       }
-    }
+    },
+    /**
+     *@Description: 屏幕适配
+     *pClientWidth 当前设备宽度
+     *screenAdaptiveRatio 适配比例
+     *screenReferValue 屏幕基准值
+    */
+    funScreenAdaptation(e) {
+      const pClientWidth = this.currentEquipWidth;
+      if(!pClientWidth) {
+        return e;
+      }
+      const screenReferValue = this.propData.screenReferValue || 414;
+      const screenAdaptiveRatio = this.propData.screenAdaptiveRatio || 1;
+      return e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 )
+    },
   }
 }
 </script>
