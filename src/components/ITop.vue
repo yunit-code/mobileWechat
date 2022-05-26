@@ -97,6 +97,7 @@ export default {
   },
   created() {
     this.moduleObject = this.$root.moduleObject
+    this.initData();
     this.convertAttrToStyleObject();
     this.convertThemeListAttrToStyleObject();
     if(this.moduleObject.env=="develop" || !IDM.env_dev){
@@ -278,7 +279,6 @@ export default {
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id,styleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .top-bg .top-content .text",fontStyleObject);
-      this.initData();
     },
     /**
      * 主题颜色
@@ -349,11 +349,31 @@ export default {
       //请求数据源
       this.initData();
     },
+    // 定位当前城市、街道
+    getWeather() {
+      let lat, lon;
+      const weatherApi = '/ctrl/weather/getWeatherByLocation'
+        navigator.geolocation.getCurrentPosition((pos) => {
+          // 当前经纬度存入变量 lat、lon
+            lat = pos.coords.latitude;
+            lon = pos.coords.longitude;
+            IDM.http.get(weatherApi, {lon, lat}).done(res => {
+              if (res.type === "success") {
+                this.temperature = res.data.temp2;
+                this.weatherLogo = res.data.img2
+                this.city = res.data.city;
+              } else {
+                IDM.message.error(res.message);
+              }
+            })
+        })
+    },
     /**
      * 加载动态数据
      */
     initData(){
       if(this.moduleObject.env=="production"){
+        this.getWeather();
         var dataObject = {IDM:window.IDM};
         dataObject["userInfo"] = IDM.user.getCurrentUserInfo();
 
