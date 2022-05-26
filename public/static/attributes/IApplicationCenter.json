@@ -40,15 +40,8 @@
                     "layoutType": "inline",
                     "text": "显示图标",
                     "bindKey": "showTitleIcon",
-                    "default": true
-                },
-                {
-                    "type": "switch",
-                    "layoutType": "inline",
-                    "text": "我的应用",
-                    "desc":"设置组件是否是我的应用模块",
-                    "bindKey": "isMyApplication",
-                    "default": false
+                    "default": true,
+                    "display": "@[showTitle]"
                 },
                 {
                     "type": "switch",
@@ -56,6 +49,23 @@
                     "text": "显示更多",
                     "desc":"设置用户配置应用程序按钮是否显示",
                     "bindKey": "showConfig",
+                    "default": false,
+                    "display": "@[showTitle]"
+                },
+                {
+                    "type": "switch",
+                    "layoutType": "inline",
+                    "text": "左右滑动",
+                    "desc":"设置是否使用左右可滑动模式，如果开启了左右滑动模式则只会在一行内显示图标",
+                    "bindKey": "isSlide",
+                    "default": false
+                },
+                {
+                    "type": "switch",
+                    "layoutType": "inline",
+                    "text": "我的应用",
+                    "desc":"设置组件是否是我的应用模块",
+                    "bindKey": "isMyApplication",
                     "default": false
                 },
                 {
@@ -71,16 +81,17 @@
                     "layoutType": "inline",
                     "text": "展示列数",
                     "bindKey": "showColumn",
-                    "default": 5
+                    "default": 5,
+                    "display": "@[!isSlide]"
                 },
                 {
                     "type": "inputNumber",
                     "layoutType": "inline",
                     "text": "最多行数",
                     "bindKey": "showRows",
-                    "default": 2
+                    "default": 2,
+                    "display": "@[!isSlide]"
                 },
-                
                 {
                     "type": "table",
                     "text": "应用配置",

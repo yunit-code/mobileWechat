@@ -35,18 +35,34 @@
                     <van-loading />
                 </div>
                 <div v-else class="block">
-                    <van-grid v-if="application_data && application_data.length" :border="false" :column-num="propData.showColumn">
-                        <van-grid-item v-for="(item,index) in application_data" :key="item.key">
-                            <div @click="toApplication(item)" class="idm_applicationcenter_main_list">
-                                <div class="img_box">
-                                    <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
-                                    <svg-icon v-else icon-class="application" />
-                                    <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
-                                </div>
-                                <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
+                    <div v-if="application_data && application_data.length" class="block">
+                        <div v-if="!propData.isSlide" class="block">
+                            <van-grid :border="false" :column-num="propData.showColumn">
+                                <van-grid-item v-for="(item,index) in application_data" :key="item.key">
+                                    <div @click="toApplication(item)" class="idm_applicationcenter_main_list">
+                                        <div class="img_box">
+                                            <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
+                                            <svg-icon v-else icon-class="application" />
+                                            <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
+                                        </div>
+                                        <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
+                                    </div>
+                                </van-grid-item>
+                            </van-grid>
+                        </div>
+                        <div v-else class="block">
+                            <div class="swiper_block flex_start">
+                                <span @click="toApplication(item)" v-for="(item,index) in application_data" :key="index" class="swiper_block_list idm_applicationcenter_main_list">
+                                    <div class="img_box">
+                                        <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
+                                        <svg-icon v-else icon-class="application" />
+                                        <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
+                                    </div>
+                                    <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
+                                </span>
                             </div>
-                        </van-grid-item>
-                    </van-grid>
+                        </div>
+                    </div>
                     <van-empty class="empty_block" v-else description="暂无数据">
                         <template #image> <span></span> </template>
                         <template #description>
@@ -856,6 +872,23 @@ export default {
                 color: white;
                 background: #E81B1B;
                 border-radius: 50%;
+            }
+        }
+        .swiper_block{
+            width: auto;
+            overflow: auto;
+            flex-shrink: 0;
+            flex-wrap: nowrap;
+            flex-grow: 0;
+            padding: 7px 0 0px 0;
+            &::-webkit-scrollbar { 
+                width: 0 !important 
+            }
+            .swiper_block_list{
+                width: 20%;
+                position: relative;
+                text-align: center;
+                flex-shrink: 0;
             }
         }
     }
