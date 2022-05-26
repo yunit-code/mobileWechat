@@ -313,18 +313,16 @@ export default {
             if ( this.moduleObject.env == 'develop' ) {
                 return
             }
-            if ( this.propData.isMyApplication && this.propData.getMyApplicationUrl ) {
-                this.is_loading = true
-                window.IDM.http.get(base_url + this.propData.getMyApplicationUrl)
-                    .then((res) => {
-                        this.is_loading = false;
-                        if ( res.data && res.data.type == 'success' ) {
-                            this.makeMyApplicationData(res.data.data)
-                        }
-                    }).catch(function (error) {
-                        this.is_loading = false;
-                    });
-            }
+            this.is_loading = true
+            window.IDM.http.get(base_url + '/ctrl/tencentApp/queryMyFavorite')
+                .then((res) => {
+                    this.is_loading = false;
+                    if ( res.data && res.data.type == 'success' ) {
+                        this.makeMyApplicationData(res.data.data)
+                    }
+                }).catch(function (error) {
+                    this.is_loading = false;
+                });
         },
         makeMyApplicationData(data) {
             let application_data = [];
