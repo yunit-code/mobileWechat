@@ -148,7 +148,8 @@ export default {
       },
       messageData: {list: []},
       pageLoading: false,
-      isFirst: true
+      isFirst: true,
+      pageWidth: null
     }
   },
   created() {
@@ -626,6 +627,7 @@ export default {
           this.initData(this.propData.messageTitleList[this.defaultIndex], this.defaultIndex)
           break;
         case 'pageResize':
+          this.pageWidth = messageObject.message.width
           this.convertAttrToStyleObject()
           break;
       }
