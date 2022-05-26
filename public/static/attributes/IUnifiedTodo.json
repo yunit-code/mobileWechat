@@ -572,11 +572,11 @@
                     },
                     "dictionary": [
                         {
-                            "label": "待办事项",
+                            "label": "inbox",
                             "value": "inbox"
                         },
                         {
-                            "label": "应用中心",
+                            "label": "info",
                             "value": "info"
                         }
                     ]
