@@ -136,7 +136,7 @@ export default {
           },
           fontSize: 16,
           fontSizeUnit: "px",
-          fontWeight: "800"
+          fontWeight: "600"
         },
         titleIconPosition: 'right',
         showIcon: true,

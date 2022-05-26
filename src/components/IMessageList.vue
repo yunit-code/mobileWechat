@@ -701,7 +701,7 @@ export default {
     &-title{
       padding: 0 0 10px 0;
       color: #333;
-      font-weight: 800;
+      font-weight: 600;
       &-left-icon{
         display: flex;
         align-items: center;
@@ -750,8 +750,7 @@ export default {
         }
         .active{
           color: #000;
-          font-weight: 500;
-          font-weight: 800;
+          font-weight: 600;
         }
       }
       &-more{
@@ -787,7 +786,7 @@ export default {
           color: rgb(61, 140, 243);
           font-weight: 500;
           background-color: transparent;
-          font-weight: 800;
+          font-weight: 600;
         }
       }
       &-more{
