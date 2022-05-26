@@ -553,11 +553,7 @@ export default {
           if(item.bgAttachment) {
             styles["backgroundAttachment"]= item.bgAttachment;
           }
-          if(this.currentEquipWidth > 650) {
-            styles['height'] = `80px`;
-          }else {
-            styles['height'] = `${this.funScreenAdaptation(this.propData.shortItemHeight.inputVal)}${this.propData.shortItemHeight.selectVal}`;
-          }
+          styles['height'] = `${this.funScreenAdaptationHeight(this.propData.shortItemHeight.inputVal)}${this.propData.shortItemHeight.selectVal}`;
           styles['width'] = `${this.propData.shortItemWidth.inputVal}${this.propData.shortItemWidth.selectVal}`;
           // styles['width'] = this.propData.shortItemWidth.inputVal+this.propData.shortItemWidth.selectVal;
           // styles['height'] = this.propData.shortItemHeight.inputVal+this.propData.shortItemHeight.selectVal;
@@ -695,12 +691,39 @@ export default {
      *screenReferValue 屏幕基准值
     */
     funScreenAdaptation(e) {
-      const pClientWidth = this.currentEquipWidth;
-      if(!pClientWidth) {
-        return e;
+      let pClientWidth = this.currentEquipWidth;
+      if(this.moduleObject.env==="develop") {
+        if(!pClientWidth) {
+          return e;
+        }
+      }else {
+        if(!pClientWidth) {
+          pClientWidth = document.body.clientWidth;
+        }
       }
       const screenReferValue = this.propData.screenReferValue || 414;
       const screenAdaptiveRatio = this.propData.screenAdaptiveRatio || 1;
+      return e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 )
+    },
+    /**
+     *@Description: 屏幕高度适配
+     *pClientWidth 当前设备宽度
+     *screenAdaptiveRatio 适配比例
+     *screenReferValue 屏幕基准值
+    */
+    funScreenAdaptationHeight(e) {
+      let pClientWidth = this.currentEquipWidth;
+      if(this.moduleObject.env==="develop") {
+        if(!pClientWidth) {
+          return e;
+        }
+      }else {
+        if(!pClientWidth) {
+          pClientWidth = document.body.clientWidth;
+        }
+      }
+      const screenReferValue = this.propData.screenReferValue || 414;
+      const screenAdaptiveRatio = 1.6;
       return e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 )
     },
   }

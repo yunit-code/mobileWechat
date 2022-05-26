@@ -114,11 +114,7 @@ export default {
         }else {
           styles["backgroundImage"]= 'linear-gradient(to right,#f4b0b0,#f4acac,#f18c8b)';
         }
-        if(this.currentEquipWidth > 650) {
-          styles['height'] = `80px`;
-        }else {
-          styles['height'] = `${this.funScreenAdaptation(this.propData.shortItemHeight.inputVal)}${this.propData.shortItemHeight.selectVal}`;
-        }
+        styles['height'] = `${this.funScreenAdaptationHeight(this.propData.shortItemHeight.inputVal)}${this.propData.shortItemHeight.selectVal}`;
         // styles['width'] = this.propData.shortItemWidth.inputVal+this.propData.shortItemWidth.selectVal;
         // styles['height'] = this.propData.shortItemHeight.inputVal+this.propData.shortItemHeight.selectVal;
         this.$set(item,'styles',styles);
@@ -446,7 +442,7 @@ export default {
           }
         }
       }
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_shortcut_cont", styleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .summary-bg", styleObject);
       this.initData();
     },
     /**
@@ -598,12 +594,39 @@ export default {
      *screenReferValue 屏幕基准值
     */
     funScreenAdaptation(e) {
-      const pClientWidth = this.currentEquipWidth;
-      if(!pClientWidth) {
-        return e;
+      let pClientWidth = this.currentEquipWidth;
+      if(this.moduleObject.env==="develop") {
+        if(!pClientWidth) {
+          return e;
+        }
+      }else {
+        if(!pClientWidth) {
+          pClientWidth = document.body.clientWidth;
+        }
       }
       const screenReferValue = this.propData.screenReferValue || 414;
       const screenAdaptiveRatio = this.propData.screenAdaptiveRatio || 1;
+      return e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 )
+    },
+    /**
+     *@Description: 屏幕高度适配
+     *pClientWidth 当前设备宽度
+     *screenAdaptiveRatio 适配比例
+     *screenReferValue 屏幕基准值
+    */
+    funScreenAdaptationHeight(e) {
+      let pClientWidth = this.currentEquipWidth;
+      if(this.moduleObject.env==="develop") {
+        if(!pClientWidth) {
+          return e;
+        }
+      }else {
+        if(!pClientWidth) {
+          pClientWidth = document.body.clientWidth;
+        }
+      }
+      const screenReferValue = this.propData.screenReferValue || 414;
+      const screenAdaptiveRatio = 1.6;
       return e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 )
     },
   }
@@ -650,14 +673,14 @@ export default {
     }
     .summary-bg{
       border-radius: 6px;
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      background-position: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-start;
-      padding-left: 5px;
+      // background-repeat: no-repeat;
+      // background-size: 100% 100%;
+      // background-position: center;
+      // display: flex;
+      // flex-direction: column;
+      // justify-content: center;
+      // align-items: flex-start;
+      // padding-left: 5px;
     }
   }
 </style>

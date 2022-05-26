@@ -423,18 +423,6 @@
                         "fontSizeUnit": "px",
                         "fontWeight": "800"
                     }
-                },
-                {
-                    "type": "font",
-                    "layoutType": "block",
-                    "text": "汇总文字",
-                    "bindKey": "sumFont"
-                },
-                {
-                    "type": "font",
-                    "layoutType": "block",
-                    "text": "数字文字",
-                    "bindKey": "numFont"
                 }
             ]
         },
@@ -660,8 +648,14 @@
                 {
                     "type": "font",
                     "layoutType": "block",
-                    "text": "标题文字",
-                    "bindKey": "font2"
+                    "text": "汇总文字",
+                    "bindKey": "sumFont"
+                },
+                {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "数字文字",
+                    "bindKey": "numFont"
                 }
             ]
         },
