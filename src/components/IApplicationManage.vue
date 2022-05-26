@@ -622,7 +622,7 @@ export default {
                 font-family: PingFangSC-Medium;
                 font-size: 16px;
                 // color: #333333;
-                font-weight: 800;
+                font-weight: 600;
                 line-height: 22px;
             }
         }

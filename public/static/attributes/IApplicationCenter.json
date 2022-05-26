@@ -453,7 +453,7 @@
                             "text": "适配比例",
                             "desc": "与基准值配合使用，如果在实际预览屏幕宽为基准值的两倍，则此组件所有可适配的内容都会基于此处设置的适配比例相对应的进行放大缩小，例如此处设置1.2，则会相对应的放大至1.2倍",
                             "bindKey": "adaptationPercent",
-                            "default": "1.2"
+                            "default": "1.7"
                         }
                     ]
                 },
@@ -654,7 +654,7 @@
                             "text": "适配比例",
                             "desc": "与基准值配合使用，如果在实际预览屏幕宽为基准值的两倍，则此组件所有可适配的内容都会基于此处设置的适配比例相对应的进行放大缩小，例如此处设置1.2，则会相对应的放大至1.2倍",
                             "bindKey": "adaptationPercentManage",
-                            "default": "1.2"
+                            "default": "1.7"
                         }
                     ]
                 }
@@ -672,6 +672,14 @@
                     "desc": "点击？查看样式设置用法指南",
                     "helpUrl": "",
                     "children": [
+                        {
+                            "type": "inputNumber",
+                            "layoutType": "inline",
+                            "text": "图片宽度",
+                            "desc": "填写应用图片的宽度，单位px",
+                            "bindKey": "applicationImgWidthSearch",
+                            "default": 40
+                        },
                         {
                             "type": "font",
                             "layoutType": "block",
@@ -844,7 +852,7 @@
                             "text": "适配比例",
                             "desc": "与基准值配合使用，如果在实际预览屏幕宽为基准值的两倍，则此组件所有可适配的内容都会基于此处设置的适配比例相对应的进行放大缩小，例如此处设置1.2，则会相对应的放大至1.2倍",
                             "bindKey": "adaptationPercentSearch",
-                            "default": "1.2"
+                            "default": "1.7"
                         }
                     ]
                 }

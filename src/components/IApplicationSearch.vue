@@ -68,7 +68,7 @@ export default {
             moduleObject: {},
             propData: { },
             search_text: '',
-            application_data: [ ],
+            application_data: [{} ],
             is_loading: false,
             clientWidth: 414,
         }
@@ -213,6 +213,7 @@ export default {
             var styleObject = {};
             var styleObjectButton = {};
             var styleObjectButtonDisabled = {};
+            var imgStyleObject = {};
             for (const key in this.propData) {
                 if (this.propData.hasOwnProperty.call(this.propData, key)) {
                     const element = this.propData[key];
@@ -338,6 +339,9 @@ export default {
                             styleObjectButtonDisabled["text-align"] = element.fontTextAlign;
                             styleObjectButtonDisabled["text-decoration"] = element.fontDecoration;
                             break;
+                        case "applicationImgWidthSearch":
+                            imgStyleObject['width'] = this.translatePxToAdaptation(element) + 'px'
+                            imgStyleObject['height'] = this.translatePxToAdaptation(element) + 'px'
 
                     }
                 }
@@ -345,6 +349,8 @@ export default {
             window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_search_pop', styleObject);
             window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_search_pop .idm_iapplicationsearch .add', styleObjectButton);
             window.IDM.setStyleToPageHead(this.moduleObject.id + ' #application_search_pop .idm_iapplicationsearch .add_disabled', styleObjectButtonDisabled);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + " #application_search_pop .idm_iapplicationsearch_main .list_left img", imgStyleObject);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + " #application_search_pop .idm_iapplicationsearch_main .list_left svg", imgStyleObject);
             this.initData();
         },
         
@@ -425,7 +431,7 @@ export default {
     .idm_iapplicationsearch_main{
         padding: 0px 10px 20px 10px;
         .list{
-            height: 45px;
+            padding: 8px 0;
             border-bottom: 1px solid ghostwhite;
             .list_left{
                 img,svg{
