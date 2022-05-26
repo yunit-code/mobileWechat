@@ -352,21 +352,20 @@ export default {
     // 定位当前城市、街道
     getWeather() {
       let lat, lon;
-      const weatherApi = '/ctrl/weather/getWeatherByLocation'
-        navigator.geolocation.getCurrentPosition((pos) => {
-          // 当前经纬度存入变量 lat、lon
-            lat = pos.coords.latitude;
-            lon = pos.coords.longitude;
-            IDM.http.get(weatherApi, {lon, lat}).done(res => {
-              if (res.type === "success") {
-                this.temperature = res.data.temp2;
-                this.weatherLogo = res.data.img2
-                this.city = res.data.city;
-              } else {
-                IDM.message.error(res.message);
-              }
-            })
-        })
+      const weatherApi = '/ctrl/weather/getWeatherByLocation';
+      navigator.geolocation.getCurrentPosition((pos) => {
+        // 当前经纬度存入变量 lat、lon
+          lat = pos.coords.latitude;
+          lon = pos.coords.longitude;
+          IDM.http.get(weatherApi, {lon, lat}).done(res => {
+            if (res.type === "success") {
+              this.temperature = res.data.temp2;
+              this.city = res.data.city;
+            } else {
+              IDM.message.error(res.message);
+            }
+          })
+      })
     },
     /**
      * 加载动态数据
