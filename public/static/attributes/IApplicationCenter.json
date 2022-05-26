@@ -456,15 +456,6 @@
                     "placeholder": "示例:count"
                 },
                 {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "接口地址",
-                    "desc": "当我的应用选项打开的时候，用于获取应用数据的接口地址",
-                    "bindKey": "getMyApplicationUrl",
-                    "default": "/ctrl/tencentApp/queryMyFavorite",
-                    "display": "@[isMyApplication]"
-                },
-                {
                     "type": "select",
                     "layoutType": "inline",
                     "text": "刷新KEY",
@@ -561,171 +552,6 @@
                                     "bindKey": "bgColorManage",
                                     "placeholder": "请选择颜色",
                                     "default": {}
-                                },
-                                {
-                                    "type": "uploadImage",
-                                    "layoutType": "inline",
-                                    "text": "背景图片",
-                                    "bindKey": "bgImgUrlManage",
-                                    "placeholder": "可输入图片地址或直接上传",
-                                    "ctrlAttrObject": {
-                                        "maxSize": 2097152
-                                    }
-                                },
-                                {
-                                    "type": "inputNumberUnit",
-                                    "layoutType": "inline",
-                                    "text": "横向偏移",
-                                    "bindKey": "positionXManage",
-                                    "dictionary": [
-                                        {
-                                            "label": "px",
-                                            "value": "px"
-                                        },
-                                        {
-                                            "label": "%",
-                                            "value": "%"
-                                        },
-                                        {
-                                            "label": "em",
-                                            "value": "em"
-                                        }
-                                    ],
-                                    "display": "@[bgImgUrlManage]"
-                                },
-                                {
-                                    "type": "inputNumberUnit",
-                                    "layoutType": "inline",
-                                    "text": "纵向偏移",
-                                    "bindKey": "positionYManage",
-                                    "dictionary": [
-                                        {
-                                            "label": "px",
-                                            "value": "px"
-                                        },
-                                        {
-                                            "label": "%",
-                                            "value": "%"
-                                        },
-                                        {
-                                            "label": "em",
-                                            "value": "em"
-                                        }
-                                    ],
-                                    "display": "@[bgImgUrlManage]"
-                                },
-                                {
-                                    "type": "radio",
-                                    "layoutType": "block",
-                                    "text": "背景大小",
-                                    "bindKey": "bgSizeManage",
-                                    "dictionary": [
-                                        {
-                                            "label": "裁切显示",
-                                            "value": "cover"
-                                        },
-                                        {
-                                            "label": "完全显示",
-                                            "value": "contain"
-                                        },
-                                        {
-                                            "label": "自定义",
-                                            "value": "custom"
-                                        }
-                                    ],
-                                    "display": "@[bgImgUrlManage]"
-                                },
-                                {
-                                    "type": "inputNumberUnit",
-                                    "layoutType": "inline",
-                                    "text": "宽度",
-                                    "bindKey": "bgSizeWidthManage",
-                                    "dictionary": [
-                                        {
-                                            "label": "px",
-                                            "value": "px"
-                                        },
-                                        {
-                                            "label": "%",
-                                            "value": "%"
-                                        },
-                                        {
-                                            "label": "em",
-                                            "value": "em"
-                                        }
-                                    ],
-                                    "display": "@[bgSizeManage=='custom']"
-                                },
-                                {
-                                    "type": "inputNumberUnit",
-                                    "layoutType": "inline",
-                                    "text": "高度",
-                                    "bindKey": "bgSizeHeightManage",
-                                    "dictionary": [
-                                        {
-                                            "label": "px",
-                                            "value": "px"
-                                        },
-                                        {
-                                            "label": "%",
-                                            "value": "%"
-                                        },
-                                        {
-                                            "label": "em",
-                                            "value": "em"
-                                        }
-                                    ],
-                                    "display": "@[bgSizeManage=='custom']"
-                                },
-                                {
-                                    "type": "radio",
-                                    "layoutType": "block",
-                                    "text": "平铺模式",
-                                    "bindKey": "bgRepeatManage",
-                                    "dictionary": [
-                                        {
-                                            "label": "双向重复",
-                                            "value": "repeat"
-                                        },
-                                        {
-                                            "label": "水平重复",
-                                            "value": "repeat-x"
-                                        },
-                                        {
-                                            "label": "垂直重复",
-                                            "value": "repeat-y"
-                                        },
-                                        {
-                                            "label": "不重复",
-                                            "value": "no-repeat"
-                                        },
-                                        {
-                                            "label": "继承",
-                                            "value": "inherit"
-                                        }
-                                    ],
-                                    "display": "@[bgImgUrlManage]"
-                                },
-                                {
-                                    "type": "radio",
-                                    "layoutType": "inline",
-                                    "text": "背景模式",
-                                    "bindKey": "bgAttachmentManage",
-                                    "dictionary": [
-                                        {
-                                            "label": "固定",
-                                            "value": "fixed"
-                                        },
-                                        {
-                                            "label": "滚动",
-                                            "value": "scroll"
-                                        },
-                                        {
-                                            "label": "继承",
-                                            "value": "inherit"
-                                        }
-                                    ],
-                                    "display": "@[bgImgUrlManage]"
                                 }
                             ]
                         },
@@ -838,7 +664,7 @@
                         {
                             "type": "font",
                             "layoutType": "block",
-                            "text": "文字",
+                            "text": "字体",
                             "bindKey": "fontSearch"
                         },
                         {
@@ -856,7 +682,7 @@
                                 {
                                     "type": "font",
                                     "layoutType": "block",
-                                    "text": "文字",
+                                    "text": "字体",
                                     "bindKey": "fontButton"
                                 }
                             ]

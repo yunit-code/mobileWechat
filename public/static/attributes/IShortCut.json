@@ -35,7 +35,7 @@
                     "text": "适配比例属性",
                     "bindKey": "screenAdaptiveRatio",
                     "desc":"与基准值配合使用，如果在实际预览屏幕宽为基准值的两倍，则此组件所有可适配的内容都会基于此处设置的适配比例相对应的进行放大缩小，例如此处设置1.2，则会相对应的放大至1.2倍",
-                    "default": 1,
+                    "default": 1.2,
                     "min": 0
                 },
                 {
@@ -847,14 +847,33 @@
             "tabText": "主题[index]",
             "children": [
                 {
-                    "type": "input",
+                    "type": "select",
                     "layoutType": "inline",
                     "text": "主题标识",
                     "bindKey": "key",
-                    "desc":"用于设置主题的标识，此项需要搭配自定义开发切换主题的功能，例如：蓝色标识为blue，用户切换主题的时候存储到数据库中的标识为blue，则这里填写为blue",
-                    "default":"",
-                    "placeholder":"例如：blue"
-                },{
+                    "multiple": false,
+                    "desc": "用于设置主题的标识，此项需要搭配自定义开发切换主题的功能，例如：蓝色标识为blue，用户切换主题的时候存储到数据库中的标识为blue，则这里填写为blue",
+                    "default": "",
+                    "placeholder": "例如：blue",
+                    "ctrlAttrObject": {
+                        "mode": "combobox"
+                    },
+                    "dictionary": [
+                        {
+                            "label": "blue",
+                            "value": "blue"
+                        },
+                        {
+                            "label": "red",
+                            "value": "red"
+                        },
+                        {
+                            "label": "green",
+                            "value": "green"
+                        }
+                    ]
+                  },
+                  {
                     "type": "colorPicker",
                     "layoutType": "inline",
                     "text": "主要颜色",

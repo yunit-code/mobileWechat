@@ -164,7 +164,7 @@
                 {
                     "type": "font",
                     "layoutType": "block",
-                    "text": "文字",
+                    "text": "字体",
                     "bindKey": "font"
                 },
                 {

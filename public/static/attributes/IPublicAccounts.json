@@ -118,14 +118,6 @@
                     "text": "数据源",
                     "bindKey": "dataSource",
                     "dataSourceUrl": "/ctrl/dataSource/getDatasourceByGroup"
-                },
-                {
-                    "type": "input",
-                    "layoutType": "block",
-                    "text": "切换账号接口地址",
-                    "bindKey": "changeInterfaceUrl",
-                    "desc": "用于获取数据源的接口地址，请按照统一标准的返回格式返回文本数据，格式如下：{\"code\":\"200\",\"data\":\"\",...}",
-                    "default": "/ctrl/virtualAccount/switchAccount"
                 }
             ]
         }

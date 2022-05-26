@@ -106,14 +106,14 @@
               v-if="
                 !item.schedule || (item.schedule && item.schedule.length == 0)
               "
-              :image-size="propData.emptyImageSize || '100px'"
+              :image-size="emptyImageSize"
               :description="propData.emptyDescription || '暂无日程'"
             />
           </a-tab-pane>
         </a-tabs>
         <van-empty
           v-if="!scheduleList || scheduleList.length == 0"
-          :image-size="propData.emptyImageSize || '100px'"
+          :image-size="emptyImageSize"
           :description="propData.emptyDescription || '暂无日程'"
         />
       </div>
@@ -151,6 +151,17 @@ export default {
     };
   },
   props: {},
+  computed:{
+    emptyImageSize(){
+      let width = ""
+      if(this.propData.emptyImageSize){
+        width = this.propData.emptyImageSize.inputVal + this.propData.emptyImageSize.selectVal
+      }else{
+        width = (this.getScale() * 100) + "px"
+      }
+      return width
+    }
+  },
   created() {
     this.moduleObject = this.$root.moduleObject;
     this.convertThemeListAttrToStyleObject();
@@ -181,22 +192,18 @@ export default {
           this.requsetList();
           break;
         case 'pageResize':
-          this.convertAttrToStyleObject();
+          this.convertAttrToStyleObject(messageObject.message);
           break;
       }
     },
     /**
      * 适配页面
      */
-    getScale(){
-      let scale = 1;
-      if(this.moduleObject.env === "production" && this.propData.baseValue && this.propData.adaptationRatio){
-        const base = this.propData.baseValue
-        const ratio = this.propData.adaptationRatio
-        const width = window.outerWidth
-        scale = ((width / base - 1) * (ratio - 1) + 1)
-      }
-      return scale
+    getScale(pageWidth){
+      const base = this.propData.baseValue || 414
+      const ratio = this.propData.adaptationRatio || 1.2
+      const width = this.moduleObject.env ===  "production" ? window.innerWidth : pageWidth || 414
+      return (width / base - 1) * (ratio - 1) + 1
     },
     /**
      * 初始化数据
@@ -345,7 +352,7 @@ export default {
     /**
      * 把属性转换成样式对象
      */
-    convertAttrToStyleObject() {
+    convertAttrToStyleObject(pageSize={}) {
       
       var styleObject = {};
       var titleStyleObject = {};
@@ -353,7 +360,7 @@ export default {
       var iconStyleObject = {};
       var emptyStyleObject = {};
 
-      const scale  = this.getScale();
+      const scale  = this.getScale(pageSize.width);
       styleObject['--i-schedule-scale'] = scale
 
       if (this.propData.bgSize && this.propData.bgSize == "custom") {
@@ -1162,6 +1169,10 @@ $scale: var(--i-schedule-scale);
       border:calc(1px * #{ $scale }) solid #f5dab1;
       border-radius: calc(4px * #{ $scale });;
     }
+  }
+
+  ::v-deep .van-empty__description {
+    font-size: inherit;
   }
 }
 </style>

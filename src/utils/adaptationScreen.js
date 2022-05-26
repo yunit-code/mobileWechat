@@ -22,3 +22,10 @@ export const getComputedSize = function (initSize) {
   }
   return Math.round(FINAL_RESULT)
 }
+export const translatePxToAdaptationApi = function(data,adaptationBase = 414,adaptationPercent = 1.2,clientWidth = 414) {
+  if ( (!data) && data !== 0 ) {
+      return 
+  }
+  let percent = ( ( clientWidth/adaptationBase - 1 ) * ( adaptationPercent - 1 ) + 1 )
+  return parseInt( data * percent ) 
+}
