@@ -95,7 +95,7 @@ export default {
           this.initData()
           break;
          case 'pageResize':
-          this.convertAttrToStyleObject();
+          this.convertAttrToStyleObject(messageObject.message);
           break;
       }
     },
@@ -290,13 +290,13 @@ export default {
     /**
      * 把属性转换成样式对象
      */
-    convertAttrToStyleObject() {
+    convertAttrToStyleObject(pageSize = {}) {
       var styleObject = {};
       var tipStyleObject = {};
       var cardStyleObject = {};
       var emptyStyleObject = {};
 
-      const scale  = this.getScale();
+      const scale  = this.getScale(pageSize.width);
       styleObject['--i-sort-scale'] = scale
 
       if (this.propData.bgSize && this.propData.bgSize == "custom") {
@@ -518,15 +518,11 @@ export default {
     /**
      * 适配页面
      */
-    getScale(){
-      let scale = 1;
-      if(this.moduleObject.env === "production" && this.propData.baseValue && this.propData.adaptationRatio){
-        const base = this.propData.baseValue
-        const ratio = this.propData.adaptationRatio
-        const width = window.outerWidth
-        scale = ((width / base - 1) * (ratio - 1) + 1)
-      }
-      return scale
+    getScale(pageWidth){
+      const base = this.propData.baseValue || 414
+      const ratio = this.propData.adaptationRatio || 1.2
+      const width = this.moduleObject.env ===  "production" ? window.innerWidth : pageWidth || 414
+      return((width / base - 1) * (ratio - 1) + 1)
     },
     /**
      * 置顶
