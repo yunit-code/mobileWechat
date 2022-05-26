@@ -116,7 +116,7 @@
                             "placeholder": "示例：暂无数据"
                         },
                         {
-                            "type": "input",
+                            "type": "inputNumberUnit",
                             "layoutType": "inline",
                             "text": "图标大小",
                             "bindKey": "emptyImageSize",

@@ -522,7 +522,7 @@ export default {
       const base = this.propData.baseValue || 414
       const ratio = this.propData.adaptationRatio || 1.2
       const width = this.moduleObject.env ===  "production" ? window.innerWidth : pageWidth || 414
-      return((width / base - 1) * (ratio - 1) + 1)
+      return (width / base - 1) * (ratio - 1) + 1
     },
     /**
      * 置顶

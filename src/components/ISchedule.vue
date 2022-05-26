@@ -106,14 +106,14 @@
               v-if="
                 !item.schedule || (item.schedule && item.schedule.length == 0)
               "
-              :image-size="propData.emptyImageSize || '100px'"
+              :image-size="emptyImageSize"
               :description="propData.emptyDescription || '暂无日程'"
             />
           </a-tab-pane>
         </a-tabs>
         <van-empty
           v-if="!scheduleList || scheduleList.length == 0"
-          :image-size="propData.emptyImageSize || '100px'"
+          :image-size="emptyImageSize"
           :description="propData.emptyDescription || '暂无日程'"
         />
       </div>
@@ -151,6 +151,17 @@ export default {
     };
   },
   props: {},
+  computed:{
+    emptyImageSize(){
+      let width = ""
+      if(this.propData.emptyImageSize){
+        width = this.propData.emptyImageSize.inputVal + this.propData.emptyImageSize.selectVal
+      }else{
+        width = (this.getScale() * 100) + "px"
+      }
+      return width
+    }
+  },
   created() {
     this.moduleObject = this.$root.moduleObject;
     this.convertThemeListAttrToStyleObject();
@@ -192,7 +203,7 @@ export default {
       const base = this.propData.baseValue || 414
       const ratio = this.propData.adaptationRatio || 1.2
       const width = this.moduleObject.env ===  "production" ? window.innerWidth : pageWidth || 414
-      return((width / base - 1) * (ratio - 1) + 1)
+      return (width / base - 1) * (ratio - 1) + 1
     },
     /**
      * 初始化数据
@@ -1158,6 +1169,10 @@ $scale: var(--i-schedule-scale);
       border:calc(1px * #{ $scale }) solid #f5dab1;
       border-radius: calc(4px * #{ $scale });;
     }
+  }
+
+  ::v-deep .van-empty__description {
+    font-size: inherit;
   }
 }
 </style>
