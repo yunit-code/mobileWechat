@@ -20,7 +20,7 @@
             class="swiper-slide idm-banner-box-swiper-item-container banner-item-container"
             v-for="(item, index) in bannerData.value"
             :key="index"
-            @click="handleClick(item)"
+            @click="handleClick(item, index)"
           >
             <img v-if="propData && propData.dataType === 'custom'" :src="item.image && IDM.url.getWebPath(item.image)"  class="slider-img" alt="" />
 
@@ -103,7 +103,7 @@ export default {
   methods: {
     initSwiper() {
       this.$nextTick(()=> {
-        new Swiper('#'+this.moduleObject.id + " .idm-banner-box-swiper-container" + this.refreshKeyNumber, {
+        let swiper = new Swiper('#'+this.moduleObject.id + " .idm-banner-box-swiper-container" + this.refreshKeyNumber, {
           autoplay: 2000,                                           //自动播放
           speed: 500,                                               //播放速度
           loop: true,                                               //循环播放
@@ -135,6 +135,10 @@ export default {
             },
           }
         });
+        const index = window.sessionStorage.swiperClickedIndex
+        if(index != undefined) {
+          swiper.slideTo(Number(index), 0, false)
+        }
       })
     },
     /**
@@ -465,10 +469,11 @@ export default {
     /**
      * 轮播点击事件
      */
-    handleClick(item) {
+    handleClick(item, index) {
       if(this.moduleObject.env === 'develop') {
         return
       }
+      // window.sessionStorage.swiperClickedIndex = index
       if(item.jumpUrl) {
         window.open(IDM.url.getWebPath(item.jumpUrl), this.propData.jumpStyle || '_self')
       }
