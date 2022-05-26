@@ -18,7 +18,7 @@
     -->
      <div class="top-bg">
         <div class="top-set">
-          <svg-icon v-show="propData.set" @click.native="goUrl" icon-class="isort-set" class="svg" :style="{fontSize: propData.iconSize + 'px'}"/>
+          <svg-icon v-show="propData.set" @click.native="goUrl" icon-class="isort-set" class="svg" :style="{fontSize: translatePxToAdaptation(propData.iconSize) + 'px'}"/>
         </div>
         <div class="top-content">
           <div class="user-info" v-if="propData.userInfo">
@@ -52,6 +52,8 @@ export default {
       weatherLogo: '',
       temperature: '',
       city: '',
+      // 当前设备宽度
+      currentEquipWidth: 0,
       propData:this.$root.propData.compositeAttr||{
         userInfo:true,
         weather: true,
@@ -131,6 +133,20 @@ export default {
       this.propData = propData.compositeAttr||{};
       this.convertAttrToStyleObject();
       this.convertThemeListAttrToStyleObject();
+    },
+    /**
+     * 把属性转换成样式对象
+     */
+    translatePxToAdaptation(data) {
+      const clientWidth = this.currentEquipWidth;
+      if (!data || !clientWidth) {
+        return data;
+      }
+      const adaptationBase = this.propData.adaptationBase || 414;
+      const adaptationPercent = this.propData.adaptationPercent || 1;
+      const percent =
+        (clientWidth / adaptationBase - 1) * (adaptationPercent - 1) + 1;
+      return data * percent;
     },
     /**
      * 把属性转换成样式对象
@@ -252,8 +268,8 @@ export default {
               }
               fontStyleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
               fontStyleObject["font-style"]=element.fontStyle;
-              fontStyleObject["font-size"]=element.fontSize+element.fontSizeUnit;
-              fontStyleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
+              fontStyleObject["font-size"]=this.translatePxToAdaptation(element.fontSize)+element.fontSizeUnit;
+              fontStyleObject["line-height"]=this.translatePxToAdaptation(element.fontLineHeight) + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
               fontStyleObject["text-align"]=element.fontTextAlign;
               fontStyleObject["text-decoration"]=element.fontDecoration;
               break;
@@ -372,6 +388,9 @@ export default {
       console.log("组件收到消息",messageObject)
       if (messageObject.type && messageObject.type == "linkageReload") {
         this.reload();
+      } else if (messageObject.type && messageObject.type == "pageResize") {
+        this.currentEquipWidth = messageObject.message.width;
+        this.convertAttrToStyleObject();
       }
     },
     /**

@@ -155,6 +155,8 @@ export default {
       activeKey: "",
       // [{key: '1', pageId: '1', title: '测试用例1'}, {key: '2', pageId: '2', title: '测试用例2'}]
       menuList: [],
+      // 当前设备宽度
+      currentEquipWidth: 0
     };
   },
   created() {
@@ -241,6 +243,20 @@ export default {
     /**
      * 把属性转换成样式对象
      */
+    translatePxToAdaptation(data) {
+      const clientWidth = this.currentEquipWidth;
+      if (!data || !clientWidth) {
+        return data;
+      }
+      const adaptationBase = this.propData.adaptationBase || 414;
+      const adaptationPercent = this.propData.adaptationPercent || 1;
+      const percent =
+        (clientWidth / adaptationBase - 1) * (adaptationPercent - 1) + 1;
+      return data * percent;
+    },
+    /**
+     * 把属性转换成样式对象
+     */
     convertAttrToStyleObject() {
       let btnStyleObject = {};
       let cellSelectedStyleObject = {};
@@ -293,11 +309,11 @@ export default {
               }
               if (element.fontSize) {
                 titleStyleObject["font-size"] =
-                  element.fontSize + element.fontSizeUnit;
+                  this.translatePxToAdaptation(element.fontSize) + element.fontSizeUnit;
               }
               if (element.fontLineHeight) {
                 titleStyleObject["line-height"] =
-                  element.fontLineHeight +
+                  this.translatePxToAdaptation(element.fontLineHeight) +
                   (element.fontLineHeightUnit == "-"
                     ? ""
                     : element.fontLineHeightUnit);
@@ -602,6 +618,9 @@ export default {
       console.log("组件收到消息",messageObject)
       if (messageObject.type && messageObject.type == "linkageReload") {
         this.getMenuList();
+      } else if (messageObject.type && messageObject.type == "pageResize") {
+        this.currentEquipWidth = messageObject.message.width;
+        this.convertAttrToStyleObject();
       }
     },
   },
