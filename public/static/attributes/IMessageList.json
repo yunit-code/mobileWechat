@@ -76,7 +76,7 @@
                     "type": "switch",
                     "layoutType": "inline",
                     "text": "显示页签",
-                    "desc": "是否显示显示页签，不显示则默认取第一个",
+                    "desc": "是否显示页签，不显示则默认取第一个",
                     "bindKey": "showTab",
                     "default": true
                 },
@@ -273,7 +273,7 @@
                     "layoutType": "block",
                     "text": "选中页签字体",
                     "bindKey": "titleFontStyleActive",
-                    "desc": "设置选中页签字体颜色",
+                    "desc": "设置选中页签字体样式",
                     "default": {
                         "fontColors": {
                             "hex": "#000"
@@ -313,7 +313,7 @@
                             "layoutType": "inline",
                             "text": "更多链接",
                             "bindKey": "moreListLink",
-                            "desc": "此设置用于点击更多时候跳转链接，如果设置了链接地址则内置的根据数据跳转链接则失效",
+                            "desc": "此设置用于点击更多时跳转链接，如果设置了链接地址，则内置的根据数据跳转链接失效。",
                             "display": "@[showMore == true && showTab == true]"
                         },
                         {
