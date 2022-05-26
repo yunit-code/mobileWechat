@@ -341,7 +341,7 @@ export default {
     /**
      * 把属性转换成样式对象
      */
-    convertAttrToStyleObject(pageSize) {
+    convertAttrToStyleObject(pageSize={}) {
       
       var styleObject = {};
       var titleStyleObject = {};
