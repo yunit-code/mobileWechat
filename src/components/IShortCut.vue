@@ -345,7 +345,8 @@ export default {
      * 把属性转换成样式对象
      */
     convertAttrToStyleObject2(){
-      var styleObject = {};
+      var styleObject = {},
+        styleObjectCont = {};
       if(this.propData.bgSize2&&this.propData.bgSize2=="custom"){
         styleObject["background-size"]=(this.propData.bgSizeWidth2?this.propData.bgSizeWidth2.inputVal+this.propData.bgSizeWidth2.selectVal:"auto")+" "+(this.propData.bgSizeHeight2?this.propData.bgSizeHeight2.inputVal+this.propData.bgSizeHeight2.selectVal:"auto")
       }else if(this.propData.bgSize2){
@@ -465,12 +466,16 @@ export default {
               styleObject["font-size"]= `${this.funScreenAdaptation(element.fontSize||14)}${element.fontSizeUnit||'px'}`;
               styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
               styleObject["text-align"]=element.fontTextAlign;
+              if(element.fontTextAlign) {
+                styleObjectCont['justify-content'] = element.fontTextAlign==='center'?'center':element.fontTextAlign==='right'?'flex-end':'flex-start'
+              }
               styleObject["text-decoration"]=element.fontDecoration;
               break;
           }
         }
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_shortcut_cont", styleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_shortcut_cont .short-bg", styleObjectCont);
       this.initData();
     },
     /**
