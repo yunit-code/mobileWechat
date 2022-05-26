@@ -261,7 +261,7 @@
                     "desc": "设置页签字体样式",
                     "default": {
                         "fontColors": {
-                            "hex": "#333333"
+                            "hex": "#888888"
                         },
                         "fontSize": 16,
                         "fontSizeUnit": "px"
@@ -276,7 +276,7 @@
                     "desc": "设置选中页签字体样式",
                     "default": {
                         "fontColors": {
-                            "hex": "#000"
+                            "hex": "#333"
                         },
                         "fontSize": 16,
                         "fontWeight": "600",
@@ -338,8 +338,7 @@
                     "layoutType": "inline",
                     "text": "背景色",
                     "bindKey": "subBgColor",
-                    "placeholder": "请选择颜色",
-                    "default": {}
+                    "placeholder": "请选择颜色"
                 },
                 {
                     "type": "inlineGroup",

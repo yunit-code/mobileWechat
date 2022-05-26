@@ -734,8 +734,9 @@ export default {
         overflow-x: auto;
         scrollbar-width: none; /* firefox */
         -ms-overflow-style: none; /* IE 10+ */
+        color: #888;
         &::-webkit-scrollbar {
-          display: none; 
+          display: none;
         }
         >span{
           border-right: 1px solid #ccc;
@@ -749,7 +750,7 @@ export default {
           }
         }
         .active{
-          color: #000;
+          color: #333;
           font-weight: 600;
         }
       }
@@ -813,6 +814,7 @@ export default {
         text-overflow: ellipsis;
         width: 100%;
         white-space: nowrap;
+        color: #000;
       }
       &-time{
         white-space: nowrap;
@@ -854,6 +856,7 @@ export default {
         -webkit-line-clamp:2;
         font-size: 15px;
         font-weight: 600;
+        color: #888;
       }
       &-title2{
         width: 100%;
