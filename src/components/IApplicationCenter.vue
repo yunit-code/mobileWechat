@@ -880,7 +880,7 @@ export default {
             flex-shrink: 0;
             flex-wrap: nowrap;
             flex-grow: 0;
-            padding: 7px 0 0px 0;
+            padding: 7px 0 7px 0;
             &::-webkit-scrollbar { 
                 width: 0 !important 
             }
