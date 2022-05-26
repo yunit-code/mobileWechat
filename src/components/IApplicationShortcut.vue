@@ -50,6 +50,7 @@
 
 <script>
 import { base_url } from '../api/config.js'
+import { translatePxToAdaptationApi } from '@/utils/adaptationScreen'
 
 import { Grid, GridItem, Empty } from 'vant';
 import 'vant/lib/grid/style';
@@ -69,6 +70,7 @@ export default {
             },
             application_data: [ ],
             have_power_application_data_ids: [],//用户有权限的app
+            clientWidth: 414,
         }
     },
     props: {
@@ -94,7 +96,7 @@ export default {
     },
     created() {
         this.moduleObject = this.$root.moduleObject
-        
+        this.getClientWidth()
         this.getHavePowerApplication()
         this.convertAttrToStyleObject();
     },
@@ -319,19 +321,15 @@ export default {
         /**
          * 把属性转换成样式对象
          */
-        translatePxToAdaptation(data) {
-            if ( (!data) && data !== 0 ) {
-                return 
-            }
-            let clientWidth = document.body.clientWidth;
-            let adaptationBase = this.propData.adaptationBase || 414;
-            let adaptationPercent = this.propData.adaptationPercent || 1;
-            let percent = ( ( clientWidth/adaptationBase - 1 ) * ( adaptationPercent - 1 ) + 1 )
+        getClientWidth() {
             if ( this.moduleObject.env == 'develop' ) {
-                return data
+                return
             } else {
-                return data * percent
+                this.clientWidth = window.outerWidth;
             }
+        },
+        translatePxToAdaptation(data) {
+            translatePxToAdaptationApi(data,this.propData.adaptationBase,this.propData.adaptationPercent,this.clientWidth)
         },
         convertAttrToStyleObject() {
             this.convertThemeListAttrToStyleObject()
@@ -498,45 +496,6 @@ export default {
         },
         
         /**
-         * 通用的获取表达式匹配后的结果
-         */
-        getExpressData(dataName, dataFiled, resultData) {
-            //给defaultValue设置dataFiled的值
-            var _defaultVal = undefined;
-            if (dataFiled) {
-                var filedExp = dataFiled;
-                filedExp =
-                    dataName +
-                    (filedExp.startsWiths("[") ? "" : ".") +
-                    filedExp;
-                var dataObject = { IDM: window.IDM };
-                dataObject[dataName] = resultData;
-                _defaultVal = window.IDM.express.replace.call(
-                    this,
-                    "@[" + filedExp + "]",
-                    dataObject
-                );
-            }
-            //对结果进行再次函数自定义
-            if (this.propData.customFunction && this.propData.customFunction.length > 0) {
-                var params = this.commonParam();
-                var resValue = "";
-                try {
-                    resValue = window[this.propData.customFunction[0].name] && window[this.propData.customFunction[0].name].call(this, {
-                        ...params,
-                        ...this.propData.customFunction[0].param,
-                        moduleObject: this.moduleObject,
-                        expressData: _defaultVal, interfaceData: resultData
-                    });
-                } catch (error) {
-                }
-                _defaultVal = resValue;
-            }
-
-            return _defaultVal;
-        },
-        
-        /**
          * 组件通信：接收消息的方法
          * @param {
          *  type:"发送消息的时候定义的类型，这里可以自己用来要具体做什么，统一规定的type：linkageResult（组件联动传结果值）、linkageDemand（组件联动传需求值）、linkageReload（联动组件重新加载）
@@ -555,6 +514,7 @@ export default {
             } else if ( messageObject.type && messageObject.type == "linkageReload" ) {
                 this.initApplicationData()
             } else if ( messageObject.type && messageObject.type == "pageResize" ) {
+                this.clientWidth = messageObject.message ? messageObject.message.width : 414;
                 this.convertAttrToStyleObject()
             }
             // 配置了刷新KEY，消息类型是websocket，收到的消息对象有message并不为空

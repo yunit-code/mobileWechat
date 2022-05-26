@@ -99,6 +99,7 @@
 
 <script>
 import { base_url } from '../api/config.js'
+import { translatePxToAdaptationApi } from '@/utils/adaptationScreen'
 import { Grid,GridItem,Tab,Tabs,Icon,Button,Toast,Empty,Loading } from 'vant';
 
 import 'vant/lib/grid/style';
@@ -129,7 +130,8 @@ export default {
             my_application_data: [ ],
             application_data: [ ],
             is_loading_my_application: false,
-            is_loading_all_application: false
+            is_loading_all_application: false,
+            clientWidth: 414,
         }
     },
     props: [ 'datas' ],
@@ -140,6 +142,7 @@ export default {
         }
         console.log('moduleObject',this.moduleObject)
         console.log('propData',this.propData)
+        this.getClientWidth()
         this.initDevelopData()
         this.convertAttrToStyleObject();
     },
@@ -337,19 +340,15 @@ export default {
         /**
          * 把属性转换成样式对象
          */
-        translatePxToAdaptation(data) {
-            if ( (!data) && data !== 0 ) {
-                return 
-            }
-            let clientWidth = document.body.clientWidth;
-            let adaptationBaseManage = this.propData.adaptationBaseManage || 414;
-            let adaptationPercentManage = this.propData.adaptationPercentManage || 1;
-            let percent = ( ( clientWidth/adaptationBaseManage - 1 ) * ( adaptationPercentManage - 1 ) + 1 )
+        getClientWidth() {
             if ( this.moduleObject.env == 'develop' ) {
-                return data
+                return
             } else {
-                return data * percent
+                this.clientWidth = window.outerWidth;
             }
+        },
+        translatePxToAdaptation(data) {
+            translatePxToAdaptationApi(data,this.propData.adaptationBaseManage,this.propData.adaptationPercentManage,this.clientWidth)
         },
         convertAttrToStyleObject() {
             this.convertThemeListAttrToStyleObject()
@@ -574,6 +573,9 @@ export default {
                 this.hideThisModuleHandle();
             } else if ( messageObject.type && messageObject.type == "linkageReload" ) {
                 this.initData()
+            } else if ( messageObject.type && messageObject.type == "pageResize" ) {
+                this.clientWidth = messageObject.message ? messageObject.message.width : 414;
+                this.convertAttrToStyleObject()
             }
         },
         showThisModuleHandle() {

@@ -48,6 +48,7 @@
 
 <script>
 import { base_url } from '../api/config.js'
+import { translatePxToAdaptationApi } from '@/utils/adaptationScreen'
 
 import { Search,Sticky,Toast,Loading } from 'vant';
 import 'vant/lib/search/style';
@@ -68,7 +69,8 @@ export default {
             propData: { },
             search_text: '',
             application_data: [ ],
-            is_loading: false
+            is_loading: false,
+            clientWidth: 414,
         }
     },
     props: [ 'datas' ],
@@ -77,6 +79,7 @@ export default {
         this.propData = {
             ...this.datas
         }
+        this.getClientWidth()
         this.initDevelopData()
         this.convertAttrToStyleObject();
     },
@@ -195,19 +198,15 @@ export default {
         /**
          * 把属性转换成样式对象
          */
-        translatePxToAdaptation(data) {
-            if ( (!data) && data !== 0 ) {
-                return 
-            }
-            let clientWidth = document.body.clientWidth;
-            let adaptationBaseSearch = this.propData.adaptationBaseSearch || 414;
-            let adaptationPercentSearch = this.propData.adaptationPercentSearch || 1;
-            let percent = ( ( clientWidth/adaptationBaseSearch - 1 ) * ( adaptationPercentSearch - 1 ) + 1 )
+        getClientWidth() {
             if ( this.moduleObject.env == 'develop' ) {
-                return data
+                return
             } else {
-                return data * percent
+                this.clientWidth = window.outerWidth;
             }
+        },
+        translatePxToAdaptation(data) {
+            translatePxToAdaptationApi(data,this.propData.adaptationBaseSearch,this.propData.adaptationPercentSearch,this.clientWidth)
         },
         convertAttrToStyleObject() {
             this.convertThemeListAttrToStyleObject()
@@ -381,6 +380,9 @@ export default {
                 this.hideThisModuleHandle();
             } else if ( messageObject.type && messageObject.type == "linkageReload" ) {
                 this.initData()
+            } else if ( messageObject.type && messageObject.type == "pageResize" ) {
+                this.clientWidth = messageObject.message ? messageObject.message.width : 414;
+                this.convertAttrToStyleObject()
             }
         },
         /**
