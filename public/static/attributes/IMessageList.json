@@ -399,7 +399,7 @@
                     "type": "inputNumberUnit",
                     "layoutType": "inline",
                     "text": "空白高度",
-                    "desc": "列表为空时，显示空白数据高度，设置过小则显示不全，推荐90px",
+                    "desc": "列表为空时，显示空白数据高度，设置过小则显示不全，推荐110px",
                     "bindKey": "emptyBoxHeight",
                     "dictionary": [
                         {
@@ -412,7 +412,7 @@
                         }
                     ],
                     "default": {
-                        "inputVal": 90,
+                        "inputVal": 110,
                         "selectVal": "px"
                     }
                 }
