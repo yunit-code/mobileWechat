@@ -622,6 +622,7 @@ export default {
                 font-family: PingFangSC-Medium;
                 font-size: 16px;
                 // color: #333333;
+                font-weight: 800;
                 line-height: 22px;
             }
         }
@@ -665,10 +666,8 @@ export default {
     
     .idm_applicationmanage_footer{
         width: 100%;
-        // position: fixed;
-        // bottom: 80px;
         margin-top: 40px;
-        // padding: 0 20px;
+        padding: 0 20px;
         // background: white;
         .button:nth-child(1){
             margin-right: 20px;
