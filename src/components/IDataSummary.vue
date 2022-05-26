@@ -263,7 +263,7 @@ export default {
               styleObject["font-style"]=element.fontStyle;
               // const sizeResult = element.fontSize+element.fontSizeUnit;
               // styleObject["font-size"]= Boolean(sizeResult)?sizeResult:'16px';
-              styleObject["font-size"]= `${this.funScreenAdaptation(element.fontSize)}${element.fontSizeUnit}`;
+              styleObject["font-size"]= `${this.funScreenAdaptation(element.fontSize||16)}${element.fontSizeUnit||'px'}`;
               styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
               styleObject["text-align"]=element.fontTextAlign;
               styleObject["text-decoration"]=element.fontDecoration;
@@ -275,9 +275,9 @@ export default {
               // styleObjectTitleIcon["font-size"] = element + "px";
               // styleObjectTitleIcon["width"] = element + "px";
               // styleObjectTitleIcon["height"] = element + "px";
-              styleObjectTitleIcon["font-size"]= `${this.funScreenAdaptation(element)}px`;
-              styleObjectTitleIcon["width"] = `${this.funScreenAdaptation(element)}px`;
-              styleObjectTitleIcon["height"] = `${this.funScreenAdaptation(element)}px`;
+              styleObjectTitleIcon["font-size"]= `${this.funScreenAdaptation(element||14)}px`;
+              styleObjectTitleIcon["width"] = `${this.funScreenAdaptation(element||14)}px`;
+              styleObjectTitleIcon["height"] = `${this.funScreenAdaptation(element||14)}px`;
               break
             case "sumFont":
               styleObjectSumTitle["font-family"]=element.fontFamily;
@@ -286,7 +286,7 @@ export default {
               }
               styleObjectSumTitle["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
               styleObjectSumTitle["font-style"]=element.fontStyle;
-              styleObjectSumTitle["font-size"]=`${this.funScreenAdaptation(element.fontSize)}${element.fontSizeUnit}`;
+              styleObjectSumTitle["font-size"]=`${this.funScreenAdaptation(element.fontSize||15)}${element.fontSizeUnit||'px'}`;
               styleObjectSumTitle["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
               styleObjectSumTitle["text-align"]=element.fontTextAlign;
               styleObjectSumTitle["text-decoration"]=element.fontDecoration;
@@ -298,7 +298,7 @@ export default {
               }
               styleObjectNum["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
               styleObjectNum["font-style"]=element.fontStyle;
-              styleObjectNum["font-size"]=`${this.funScreenAdaptation(element.fontSize)}${element.fontSizeUnit}`;
+              styleObjectNum["font-size"]=`${this.funScreenAdaptation(element.fontSize||15)}${element.fontSizeUnit||'px'}`;
               styleObjectNum["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
               styleObjectNum["text-align"]=element.fontTextAlign;
               styleObjectNum["text-decoration"]=element.fontDecoration;
@@ -434,7 +434,7 @@ export default {
               }
               styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
               styleObject["font-style"]=element.fontStyle;
-              styleObject["font-size"]= `${this.funScreenAdaptation(element.fontSize)}${element.fontSizeUnit}`;
+              styleObject["font-size"]= `${this.funScreenAdaptation(element.fontSize||16)}${element.fontSizeUnit||'px'}`;
               styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
               styleObject["text-align"]=element.fontTextAlign;
               styleObject["text-decoration"]=element.fontDecoration;
@@ -673,9 +673,9 @@ export default {
     }
     .summary-bg{
       border-radius: 6px;
-      // background-repeat: no-repeat;
-      // background-size: 100% 100%;
-      // background-position: center;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-position: center;
       // display: flex;
       // flex-direction: column;
       // justify-content: center;
