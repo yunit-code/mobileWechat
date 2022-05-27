@@ -77,7 +77,7 @@
 <script>
 import { Icon, Loading, Empty } from 'vant';
 import { getDatasInterfaceUrl } from '@/api/config'
-import { getComputedSize } from '@/utils/adaptationScreen'
+import { getAdaptiveSize, titleDifferentValue } from '@/utils/adaptationScreen'
 import 'vant/lib/icon/style';
 import 'vant/lib/loading/style';
 import 'vant/lib/empty/style';
@@ -405,9 +405,9 @@ export default {
                 styleObjectTitleIcon["fill"] = element.hex + ' !important';
                 break
             case "titleIconFontSize":
-                styleObjectTitleIcon["font-size"] = getComputedSize.call(this, element) + "px";
-                styleObjectTitleIcon["width"] = getComputedSize.call(this, element) + "px";
-                styleObjectTitleIcon["height"] = getComputedSize.call(this, element) + "px";
+                styleObjectTitleIcon["font-size"] = getAdaptiveSize.call(this, element) + "px";
+                styleObjectTitleIcon["width"] = getAdaptiveSize.call(this, element) + "px";
+                styleObjectTitleIcon["height"] = getAdaptiveSize.call(this, element) + "px";
                 break
             case 'titleFontStyle':
               titleFontStyleObj["font-family"] = element.fontFamily;
@@ -416,7 +416,7 @@ export default {
               }
               titleFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
               titleFontStyleObj["font-style"] = element.fontStyle;
-              titleFontStyleObj["font-size"] = getComputedSize.call(this, element.fontSize) + element.fontSizeUnit;
+              titleFontStyleObj["font-size"] = getAdaptiveSize.call(this, element.fontSize) + titleDifferentValue + element.fontSizeUnit;
               titleFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
               titleFontStyleObj["text-align"] = element.fontTextAlign;
               titleFontStyleObj["text-decoration"] = element.fontDecoration;
@@ -428,7 +428,7 @@ export default {
               }
               todoFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
               todoFontStyleObj["font-style"] = element.fontStyle;
-              todoFontStyleObj["font-size"] = getComputedSize.call(this, element.fontSize) + element.fontSizeUnit;
+              todoFontStyleObj["font-size"] = getAdaptiveSize.call(this, element.fontSize) + element.fontSizeUnit;
               todoFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
               todoFontStyleObj["text-align"] = element.fontTextAlign;
               todoFontStyleObj["text-decoration"] = element.fontDecoration;
@@ -452,17 +452,17 @@ export default {
                 readIconObj["fill"] = element.hex;
                 break
             case "readIconSize":
-                readIconObj["font-size"] = getComputedSize.call(this, element) + "px";
-                readIconObj["width"] = getComputedSize.call(this, element) + "px";
-                readIconObj["height"] = getComputedSize.call(this, element) + "px";
+                readIconObj["font-size"] = getAdaptiveSize.call(this, element) + "px";
+                readIconObj["width"] = getAdaptiveSize.call(this, element) + "px";
+                readIconObj["height"] = getAdaptiveSize.call(this, element) + "px";
                 break
             case "noReadIconColor":
                 noReadIconObj["fill"] = element.hex;
                 break
             case "noReadIconSize":
-                noReadIconObj["font-size"] = getComputedSize.call(this, element) + "px";
-                noReadIconObj["width"] = getComputedSize.call(this, element) + "px";
-                noReadIconObj["height"] = getComputedSize.call(this, element) + "px";
+                noReadIconObj["font-size"] = getAdaptiveSize.call(this, element) + "px";
+                noReadIconObj["width"] = getAdaptiveSize.call(this, element) + "px";
+                noReadIconObj["height"] = getAdaptiveSize.call(this, element) + "px";
                 break
           }
 
@@ -479,9 +479,9 @@ export default {
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-empty", emptyBoxHeightObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-icon-has-read", readIconObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-icon-no-read", noReadIconObj);
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-intr", {'font-size': getComputedSize.call(this, 14) + 'px'});
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-icon", {'font-size': getComputedSize.call(this, 15) + 'px'});
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-content", {'font-size': getComputedSize.call(this, 15) + 'px'});
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-intr", {'font-size': getAdaptiveSize.call(this, 14) + 'px'});
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-icon", {'font-size': getAdaptiveSize.call(this, 15) + 'px'});
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-content", {'font-size': getAdaptiveSize.call(this, 15) + 'px'});
       this.initData();
     },
     /**

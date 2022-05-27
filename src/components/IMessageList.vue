@@ -87,7 +87,7 @@ import { Icon, Loading, Empty } from 'vant';
 import 'vant/lib/icon/style';
 import 'vant/lib/loading/style';
 import 'vant/lib/empty/style';
-import { getComputedSize } from '@/utils/adaptationScreen'
+import { getAdaptiveSize, titleDifferentValue } from '@/utils/adaptationScreen'
 
 import { getDatasInterfaceUrl } from '@/api/config'
 const messageData = {
@@ -378,9 +378,9 @@ export default {
                 styleObjectTitleIcon["fill"] = element.hex;
                 break
             case "titleIconFontSize":
-                styleObjectTitleIcon["font-size"] = getComputedSize.call(this,element) + "px";
-                styleObjectTitleIcon["width"] = getComputedSize.call(this,element) + "px";
-                styleObjectTitleIcon["height"] = getComputedSize.call(this,element) + "px";
+                styleObjectTitleIcon["font-size"] = getAdaptiveSize.call(this,element) + "px";
+                styleObjectTitleIcon["width"] = getAdaptiveSize.call(this,element) + "px";
+                styleObjectTitleIcon["height"] = getAdaptiveSize.call(this,element) + "px";
                 break
             case 'titleFontStyle':
                 titleFontStyleObj["font-family"] = element.fontFamily;
@@ -389,7 +389,7 @@ export default {
                 }
                 titleFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                 titleFontStyleObj["font-style"] = element.fontStyle;
-                titleFontStyleObj["font-size"] =  getComputedSize.call(this, element.fontSize) + element.fontSizeUnit;
+                titleFontStyleObj["font-size"] =  getAdaptiveSize.call(this, element.fontSize) + titleDifferentValue + element.fontSizeUnit;
                 titleFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
                 titleFontStyleObj["text-align"] = element.fontTextAlign;
                 titleFontStyleObj["text-decoration"] = element.fontDecoration;
@@ -401,7 +401,7 @@ export default {
                 }
                 tabFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                 tabFontStyleObj["font-style"] = element.fontStyle;
-                tabFontStyleObj["font-size"] =  getComputedSize.call(this, element.fontSize) + element.fontSizeUnit;
+                tabFontStyleObj["font-size"] =  getAdaptiveSize.call(this, element.fontSize) + titleDifferentValue + element.fontSizeUnit;
                 tabFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
                 tabFontStyleObj["text-align"] = element.fontTextAlign;
                 tabFontStyleObj["text-decoration"] = element.fontDecoration;
@@ -413,7 +413,7 @@ export default {
                 }
                 titleFontStyleActiveObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                 titleFontStyleActiveObj["font-style"] = element.fontStyle;
-                titleFontStyleActiveObj["font-size"] = getComputedSize.call(this, element.fontSize) + element.fontSizeUnit;
+                titleFontStyleActiveObj["font-size"] = getAdaptiveSize.call(this, element.fontSize) + titleDifferentValue + element.fontSizeUnit;
                 titleFontStyleActiveObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
                 titleFontStyleActiveObj["text-align"] = element.fontTextAlign;
                 titleFontStyleActiveObj["text-decoration"] = element.fontDecoration;
@@ -425,7 +425,7 @@ export default {
                 }
                 messageItemFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                 messageItemFontStyleObj["font-style"] = element.fontStyle;
-                messageItemFontStyleObj["font-size"] = getComputedSize.call(this, element.fontSize) + element.fontSizeUnit;
+                messageItemFontStyleObj["font-size"] = getAdaptiveSize.call(this, element.fontSize) + element.fontSizeUnit;
                 messageItemFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
                 messageItemFontStyleObj["text-align"] = element.fontTextAlign;
                 messageItemFontStyleObj["text-decoration"] = element.fontDecoration;
@@ -447,12 +447,21 @@ export default {
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list2-title", messageItemFontStyleObj);
 
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list2-left-img", {
-        'width': getComputedSize.call(this, 80) + 'px',
-        'height': getComputedSize.call(this, 70) + 'px'
+        'width': getAdaptiveSize.call(this, 80) + 'px',
+        'height': getAdaptiveSize.call(this, 70) + 'px'
       });
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list2-left-img2", {
-        'width': getComputedSize.call(this, 60) + 'px',
-        'height': getComputedSize.call(this, 60) + 'px'
+        'width': getAdaptiveSize.call(this, 60) + 'px',
+        'height': getAdaptiveSize.call(this, 60) + 'px'
+      });
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list-style-square", {
+        'font-size': getAdaptiveSize.call(this, 10) + 'px'
+      });
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list-time", {
+        'font-size': getAdaptiveSize.call(this, 16) + 'px',
+      });
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list2-title-bottom", {
+        'font-size': getAdaptiveSize.call(this, 14) + 'px',
       });
       this.initData();
     },

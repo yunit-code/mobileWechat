@@ -331,7 +331,14 @@
                     "type": "font",
                     "layoutType": "block",
                     "text": "信息字体",
-                    "bindKey": "messageItemFontStyle"
+                    "bindKey": "messageItemFontStyle",
+                    "default": {
+                        "fontColors": {
+                            "hex": "#000000"
+                        },
+                        "fontSize": 16,
+                        "fontSizeUnit": "px"
+                    }
                 },
                 {
                     "type": "colorPicker",
