@@ -299,7 +299,7 @@ export default {
               }
               bannerFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
               bannerFontStyleObj["font-style"] = element.fontStyle;
-              bannerFontStyleObj["font-size"] = getAdaptiveSize.call(this, element) + element.fontSizeUnit;
+              bannerFontStyleObj["font-size"] = getAdaptiveSize.call(this, element.fontSize) + element.fontSizeUnit;
               bannerFontStyleObj["line-height"] =
                 element.fontLineHeight +
                 (element.fontLineHeightUnit == "-"

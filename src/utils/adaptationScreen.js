@@ -1,5 +1,5 @@
 /**
- * 标题适配插值
+ * 标题适配差值
  * type: number
  */
 export const titleDifferentValue = 0

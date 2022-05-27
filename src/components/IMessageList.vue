@@ -87,7 +87,7 @@ import { Icon, Loading, Empty } from 'vant';
 import 'vant/lib/icon/style';
 import 'vant/lib/loading/style';
 import 'vant/lib/empty/style';
-import { getAdaptiveSize, titleDifferentValue } from '@/utils/adaptationScreen'
+import { getAdaptiveSize } from '@/utils/adaptationScreen'
 
 import { getDatasInterfaceUrl } from '@/api/config'
 const messageData = {
@@ -389,7 +389,7 @@ export default {
                 }
                 titleFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                 titleFontStyleObj["font-style"] = element.fontStyle;
-                titleFontStyleObj["font-size"] =  getAdaptiveSize.call(this, element.fontSize) + titleDifferentValue + element.fontSizeUnit;
+                titleFontStyleObj["font-size"] =  getAdaptiveSize.call(this, element.fontSize) + element.fontSizeUnit;
                 titleFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
                 titleFontStyleObj["text-align"] = element.fontTextAlign;
                 titleFontStyleObj["text-decoration"] = element.fontDecoration;
@@ -401,7 +401,7 @@ export default {
                 }
                 tabFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                 tabFontStyleObj["font-style"] = element.fontStyle;
-                tabFontStyleObj["font-size"] =  getAdaptiveSize.call(this, element.fontSize) + titleDifferentValue + element.fontSizeUnit;
+                tabFontStyleObj["font-size"] =  getAdaptiveSize.call(this, element.fontSize) + element.fontSizeUnit;
                 tabFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
                 tabFontStyleObj["text-align"] = element.fontTextAlign;
                 tabFontStyleObj["text-decoration"] = element.fontDecoration;
@@ -413,7 +413,7 @@ export default {
                 }
                 titleFontStyleActiveObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                 titleFontStyleActiveObj["font-style"] = element.fontStyle;
-                titleFontStyleActiveObj["font-size"] = getAdaptiveSize.call(this, element.fontSize) + titleDifferentValue + element.fontSizeUnit;
+                titleFontStyleActiveObj["font-size"] = getAdaptiveSize.call(this, element.fontSize) + element.fontSizeUnit;
                 titleFontStyleActiveObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
                 titleFontStyleActiveObj["text-align"] = element.fontTextAlign;
                 titleFontStyleActiveObj["text-decoration"] = element.fontDecoration;

@@ -77,7 +77,7 @@
 <script>
 import { Icon, Loading, Empty } from 'vant';
 import { getDatasInterfaceUrl } from '@/api/config'
-import { getAdaptiveSize, titleDifferentValue } from '@/utils/adaptationScreen'
+import { getAdaptiveSize } from '@/utils/adaptationScreen'
 import 'vant/lib/icon/style';
 import 'vant/lib/loading/style';
 import 'vant/lib/empty/style';
@@ -416,7 +416,7 @@ export default {
               }
               titleFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
               titleFontStyleObj["font-style"] = element.fontStyle;
-              titleFontStyleObj["font-size"] = getAdaptiveSize.call(this, element.fontSize) + titleDifferentValue + element.fontSizeUnit;
+              titleFontStyleObj["font-size"] = getAdaptiveSize.call(this, element.fontSize) + element.fontSizeUnit;
               titleFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
               titleFontStyleObj["text-align"] = element.fontTextAlign;
               titleFontStyleObj["text-decoration"] = element.fontDecoration;
