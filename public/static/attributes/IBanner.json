@@ -174,7 +174,7 @@
             ]
         },
         {
-            "type": "group",
+            "type": "table",
             "text": "主题设置",
             "desc": "点击？查看主题设置用法指南",
             "bindKey": "themeList",
