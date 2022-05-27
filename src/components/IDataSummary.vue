@@ -35,7 +35,9 @@
         <ul class="summary-box">
           <li v-for="(v,i) in tempSummaryConfigList" :key="i" class="summary-item"
           :style="{width: `${100/propData.showColumn}%`}">
-            <div class="summary-bg" :style="v.styles">
+            <div class="summary-bg" 
+              :style="v.styles"
+              @click="goUrl(v)">
               <!-- <div style="marginBottom: 5px" class="summary-name">{{v.name?v.name:IDM.express.replace("@[data."+v.dataFiled+".name]",data,true)}}</div> -->
               <!-- <div class="summary-num">{{v.count?v.count:IDM.express.replace("@[data."+v.dataFiled+".count]",data,true)}}</div> -->
               <div style="marginBottom: 5px" class="summary-name">{{v.name}}</div>
@@ -45,11 +47,15 @@
         </ul>
       </div>
     </div>
+    <div class="idm-unifie-todo-box-mask" v-if="moduleObject.env === 'develop' && ((!propData.dataSource))">
+      <span>！未绑定数据源</span>
+    </div>
     
   </div>
 </template>
 
 <script>
+import { getDatasInterfaceUrl } from '@/api/config'
 export default {
   name: 'IDataSummary',
   data(){
@@ -69,23 +75,6 @@ export default {
     this.convertAttrToStyleObject2();
     // 主题
     this.convertThemeListAttrToStyleObject();
-    if(this.moduleObject.env=="develop" || !IDM.env_dev){
-      this.propData = {
-        comTitle: '数据汇总',
-        showColumn: 2,
-        showRows: 2,
-        shortItemHeight: {'inputVal':'72.5', 'selectVal': 'px'},
-        customInterfaceUrl: '/ctrl/dataSource/getDatas',
-        isShowTitle: true,
-        summaryConfigList:[
-          {
-            name: '省政府领导分工',
-            count: 10,
-            bgUrl: '',
-          },
-        ]
-      }
-    }
   },
   mounted() {
     //赋值给window提供跨页面调用
@@ -97,6 +86,12 @@ export default {
   },
   destroyed() {},
   methods:{
+    goUrl(v) {
+      if (v.jumpUrl) {
+        window.open(IDM.url.getWebPath(v.jumpUrl))
+        // v.jumpType === 'current' && this.moduleObject.env=="production" && (window.location.href=IDM.url.getWebPath(v.jumpUrl))
+      }
+    },
     changeLines() {
       if ( this.tempSummaryConfigList && (this.tempSummaryConfigList.length > this.propData.showRows * this.propData.showColumn) ) {
         this.tempSummaryConfigList.splice(this.propData.showRows * this.propData.showColumn)
@@ -115,10 +110,39 @@ export default {
           styles["backgroundImage"]= 'linear-gradient(to right,#f4b0b0,#f4acac,#f18c8b)';
         }
         styles['height'] = `${this.funScreenAdaptationHeight(this.propData.shortItemHeight.inputVal)}${this.propData.shortItemHeight.selectVal}`;
+        if(this.currentEquipWidth >600) {
+          styles['margin'] = `0 5px`;
+        }
         // styles['width'] = this.propData.shortItemWidth.inputVal+this.propData.shortItemWidth.selectVal;
         // styles['height'] = this.propData.shortItemHeight.inputVal+this.propData.shortItemHeight.selectVal;
         this.$set(item,'styles',styles);
       })
+      if(!this.propData.dataSource) {
+        return;
+      }
+      window.IDM.http
+        .post(getDatasInterfaceUrl, {
+          id: this.propData.dataSource && this.propData.dataSource.value
+        },{headers: {"Content-Type": "application/json;charset=UTF-8"}})
+        .then((res) => {
+          if(res.status == 200 && res.data.code == 200){
+            for (let iName in res.data.data) {
+              const cItem = this.tempSummaryConfigList.find(item=> item.tabKey == iName);
+              if(cItem) {
+                cItem.count = res.data.data[iName][this.propData.dataFiled||'count'];
+                cItem.name = res.data.data[iName].name;
+                cItem.jumpUrl = res.data.data[iName].jumpUrl;
+              }
+            }
+          }else {
+            IDM.message.error(res.data.message)
+          }
+        })
+        .catch((error) => {})
+        .finally(()=>{
+          this.isFirst = false
+          this.pageLoading = false
+        })
     },
     /**
      * 提供父级组件调用的刷新prop数据组件
@@ -281,24 +305,24 @@ export default {
               break
             case "sumFont":
               styleObjectSumTitle["font-family"]=element.fontFamily;
-              if(element.fontColors.hex8){
+              if(element.fontColors&&element.fontColors.hex8){
                 styleObjectSumTitle["color"]=element.fontColors.hex8;
               }
               styleObjectSumTitle["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
               styleObjectSumTitle["font-style"]=element.fontStyle;
-              styleObjectSumTitle["font-size"]=`${this.funScreenAdaptation(element.fontSize||15)}${element.fontSizeUnit||'px'}`;
+              styleObjectSumTitle["font-size"]=`${this.funScreenAdaptation(element.fontSize||14)}${element.fontSizeUnit||'px'}`;
               styleObjectSumTitle["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
               styleObjectSumTitle["text-align"]=element.fontTextAlign;
               styleObjectSumTitle["text-decoration"]=element.fontDecoration;
               break;
             case "numFont":
               styleObjectNum["font-family"]=element.fontFamily;
-              if(element.fontColors.hex8){
+              if(element.fontColors&&element.fontColors.hex8){
                 styleObjectNum["color"]=element.fontColors.hex8;
               }
               styleObjectNum["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
               styleObjectNum["font-style"]=element.fontStyle;
-              styleObjectNum["font-size"]=`${this.funScreenAdaptation(element.fontSize||15)}${element.fontSizeUnit||'px'}`;
+              styleObjectNum["font-size"]=`${this.funScreenAdaptation(element.fontSize||14)}${element.fontSizeUnit||'px'}`;
               styleObjectNum["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
               styleObjectNum["text-align"]=element.fontTextAlign;
               styleObjectNum["text-decoration"]=element.fontDecoration;
@@ -510,23 +534,6 @@ export default {
      * 加载动态数据
      */
     initData(){
-      let that = this;
-      if(this.moduleObject.env=="production"){
-        var params = {
-          id: this.propData.dataSource && this.propData.selectApplication.value
-        }
-        this.propData.selectApplication&&this.propData.customInterfaceUrl&&window.IDM.http.post(this.propData.customInterfaceUrl, params, {
-          headers: {
-            'Content-Type': 'application/json'
-          },
-        })
-        .then((res) => {
-          //res.data
-          if ( res.data && res.data.type == 'success') {
-            that.$set(that.propData,"summaryConfigList",res.data.data);
-          }
-        })
-      }
       if ( this.propData.summaryConfigList && this.propData.summaryConfigList.length ) {
         this.tempSummaryConfigList = JSON.parse(JSON.stringify(this.propData.summaryConfigList))
       } else {
@@ -606,7 +613,7 @@ export default {
       }
       const screenReferValue = this.propData.screenReferValue || 414;
       const screenAdaptiveRatio = this.propData.screenAdaptiveRatio || 1;
-      return e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 )
+      return Math.round(e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 ))
     },
     /**
      *@Description: 屏幕高度适配
@@ -626,13 +633,17 @@ export default {
         }
       }
       const screenReferValue = this.propData.screenReferValue || 414;
-      const screenAdaptiveRatio = 1.6;
-      return e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 )
+      const screenAdaptiveRatio = Number(this.propData.screenAdaptiveRatio) + 0.5 || 1.2;
+      return Math.round(e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 ))
     },
   }
 }
 </script>
 <style lang="scss" scoped>
+.idm-unifie-todo-box-mask {
+  font-size: 14px;
+  font-weight: 400;
+}
   ul, li{
     padding:0;
     margin:0;

@@ -161,11 +161,19 @@ export default {
   },
   created() {
     this.moduleObject = this.$root.moduleObject;
+    this.getClientWidth();
     this.convertAttrToStyleObject();
     this.convertThemeListAttrToStyleObject();
     this.getMenuList();
   },
   methods: {
+    getClientWidth() {
+      if ( this.moduleObject.env == 'develop' ) {
+          return
+      } else {
+          this.currentEquipWidth = window.screen.width;
+      }
+    },
     /**
      * 提供父级组件调用的刷新prop数据组件
      */
@@ -283,16 +291,16 @@ export default {
               btnStyleObject["box-shadow"] = element;
               break;
             case "width":
-              btnStyleObject["width"] = element;
+              btnStyleObject["width"] = this.translatePxToAdaptation(element) + 'px';
               break;
             case "height":
-              btnStyleObject["height"] = element;
+              btnStyleObject["height"] = this.translatePxToAdaptation(element) + 'px';
               break;
             case "iconSize":
-              btnStyleObject["font-size"] = element;
-              iconSizeStyleObject["font-size"] = element;
-              iconSizeStyleObject["width"] = element;
-              iconSizeStyleObject["height"] = element;
+              btnStyleObject["font-size"] = this.translatePxToAdaptation(element) + 'px';
+              iconSizeStyleObject["font-size"] = this.translatePxToAdaptation(element) + 'px';
+              iconSizeStyleObject["width"] = this.translatePxToAdaptation(element) + 'px';
+              iconSizeStyleObject["height"] = this.translatePxToAdaptation(element) + 'px';
               break;
             case "fontStyle":
               if (element.fontFamily) {

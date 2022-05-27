@@ -107,7 +107,7 @@ export default {
       moduleObject:{},
       propData:this.$root.propData.compositeAttr||{
         isShowTitle: true,
-        shortItemHeight: {'inputVal':'72.5', 'selectVal': 'px'},
+        shortItemHeight: {'inputVal':50, 'selectVal': 'px'},
         shortItemWidth: {'inputVal':100, 'selectVal': '%'},
         shortCutStyle: "default"
       },
@@ -121,41 +121,8 @@ export default {
     this.moduleObject = this.$root.moduleObject
     this.convertAttrToStyleObject();
     this.convertAttrToStyleObject2();
-      // 主题
-      this.convertThemeListAttrToStyleObject();
-    if(this.moduleObject.env=="develop" || !IDM.env_dev){
-      this.propData = {
-        isShowTitle: true,
-        comTitle: '快捷方式',
-        showType: 'else',
-        shortCutStyle: "default",
-        maxNumber: 2,
-        shortItemHeight: {'inputVal':'72.5', 'selectVal': 'px'},
-        shortItemWidth: {'inputVal':100, 'selectVal': '%'},
-        jumpType: 'new',
-        shortConfigList:[
-          {
-            bgUrl: '',
-            name: '省政府领导分工',
-            shotUrl: 'https://www.baidu.com/',
-            showTodoNumber: true,
-            todoNumber: 10
-          },
-          {
-            bgUrl: '',
-            name: 'test1',
-            showTodoNumber: true,
-            todoNumber: 10
-          },
-          {
-            bgUrl: '',
-            name: 'test2',
-            showTodoNumber: true,
-            todoNumber: 10
-          }
-        ]
-      }
-    }
+    // 主题
+    this.convertThemeListAttrToStyleObject();
   },
   mounted() {
     //赋值给window提供跨页面调用
@@ -541,6 +508,7 @@ export default {
       }
       this.getApplicationMarkNumber();
       if(this.propData.shortCutStyle === 'default'&&this.propData.shortConfigList) {
+        let styleObj = {};
         this.propData.shortConfigList.forEach(item=> {
           const styles = {}
           // if(item.positionX&&item.positionX.inputVal){
@@ -565,6 +533,9 @@ export default {
           }
           styles['height'] = `${this.funScreenAdaptationHeight(this.propData.shortItemHeight.inputVal)}${this.propData.shortItemHeight.selectVal}`;
           styles['width'] = `${this.propData.shortItemWidth.inputVal}${this.propData.shortItemWidth.selectVal}`;
+          if(this.currentEquipWidth >600) {
+            styles['margin'] = `0 5px`;
+          }
           // styles['width'] = this.propData.shortItemWidth.inputVal+this.propData.shortItemWidth.selectVal;
           // styles['height'] = this.propData.shortItemHeight.inputVal+this.propData.shortItemHeight.selectVal;
           this.$set(item,'styles',styles);
@@ -712,8 +683,8 @@ export default {
         }
       }
       const screenReferValue = this.propData.screenReferValue || 414;
-      const screenAdaptiveRatio = this.propData.screenAdaptiveRatio || 1;
-      return e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 )
+      const screenAdaptiveRatio = this.propData.screenAdaptiveRatio || 1.2;
+      return Math.round(e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 ))
     },
     /**
      *@Description: 屏幕高度适配
@@ -733,8 +704,8 @@ export default {
         }
       }
       const screenReferValue = this.propData.screenReferValue || 414;
-      const screenAdaptiveRatio = 1.4;
-      return e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 )
+      const screenAdaptiveRatio = Number(this.propData.screenAdaptiveRatio) + 0.5 || 1.2;
+      return Math.round(e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 ))
     },
   }
 }

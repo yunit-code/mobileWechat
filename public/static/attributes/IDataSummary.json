@@ -134,6 +134,14 @@
                         {
                             "type": "input",
                             "layoutType": "inline",
+                            "text": "汇总标识",
+                            "bindKey": "tabKey",
+                            "desc": "设置当前汇总标识，用来获取对应汇总数据，例如：汇总1 - inbox，汇总2 - toread",
+                            "default": ""
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
                             "text": "默认值",
                             "bindKey": "count",
                             "default": "--"
@@ -182,7 +190,17 @@
                     "type": "box",
                     "layoutType": "block",
                     "text": "内外边距",
-                    "bindKey": "box"
+                    "bindKey": "box",
+                    "default": {
+                        "marginTopVal": "",
+                        "marginRightVal": "",
+                        "marginBottomVal": "",
+                        "marginLeftVal": "",
+                        "paddingTopVal": "10px",
+                        "paddingRightVal": "10px",
+                        "paddingBottomVal": "10px",
+                        "paddingLeftVal": "10px"
+                    }
                 },
                 {
                     "type": "inlineGroup",
@@ -631,13 +649,29 @@
                     "type": "font",
                     "layoutType": "block",
                     "text": "汇总文字",
-                    "bindKey": "sumFont"
+                    "bindKey": "sumFont",
+                    "default":  {
+                        "fontColors": {
+                            "hex8": "#ffffff"
+                        },
+                        "fontSize": 14,
+                        "fontSizeUnit": "px",
+                        "fontWeight": "400"
+                    }
                 },
                 {
                     "type": "font",
                     "layoutType": "block",
                     "text": "数字文字",
-                    "bindKey": "numFont"
+                    "bindKey": "numFont",
+                    "default":  {
+                        "fontColors": {
+                            "hex8": "#ffffff"
+                        },
+                        "fontSize": 14,
+                        "fontSizeUnit": "px",
+                        "fontWeight": "400"
+                    }
                 }
             ]
         },
@@ -709,22 +743,45 @@
             "desc": "点击？查看高级设置用法指南",
             "children": [
                 {
-                    "type": "inputNumber",
-                    "layoutType": "inline",
-                    "text": "基准值属性",
-                    "bindKey": "screenReferValue",
-                    "desc":"此属性用于标记当前组件在显示效果最完美情况下的宽度大小（px），例如：此组件显示效果最佳宽度为414px，则此处设置为414即可，如果此组件最佳效果为当前配置的屏幕宽（px）的一半则只需要除以2即可。",
-                    "default": 414,
-                    "min": 0
+                    "type": "group",
+                    "text": "适配设置",
+                    "desc":"通过设置属性来适配移动端页面尺寸",
+                    "children": [
+                        {
+                            "type": "inputNumber",
+                            "layoutType": "inline",
+                            "text": "基准值",
+                            "bindKey": "screenReferValue",
+                            "desc":"此属性用于标记当前组件在显示效果最完美情况下的宽度大小（px），例如：此组件显示效果最佳宽度为414px，则此处设置为414即可，如果此组件最佳效果为当前配置的屏幕宽（px）的一半则只需要除以2即可。",
+                            "default": 414,
+                            "min": 0
+                        },
+                        {
+                            "type": "inputNumber",
+                            "layoutType": "inline",
+                            "text": "适配比例",
+                            "bindKey": "screenAdaptiveRatio",
+                            "desc":"与基准值配合使用，如果在实际预览屏幕宽为基准值的两倍，则此组件所有可适配的内容都会基于此处设置的适配比例相对应的进行放大缩小，例如此处设置1.2，则会相对应的放大至1.2倍",
+                            "default": 1.2,
+                            "min": 0
+                        }
+                    ]
                 },
                 {
-                    "type": "inputNumber",
+                    "type": "treeSelect",
                     "layoutType": "inline",
-                    "text": "适配比例属性",
-                    "bindKey": "screenAdaptiveRatio",
-                    "desc":"与基准值配合使用，如果在实际预览屏幕宽为基准值的两倍，则此组件所有可适配的内容都会基于此处设置的适配比例相对应的进行放大缩小，例如此处设置1.2，则会相对应的放大至1.2倍",
-                    "default": 1.2,
-                    "min": 0
+                    "text": "数据源",
+                    "bindKey": "dataSource",
+                    "dataSourceUrl":"/ctrl/dataSource/getDatasourceByGroup"
+                },
+                {
+                    "type": "textarea",
+                    "layoutType": "inline",
+                    "text": "显示字段",
+                    "bindKey": "dataFiled",
+                    "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData（自定义接口忽略）且它的值为{data:{filedName:[{\"text\":\"\",\"value\":\"\",\"check\":true}]}}，则这里应该填写data.filedName",
+                    "default": "count",
+                    "placeholder": "示例：data.filedName 或者 [0].data[0].filedName"
                 }
             ]
         }

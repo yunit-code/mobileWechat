@@ -17,6 +17,7 @@
     -->
     <div v-if="accountList && accountList.length > 0" class="drag-bar-wrapper" @touchstart="down"  @touchmove="move"  @touchend="end" :style="{position: (moduleObject.env === 'production' || !IDM.env_dev) && propData.fixed && 'fixed',...offset}">    
       <van-popover
+        id="idm_publicAccounts_popover"
         v-model="showPopover"
         trigger="click"
         :placement="placement"
@@ -26,7 +27,7 @@
         v-if="propData.dataSource"
       >
         <template #reference>
-          <img :style="{height: propData.imgHeight || '32px', width: propData.imgWidth || '32px'}" v-if="propData.accountUrl && accountList" :src="IDM.url.getWebPath(propData.accountUrl)" alt="">
+          <img :style="{height: translatePxToAdaptation(propData.imgHeight || 32) + 'px', width: translatePxToAdaptation(propData.imgWidth || 32) + 'px'}" v-if="propData.accountUrl && accountList" :src="IDM.url.getWebPath(propData.accountUrl)" alt="">
           <span class="drag-bar-mask" v-else>请上传或选择图标！</span>
         </template>
       </van-popover>
@@ -63,6 +64,8 @@ export default {
       yPum: "",
       moduleObject:{},
       accountList:[],
+      // 当前设备宽度
+      currentEquipWidth: 0,
       propData:this.$root.propData.compositeAttr||{
         accountUrl: '',
         fixed: true,
@@ -102,7 +105,9 @@ export default {
   },
   created() {
     this.moduleObject = this.$root.moduleObject
+    this.getClientWidth();
     this.convertAttrToStyleObject();
+    this.initData();
     if(this.moduleObject.env=="develop" || !IDM.env_dev){
       this.accountList = [
         {
@@ -130,6 +135,13 @@ export default {
   },
   destroyed() {},
   methods:{
+    getClientWidth() {
+      if ( this.moduleObject.env == 'develop' ) {
+          return
+      } else {
+          this.currentEquipWidth = window.screen.width;
+      }
+    },
     // 实现移动端拖拽
     down() {
       let item_box = document.querySelector(".drag-bar-wrapper");
@@ -236,132 +248,68 @@ export default {
     /**
      * 把属性转换成样式对象
      */
-    convertAttrToStyleObject(){
-      var styleObject = {};
-      if(this.propData.bgSize&&this.propData.bgSize=="custom"){
-        styleObject["background-size"]=(this.propData.bgSizeWidth?this.propData.bgSizeWidth.inputVal+this.propData.bgSizeWidth.selectVal:"auto")+" "+(this.propData.bgSizeHeight?this.propData.bgSizeHeight.inputVal+this.propData.bgSizeHeight.selectVal:"auto")
-      }else if(this.propData.bgSize){
-        styleObject["background-size"]=this.propData.bgSize;
+    translatePxToAdaptation(data) {
+      const clientWidth = this.currentEquipWidth;
+      if (!data || !clientWidth) {
+        return data;
       }
-      if(this.propData.positionX&&this.propData.positionX.inputVal){
-        styleObject["background-position-x"]=this.propData.positionX.inputVal+this.propData.positionX.selectVal;
-      }
-      if(this.propData.positionY&&this.propData.positionY.inputVal){
-        styleObject["background-position-y"]=this.propData.positionY.inputVal+this.propData.positionY.selectVal;
-      }
+      const adaptationBase = this.propData.adaptationBase || 414;
+      const adaptationPercent = this.propData.adaptationPercent || 1;
+      const percent =
+        (clientWidth / adaptationBase - 1) * (adaptationPercent - 1) + 1;
+      return data * percent;
+    },
+    /**
+     * 把属性转换成样式对象
+     */
+    convertAttrToStyleObject() {
+      let titleStyleObject = {};
       for (const key in this.propData) {
         if (this.propData.hasOwnProperty.call(this.propData, key)) {
           const element = this.propData[key];
-          if(!element&&element!==false&&element!=0){
+          if (!element && element !== false && element != 0) {
             continue;
           }
           switch (key) {
-            case "width":
-            case "height":
-              styleObject[key]=element;
-              break;
-            case "bgColor":
-              if(element&&element.hex8){
-                styleObject["background-color"]=element.hex8;
+            case "fontStyle":
+              if (element.fontFamily) {
+                titleStyleObject["font-family"] = element.fontFamily;
               }
-              break;
-            case "box":
-              if(element.marginTopVal){
-                styleObject["margin-top"]=`${element.marginTopVal}`;
+              if (element.fontColors.hex8) {
+                titleStyleObject["color"] = element.fontColors.hex8;
               }
-              if(element.marginRightVal){
-                styleObject["margin-right"]=`${element.marginRightVal}`;
+              if (element.fontWeight) {
+                titleStyleObject["font-weight"] =
+                  element.fontWeight && element.fontWeight.split(" ")[0];
               }
-              if(element.marginBottomVal){
-                styleObject["margin-bottom"]=`${element.marginBottomVal}`;
+              if (element.fontStyle) {
+                titleStyleObject["font-style"] = element.fontStyle;
               }
-              if(element.marginLeftVal){
-                styleObject["margin-left"]=`${element.marginLeftVal}`;
+              if (element.fontSize) {
+                titleStyleObject["font-size"] =
+                  this.translatePxToAdaptation(element.fontSize) + element.fontSizeUnit;
               }
-              if(element.paddingTopVal){
-                styleObject["padding-top"]=`${element.paddingTopVal}`;
+              if (element.fontLineHeight) {
+                titleStyleObject["line-height"] =
+                  this.translatePxToAdaptation(element.fontLineHeight) +
+                  (element.fontLineHeightUnit == "-"
+                    ? ""
+                    : element.fontLineHeightUnit);
               }
-              if(element.paddingRightVal){
-                styleObject["padding-right"]=`${element.paddingRightVal}`;
+              if (element.fontTextAlign) {
+                titleStyleObject["text-align"] = element.fontTextAlign;
               }
-              if(element.paddingBottomVal){
-                styleObject["padding-bottom"]=`${element.paddingBottomVal}`;
+              if (element.fontDecoration) {
+                titleStyleObject["text-decoration"] = element.fontDecoration;
               }
-              if(element.paddingLeftVal){
-                styleObject["padding-left"]=`${element.paddingLeftVal}`;
-              }
-              break;
-            case "bgImgUrl":
-              styleObject["background-image"]=`url(${window.IDM.url.getWebPath(element)})`;
-              break;
-            case "positionX":
-              //背景横向偏移
-              
-              break;
-            case "positionY":
-              //背景纵向偏移
-              
-              break;
-            case "bgRepeat":
-              //平铺模式
-                styleObject["background-repeat"]=element;
-              break;
-            case "bgAttachment":
-              //背景模式
-                styleObject["background-attachment"]=element;
-              break;
-            case "border":
-              if(element.border.top.width>0){
-                styleObject["border-top-width"]=element.border.top.width+element.border.top.widthUnit;
-                styleObject["border-top-style"]=element.border.top.style;
-                if(element.border.top.colors.hex8){
-                  styleObject["border-top-color"]=element.border.top.colors.hex8;
-                }
-              }
-              if(element.border.right.width>0){
-                styleObject["border-right-width"]=element.border.right.width+element.border.right.widthUnit;
-                styleObject["border-right-style"]=element.border.right.style;
-                if(element.border.right.colors.hex8){
-                  styleObject["border-right-color"]=element.border.right.colors.hex8;
-                }
-              }
-              if(element.border.bottom.width>0){
-                styleObject["border-bottom-width"]=element.border.bottom.width+element.border.bottom.widthUnit;
-                styleObject["border-bottom-style"]=element.border.bottom.style;
-                if(element.border.bottom.colors.hex8){
-                  styleObject["border-bottom-color"]=element.border.bottom.colors.hex8;
-                }
-              }
-              if(element.border.left.width>0){
-                styleObject["border-left-width"]=element.border.left.width+element.border.left.widthUnit;
-                styleObject["border-left-style"]=element.border.left.style;
-                if(element.border.left.colors.hex8){
-                  styleObject["border-left-color"]=element.border.left.colors.hex8;
-                }
-              }
-              
-              styleObject["border-top-left-radius"]=element.radius.leftTop.radius+element.radius.leftTop.radiusUnit;
-              styleObject["border-top-right-radius"]=element.radius.rightTop.radius+element.radius.rightTop.radiusUnit;
-              styleObject["border-bottom-left-radius"]=element.radius.leftBottom.radius+element.radius.leftBottom.radiusUnit;
-              styleObject["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
-              break;
-            case "font":
-              styleObject["font-family"]=element.fontFamily;
-              if(element.fontColors.hex8){
-                styleObject["color"]=element.fontColors.hex8;
-              }
-              styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
-              styleObject["font-style"]=element.fontStyle;
-              styleObject["font-size"]=element.fontSize+element.fontSizeUnit;
-              styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
-              styleObject["text-align"]=element.fontTextAlign;
-              styleObject["text-decoration"]=element.fontDecoration;
               break;
           }
         }
       }
-      window.IDM.setStyleToPageHead(this.moduleObject.id,styleObject);
-      this.initData();
+      window.IDM.setStyleToPageHead(
+        ".van-popover .van-popover__content .idm_publicAccounts_popover_item .van-popover__action-text",
+        titleStyleObject
+      );
     },
     /**
      * 通用的url参数对象
@@ -410,6 +358,7 @@ export default {
                 that.accountList = res.data.map((item) => ({
                     ...item,
                     text: item.userName,
+                    className: 'idm_publicAccounts_popover_item'
                   }));
               } else {
                 IDM.message.error(res.message);
@@ -431,6 +380,9 @@ export default {
       console.log("组件收到消息",messageObject)
       if (messageObject.type && messageObject.type == "linkageReload") {
         this.reload();
+      } else if (messageObject.type && messageObject.type == "pageResize") {
+        this.currentEquipWidth = messageObject.message.width;
+        this.convertAttrToStyleObject();
       }
     },
     /**

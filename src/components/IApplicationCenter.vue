@@ -439,8 +439,8 @@ export default {
                 this.clientWidth = window.outerWidth;
             }
         },
-        translatePxToAdaptation(data) {
-            return translatePxToAdaptationApi(data,this.propData.adaptationBase,this.propData.adaptationPercent,this.clientWidth)
+        translatePxToAdaptation(data,is_img) {
+            return translatePxToAdaptationApi(data,this.propData.adaptationBase,this.propData.adaptationPercent,this.clientWidth,is_img)
         },
         convertAttrToStyleObject() {
             this.convertAttrToStyleObjectInner()
@@ -593,8 +593,8 @@ export default {
                             styleObjectTitleIcon["height"] = this.translatePxToAdaptation(element) + "px";
                             break
                         case "applicationImgWidth":
-                            imgStyleObject['width'] = this.translatePxToAdaptation(element) + 'px'
-                            imgStyleObject['height'] = this.translatePxToAdaptation(element) + 'px'
+                            imgStyleObject['width'] = this.translatePxToAdaptation(element,true) + 'px'
+                            imgStyleObject['height'] = this.translatePxToAdaptation(element,true) + 'px'
                     }
                 }
             }
@@ -836,9 +836,10 @@ export default {
             font-size: 16px;
             color: #333333;
             font-weight: 600;
-            line-height: 22px;
+            line-height: 23px;
         }
         .idm_applicationcenter_title_right{
+            line-height: 1;
             i{
                 font-size: 23px;
             }

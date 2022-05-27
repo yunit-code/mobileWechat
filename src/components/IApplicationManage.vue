@@ -347,8 +347,8 @@ export default {
                 this.clientWidth = window.outerWidth;
             }
         },
-        translatePxToAdaptation(data) {
-            return translatePxToAdaptationApi(data,this.propData.adaptationBaseManage,this.propData.adaptationPercentManage,this.clientWidth)
+        translatePxToAdaptation(data,is_img) {
+            return translatePxToAdaptationApi(data,this.propData.adaptationBaseManage,this.propData.adaptationPercentManage,this.clientWidth,is_img)
         },
         convertAttrToStyleObject() {
             this.convertThemeListAttrToStyleObject()
@@ -528,8 +528,8 @@ export default {
                             styleObjectTitle["text-decoration"] = element.fontDecoration;
                             break;
                         case "applicationImgWidthManage":
-                            imgStyleObject['width'] = this.translatePxToAdaptation(element) + 'px'
-                            imgStyleObject['height'] = this.translatePxToAdaptation(element) + 'px'
+                            imgStyleObject['width'] = this.translatePxToAdaptation(element,true) + 'px'
+                            imgStyleObject['height'] = this.translatePxToAdaptation(element,true) + 'px'
                     }
                 }
             }
@@ -620,10 +620,8 @@ export default {
             padding: 10px 10px 10px 10px;
             .idm_applicationmanage_title_left_text{
                 font-family: PingFangSC-Medium;
-                font-size: 16px;
-                // color: #333333;
                 font-weight: 600;
-                line-height: 22px;
+                line-height: 23px;
             }
         }
         .idm_applicationmanage_main{

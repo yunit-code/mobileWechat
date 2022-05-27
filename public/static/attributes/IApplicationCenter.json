@@ -250,7 +250,8 @@
                     "bindKey": "titleFont",
                     "default": {
                         "fontColors": {
-                            "hex": "#333333"
+                            "hex": "#333333",
+                            "hex8": "#333333FF"
                         },
                         "fontSize": 16,
                         "fontSizeUnit": "px",
@@ -332,7 +333,8 @@
                     "bindKey": "font",
                     "default": {
                         "fontColors": {
-                            "hex8": "333333"
+                            "hex": "333333",
+                            "hex8": "#333333FF"
                         },
                         "fontSize": 12,
                         "fontSizeUnit": "px"
@@ -524,7 +526,8 @@
                             "bindKey": "titleFontManage",
                             "default": {
                                 "fontColors": {
-                                    "hex": "#333333"
+                                    "hex": "#333333",
+                                    "hex8": "#333333FF"
                                 },
                                 "fontSize": 16,
                                 "fontSizeUnit": "px",
@@ -568,7 +571,8 @@
                             "bindKey": "fontManage",
                             "default": {
                                 "fontColors": {
-                                    "hex8": "333333"
+                                    "hex": "333333",
+                                    "hex8": "#333333FF"
                                 },
                                 "fontSize": 12,
                                 "fontSizeUnit": "px"
@@ -717,7 +721,8 @@
                             "bindKey": "fontSearch",
                             "default": {
                                 "fontColors": {
-                                    "hex": "#333333"
+                                    "hex": "#333333",
+                                    "hex8": "#333333FF"
                                 },
                                 "fontSize": 14,
                                 "fontSizeUnit": "px"
@@ -742,6 +747,7 @@
                                     "bindKey": "fontButton",
                                     "default": {
                                         "fontColors": {
+                                            "hex": "",
                                             "hex8": ""
                                         },
                                         "fontSize": 12,
@@ -769,6 +775,7 @@
                                     "bindKey": "fontButtonDisabled",
                                     "default": {
                                         "fontColors": {
+                                            "hex": "",
                                             "hex8": ""
                                         },
                                         "fontSize": 12,

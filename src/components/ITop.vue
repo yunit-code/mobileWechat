@@ -97,6 +97,7 @@ export default {
   },
   created() {
     this.moduleObject = this.$root.moduleObject
+    this.getClientWidth();
     this.initData();
     this.convertAttrToStyleObject();
     this.convertThemeListAttrToStyleObject();
@@ -117,6 +118,13 @@ export default {
   },
   destroyed() {},
   methods:{
+    getClientWidth() {
+      if ( this.moduleObject.env == 'develop' ) {
+          return
+      } else {
+          this.currentEquipWidth = window.screen.width;
+      }
+    },
     // 设置图标跳转
     goUrl() {
       if (this.propData.setUrl) {
