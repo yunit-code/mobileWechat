@@ -107,7 +107,7 @@ export default {
       moduleObject:{},
       propData:this.$root.propData.compositeAttr||{
         isShowTitle: true,
-        shortItemHeight: {'inputVal':50, 'selectVal': 'px'},
+        shortItemHeight: {'inputVal':45, 'selectVal': 'px'},
         shortItemWidth: {'inputVal':100, 'selectVal': '%'},
         shortCutStyle: "default"
       },
@@ -431,7 +431,7 @@ export default {
               }
               styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
               styleObject["font-style"]=element.fontStyle;
-              styleObject["font-size"]= `${this.funScreenAdaptation(element.fontSize||14)}${element.fontSizeUnit||'px'}`;
+              styleObject["font-size"]= `${this.funScreenAdaptation(element.fontSize||12)}${element.fontSizeUnit||'px'}`;
               styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
               styleObject["text-align"]=element.fontTextAlign;
               if(element.fontTextAlign) {

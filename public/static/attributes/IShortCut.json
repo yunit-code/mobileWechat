@@ -123,7 +123,7 @@
                     "layoutType": "inline",
                     "text": "每项高度",
                     "bindKey": "shortItemHeight",
-                    "default": {"inputVal":50, "selectVal": "px"},
+                    "default": {"inputVal":45, "selectVal": "px"},
                     "dictionary": [
                         {
                             "label": "px",
@@ -824,7 +824,7 @@
                         "fontColors": {
                             "hex8": "#ffffff"
                         },
-                        "fontSize": 14,
+                        "fontSize": 12,
                         "fontSizeUnit": "px",
                         "fontWeight": "400"
                     }
