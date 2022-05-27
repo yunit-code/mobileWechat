@@ -533,7 +533,13 @@ export default {
           }
           styles['height'] = `${this.funScreenAdaptationHeight(this.propData.shortItemHeight.inputVal)}${this.propData.shortItemHeight.selectVal}`;
           styles['width'] = `${this.propData.shortItemWidth.inputVal}${this.propData.shortItemWidth.selectVal}`;
-          if(this.currentEquipWidth >600) {
+          let pClientWidth = this.currentEquipWidth;
+          if(this.moduleObject.env!=="develop") {
+            if(!pClientWidth) {
+              pClientWidth = document.body.clientWidth;
+            }
+          }
+          if(pClientWidth >600) {
             styles['margin'] = `0 10px`;
           }
           // styles['width'] = this.propData.shortItemWidth.inputVal+this.propData.shortItemWidth.selectVal;
@@ -704,7 +710,7 @@ export default {
         }
       }
       const screenReferValue = this.propData.screenReferValue || 414;
-      const screenAdaptiveRatio = Number(this.propData.screenAdaptiveRatio) + 0.5 || 1.2;
+      const screenAdaptiveRatio = Number(this.propData.screenAdaptiveRatio) + 0.3 || 1.2;
       return Math.round(e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 ))
     },
   }
