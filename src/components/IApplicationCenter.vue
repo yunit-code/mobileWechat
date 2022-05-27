@@ -822,9 +822,7 @@ export default {
 </script>
 <style lang="scss">
 .idm_applicationcenter {
-    font-size: 12px;
     font-family: PingFangSC-Regular;
-    color: #333333;
     text-align: center;
     border-radius: 10px;
     .idm_applicationcenter_title{

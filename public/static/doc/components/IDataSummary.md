@@ -16,14 +16,6 @@ mobileWechat@1.0.8
 - 标识：`ctrlId`
 - 默认值：`@[packageid]`
 ### 基本属性
-#### 基准值属性【screenReferValue】
-用于设置页面适配基准值属性
-- 标识：`页面适配基准值属性【screenReferValue】`
-- 默认值：`414`
-#### 适配比例属性【screenAdaptiveRatio】
-用于设置页面适配比例属性
-- 标识：`适配比例属性【screenAdaptiveRatio】`
-- 默认值：`1.2`
 #### 显示标题【isShowTitle】
 用于设置title是否显示
 - 标识：`是否显示标题【isShowTitle】`
@@ -362,3 +354,15 @@ mobileWechat@1.0.8
 - 标识：`themeList`
 
 - 默认值：`[]`
+
+### 高级
+<font color="#CCCCCC">用于对组件高级设置的属性的分组。</font>
+
+#### 基准值属性【screenReferValue】
+用于设置页面适配基准值属性
+- 标识：`页面适配基准值属性【screenReferValue】`
+- 默认值：`414`
+#### 适配比例属性【screenAdaptiveRatio】
+用于设置页面适配比例属性
+- 标识：`适配比例属性【screenAdaptiveRatio】`
+- 默认值：`1.2`
