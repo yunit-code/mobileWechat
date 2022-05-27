@@ -139,7 +139,7 @@ export default {
       if ( this.moduleObject.env == 'develop' ) {
           return
       } else {
-          this.currentEquipWidth = window.outerWidth;
+          this.currentEquipWidth = window.screen.width;
       }
     },
     // 实现移动端拖拽
@@ -307,7 +307,7 @@ export default {
         }
       }
       window.IDM.setStyleToPageHead(
-        "idm_publicAccounts_popover" + " .van-popover__content .van-popover__action .van-popover__action-text",
+        ".van-popover .van-popover__content .idm_publicAccounts_popover_item .van-popover__action-text",
         titleStyleObject
       );
     },
@@ -358,6 +358,7 @@ export default {
                 that.accountList = res.data.map((item) => ({
                     ...item,
                     text: item.userName,
+                    className: 'idm_publicAccounts_popover_item'
                   }));
               } else {
                 IDM.message.error(res.message);

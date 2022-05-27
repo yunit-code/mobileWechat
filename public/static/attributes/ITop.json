@@ -378,7 +378,10 @@
                     "layoutType": "block",
                     "text": "文字",
                     "bindKey": "font",
-                    "default":  {
+                    "default": {
+                        "fontColors": {
+                            "hex8": ""
+                          },
                         "fontSize": 18,
                         "fontSizeUnit": "px"
                     }

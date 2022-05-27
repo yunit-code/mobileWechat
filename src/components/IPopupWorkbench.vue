@@ -171,7 +171,7 @@ export default {
       if ( this.moduleObject.env == 'develop' ) {
           return
       } else {
-          this.currentEquipWidth = window.outerWidth;
+          this.currentEquipWidth = window.screen.width;
       }
     },
     /**

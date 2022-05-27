@@ -119,6 +119,9 @@
                     "text": "字体设置",
                     "bindKey": "fontStyle",
                     "default": {
+                        "fontColors": {
+                            "hex8": "#333333FF"
+                        },
                         "fontSize": 14,
                         "fontSizeUnit": "px"
                     }
