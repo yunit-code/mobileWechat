@@ -74,6 +74,7 @@ export default {
   data() {
     return {
       moduleObject: {},
+      pageWidth: null,
       propData: this.$root.propData.compositeAttr || {
         htmlTitle: "广告轮播",
         width: "100%",
@@ -490,6 +491,12 @@ export default {
      * } object
      */
     receiveBroadcastMessage(messageObject) {
+      switch(messageObject.type) {
+        case 'pageResize':
+          this.pageWidth = messageObject.message.width
+          this.convertAttrToStyleObject()
+          break;
+      }
       console.log("组件收到消息",messageObject)
     },
     /**
