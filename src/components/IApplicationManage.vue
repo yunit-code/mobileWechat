@@ -179,33 +179,33 @@ export default {
                     "color": item.mainColor ? item.mainColor.hex8 : "",
                 }
                 
-                IDM.setStyleToPageHead(
-                    "." +
-                        themeNamePrefix +
-                        item.key +
-                        " #" +
-                        (this.moduleObject.packageid || "module_demo") +
-                        " .idm_applicationmanage",
-                    styleObject
-                );
-                IDM.setStyleToPageHead(
-                    "." +
-                        themeNamePrefix +
-                        item.key +
-                        " #" +
-                        (this.moduleObject.packageid || "module_demo") +
-                        " .idm_applicationmanage .van-tab",
-                    fontStyleObject
-                );
-                IDM.setStyleToPageHead(
-                    "." +
-                        themeNamePrefix +
-                        item.key +
-                        " #" +
-                        (this.moduleObject.packageid || "module_demo") +
-                        " .idm_applicationmanage .van-tabs__line",
-                    styleObject
-                );
+                // IDM.setStyleToPageHead(
+                //     "." +
+                //         themeNamePrefix +
+                //         item.key +
+                //         " #" +
+                //         (this.moduleObject.packageid || "module_demo") +
+                //         " .idm_applicationmanage",
+                //     styleObject
+                // );
+                // IDM.setStyleToPageHead(
+                //     "." +
+                //         themeNamePrefix +
+                //         item.key +
+                //         " #" +
+                //         (this.moduleObject.packageid || "module_demo") +
+                //         " .idm_applicationmanage .van-tab",
+                //     fontStyleObject
+                // );
+                // IDM.setStyleToPageHead(
+                //     "." +
+                //         themeNamePrefix +
+                //         item.key +
+                //         " #" +
+                //         (this.moduleObject.packageid || "module_demo") +
+                //         " .idm_applicationmanage .van-tabs__line",
+                //     styleObject
+                // );
                 
             }
         },

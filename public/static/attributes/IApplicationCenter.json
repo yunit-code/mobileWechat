@@ -399,7 +399,7 @@
                     "text": "主题标识",
                     "bindKey": "key",
                     "desc":"用于设置主题的标识，此项需要搭配自定义开发切换主题的功能，例如：蓝色标识为blue，用户切换主题的时候存储到数据库中的标识为blue，则这里选择blue",
-                    "default":"blue",
+                    "default":"",
                     "placeholder":"例如：blue",
                     "ctrlAttrObject": {
                         "mode": "combobox"
@@ -621,7 +621,7 @@
                             "text": "主题标识",
                             "bindKey": "key",
                             "desc":"用于设置主题的标识，此项需要搭配自定义开发切换主题的功能，例如：蓝色标识为blue，用户切换主题的时候存储到数据库中的标识为blue，则这里选择blue",
-                            "default":"blue",
+                            "default":"",
                             "placeholder":"例如：blue",
                             "ctrlAttrObject": {
                                 "mode": "combobox"
@@ -843,7 +843,7 @@
                             "text": "主题标识",
                             "bindKey": "key",
                             "desc":"用于设置主题的标识，此项需要搭配自定义开发切换主题的功能，例如：蓝色标识为blue，用户切换主题的时候存储到数据库中的标识为blue，则这里选择blue",
-                            "default":"blue",
+                            "default":"",
                             "placeholder":"例如：blue",
                             "ctrlAttrObject": {
                                 "mode": "combobox"

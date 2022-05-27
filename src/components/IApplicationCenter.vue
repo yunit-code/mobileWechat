@@ -190,45 +190,46 @@ export default {
                         item.key +
                         " #" +
                         (this.moduleObject.packageid || "module_demo") +
-                        " .idm_applicationcenter",
+                        " .idm_applicationcenter_title_left_icon .idm_filed_svg_icon",
                     styleObject
                 );
-                IDM.setStyleToPageHead(
-                    "." +
-                        themeNamePrefix +
-                        item.key +
-                        " #" +
-                        (this.moduleObject.packageid || "module_demo") +
-                        " .idm_applicationcenter_main_list",
-                    fontStyleObject
-                );
-                IDM.setStyleToPageHead(
-                    "." +
-                        themeNamePrefix +
-                        item.key +
-                        " #" +
-                        (this.moduleObject.packageid || "module_demo") +
-                        " .idm_applicationcenter_title_left_icon",
-                    fontStyleObject
-                );
-                IDM.setStyleToPageHead(
-                    "." +
-                        themeNamePrefix +
-                        item.key +
-                        " #" +
-                        (this.moduleObject.packageid || "module_demo") +
-                        " .idm_applicationcenter_title_right i",
-                    fontStyleObject
-                );
-                IDM.setStyleToPageHead(
-                    "." +
-                        themeNamePrefix +
-                        item.key +
-                        " #" +
-                        (this.moduleObject.packageid || "module_demo") +
-                        " .idm_applicationcenter_title_left_text",
-                    fontStyleObject
-                );
+                // IDM.setStyleToPageHead(
+                //     "." +
+                //         themeNamePrefix +
+                //         item.key +
+                //         " #" +
+                //         (this.moduleObject.packageid || "module_demo") +
+                //         " .idm_applicationcenter",
+                //     styleObject
+                // );
+                
+                // IDM.setStyleToPageHead(
+                //     "." +
+                //         themeNamePrefix +
+                //         item.key +
+                //         " #" +
+                //         (this.moduleObject.packageid || "module_demo") +
+                //         " .idm_applicationcenter_main_list",
+                //     fontStyleObject
+                // );
+                // IDM.setStyleToPageHead(
+                //     "." +
+                //         themeNamePrefix +
+                //         item.key +
+                //         " #" +
+                //         (this.moduleObject.packageid || "module_demo") +
+                //         " .idm_applicationcenter_title_right i",
+                //     fontStyleObject
+                // );
+                // IDM.setStyleToPageHead(
+                //     "." +
+                //         themeNamePrefix +
+                //         item.key +
+                //         " #" +
+                //         (this.moduleObject.packageid || "module_demo") +
+                //         " .idm_applicationcenter_title_left_text",
+                //     fontStyleObject
+                // );
             }
         },
         closeApplicationManage() {

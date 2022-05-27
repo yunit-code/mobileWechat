@@ -131,24 +131,24 @@ export default {
                 let fontStyleObject = {
                     "color": item.mainColor ? item.mainColor.hex8 : "",
                 }
-                IDM.setStyleToPageHead(
-                    "." +
-                        themeNamePrefix +
-                        item.key +
-                        " #" +
-                        (this.moduleObject.packageid || "module_demo") +
-                        " .idm_applicationshortcut",
-                    styleObject
-                );
-                IDM.setStyleToPageHead(
-                    "." +
-                        themeNamePrefix +
-                        item.key +
-                        " #" +
-                        (this.moduleObject.packageid || "module_demo") +
-                        " .idm_applicationcenter_main_list",
-                    fontStyleObject
-                );
+                // IDM.setStyleToPageHead(
+                //     "." +
+                //         themeNamePrefix +
+                //         item.key +
+                //         " #" +
+                //         (this.moduleObject.packageid || "module_demo") +
+                //         " .idm_applicationshortcut",
+                //     styleObject
+                // );
+                // IDM.setStyleToPageHead(
+                //     "." +
+                //         themeNamePrefix +
+                //         item.key +
+                //         " #" +
+                //         (this.moduleObject.packageid || "module_demo") +
+                //         " .idm_applicationshortcut .idm_applicationcenter_main_list_name",
+                //     fontStyleObject
+                // );
             }
         },
         watchApplicationChange(value,old) {

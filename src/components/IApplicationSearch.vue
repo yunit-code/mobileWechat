@@ -119,24 +119,24 @@ export default {
                 if ( item.mainColor && item.mainColor.hex8 ) {
                     borderStyleObject['border-bottom'] = '1px solid ' + item.mainColor.hex8
                 } 
-                IDM.setStyleToPageHead(
-                    "." +
-                        themeNamePrefix +
-                        item.key +
-                        " #" +
-                        (this.moduleObject.packageid || "module_demo") +
-                        " .idm_iapplicationsearch",
-                    styleObject
-                );
-                IDM.setStyleToPageHead(
-                    "." +
-                        themeNamePrefix +
-                        item.key +
-                        " #" +
-                        (this.moduleObject.packageid || "module_demo") +
-                        " .idm_iapplicationsearch_main .list",
-                    borderStyleObject
-                );
+                // IDM.setStyleToPageHead(
+                //     "." +
+                //         themeNamePrefix +
+                //         item.key +
+                //         " #" +
+                //         (this.moduleObject.packageid || "module_demo") +
+                //         " .idm_iapplicationsearch",
+                //     styleObject
+                // );
+                // IDM.setStyleToPageHead(
+                //     "." +
+                //         themeNamePrefix +
+                //         item.key +
+                //         " #" +
+                //         (this.moduleObject.packageid || "module_demo") +
+                //         " .idm_iapplicationsearch_main .list",
+                //     borderStyleObject
+                // );
             }
         },
         initDevelopData() {
