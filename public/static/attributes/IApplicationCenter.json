@@ -332,7 +332,7 @@
                     "bindKey": "font",
                     "default": {
                         "fontColors": {
-                            "hex8": ""
+                            "hex8": "333333"
                         },
                         "fontSize": 12,
                         "fontSizeUnit": "px"
@@ -568,7 +568,7 @@
                             "bindKey": "fontManage",
                             "default": {
                                 "fontColors": {
-                                    "hex8": ""
+                                    "hex8": "333333"
                                 },
                                 "fontSize": 12,
                                 "fontSizeUnit": "px"
