@@ -463,6 +463,16 @@ export default {
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list2-title-bottom", {
         'font-size': getAdaptiveSize.call(this, 14) + 'px',
       });
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list2-title-bottom", {
+        'font-size': getAdaptiveSize.call(this, 14) + 'px',
+      });
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list2-title-bottom", {
+        'font-size': getAdaptiveSize.call(this, 14) + 'px',
+      });
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-top-left > span", {
+        'padding-left': getAdaptiveSize.call(this, 15, 4) + 'px',
+        'padding-right': getAdaptiveSize.call(this, 15, 4) + 'px',
+      });
       this.initData();
     },
     /**
