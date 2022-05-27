@@ -188,7 +188,7 @@
             "fontColors": {
               "hex8": "#333333FF"
             },
-            "fontSize": 14,
+            "fontSize": 16,
             "fontSizeUnit": "px"
           }
         },
@@ -206,7 +206,7 @@
           "text": "菜单宽度",
           "desc": "弹出菜单所占屏幕的宽度，请使用 % 或 px",
           "bindKey": "menuWidth",
-          "default": "80%"
+          "default": "60%"
         },
         {
           "type": "box",
@@ -228,19 +228,19 @@
               "type": "input",
               "layoutType": "block",
               "text": "按钮宽",
-              "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
+              "desc": "填写数值，单位px不必填写",
               "bindKey": "width",
               "width": "60px",
-              "default": "28px"
+              "default": "30"
             },
             {
               "type": "input",
               "layoutType": "block",
               "text": "按钮高",
-              "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
+              "desc": "填写数值，单位px不必填写",
               "bindKey": "height",
               "width": "60px",
-              "default": "28px"
+              "default": "30"
             }
           ]
         },
@@ -248,9 +248,9 @@
           "type": "input",
           "layoutType": "inline",
           "text": "图标大小",
-          "desc": "按钮图标大小，使用px单位，比如18px",
+          "desc": "填写数值，单位px不必填写",
           "bindKey": "iconSize",
-          "default": "18px"
+          "default": "16"
         },
         {
           "type": "box",

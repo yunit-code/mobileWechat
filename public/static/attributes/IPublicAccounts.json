@@ -31,30 +31,6 @@
                     }
                 },
                 {
-                    "type": "inlineGroup",
-                    "text": "图标宽高",
-                    "children": [
-                        {
-                            "type": "input",
-                            "layoutType": "block",
-                            "text": "图标宽",
-                            "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
-                            "bindKey": "imgWidth",
-                            "width": "60px",
-                            "default": "32px"
-                        },
-                        {
-                            "type": "input",
-                            "layoutType": "block",
-                            "text": "图标高",
-                            "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
-                            "bindKey": "imgHeight",
-                            "width": "60px",
-                            "default": "32px"
-                        }
-                    ]
-                },
-                {
                     "type": "switch",
                     "layoutType": "inline",
                     "text": "固定位置",
@@ -109,9 +85,73 @@
         },
         {
             "type": "group",
+            "text": "样式设置",
+            "desc": "点击？查看样式设置用法指南",
+            "helpUrl": "",
+            "children": [
+                {
+                    "type": "inlineGroup",
+                    "text": "图标宽高",
+                    "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "block",
+                            "text": "图标宽",
+                            "desc": "填写数值，单位px不必填写",
+                            "bindKey": "imgWidth",
+                            "width": "60px",
+                            "default": "32"
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "block",
+                            "text": "图标高",
+                            "desc": "填写数值，单位px不必填写",
+                            "bindKey": "imgHeight",
+                            "width": "60px",
+                            "default": "32"
+                        }
+                    ]
+                },
+                {
+                    "type": "font",
+                    "layoutType": "block",
+                    "text": "字体设置",
+                    "bindKey": "fontStyle",
+                    "default": {
+                        "fontSize": 14,
+                        "fontSizeUnit": "px"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "group",
             "text": "高级",
             "desc": "点击？查看高级设置用法指南",
             "children": [
+                {
+                    "type": "group",
+                    "text": "适配设置",
+                    "children": [
+                        {
+                            "type": "inputNumber",
+                            "layoutType": "inline",
+                            "text": "基准值",
+                            "desc": "此属性用于标记当前组件在显示效果最完美情况下的宽度大小（px），例如：此组件显示效果最佳宽度为414px，则此处设置为414即可，如果此组件最佳效果为当前配置的屏幕宽（px）的一半则只需要除以2即可。",
+                            "bindKey": "adaptationBase",
+                            "default": 414
+                        },
+                        {
+                            "type": "inputNumber",
+                            "layoutType": "inline",
+                            "text": "适配比例",
+                            "desc": "与基准值配合使用，如果在实际预览屏幕宽为基准值的两倍，则此组件所有可适配的内容都会基于此处设置的适配比例相对应的进行放大缩小，例如此处设置1.2，则会相对应的放大至1.2倍",
+                            "bindKey": "adaptationPercent",
+                            "default": "1.2"
+                        }
+                    ]
+                },
                 {
                     "type": "treeSelect",
                     "layoutType": "inline",
