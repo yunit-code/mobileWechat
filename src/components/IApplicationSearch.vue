@@ -205,8 +205,8 @@ export default {
                 this.clientWidth = window.outerWidth;
             }
         },
-        translatePxToAdaptation(data) {
-            return translatePxToAdaptationApi(data,this.propData.adaptationBaseSearch,this.propData.adaptationPercentSearch,this.clientWidth)
+        translatePxToAdaptation(data,is_img) {
+            return translatePxToAdaptationApi(data,this.propData.adaptationBaseSearch,this.propData.adaptationPercentSearch,this.clientWidth,is_img)
         },
         convertAttrToStyleObject() {
             this.convertThemeListAttrToStyleObject()

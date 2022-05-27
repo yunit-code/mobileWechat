@@ -28,10 +28,14 @@ export const getAdaptiveSize = function (initSize) {
   }
   return Math.round(FINAL_RESULT)
 }
-export const translatePxToAdaptationApi = function(data,adaptationBase = 414,adaptationPercent = 1.2,clientWidth = 414) {
+export const translatePxToAdaptationApi = function(data,adaptationBase = 414,adaptationPercent = 1.2,clientWidth = 414,is_img) {
   if ( (!data) && data !== 0 ) {
       return 
   }
-  let percent = ( ( clientWidth/adaptationBase - 1 ) * ( adaptationPercent - 1 ) + 1 )
-  return parseInt( data * percent ) 
+  if ( is_img ) {
+    var percent = ( ( clientWidth/adaptationBase - 1 ) * ( adaptationPercent - 0.5 ) + 1 )
+  } else {
+    var percent = ( ( clientWidth/adaptationBase - 1 ) * ( adaptationPercent - 1 ) + 1 )
+  }
+  return Math.round( data * percent ) 
 }
