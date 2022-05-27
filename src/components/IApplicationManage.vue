@@ -621,7 +621,7 @@ export default {
             .idm_applicationmanage_title_left_text{
                 font-family: PingFangSC-Medium;
                 font-weight: 600;
-                line-height: 22px;
+                line-height: 23px;
             }
         }
         .idm_applicationmanage_main{

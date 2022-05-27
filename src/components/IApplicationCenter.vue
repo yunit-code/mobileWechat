@@ -836,7 +836,7 @@ export default {
             font-size: 16px;
             color: #333333;
             font-weight: 600;
-            line-height: 22px;
+            line-height: 23px;
         }
         .idm_applicationcenter_title_right{
             line-height: 1;
