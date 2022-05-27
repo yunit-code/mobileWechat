@@ -35,7 +35,9 @@
         <ul class="summary-box">
           <li v-for="(v,i) in tempSummaryConfigList" :key="i" class="summary-item"
           :style="{width: `${100/propData.showColumn}%`}">
-            <div class="summary-bg" :style="v.styles">
+            <div class="summary-bg" 
+              :style="v.styles"
+              @click="goUrl(v)">
               <!-- <div style="marginBottom: 5px" class="summary-name">{{v.name?v.name:IDM.express.replace("@[data."+v.dataFiled+".name]",data,true)}}</div> -->
               <!-- <div class="summary-num">{{v.count?v.count:IDM.express.replace("@[data."+v.dataFiled+".count]",data,true)}}</div> -->
               <div style="marginBottom: 5px" class="summary-name">{{v.name}}</div>
@@ -45,11 +47,15 @@
         </ul>
       </div>
     </div>
+    <div class="idm-unifie-todo-box-mask" v-if="moduleObject.env === 'develop' && ((!propData.dataSource))">
+      <span>！未绑定数据源</span>
+    </div>
     
   </div>
 </template>
 
 <script>
+import { getDatasInterfaceUrl } from '@/api/config'
 export default {
   name: 'IDataSummary',
   data(){
@@ -97,6 +103,12 @@ export default {
   },
   destroyed() {},
   methods:{
+    goUrl(v) {
+      if (v.jumpUrl) {
+        window.open(IDM.url.getWebPath(v.jumpUrl))
+        // v.jumpType === 'current' && this.moduleObject.env=="production" && (window.location.href=IDM.url.getWebPath(v.jumpUrl))
+      }
+    },
     changeLines() {
       if ( this.tempSummaryConfigList && (this.tempSummaryConfigList.length > this.propData.showRows * this.propData.showColumn) ) {
         this.tempSummaryConfigList.splice(this.propData.showRows * this.propData.showColumn)
@@ -119,6 +131,32 @@ export default {
         // styles['height'] = this.propData.shortItemHeight.inputVal+this.propData.shortItemHeight.selectVal;
         this.$set(item,'styles',styles);
       })
+      if(!this.propData.dataSource) {
+        return;
+      }
+      window.IDM.http
+        .post(getDatasInterfaceUrl, {
+          id: this.propData.dataSource && this.propData.dataSource.value
+        },{headers: {"Content-Type": "application/json;charset=UTF-8"}})
+        .then((res) => {
+          if(res.status == 200 && res.data.code == 200){
+            for (let iName in res.data.data) {
+              const cItem = this.tempSummaryConfigList.find(item=> item.tabKey == iName);
+              if(cItem) {
+                cItem.count = res.data.data[iName][this.propData.dataFiled||'count'];
+                cItem.name = res.data.data[iName].name;
+                cItem.jumpUrl = res.data.data[iName].jumpUrl;
+              }
+            }
+          }else {
+            IDM.message.error(res.data.message)
+          }
+        })
+        .catch((error) => {})
+        .finally(()=>{
+          this.isFirst = false
+          this.pageLoading = false
+        })
     },
     /**
      * 提供父级组件调用的刷新prop数据组件
@@ -510,23 +548,6 @@ export default {
      * 加载动态数据
      */
     initData(){
-      let that = this;
-      if(this.moduleObject.env=="production"){
-        var params = {
-          id: this.propData.dataSource && this.propData.selectApplication.value
-        }
-        this.propData.selectApplication&&this.propData.customInterfaceUrl&&window.IDM.http.post(this.propData.customInterfaceUrl, params, {
-          headers: {
-            'Content-Type': 'application/json'
-          },
-        })
-        .then((res) => {
-          //res.data
-          if ( res.data && res.data.type == 'success') {
-            that.$set(that.propData,"summaryConfigList",res.data.data);
-          }
-        })
-      }
       if ( this.propData.summaryConfigList && this.propData.summaryConfigList.length ) {
         this.tempSummaryConfigList = JSON.parse(JSON.stringify(this.propData.summaryConfigList))
       } else {

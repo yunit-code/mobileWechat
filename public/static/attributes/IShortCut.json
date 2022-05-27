@@ -890,7 +890,7 @@
                 {
                     "type": "inputNumber",
                     "layoutType": "inline",
-                    "text": "基准值属性",
+                    "text": "基准值",
                     "bindKey": "screenReferValue",
                     "desc":"此属性用于标记当前组件在显示效果最完美情况下的宽度大小（px），例如：此组件显示效果最佳宽度为414px，则此处设置为414即可，如果此组件最佳效果为当前配置的屏幕宽（px）的一半则只需要除以2即可。",
                     "default": 414,
@@ -899,7 +899,7 @@
                 {
                     "type": "inputNumber",
                     "layoutType": "inline",
-                    "text": "适配比例属性",
+                    "text": "适配比例",
                     "bindKey": "screenAdaptiveRatio",
                     "desc":"与基准值配合使用，如果在实际预览屏幕宽为基准值的两倍，则此组件所有可适配的内容都会基于此处设置的适配比例相对应的进行放大缩小，例如此处设置1.2，则会相对应的放大至1.2倍",
                     "default": 1.2,
