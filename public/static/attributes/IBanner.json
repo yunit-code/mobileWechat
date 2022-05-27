@@ -90,6 +90,10 @@
                         {
                             "label": "vh",
                             "value": "vh"
+                        },
+                        {
+                            "label": "vw",
+                            "value": "vw"
                         }
                     ]
                 },
@@ -130,10 +134,6 @@
                         {
                             "label": "%",
                             "value": "%"
-                        },
-                        {
-                            "label": "vw",
-                            "value": "vw"
                         }
                     ]
                 },
