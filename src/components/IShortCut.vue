@@ -346,7 +346,8 @@ export default {
      */
     convertAttrToStyleObject2(){
       var styleObject = {},
-        styleObjectCont = {};
+        styleObjectCont = {},
+        styleObjectNum = {};
       if(this.propData.bgSize2&&this.propData.bgSize2=="custom"){
         styleObject["background-size"]=(this.propData.bgSizeWidth2?this.propData.bgSizeWidth2.inputVal+this.propData.bgSizeWidth2.selectVal:"auto")+" "+(this.propData.bgSizeHeight2?this.propData.bgSizeHeight2.inputVal+this.propData.bgSizeHeight2.selectVal:"auto")
       }else if(this.propData.bgSize2){
@@ -474,8 +475,12 @@ export default {
           }
         }
       }
+      styleObjectNum['width'] = `${this.funScreenAdaptation(20)}'px'`;
+      styleObjectNum['height'] = `${this.funScreenAdaptation(20)}'px'`;
+      styleObjectNum['font-size'] = `${this.funScreenAdaptation(12)}'px'`;
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_shortcut_cont", styleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_shortcut_cont .short-bg", styleObjectCont);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_shortcut_cont .number", styleObjectNum);
       this.initData();
     },
     /**
@@ -571,7 +576,7 @@ export default {
         console.log('propData.shortConfigList',this.propData.shortConfigList)
         for( let i = 0,maxi = this.propData.shortConfigList.length;i < maxi;i++ ) {
           const item = this.propData.shortConfigList[i];
-            if ( item.showTodoNumber ) {
+            if ( item.showTodoNumber && item.getApplicationMarkNumberUrl) {
               this.getApplicationMarkNumberSubmit(item,item.sourceId)
             }
         }
@@ -778,18 +783,20 @@ export default {
           position: relative;
       }
       .number{
-          width: 15px;
-          height: 15px;
-          line-height: 15px;
-          position: absolute;
-          top: -7px;
-          right: -7px;
-          text-align: center;
-          font-size: 12px;
-          overflow: hidden;
-          color: white;
-          background: #E81B1B;
-          border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: -10px;
+        right: -10px;
+        text-align: center;
+        font-size: 12px;
+        overflow: hidden;
+        color: white;
+        background: #E81B1B;
+        border-radius: 50%;
       }
     }
     /* 样式三 */
@@ -854,18 +861,20 @@ export default {
           transform: rotate(-60deg);
       }
       .number{
-          width: 15px;
-          height: 15px;
-          line-height: 15px;
-          position: absolute;
-          top: -7px;
-          right: -7px;
-          text-align: center;
-          font-size: 12px;
-          overflow: hidden;
-          color: white;
-          background: #E81B1B;
-          border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        top: -10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        right: -10px;
+        text-align: center;
+        font-size: 12px;
+        overflow: hidden;
+        color: white;
+        background: #E81B1B;
+        border-radius: 50%;
       }
     }
   }
@@ -881,12 +890,14 @@ export default {
       justify-content: center;
       // margin-bottom: 10px;
       .number {
-        width: 15px;
-        height: 15px;
-        line-height: 15px;
+        width: 20px;
+        height: 20px;
         position: absolute;
-        top: -7px;
-        right: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: -10px;
+        right: -10px;
         text-align: center;
         font-size: 12px;
         overflow: hidden;
