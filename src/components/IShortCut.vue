@@ -121,41 +121,8 @@ export default {
     this.moduleObject = this.$root.moduleObject
     this.convertAttrToStyleObject();
     this.convertAttrToStyleObject2();
-      // 主题
-      this.convertThemeListAttrToStyleObject();
-    if(this.moduleObject.env=="develop" || !IDM.env_dev){
-      this.propData = {
-        isShowTitle: true,
-        comTitle: '快捷方式',
-        showType: 'else',
-        shortCutStyle: "default",
-        maxNumber: 2,
-        shortItemHeight: {'inputVal':'72.5', 'selectVal': 'px'},
-        shortItemWidth: {'inputVal':100, 'selectVal': '%'},
-        jumpType: 'new',
-        shortConfigList:[
-          {
-            bgUrl: '',
-            name: '省政府领导分工',
-            shotUrl: 'https://www.baidu.com/',
-            showTodoNumber: true,
-            todoNumber: 10
-          },
-          {
-            bgUrl: '',
-            name: 'test1',
-            showTodoNumber: true,
-            todoNumber: 10
-          },
-          {
-            bgUrl: '',
-            name: 'test2',
-            showTodoNumber: true,
-            todoNumber: 10
-          }
-        ]
-      }
-    }
+    // 主题
+    this.convertThemeListAttrToStyleObject();
   },
   mounted() {
     //赋值给window提供跨页面调用
