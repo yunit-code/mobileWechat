@@ -75,7 +75,7 @@
                     "type": "inputNumberUnit",
                     "layoutType": "inline",
                     "text": "轮播高度",
-                    "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
+                    "desc": "图片高度建议设置为：86-（图片高度/图片宽度*100），单位选择vw即可实现轮播图宽高比例同比放大",
                     "bindKey": "height",
                     "width": "60px",
                     "default": {

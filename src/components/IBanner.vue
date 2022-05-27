@@ -191,8 +191,13 @@ export default {
               styleObject[key] = element;
               break;
             case "height":
-              styleObject[key] = element.inputVal + element.selectVal;
-              bannerItemStyleObj[key] = element.inputVal + element.selectVal;
+              if(this.moduleObject.env === 'develop' && element.selectVal === 'vw'){
+                styleObject[key] = element.inputVal/100 * (this.pageWidth || 414) + 'px';
+                bannerItemStyleObj[key] = element.inputVal/100 * (this.pageWidth || 414) + 'px';
+              }else{
+                styleObject[key] = element.inputVal + element.selectVal;
+                bannerItemStyleObj[key] = element.inputVal + element.selectVal;
+              }
               break;
             case "box":
               if (element.marginTopVal) {
