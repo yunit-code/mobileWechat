@@ -184,6 +184,13 @@ export default {
                 let fontStyleObject = {
                     "color": item.mainColor ? item.mainColor.hex8 : "",
                 }
+                console.log('主题属性',fontStyleObject)
+                console.log('主题属性key',"." +
+                        themeNamePrefix +
+                        item.key +
+                        " #" +
+                        (this.moduleObject.packageid || "module_demo") +
+                        " .idm_applicationcenter_title_left_icon .idm_filed_svg_icon")
                 IDM.setStyleToPageHead(
                     "." +
                         themeNamePrefix +
@@ -191,7 +198,7 @@ export default {
                         " #" +
                         (this.moduleObject.packageid || "module_demo") +
                         " .idm_applicationcenter_title_left_icon .idm_filed_svg_icon",
-                    styleObject
+                    fontStyleObject
                 );
                 // IDM.setStyleToPageHead(
                 //     "." +
@@ -601,7 +608,7 @@ export default {
             }
             window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_text", styleObjectTitle);
-            window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_icon .idm_filed_svg_icon", styleObjectTitleIcon);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_icon", styleObjectTitleIcon);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_main_list_name", fontStyleObject);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter .idm_applicationcenter_main_list .img_box", imgStyleObject);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter .idm_applicationcenter_main_list img", imgStyleObject);
