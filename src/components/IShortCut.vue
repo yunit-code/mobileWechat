@@ -712,8 +712,8 @@ export default {
         }
       }
       const screenReferValue = this.propData.screenReferValue || 414;
-      const screenAdaptiveRatio = this.propData.screenAdaptiveRatio || 1;
-      return e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 )
+      const screenAdaptiveRatio = this.propData.screenAdaptiveRatio || 1.2;
+      return Math.round(e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 ))
     },
     /**
      *@Description: 屏幕高度适配
@@ -733,8 +733,8 @@ export default {
         }
       }
       const screenReferValue = this.propData.screenReferValue || 414;
-      const screenAdaptiveRatio = 1.4;
-      return e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 )
+      const screenAdaptiveRatio = Number(this.propData.screenAdaptiveRatio) + 0.5 || 1.2;
+      return Math.round(e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 ))
     },
   }
 }

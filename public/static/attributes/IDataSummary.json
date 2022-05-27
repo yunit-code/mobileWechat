@@ -639,13 +639,23 @@
                     "type": "font",
                     "layoutType": "block",
                     "text": "汇总文字",
-                    "bindKey": "sumFont"
+                    "bindKey": "sumFont",
+                    "default":  {
+                        "fontSize": 14,
+                        "fontSizeUnit": "px",
+                        "fontWeight": "400"
+                    }
                 },
                 {
                     "type": "font",
                     "layoutType": "block",
                     "text": "数字文字",
-                    "bindKey": "numFont"
+                    "bindKey": "numFont",
+                    "default":  {
+                        "fontSize": 14,
+                        "fontSizeUnit": "px",
+                        "fontWeight": "400"
+                    }
                 }
             ]
         },

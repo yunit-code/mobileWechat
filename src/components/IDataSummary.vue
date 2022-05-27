@@ -324,7 +324,7 @@ export default {
               }
               styleObjectSumTitle["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
               styleObjectSumTitle["font-style"]=element.fontStyle;
-              styleObjectSumTitle["font-size"]=`${this.funScreenAdaptation(element.fontSize||15)}${element.fontSizeUnit||'px'}`;
+              styleObjectSumTitle["font-size"]=`${this.funScreenAdaptation(element.fontSize||14)}${element.fontSizeUnit||'px'}`;
               styleObjectSumTitle["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
               styleObjectSumTitle["text-align"]=element.fontTextAlign;
               styleObjectSumTitle["text-decoration"]=element.fontDecoration;
@@ -336,7 +336,7 @@ export default {
               }
               styleObjectNum["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
               styleObjectNum["font-style"]=element.fontStyle;
-              styleObjectNum["font-size"]=`${this.funScreenAdaptation(element.fontSize||15)}${element.fontSizeUnit||'px'}`;
+              styleObjectNum["font-size"]=`${this.funScreenAdaptation(element.fontSize||14)}${element.fontSizeUnit||'px'}`;
               styleObjectNum["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
               styleObjectNum["text-align"]=element.fontTextAlign;
               styleObjectNum["text-decoration"]=element.fontDecoration;
@@ -627,7 +627,7 @@ export default {
       }
       const screenReferValue = this.propData.screenReferValue || 414;
       const screenAdaptiveRatio = this.propData.screenAdaptiveRatio || 1;
-      return e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 )
+      return Math.round(e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 ))
     },
     /**
      *@Description: 屏幕高度适配
@@ -647,8 +647,8 @@ export default {
         }
       }
       const screenReferValue = this.propData.screenReferValue || 414;
-      const screenAdaptiveRatio = 1.6;
-      return e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 )
+      const screenAdaptiveRatio = Number(this.propData.screenAdaptiveRatio) + 0.5 || 1.2;
+      return Math.round(e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 ))
     },
   }
 }
