@@ -107,7 +107,7 @@ export default {
       moduleObject:{},
       propData:this.$root.propData.compositeAttr||{
         isShowTitle: true,
-        shortItemHeight: {'inputVal':'72.5', 'selectVal': 'px'},
+        shortItemHeight: {'inputVal':50, 'selectVal': 'px'},
         shortItemWidth: {'inputVal':100, 'selectVal': '%'},
         shortCutStyle: "default"
       },
