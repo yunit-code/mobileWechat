@@ -57,6 +57,10 @@ mobileWechat@1.0.8
 用于设置卡片内容的名称
 - 标识：`名称【name】`
 - 默认值：`经办`
+##### 汇总标识【tabKey】
+用于设置当前汇总标识，用来获取对应汇总数据，例如：汇总1 - inbox，汇总2 - toread
+- 标识：`默认值【tabKey】`
+- 默认值：`--`
 ##### 默认值【sumNum】
 用于设置卡片内容的名称
 - 标识：`默认值【sumNum】`
@@ -358,11 +362,24 @@ mobileWechat@1.0.8
 ### 高级
 <font color="#CCCCCC">用于对组件高级设置的属性的分组。</font>
 
-#### 基准值属性【screenReferValue】
+#### 适配设置
+通过设置属性来适配移动端页面尺寸
+
+##### 基准值属性【screenReferValue】
 用于设置页面适配基准值属性
 - 标识：`页面适配基准值属性【screenReferValue】`
 - 默认值：`414`
-#### 适配比例属性【screenAdaptiveRatio】
+##### 适配比例属性【screenAdaptiveRatio】
 用于设置页面适配比例属性
 - 标识：`适配比例属性【screenAdaptiveRatio】`
 - 默认值：`1.2`
+
+##### 数据源【dataSource】
+用于选择数据源
+- 标识：`dataSource`
+- 默认值：`/ctrl/dataSource/getDatasourceByGroup`
+
+##### 显示字段【dataFiled】
+根据接口返回数据显示消息标题字段
+- 标识：`dataFiled`
+- 默认值：`count`
