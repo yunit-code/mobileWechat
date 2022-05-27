@@ -161,11 +161,19 @@ export default {
   },
   created() {
     this.moduleObject = this.$root.moduleObject;
+    this.getClientWidth();
     this.convertAttrToStyleObject();
     this.convertThemeListAttrToStyleObject();
     this.getMenuList();
   },
   methods: {
+    getClientWidth() {
+      if ( this.moduleObject.env == 'develop' ) {
+          return
+      } else {
+          this.currentEquipWidth = window.outerWidth;
+      }
+    },
     /**
      * 提供父级组件调用的刷新prop数据组件
      */

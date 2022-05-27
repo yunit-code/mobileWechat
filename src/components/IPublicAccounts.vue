@@ -105,6 +105,7 @@ export default {
   },
   created() {
     this.moduleObject = this.$root.moduleObject
+    this.getClientWidth();
     this.convertAttrToStyleObject();
     this.initData();
     if(this.moduleObject.env=="develop" || !IDM.env_dev){
@@ -134,6 +135,13 @@ export default {
   },
   destroyed() {},
   methods:{
+    getClientWidth() {
+      if ( this.moduleObject.env == 'develop' ) {
+          return
+      } else {
+          this.currentEquipWidth = window.outerWidth;
+      }
+    },
     // 实现移动端拖拽
     down() {
       let item_box = document.querySelector(".drag-bar-wrapper");
