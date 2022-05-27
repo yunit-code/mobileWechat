@@ -165,7 +165,11 @@
                     "type": "font",
                     "layoutType": "block",
                     "text": "字体",
-                    "bindKey": "font"
+                    "bindKey": "font",
+                    "default": {
+                        "fontSize": 12,
+                        "fontSizeUnit": "px"
+                    }
                 },
                 {
                     "type": "box",

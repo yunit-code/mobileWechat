@@ -247,7 +247,15 @@
                     "type": "font",
                     "layoutType": "block",
                     "text": "标题字体",
-                    "bindKey": "titleFont"
+                    "bindKey": "titleFont",
+                    "default": {
+                        "fontColors": {
+                            "hex": "#333333"
+                        },
+                        "fontSize": 16,
+                        "fontSizeUnit": "px",
+                        "fontWeight": "600"
+                    }
                 }
             ]
         },
@@ -321,7 +329,11 @@
                     "type": "font",
                     "layoutType": "block",
                     "text": "字体",
-                    "bindKey": "font"
+                    "bindKey": "font",
+                    "default": {
+                        "fontSize": 12,
+                        "fontSizeUnit": "px"
+                    }
                 },
                 {
                     "type": "box",
@@ -506,7 +518,15 @@
                             "type": "font",
                             "layoutType": "block",
                             "text": "字体",
-                            "bindKey": "titleFontManage"
+                            "bindKey": "titleFontManage",
+                            "default": {
+                                "fontColors": {
+                                    "hex": "#333333"
+                                },
+                                "fontSize": 16,
+                                "fontSizeUnit": "px",
+                                "fontWeight": "600"
+                            }
                         },
                         {
                             "type": "colorPicker",
@@ -542,7 +562,11 @@
                             "type": "font",
                             "layoutType": "block",
                             "text": "字体",
-                            "bindKey": "fontManage"
+                            "bindKey": "fontManage",
+                            "default": {
+                                "fontSize": 12,
+                                "fontSizeUnit": "px"
+                            }
                         },
                         {
                             "type": "box",
@@ -684,7 +708,14 @@
                             "type": "font",
                             "layoutType": "block",
                             "text": "字体",
-                            "bindKey": "fontSearch"
+                            "bindKey": "fontSearch",
+                            "default": {
+                                "fontColors": {
+                                    "hex": "#333333"
+                                },
+                                "fontSize": 14,
+                                "fontSizeUnit": "px"
+                            }
                         },
                         {
                             "type": "group",
@@ -702,7 +733,11 @@
                                     "type": "font",
                                     "layoutType": "block",
                                     "text": "字体",
-                                    "bindKey": "fontButton"
+                                    "bindKey": "fontButton",
+                                    "default": {
+                                        "fontSize": 12,
+                                        "fontSizeUnit": "px"
+                                    }
                                 }
                             ]
                         },
@@ -722,7 +757,11 @@
                                     "type": "font",
                                     "layoutType": "block",
                                     "text": "文字",
-                                    "bindKey": "fontButtonDisabled"
+                                    "bindKey": "fontButtonDisabled",
+                                    "default": {
+                                        "fontSize": 12,
+                                        "fontSizeUnit": "px"
+                                    }
                                 }
                             ]
                         },
