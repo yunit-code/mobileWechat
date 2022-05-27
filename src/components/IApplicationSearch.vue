@@ -115,9 +115,10 @@ export default {
                 let fontStyleObject = {
                     "color": item.mainColor ? item.mainColor.hex8 : "",
                 }
-                let borderStyleObject = {
-                    "border-bottom": '1px solid ' + (item.mainColor ? item.mainColor.hex8 : ""),
-                }
+                let borderStyleObject = { }
+                if ( item.mainColor && item.mainColor.hex8 ) {
+                    borderStyleObject['border-bottom'] = '1px solid ' + item.mainColor.hex8
+                } 
                 IDM.setStyleToPageHead(
                     "." +
                         themeNamePrefix +

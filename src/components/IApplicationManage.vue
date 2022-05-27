@@ -620,8 +620,6 @@ export default {
             padding: 10px 10px 10px 10px;
             .idm_applicationmanage_title_left_text{
                 font-family: PingFangSC-Medium;
-                font-size: 16px;
-                // color: #333333;
                 font-weight: 600;
                 line-height: 22px;
             }
