@@ -98,20 +98,21 @@ export default {
       }
       this.tempSummaryConfigList.forEach(item=> {
         const styles = {}
-        // if(item.positionX&&item.positionX.inputVal){
-        //   item.styles["backgroundPosition"]= `${item.positionX.selectVal&&item.positionX.inputVal?item.positionX.inputVal+ item.positionX.selectVal:'0%'} ${item.positionY.selectVal&&item.positionY.inputVal?item.positionY.inputVal+ item.positionY.selectVal:'0%'}`;
-        // }
-        // if(item.positionY&&item.positionY.inputVal){
-        //   item.styles["backgroundPosition"]= `${item.positionX.selectVal&&item.positionX.inputVal?item.positionX.inputVal+ item.positionX.selectVal:'0%'} ${item.positionY.selectVal&&item.positionY.inputVal?item.positionY.inputVal+ item.positionY.selectVal:'0%'}`;
-        // }
         if(item.bgUrl) {
           styles["backgroundImage"]=`url(${window.IDM.url.getWebPath(item.bgUrl)})`;
         }else {
           styles["backgroundImage"]= 'linear-gradient(to right,#f4b0b0,#f4acac,#f18c8b)';
         }
         styles['height'] = `${this.funScreenAdaptationHeight(this.propData.shortItemHeight.inputVal)}${this.propData.shortItemHeight.selectVal}`;
-        if(this.currentEquipWidth >600) {
-          styles['margin'] = `0 5px`;
+        
+        let pClientWidth = this.currentEquipWidth;
+        if(this.moduleObject.env!=="develop") {
+          if(!pClientWidth) {
+            pClientWidth = document.body.clientWidth;
+          }
+        }
+        if(pClientWidth >600) {
+          styles['margin'] = `0 10px`;
         }
         // styles['width'] = this.propData.shortItemWidth.inputVal+this.propData.shortItemWidth.selectVal;
         // styles['height'] = this.propData.shortItemHeight.inputVal+this.propData.shortItemHeight.selectVal;
@@ -633,7 +634,7 @@ export default {
         }
       }
       const screenReferValue = this.propData.screenReferValue || 414;
-      const screenAdaptiveRatio = Number(this.propData.screenAdaptiveRatio) + 0.5 || 1.2;
+      const screenAdaptiveRatio = Number(this.propData.screenAdaptiveRatio) + 0.3 || 1.2;
       return Math.round(e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 ))
     },
   }
