@@ -2,7 +2,7 @@
  * 标题适配插值
  * type: number
  */
-export const titleDifferentValue = -5
+export const titleDifferentValue = 0
 
 /**
  * 
