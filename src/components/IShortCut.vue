@@ -534,7 +534,7 @@ export default {
           styles['height'] = `${this.funScreenAdaptationHeight(this.propData.shortItemHeight.inputVal)}${this.propData.shortItemHeight.selectVal}`;
           styles['width'] = `${this.propData.shortItemWidth.inputVal}${this.propData.shortItemWidth.selectVal}`;
           if(this.currentEquipWidth >600) {
-            styles['margin'] = `0 5px`;
+            styles['margin'] = `0 10px`;
           }
           // styles['width'] = this.propData.shortItemWidth.inputVal+this.propData.shortItemWidth.selectVal;
           // styles['height'] = this.propData.shortItemHeight.inputVal+this.propData.shortItemHeight.selectVal;
