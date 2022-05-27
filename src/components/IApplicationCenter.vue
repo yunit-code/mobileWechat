@@ -12,19 +12,15 @@
         <div class="idm_applicationcenter">
             <div v-if="propData.showTitle" class="idm_applicationcenter_title flex_between">
                 <div class="idm_applicationcenter_title_left flex_start">
-                    <div v-if="propData.showTitleIcon && propData.titleIconPosition == 'left'" class="idm_applicationcenter_title_left_icon idm_applicationcenter_title_left_icon1">
-                        <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm_filed_svg_icon" aria-hidden="true" >
-                            <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
-                        </svg>
-                        <svg-icon v-else icon-class="application-icon" />
-                    </div>
+                    <svg v-if="propData.showTitleIcon && propData.titleIconPosition == 'left' && propData.titleIconClass && propData.titleIconClass.length" class="idm_filed_svg_icon idm_applicationcenter_title_left_icon1" aria-hidden="true" >
+                        <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
+                    </svg>
+                    <svg-icon v-else-if="propData.showTitleIcon && propData.titleIconPosition == 'left' && ((!propData.titleIconClass) || !propData.titleIconClass.length)" icon-class="application-icon" />
                     <div class="idm_applicationcenter_title_left_text">{{ propData.title || '应用中心' }}</div>
-                    <div v-if="propData.showTitleIcon && propData.titleIconPosition == 'right'" class="idm_applicationcenter_title_left_icon idm_applicationcenter_title_left_icon2">
-                        <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm_filed_svg_icon" aria-hidden="true" >
-                            <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
-                        </svg>
-                        <svg-icon v-else icon-class="application-icon" />
-                    </div>
+                    <svg v-if="propData.showTitleIcon && propData.titleIconPosition == 'right' && propData.titleIconClass && propData.titleIconClass.length" class="idm_filed_svg_icon idm_applicationcenter_title_left_icon2" aria-hidden="true" >
+                        <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
+                    </svg>
+                    <svg-icon v-else-if="propData.showTitleIcon && propData.titleIconPosition == 'right' && ((!propData.titleIconClass) || !propData.titleIconClass.length)" icon-class="application-icon" />
                 </div>
                 <div @click="toApplicationManage" v-if="propData.showConfig" class="idm_applicationcenter_title_right">
                     <van-icon class="idm-message-list-box-top-more" name="ellipsis" />
@@ -109,7 +105,10 @@ export default {
         return {
             moduleObject: {},
             propData: this.$root.propData.compositeAttr || {
-                showTitle: false
+                showTitle: true,
+                showConfig: true,
+                showTitleIcon: true,
+                titleIconPosition: 'right'
             },
             application_data: [
                 {}
@@ -190,14 +189,15 @@ export default {
                         item.key +
                         " #" +
                         (this.moduleObject.packageid || "module_demo") +
-                        " .idm_applicationcenter_title_left_icon .idm_filed_svg_icon")
+                        " .idm_applicationcenter_title_left .idm_filed_svg_icon")
+                
                 IDM.setStyleToPageHead(
                     "." +
                         themeNamePrefix +
                         item.key +
                         " #" +
                         (this.moduleObject.packageid || "module_demo") +
-                        " .idm_applicationcenter_title_left_icon .idm_filed_svg_icon",
+                        " .idm_applicationcenter_title_left .idm_filed_svg_icon",
                     fontStyleObject
                 );
                 // IDM.setStyleToPageHead(
@@ -452,7 +452,6 @@ export default {
         },
         convertAttrToStyleObject() {
             this.convertAttrToStyleObjectInner()
-            this.convertThemeListAttrToStyleObject()
             var styleObject = {};
             var styleObjectInner = {};
             var styleObjectTitle = {};
@@ -608,11 +607,12 @@ export default {
             }
             window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_text", styleObjectTitle);
-            window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_icon", styleObjectTitleIcon);
+            window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left .idm_filed_svg_icon", styleObjectTitleIcon);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_main_list_name", fontStyleObject);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter .idm_applicationcenter_main_list .img_box", imgStyleObject);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter .idm_applicationcenter_main_list img", imgStyleObject);
             window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter .idm_applicationcenter_main_list svg", imgStyleObject);
+            this.convertThemeListAttrToStyleObject()
             this.initApplicationData()
         },
         convertAttrToStyleObjectInner() {
