@@ -641,6 +641,9 @@
                     "text": "汇总文字",
                     "bindKey": "sumFont",
                     "default":  {
+                        "fontColors": {
+                            "hex8": "#ffffff"
+                        },
                         "fontSize": 14,
                         "fontSizeUnit": "px",
                         "fontWeight": "400"
@@ -652,6 +655,9 @@
                     "text": "数字文字",
                     "bindKey": "numFont",
                     "default":  {
+                        "fontColors": {
+                            "hex8": "#ffffff"
+                        },
                         "fontSize": 14,
                         "fontSizeUnit": "px",
                         "fontWeight": "400"

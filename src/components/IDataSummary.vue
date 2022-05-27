@@ -75,23 +75,6 @@ export default {
     this.convertAttrToStyleObject2();
     // 主题
     this.convertThemeListAttrToStyleObject();
-    if(this.moduleObject.env=="develop" || !IDM.env_dev){
-      this.propData = {
-        comTitle: '数据汇总',
-        showColumn: 2,
-        showRows: 2,
-        shortItemHeight: {'inputVal':'72.5', 'selectVal': 'px'},
-        customInterfaceUrl: '/ctrl/dataSource/getDatas',
-        isShowTitle: true,
-        summaryConfigList:[
-          {
-            name: '省政府领导分工',
-            count: 10,
-            bgUrl: '',
-          },
-        ]
-      }
-    }
   },
   mounted() {
     //赋值给window提供跨页面调用
@@ -319,7 +302,7 @@ export default {
               break
             case "sumFont":
               styleObjectSumTitle["font-family"]=element.fontFamily;
-              if(element.fontColors.hex8){
+              if(element.fontColors&&element.fontColors.hex8){
                 styleObjectSumTitle["color"]=element.fontColors.hex8;
               }
               styleObjectSumTitle["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
@@ -331,7 +314,7 @@ export default {
               break;
             case "numFont":
               styleObjectNum["font-family"]=element.fontFamily;
-              if(element.fontColors.hex8){
+              if(element.fontColors&&element.fontColors.hex8){
                 styleObjectNum["color"]=element.fontColors.hex8;
               }
               styleObjectNum["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
@@ -654,6 +637,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.idm-unifie-todo-box-mask {
+  font-size: 14px;
+  font-weight: 400;
+}
   ul, li{
     padding:0;
     margin:0;
