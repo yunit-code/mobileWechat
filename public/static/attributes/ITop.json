@@ -425,6 +425,7 @@
                             "layoutType": "block",
                             "text": "背景大小",
                             "bindKey": "bgSize",
+                            "desc": "裁切显示：保留长宽比，完全覆盖；完全显示：保留长宽比，适应宽或高；自定义：设置长宽100%，以达到拉伸铺满的效果",
                             "dictionary": [
                                 {
                                     "label": "裁切显示",
