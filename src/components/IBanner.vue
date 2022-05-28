@@ -22,9 +22,8 @@
             :key="index"
             @click="handleClick(item, index)"
           >
-            <img v-if="propData && propData.dataType === 'custom'" :src="item.image && IDM.url.getWebPath(item.image)"  class="slider-img" alt="" />
-
-            <img v-else :src="IDM.express.replace('@['+propData.dataFiled+']', item, true)"  class="slider-img" alt="" />
+            <img v-if="isSmallScreen || !item.imagexl" :src="item.image && IDM.url.getWebPath(item.image)"  class="slider-img" alt="" />
+            <img v-else :src="item.imagexl && IDM.url.getWebPath(item.image)"  class="slider-img" alt="" />
             <span class="idm-banner-box-swiper-text">{{item.title}}</span>
           </li>
         </ul>
@@ -85,12 +84,24 @@ export default {
           inputVal: 8,
           selectVal: "px"
         },
-        dataFiled: 'image',
-        dataType: 'dataSource'
+        dataType: 'dataSource',
+        dividingPoint: 600
       },
       bannerData: {value: []},
       refreshKeyNumber: 0
     };
+  },
+  computed: {
+    isSmallScreen() {
+      let width = null
+      if(this.moduleObject.env === 'develop') {
+        width = this.pageWidth || 414
+      }else{
+        width = this.pageWidth || window.screen.width
+      }
+      console.log(width, this.propData.dividingPoint > width)
+      return this.propData.dividingPoint > width
+    }
   },
   created() {
     this.moduleObject = this.$root.moduleObject;
@@ -191,12 +202,25 @@ export default {
               styleObject[key] = element;
               break;
             case "height":
-              if(this.moduleObject.env === 'develop' && element.selectVal === 'vw'){
-                styleObject[key] = element.inputVal/100 * (this.pageWidth || 414) + 'px';
-                bannerItemStyleObj[key] = element.inputVal/100 * (this.pageWidth || 414) + 'px';
-              }else{
-                styleObject[key] = element.inputVal + element.selectVal;
-                bannerItemStyleObj[key] = element.inputVal + element.selectVal;
+              if(this.isSmallScreen){
+                if(this.moduleObject.env === 'develop' && element.selectVal === 'vw'){
+                  styleObject[key] = element.inputVal/100 * (this.pageWidth || 414) + 'px';
+                  bannerItemStyleObj[key] = element.inputVal/100 * (this.pageWidth || 414) + 'px';
+                }else{
+                  styleObject[key] = element.inputVal + element.selectVal;
+                  bannerItemStyleObj[key] = element.inputVal + element.selectVal;
+                }
+              }
+              break;
+            case "maxHeight":
+              if(!this.isSmallScreen){
+                if(this.moduleObject.env === 'develop' && element.selectVal === 'vw'){
+                  styleObject['height'] = element.inputVal/100 * (this.pageWidth || 414) + 'px';
+                  bannerItemStyleObj['height'] = element.inputVal/100 * (this.pageWidth || 414) + 'px';
+                }else{
+                  styleObject['height'] = element.inputVal + element.selectVal;
+                  bannerItemStyleObj['height'] = element.inputVal + element.selectVal;
+                }
               }
               break;
             case "box":
@@ -621,9 +645,10 @@ export default {
   transform: scale(1);
 }
 .slider-img{
+  width: 100%;
+  height: 100%;
   border-radius: 8px;
   overflow: hidden;
-  object-fit: cover;
 }
 .idm-banner-swiper-pagination{
   position: absolute;
