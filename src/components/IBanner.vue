@@ -131,7 +131,7 @@ export default {
           centeredSlides: true,                                     //居中
           coverflowEffect: {                                        //特效组件属性
             rotate: 0,                                              //旋转度数
-            stretch: '-7%',                                         //左右拉伸
+            stretch: this.isSmallScreen ? '-7%' : '-5%',                                         //左右拉伸
             depth: 100,                                             //位置深度，越大越小
             modifier: 1,                                            //depth和rotate和stretch的倍率
             slideShadows: false,                                    //阴影
