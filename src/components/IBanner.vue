@@ -343,10 +343,10 @@ export default {
               bannerItemStyleObj['border-radius'] = element.inputVal + element.selectVal;
               break;
             case "marginTop":
-              bannerFontStyleObj['margin-top'] = element.inputVal + element.selectVal;
+              styleObject['margin-top'] = element.inputVal + element.selectVal;
               break;
             case "marginBottom":
-              bannerFontStyleObj['margin-bottom'] = element.inputVal + element.selectVal;
+              styleObject['margin-bottom'] = element.inputVal + element.selectVal;
               break;
           }
         }
