@@ -302,24 +302,12 @@ export default {
         }else if(item.bgSize){
           cssObject_background_detail["background-size"]=item.bgSize;
         }
-        if(item.positionX&&item.positionX.inputVal){
-          cssObject_background_detail["background-position-x"]=item.positionX.inputVal+item.positionX.selectVal;
-        }
-        if(item.positionY&&item.positionY.inputVal){
-          cssObject_background_detail["background-position-y"]=item.positionY.inputVal+item.positionY.selectVal;
-        }
-        if (item.bgImgUrl) {
-          cssObject_background_detail["background-image"]=`url(${window.IDM.url.getWebPath(item.bgImgUrl)})`;
-        }
-        if (item.bgRepeat) {
-          cssObject_background_detail["background-repeat"]=item.bgRepeat;
-        }
-        if (item.bgAttachment) {
-          cssObject_background_detail["background-attachment"]=item.bgAttachment;
-        }
-        if (item.mainColor) {
-          cssObject_background_detail["background-color"]=item.mainColor ? item.mainColor.hex8 : "";
-        }
+        cssObject_background_detail["background-position-x"]=item.positionX&&item.positionX.inputVal ? item.positionX.inputVal+item.positionX.selectVal : '';
+        cssObject_background_detail["background-position-y"]= item.positionX&&item.positionX.inputVal ? item.positionY.inputVal+item.positionY.selectVal : '';
+        cssObject_background_detail["background-image"]=`url(${window.IDM.url.getWebPath(item.bgImgUrl)})`;
+        cssObject_background_detail["background-repeat"]=item.bgRepeat;
+        cssObject_background_detail["background-attachment"]=item.bgAttachment;
+        cssObject_background_detail["background-color"]=item.mainColor ? item.mainColor.hex8 : "";
         IDM.setStyleToPageHead(
           "." +
             themeNamePrefix +
