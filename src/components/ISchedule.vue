@@ -248,9 +248,10 @@ export default {
       const startDate = this.currentList[0][0].realDate;
       const endDate = this.currentList[2][this.currentList[2].length - 1]
         .realDate;
-      let url = `ctrl/dataSource/getDatas?id=${dataSource.value}`;
+      let url = `ctrl/dataSource/getDatas`;
       IDM.http
         .post(url, {
+          id:dataSource.value,
           startDate,
           endDate,
         },
