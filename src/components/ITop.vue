@@ -376,7 +376,6 @@ export default {
      * 加载动态数据
      */
     initData(){
-      this.getWeather();
       if(this.moduleObject.env=="production"){
         this.getWeather();
         var dataObject = {IDM:window.IDM};
