@@ -253,6 +253,11 @@ export default {
         .post(url, {
           startDate,
           endDate,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+          },
         })
         .done((res) => {
           console.log(res, "接口数据");
