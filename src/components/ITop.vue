@@ -281,9 +281,6 @@ export default {
         const cssObject_color_minor = {
           color: item.minorColor ? item.minorColor.hex8 : "",
         };
-        const cssObject_background_main = {
-          "background-color": item.mainColor ? item.mainColor.hex8 : "",
-        };
         let cssObject_background_detail = {};
         if(item.bgSize&&item.bgSize=="custom"){
           cssObject_background_detail["background-size"]=(item.bgSizeWidth?item.bgSizeWidth.inputVal+item.bgSizeWidth.selectVal:"auto")+" "+(item.bgSizeHeight?item.bgSizeHeight.inputVal+item.bgSizeHeight.selectVal:"auto")
@@ -305,14 +302,9 @@ export default {
         if (item.bgAttachment) {
           cssObject_background_detail["background-attachment"]=item.bgAttachment;
         }
-        IDM.setStyleToPageHead(
-          "." +
-            themeNamePrefix +
-            item.key +
-            " #" +
-            (this.moduleObject.packageid || "module_demo") + " .idm_top_box",
-          cssObject_background_main
-        );
+        if (item.mainColor) {
+          cssObject_background_detail["background-color"]=item.mainColor ? item.mainColor.hex8 : "";
+        }
         IDM.setStyleToPageHead(
           "." +
             themeNamePrefix +
