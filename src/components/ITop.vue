@@ -63,27 +63,7 @@ export default {
         jumpType: 'new',
         iconSize: '30',
         setUrl: 'https://www.baidu.com/',
-        headerBgUrl: '',
-        themeList: [
-          {
-            key: "blue",
-            mainColor: {
-              hex8: "#4A90E2FF",
-            },
-            minorColor: {
-              hex8: "#FFFFFFFF",
-            },
-          },
-          {
-            key: "red",
-            mainColor: {
-              hex8: "red",
-            },
-            minorColor: {
-              hex8: "red",
-            },
-          },
-        ],
+        headerBgUrl: ''
       }
     }
   },
