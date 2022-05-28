@@ -202,22 +202,28 @@ export default {
       ) {
         return false;
       }
-      const changeUrl = '/ctrl/customizePortal/savePage'
-      const layerIndex = IDM.layer.load();
-      IDM.http
-        .post(changeUrl, { pageId: item.pageId })
-        .done((res) => {
-          IDM.layer.close(layerIndex);
-          if (res.type === "success") {
-            this.selectedKey = item.key;
-            const url = window.location.href;
-            const jumpUrl = url.split("#")[0] + "#/preview/" + item.pageId;
-            window.open(jumpUrl, this.propData.jumpStyle || "_self");
-          } else {
-            IDM.message.error(res.message);
-          }
-        })
-        .error((error) => {});
+      // 改成不再调用接口的形式
+      this.selectedKey = item.key;
+      const url = window.location.href;
+      const jumpUrl = url.split("#")[0] + "#/preview/" + item.pageId;
+      window.open(jumpUrl, this.propData.jumpStyle || "_self");
+      // 废弃先前的处理方法
+      // const changeUrl = '/ctrl/customizePortal/savePage'
+      // const layerIndex = IDM.layer.load();
+      // IDM.http
+      //   .post(changeUrl, { pageId: item.pageId })
+      //   .done((res) => {
+      //     IDM.layer.close(layerIndex);
+      //     if (res.type === "success") {
+      //       this.selectedKey = item.key;
+      //       const url = window.location.href;
+      //       const jumpUrl = url.split("#")[0] + "#/preview/" + item.pageId;
+      //       window.open(jumpUrl, this.propData.jumpStyle || "_self");
+      //     } else {
+      //       IDM.message.error(res.message);
+      //     }
+      //   })
+      //   .error((error) => {});
     },
     getMenuList() {
       if (this.moduleObject.env === "develop") {

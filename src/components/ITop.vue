@@ -32,6 +32,7 @@
             <div class="text">
               <img v-if="weatherLogo" :src="weatherLogo" alt="">
               {{temperature | temperature}}
+              {{weather}}
             </div>
             <div class="text">{{city}}</div>
           </div>
@@ -50,6 +51,7 @@ export default {
       userName: '',
       userUnit: '',
       weatherLogo: '',
+      weather: '',
       temperature: '',
       city: '',
       // 当前设备宽度
@@ -163,17 +165,6 @@ export default {
     convertAttrToStyleObject(){
       let styleObject = {};
       let fontStyleObject = {};
-      if(this.propData.bgSize&&this.propData.bgSize=="custom"){
-        styleObject["background-size"]=(this.propData.bgSizeWidth?this.propData.bgSizeWidth.inputVal+this.propData.bgSizeWidth.selectVal:"auto")+" "+(this.propData.bgSizeHeight?this.propData.bgSizeHeight.inputVal+this.propData.bgSizeHeight.selectVal:"auto")
-      }else if(this.propData.bgSize){
-        styleObject["background-size"]=this.propData.bgSize;
-      }
-      if(this.propData.positionX&&this.propData.positionX.inputVal){
-        styleObject["background-position-x"]=this.propData.positionX.inputVal+this.propData.positionX.selectVal;
-      }
-      if(this.propData.positionY&&this.propData.positionY.inputVal){
-        styleObject["background-position-y"]=this.propData.positionY.inputVal+this.propData.positionY.selectVal;
-      }
       for (const key in this.propData) {
         if (this.propData.hasOwnProperty.call(this.propData, key)) {
           const element = this.propData[key];
@@ -184,11 +175,6 @@ export default {
             case "width":
             case "height":
               styleObject[key]=element;
-              break;
-            case "bgColor":
-              if(element&&element.hex8){
-                styleObject["background-color"]=element.hex8;
-              }
               break;
             case "box":
               if(element.marginTopVal){
@@ -215,25 +201,6 @@ export default {
               if(element.paddingLeftVal){
                 styleObject["padding-left"]=`${element.paddingLeftVal}`;
               }
-              break;
-            case "bgImgUrl":
-              styleObject["background-image"]=`url(${window.IDM.url.getWebPath(element)})`;
-              break;
-            case "positionX":
-              //背景横向偏移
-              
-              break;
-            case "positionY":
-              //背景纵向偏移
-              
-              break;
-            case "bgRepeat":
-              //平铺模式
-                styleObject["background-repeat"]=element;
-              break;
-            case "bgAttachment":
-              //背景模式
-                styleObject["background-attachment"]=element;
               break;
             case "border":
               if(element.border.top.width>0){
@@ -317,6 +284,27 @@ export default {
         const cssObject_background_main = {
           "background-color": item.mainColor ? item.mainColor.hex8 : "",
         };
+        let cssObject_background_detail = {};
+        if(item.bgSize&&item.bgSize=="custom"){
+          cssObject_background_detail["background-size"]=(item.bgSizeWidth?item.bgSizeWidth.inputVal+item.bgSizeWidth.selectVal:"auto")+" "+(item.bgSizeHeight?item.bgSizeHeight.inputVal+item.bgSizeHeight.selectVal:"auto")
+        }else if(item.bgSize){
+          cssObject_background_detail["background-size"]=item.bgSize;
+        }
+        if(item.positionX&&item.positionX.inputVal){
+          cssObject_background_detail["background-position-x"]=item.positionX.inputVal+item.positionX.selectVal;
+        }
+        if(item.positionY&&item.positionY.inputVal){
+          cssObject_background_detail["background-position-y"]=item.positionY.inputVal+item.positionY.selectVal;
+        }
+        if (item.bgImgUrl) {
+          cssObject_background_detail["background-image"]=`url(${window.IDM.url.getWebPath(item.bgImgUrl)})`;
+        }
+        if (item.bgRepeat) {
+          cssObject_background_detail["background-repeat"]=item.bgRepeat;
+        }
+        if (item.bgAttachment) {
+          cssObject_background_detail["background-attachment"]=item.bgAttachment;
+        }
         IDM.setStyleToPageHead(
           "." +
             themeNamePrefix +
@@ -332,6 +320,14 @@ export default {
             " #" +
             (this.moduleObject.packageid || "module_demo") + " .top-bg",
           cssObject_color_minor
+        );
+        IDM.setStyleToPageHead(
+          "." +
+            themeNamePrefix +
+            item.key +
+            " #" +
+            (this.moduleObject.packageid || "module_demo") + " .idm_top_box",
+          cssObject_background_detail
         );
       }
     },
@@ -359,26 +355,36 @@ export default {
     },
     // 定位当前城市、街道
     getWeather() {
-      let lat, lon;
       const weatherApi = '/ctrl/weather/getWeatherByLocation';
-      navigator.geolocation.getCurrentPosition((pos) => {
-        // 当前经纬度存入变量 lat、lon
-          lat = pos.coords.latitude;
-          lon = pos.coords.longitude;
-          IDM.http.get(weatherApi, {lon, lat}).done(res => {
-            if (res.type === "success") {
-              this.temperature = res.data.temp2;
-              this.city = res.data.city;
-            } else {
-              IDM.message.error(res.message);
-            }
-          })
+      IDM.http.get(weatherApi).done(res => {
+        if (res.type === "success") {
+          this.temperature = res.data.temp;
+          this.city = res.data.cityName;
+          this.weather = res.data.weather;
+        } else {
+          IDM.message.error(res.message);
+        }
       })
+      // 因浏览器限制，放弃这种方式
+      // navigator.geolocation.getCurrentPosition((pos) => {
+      //   // 当前经纬度存入变量 lat、lon
+      //     lat = pos.coords.latitude;
+      //     lon = pos.coords.longitude;
+      //     IDM.http.get(weatherApi, {lon, lat}).done(res => {
+      //       if (res.type === "success") {
+      //         this.temperature = res.data.temp2;
+      //         this.city = res.data.city;
+      //       } else {
+      //         IDM.message.error(res.message);
+      //       }
+      //     })
+      // })
     },
     /**
      * 加载动态数据
      */
     initData(){
+      this.getWeather();
       if(this.moduleObject.env=="production"){
         this.getWeather();
         var dataObject = {IDM:window.IDM};
