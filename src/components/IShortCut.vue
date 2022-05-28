@@ -892,8 +892,8 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
-        top: -10px;
-        right: -10px;
+        top: -3px;
+        right: -3px;
         text-align: center;
         font-size: 12px;
         overflow: hidden;
