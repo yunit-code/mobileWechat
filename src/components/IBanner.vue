@@ -525,6 +525,9 @@ export default {
           this.pageWidth = messageObject.message.width
           this.convertAttrToStyleObject()
           break;
+        case 'linkageReload':
+          this.initData()
+          break;
       }
       console.log("组件收到消息",messageObject)
     },
