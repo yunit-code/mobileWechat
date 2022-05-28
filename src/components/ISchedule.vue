@@ -278,7 +278,7 @@ export default {
      * 处理返回结果
      */
     dealRes(res) {
-      const data = this.propData.dataFiled ? res[this.propData.dataFiled] : res;
+      const data = this.propData.dataFiled ? this.getExpressData("dataName",this.propData.dataFiled,res) : res;
       // 更多按钮地址
       if (data.moreUrl) {
         this.propData.moreUrl = this.propData.moreUrl
@@ -944,6 +944,29 @@ export default {
      */
     currentClassStatus(i, j) {
       return i === 1 && j === this.currentIndex;
+    },
+    /**
+     * 通用的获取表达式匹配后的结果
+     */
+    getExpressData(dataName,dataFiled,resultData){
+      //给defaultValue设置dataFiled的值
+      var _defaultVal = undefined;
+      if(dataFiled){
+        var filedExp = dataFiled;
+        filedExp =
+          dataName +
+          (filedExp.startsWiths("[") ? "" : ".") +
+          filedExp;
+        var dataObject = { IDM: window.IDM };
+        dataObject[dataName] = resultData;
+        _defaultVal = window.IDM.express.replace.call(
+          this,
+          "@[" + filedExp + "]",
+          dataObject
+        );
+      }
+      
+      return _defaultVal;
     },
     /**
      * 更多按钮跳转
