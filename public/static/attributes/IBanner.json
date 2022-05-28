@@ -124,11 +124,27 @@
                     ]
                 },
                 {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "大屏间隔",
+                    "desc": "大屏幕时轮播图片间隔，大小屏幕以配置的分界点为准",
+                    "bindKey": "bigScreenStretch",
+                    "default": "-5.5%"
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "小屏间隔",
+                    "desc": "小屏幕时轮播图片间隔，大小屏幕以配置的分界点为准",
+                    "bindKey": "smallScreenStretch",
+                    "default": "-7%"
+                },
+                {
                     "type": "inputNumber",
                     "layoutType": "inline",
                     "text": "分界点",
                     "bindKey": "dividingPoint",
-                    "desc": "高度分界点，用于判断当前轮播图的高度如果小于此分界点则会小屏高度的值，如果大于此分界点则会使用大屏高度的值",
+                    "desc": "宽度分界点，用于决定当前轮播图的高度，如果屏幕小于分界点则使用小屏高度的值，反之会使用大屏高度的值",
                     "default": 600
                 },
                 {

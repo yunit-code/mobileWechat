@@ -14,7 +14,7 @@
     class="idm-banner-box"
   >
     <div class="idm-banner-box-swiper">
-      <div :class="'idm-banner-box-swiper-container' + refreshKeyNumber">
+      <div class="idm-banner-box-swiper-container" v-if="showSwiper">
         <ul class="swiper-wrapper">
           <li
             class="swiper-slide idm-banner-box-swiper-item-container banner-item-container"
@@ -74,6 +74,7 @@ export default {
     return {
       moduleObject: {},
       pageWidth: null,
+      showSwiper: true,
       propData: this.$root.propData.compositeAttr || {
         htmlTitle: "广告轮播",
         width: "100%",
@@ -85,10 +86,11 @@ export default {
           selectVal: "px"
         },
         dataType: 'dataSource',
-        dividingPoint: 600
+        dividingPoint: 600,
+        bigScreenStretch: '-5.5%',
+        smallScreenStretch: '-7%',
       },
-      bannerData: {value: []},
-      refreshKeyNumber: 0
+      bannerData: {value: []}
     };
   },
   computed: {
@@ -116,7 +118,7 @@ export default {
   methods: {
     initSwiper() {
       this.$nextTick(()=> {
-        let swiper = new Swiper('#'+this.moduleObject.id + " .idm-banner-box-swiper-container" + this.refreshKeyNumber, {
+        let swiper = new Swiper('#'+this.moduleObject.id + " .idm-banner-box-swiper-container", {
           autoplay: 2000,                                           //自动播放
           speed: 500,                                               //播放速度
           loop: true,                                               //循环播放
@@ -131,7 +133,7 @@ export default {
           centeredSlides: true,                                     //居中
           coverflowEffect: {                                        //特效组件属性
             rotate: 0,                                              //旋转度数
-            stretch: '-7%',                                         //左右拉伸
+            stretch: this.isSmallScreen ? this.propData.smallScreenStretch : this.propData.bigScreenStretch,                                         //左右拉伸
             depth: 100,                                             //位置深度，越大越小
             modifier: 1,                                            //depth和rotate和stretch的倍率
             slideShadows: false,                                    //阴影
@@ -342,10 +344,10 @@ export default {
               bannerItemStyleObj['border-radius'] = element.inputVal + element.selectVal;
               break;
             case "marginTop":
-              bannerFontStyleObj['margin-top'] = element.inputVal + element.selectVal;
+              styleObject['margin-top'] = element.inputVal + element.selectVal;
               break;
             case "marginBottom":
-              bannerFontStyleObj['margin-bottom'] = element.inputVal + element.selectVal;
+              styleObject['margin-bottom'] = element.inputVal + element.selectVal;
               break;
           }
         }
@@ -418,17 +420,18 @@ export default {
      * 加载动态数据
      */
     initData() {
-      // 刷新数每次加1,确保元素刷新
-      this.refreshKeyNumber ++
+      this.showSwiper = false
       if(this.propData.dataType === 'custom'){
          // 自定义数据直接使用
         this.$set(this.bannerData, 'value', this.propData.bannerTable)
+        this.showSwiper = true
         this.initSwiper();
         return
       }else{
         // 开发环境使用假数据，深拷贝方式数据fix不更新
         if(this.moduleObject.env === 'develop') {
           this.bannerData = _.cloneDeep(data)
+          this.showSwiper = true
           this.initSwiper();
           return
         }
@@ -451,9 +454,11 @@ export default {
           }else {
             IDM.message.error(res.data.message)
           }
+          this.showSwiper = true
           this.initSwiper()
         })
         .catch((error) => {
+          this.showSwiper = true
           this.initSwiper()
       })
     },
