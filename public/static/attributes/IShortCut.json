@@ -313,12 +313,11 @@
                             "default": false
                         },
                         {
-                            "type": "input",
+                            "type": "treeSelect",
                             "layoutType": "inline",
-                            "text": "数据接口",
-                            "desc": "应用显示角标选项打开的时候，用于获取应用右上角角标数据的接口地址",
-                            "bindKey": "getApplicationMarkNumberUrl",
-                            "default": "/ctrl/dataSource/getDatas",
+                            "text": "数据源",
+                            "bindKey": "dataSource",
+                            "dataSourceUrl":"/ctrl/dataSource/getShortCutCount",
                             "display": "@[showTodoNumber]"
                         },
                         {

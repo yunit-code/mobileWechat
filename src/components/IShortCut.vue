@@ -69,7 +69,6 @@
                       <div class="three">
                         <img v-if="v.bgUrl" :src="IDM.url.getWebPath(v.bgUrl)">
                         <svg-icon v-else icon-class="application" />
-                        <div v-if="v.showTodoNumber && v.todoNumber" class="number">{{ v.todoNumber }}</div>
                       </div>
                     </div>
                   <!-- </div> -->
@@ -77,6 +76,7 @@
                   <svg-icon v-else icon-class="application" />
                   <div v-if="v.showTodoNumber && v.todoNumber" class="number">{{ v.todoNumber }}</div> -->
                 </div>
+                <div v-if="v.showTodoNumber && v.todoNumber" class="number">{{ v.todoNumber }}</div>
                 <div class="idm_applicationcenter_main_list_name">
                   <div class="empty-view"></div>
                   <div class="tit">{{ v.name }}</div>
@@ -92,6 +92,7 @@
 </template>
 
 <script>
+import { getDatasInterfaceUrl } from '@/api/config'
 import { Grid, GridItem, Icon } from 'vant';
 import 'vant/lib/grid/style';
 import 'vant/lib/icon/style';
@@ -506,46 +507,59 @@ export default {
           }
           break;
       }
-      this.getApplicationMarkNumber();
-      if(this.propData.shortCutStyle === 'default'&&this.propData.shortConfigList) {
-        let styleObj = {};
-        this.propData.shortConfigList.forEach(item=> {
-          const styles = {}
-          // if(item.positionX&&item.positionX.inputVal){
-          //   item.styles["backgroundPosition"]= `${item.positionX.selectVal&&item.positionX.inputVal?item.positionX.inputVal+ item.positionX.selectVal:'0%'} ${item.positionY.selectVal&&item.positionY.inputVal?item.positionY.inputVal+ item.positionY.selectVal:'0%'}`;
-          // }
-          // if(item.positionY&&item.positionY.inputVal){
-          //   item.styles["backgroundPosition"]= `${item.positionX.selectVal&&item.positionX.inputVal?item.positionX.inputVal+ item.positionX.selectVal:'0%'} ${item.positionY.selectVal&&item.positionY.inputVal?item.positionY.inputVal+ item.positionY.selectVal:'0%'}`;
-          // }
-          if(item.bgUrl) {
-            styles["backgroundImage"]=`url(${window.IDM.url.getWebPath(item.bgUrl)})`;
-          }else {
-            styles["backgroundImage"]= 'linear-gradient(to right,#f4b0b0,#f4acac,#f18c8b)';
-          }
-          if(item.bgSizeWidth||item.bgSizeHeight) {
-            styles["backgroundSize"]=(item.bgSizeWidth&&item.bgSizeWidth.selectVal?item.bgSizeWidth.inputVal+item.bgSizeWidth.selectVal:"auto")+" "+(item.bgSizeHeight&&item.bgSizeHeight.selectVal?item.bgSizeHeight.inputVal+item.bgSizeHeight.selectVal:"auto")
-          }
-          if(item.bgRepeat){
-            styles["backgroundRepeat"]= item.bgRepeat;
-          }
-          if(item.bgAttachment) {
-            styles["backgroundAttachment"]= item.bgAttachment;
-          }
-          styles['height'] = `${this.funScreenAdaptationHeight(this.propData.shortItemHeight.inputVal)}${this.propData.shortItemHeight.selectVal}`;
-          styles['width'] = `${this.propData.shortItemWidth.inputVal}${this.propData.shortItemWidth.selectVal}`;
-          let pClientWidth = this.currentEquipWidth;
-          if(this.moduleObject.env!=="develop") {
-            if(!pClientWidth) {
-              pClientWidth = document.body.clientWidth;
+      if(this.propData.shortConfigList) {
+        if(this.propData.shortCutStyle === 'default') {
+          this.propData.shortConfigList.forEach(item=> {
+            const styles = {}
+            if(item.bgUrl) {
+              styles["backgroundImage"]=`url(${window.IDM.url.getWebPath(item.bgUrl)})`;
+            }else {
+              styles["backgroundImage"]= 'linear-gradient(to right,#f4b0b0,#f4acac,#f18c8b)';
             }
-          }
-          if(pClientWidth >600) {
-            styles['margin'] = `0 10px`;
-          }
-          // styles['width'] = this.propData.shortItemWidth.inputVal+this.propData.shortItemWidth.selectVal;
-          // styles['height'] = this.propData.shortItemHeight.inputVal+this.propData.shortItemHeight.selectVal;
-          this.$set(item,'styles',styles);
-        })
+            if(item.bgSizeWidth||item.bgSizeHeight) {
+              styles["backgroundSize"]=(item.bgSizeWidth&&item.bgSizeWidth.selectVal?item.bgSizeWidth.inputVal+item.bgSizeWidth.selectVal:"auto")+" "+(item.bgSizeHeight&&item.bgSizeHeight.selectVal?item.bgSizeHeight.inputVal+item.bgSizeHeight.selectVal:"auto")
+            }
+            if(item.bgRepeat){
+              styles["backgroundRepeat"]= item.bgRepeat;
+            }
+            if(item.bgAttachment) {
+              styles["backgroundAttachment"]= item.bgAttachment;
+            }
+            styles['height'] = `${this.funScreenAdaptationHeight(this.propData.shortItemHeight.inputVal)}${this.propData.shortItemHeight.selectVal}`;
+            styles['width'] = `${this.propData.shortItemWidth.inputVal}${this.propData.shortItemWidth.selectVal}`;
+            let pClientWidth = this.currentEquipWidth;
+            if(this.moduleObject.env!=="develop") {
+              if(!pClientWidth) {
+                pClientWidth = document.body.clientWidth;
+              }
+            }
+            if(pClientWidth >600) {
+              styles['margin'] = `0 10px`;
+            }
+            // styles['width'] = this.propData.shortItemWidth.inputVal+this.propData.shortItemWidth.selectVal;
+            // styles['height'] = this.propData.shortItemHeight.inputVal+this.propData.shortItemHeight.selectVal;
+            this.$set(item,'styles',styles);
+          })
+        }else if(this.propData.shortCutStyle === 'default2') {
+          let styleObjects = {};
+          styleObjects['width'] = `${this.funScreenAdaptationHeight(40, 0.5)}px`;
+          styleObjects['height'] = `${this.funScreenAdaptationHeight(40, 0.5)}px`;
+          window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_shortcut_cont .img_box", styleObjects);
+        }else {
+          let styleObjects = {};
+          let styleObjects2 = {};
+          let styleObjects3 = {};
+          styleObjects['width'] = `${this.funScreenAdaptationHeight(45, 0.5)}px`;
+          styleObjects['height'] = `${this.funScreenAdaptationHeight(50, 0.5)}px`;
+          styleObjects2['width'] = `${this.funScreenAdaptationHeight(50, 0.5)}px`;
+          styleObjects2['height'] = `${this.funScreenAdaptationHeight(40, 0.5)}px`;
+          styleObjects['margin-bottom'] = `-${this.funScreenAdaptationHeight(30, 0.5)}px`;
+          styleObjects3['top'] = `${this.funScreenAdaptationHeight(8, 0.5)}px`;
+          window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_shortcut_cont .img_box", styleObjects);
+          window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_shortcut_cont .empty-view", styleObjects2);
+          window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_shortcut_cont .number", styleObjects3);
+        }
+        this.getApplicationMarkNumber();
       }
     },
     getApplicationMarkNumber() {
@@ -553,33 +567,38 @@ export default {
         console.log('propData.shortConfigList',this.propData.shortConfigList)
         for( let i = 0,maxi = this.propData.shortConfigList.length;i < maxi;i++ ) {
           const item = this.propData.shortConfigList[i];
-            if ( item.showTodoNumber && item.getApplicationMarkNumberUrl) {
-              this.getApplicationMarkNumberSubmit(item,item.sourceId)
+            if ( item.showTodoNumber && item.dataSource) {
+              this.getApplicationMarkNumberSubmit(item)
             }
         }
       }
     },
-    getApplicationMarkNumberSubmit(item,sourceId) {
-        console.log('getApplicationMarkNumberUrl',item.getApplicationMarkNumberUrl)
-        if ( this.moduleObject.env == 'develop' ) {
-            return
-        }
-        window.IDM.http.post(item.getApplicationMarkNumberUrl,{
-          id: sourceId || 1
-        },{
-          headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-          },
-        }).then(result=>{
-            console.log('角标接口请求回参',result)
-            if ( result&&result.data&&result.data.type == 'success' && result.data.data ) {
-                if ( !item.dataFiled ) {
-                    this.$set(item, "todoNumber", result.data.data.count);
-                } else {
-                    this.$set(item, "todoNumber", result.data.data[item.dataFiled]);
-                }
-            }
-        })
+    getApplicationMarkNumberSubmit(item) {
+      console.log('getApplicationMarkNumberUrl',JSON.stringify(item))
+      if ( this.moduleObject.env == 'develop' ) {
+          return
+      }
+      if(item.dataSource) {
+        return;
+      }
+      window.IDM.http.post(getDatasInterfaceUrl,{
+        id: item.dataSource && item.dataSource.value
+      },{
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+        },
+      }).then(result=>{
+          console.log('角标接口请求回参',result)
+          if ( result&&result.data&&result.data.type == 'success' && result.data.data ) {
+              if ( !item.dataFiled ) {
+                  this.$set(item, "todoNumber", result.data.data.count);
+              } else {
+                  this.$set(item, "todoNumber", result.data.data[item.dataFiled||'count']);
+              }
+          }else {
+            IDM.message.error(res.data.message)
+          }
+      })
     },
     /**
      * 主题颜色
@@ -698,7 +717,7 @@ export default {
      *screenAdaptiveRatio 适配比例
      *screenReferValue 屏幕基准值
     */
-    funScreenAdaptationHeight(e) {
+    funScreenAdaptationHeight(e, diffVal = 0.3) {
       let pClientWidth = this.currentEquipWidth;
       if(this.moduleObject.env==="develop") {
         if(!pClientWidth) {
@@ -710,7 +729,7 @@ export default {
         }
       }
       const screenReferValue = this.propData.screenReferValue || 414;
-      const screenAdaptiveRatio = Number(this.propData.screenAdaptiveRatio) + 0.3 || 1.2;
+      const screenAdaptiveRatio = Number(this.propData.screenAdaptiveRatio) + diffVal || 1.2;
       return Math.round(e * ( ( pClientWidth/screenReferValue - 1 ) * ( screenAdaptiveRatio - 1 ) + 1 ))
     },
   }
@@ -748,16 +767,19 @@ export default {
     ::v-deep .van-grid-item__content{
       padding: 7px 3px;
     }
+    /* 样式二 */
     .idm_applicationcenter_main_list{
       position: relative;
       text-align: center;
-      .img_box,img,svg{
-          width: 40px;
-          height: 40px;
-          margin: 0 auto 2.5px auto;
-      }
       .img_box{
-          position: relative;
+        position: relative;
+        // width: 40px;
+        // height: 40px;
+        margin: 0 auto 2.5px auto;
+        img,svg{
+          width: 100%;
+          height: 100%;
+        }
       }
       .number{
         width: 20px;
@@ -788,7 +810,7 @@ export default {
         display: flex;
         margin-top: 10px;
         .empty-view {
-          width: 40px;
+          width: 50px;
           height: 40px;
         }
         .tit {
@@ -813,11 +835,14 @@ export default {
       //     left: 10px;
       // }
       .img_box{
-        position: absolute;
-        bottom: 15px;
-        left: 5px;
-        width: 45px;
-        height: 50px;
+        // position: absolute;
+        // bottom: 15px;
+        // left: 5px;
+        // width: 45px;
+        // height: 50px;
+        float: left;
+        margin-bottom: -30px;
+        margin-left: 10px;
         overflow: hidden;
         transform: rotate(120deg);
         img,svg{
@@ -841,7 +866,7 @@ export default {
         width: 20px;
         height: 20px;
         position: absolute;
-        top: -10px;
+        top: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
