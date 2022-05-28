@@ -140,11 +140,7 @@
                     "bindKey": "mainColor",
                     "desc": "主题的主要颜色，应用于背景颜色",
                     "placeholder": "请选择颜色",
-                    "display": "@[key]",
-                    "default": {
-                        "hex": "#4A90E2",
-                        "hex8": "#4A90E2FF"
-                    }
+                    "display": "@[key]"
                 },
                 {
                     "type": "colorPicker",
@@ -153,11 +149,7 @@
                     "bindKey": "minorColor",
                     "desc": "主题的次要颜色，应用于文字颜色",
                     "placeholder": "请选择颜色",
-                    "display": "@[key]",
-                    "default": {
-                        "hex": "#FFFFFF",
-                        "hex8": "#FFFFFFFF"
-                    }
+                    "display": "@[key]"
                 },
                 {
                     "type": "uploadImage",
