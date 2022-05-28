@@ -166,15 +166,19 @@ export default {
         /** * 主题颜色 */
         convertThemeListAttrToStyleObject() {
             const themeList = this.propData.themeList;
+            const themeNamePrefix = IDM.setting && IDM.setting.applications && IDM.setting.applications.themeNamePrefix ? IDM.setting.applications.themeNamePrefix : "idm-theme-";
             if (!themeList) {
+                let arr = ['blue','red','green']
+                for( let i = 0; i < arr.length; i++ ){
+                    IDM.setStyleToPageHead(
+                        "." + themeNamePrefix + arr[i] + " #" + (this.moduleObject.packageid || "module_demo") +
+                            " .idm_applicationcenter_title_left .idm_filed_svg_icon",
+                        { "color": '' }
+                    );
+                }
                 return;
             }
-            const themeNamePrefix =
-                IDM.setting &&
-                IDM.setting.applications &&
-                IDM.setting.applications.themeNamePrefix
-                ? IDM.setting.applications.themeNamePrefix
-                : "idm-theme-";
+            
             for (var i = 0; i < themeList.length; i++) {
                 var item = themeList[i];
                 let styleObject = {
@@ -183,20 +187,8 @@ export default {
                 let fontStyleObject = {
                     "color": item.mainColor ? item.mainColor.hex8 : "",
                 }
-                console.log('主题属性',fontStyleObject)
-                console.log('主题属性key',"." +
-                        themeNamePrefix +
-                        item.key +
-                        " #" +
-                        (this.moduleObject.packageid || "module_demo") +
-                        " .idm_applicationcenter_title_left .idm_filed_svg_icon")
-                
                 IDM.setStyleToPageHead(
-                    "." +
-                        themeNamePrefix +
-                        item.key +
-                        " #" +
-                        (this.moduleObject.packageid || "module_demo") +
+                    "." + themeNamePrefix + item.key + " #" + (this.moduleObject.packageid || "module_demo") +
                         " .idm_applicationcenter_title_left .idm_filed_svg_icon",
                     fontStyleObject
                 );
