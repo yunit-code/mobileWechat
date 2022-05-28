@@ -574,13 +574,7 @@ export default {
       }
     },
     getApplicationMarkNumberSubmit(item) {
-      console.log('getApplicationMarkNumberUrl',JSON.stringify(item))
-      if ( this.moduleObject.env == 'develop' ) {
-          return
-      }
-      if(item.dataSource) {
-        return;
-      }
+      // console.log('getApplicationMarkNumberUrl',JSON.stringify(item))
       window.IDM.http.post(getDatasInterfaceUrl,{
         id: item.dataSource && item.dataSource.value
       },{
@@ -898,8 +892,8 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
-        top: -10px;
-        right: -10px;
+        top: -3px;
+        right: -3px;
         text-align: center;
         font-size: 12px;
         overflow: hidden;

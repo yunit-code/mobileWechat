@@ -63,27 +63,7 @@ export default {
         jumpType: 'new',
         iconSize: '30',
         setUrl: 'https://www.baidu.com/',
-        headerBgUrl: '',
-        themeList: [
-          {
-            key: "blue",
-            mainColor: {
-              hex8: "#4A90E2FF",
-            },
-            minorColor: {
-              hex8: "#FFFFFFFF",
-            },
-          },
-          {
-            key: "red",
-            mainColor: {
-              hex8: "red",
-            },
-            minorColor: {
-              hex8: "red",
-            },
-          },
-        ],
+        headerBgUrl: ''
       }
     }
   },
@@ -165,6 +145,17 @@ export default {
     convertAttrToStyleObject(){
       let styleObject = {};
       let fontStyleObject = {};
+      if(this.propData.bgSize&&this.propData.bgSize=="custom"){
+        styleObject["background-size"]=(this.propData.bgSizeWidth?this.propData.bgSizeWidth.inputVal+this.propData.bgSizeWidth.selectVal:"auto")+" "+(this.propData.bgSizeHeight?this.propData.bgSizeHeight.inputVal+this.propData.bgSizeHeight.selectVal:"auto")
+      }else if(this.propData.bgSize){
+        styleObject["background-size"]=this.propData.bgSize;
+      }
+      if(this.propData.positionX&&this.propData.positionX.inputVal){
+        styleObject["background-position-x"]=this.propData.positionX.inputVal+this.propData.positionX.selectVal;
+      }
+      if(this.propData.positionY&&this.propData.positionY.inputVal){
+        styleObject["background-position-y"]=this.propData.positionY.inputVal+this.propData.positionY.selectVal;
+      }
       for (const key in this.propData) {
         if (this.propData.hasOwnProperty.call(this.propData, key)) {
           const element = this.propData[key];
@@ -175,6 +166,11 @@ export default {
             case "width":
             case "height":
               styleObject[key]=element;
+              break;
+            case "bgColor":
+              if(element&&element.hex8){
+                styleObject["background-color"]=element.hex8;
+              }
               break;
             case "box":
               if(element.marginTopVal){
@@ -201,6 +197,25 @@ export default {
               if(element.paddingLeftVal){
                 styleObject["padding-left"]=`${element.paddingLeftVal}`;
               }
+              break;
+            case "bgImgUrl":
+              styleObject["background-image"]=`url(${window.IDM.url.getWebPath(element)})`;
+              break;
+            case "positionX":
+              //背景横向偏移
+              
+              break;
+            case "positionY":
+              //背景纵向偏移
+              
+              break;
+            case "bgRepeat":
+              //平铺模式
+                styleObject["background-repeat"]=element;
+              break;
+            case "bgAttachment":
+              //背景模式
+                styleObject["background-attachment"]=element;
               break;
             case "border":
               if(element.border.top.width>0){
@@ -415,6 +430,7 @@ export default {
       } else if (messageObject.type && messageObject.type == "pageResize") {
         this.currentEquipWidth = messageObject.message.width;
         this.convertAttrToStyleObject();
+        this.convertThemeListAttrToStyleObject();
       }
     },
     /**
