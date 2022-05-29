@@ -858,6 +858,9 @@ export default {
      */
     initSwiper() {
       var mySwiper = new Swiper(".swiper-container", {
+        observer: true,
+        observeParents: true,
+        observeSlideChildren: true,
         on: {
           slidePrevTransitionStart: () => {},
           slidePrevTransitionEnd: () => {

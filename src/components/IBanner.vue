@@ -27,7 +27,7 @@
             <span class="idm-banner-box-swiper-text">{{item.title}}</span>
           </li>
         </ul>
-        <div class="idm-banner-swiper-pagination"></div>
+        <div class="idm-banner-swiper-pagination" v-show="propData.showBullet"></div>
       </div>
     </div>
     <div class="idm-banner-box-mask" v-if="moduleObject.env === 'develop' && (propData.dataType === 'dataSource' && !propData.dataSource)">
@@ -78,7 +78,10 @@ export default {
       propData: this.$root.propData.compositeAttr || {
         htmlTitle: "广告轮播",
         width: "100%",
-        height: "180px",
+        height: {
+          inputVal: 180,
+          selectVal: 'px'
+        },
         limit: 5,
         showBullet: true,
         imgBorderRadius: {
@@ -111,9 +114,7 @@ export default {
     this.convertThemeListAttrToStyleObject()
   },
   mounted() {
-    if(this.moduleObject.env === 'develop') {
-      this.initSwiper();
-    }
+    this.initSwiper();
   },
   methods: {
     initSwiper() {
@@ -125,7 +126,7 @@ export default {
           loopedSlides: 100,                                        //循环个数
           slidesPerView: 'auto',                                    //预览slide个数
           effect: 'coverflow',                                      //特效组件
-          pagination: this.moduleObject.env === 'develop' || !this.propData.showBullet ? '' :  { //指示器
+          pagination: !this.propData.showBullet ? '' :  { //指示器
             el: '.idm-banner-swiper-pagination',                    //指示器元素
             bulletClass : 'idm-banner-my-bullet',                   //指示器单个元素类名
             bulletActiveClass: 'idm-banner-my-bullet-active',       //指示器单个元素当前激活类名
@@ -150,6 +151,7 @@ export default {
             },
           }
         });
+        swiper.pagination.update()
         const index = window.sessionStorage.swiperClickedIndex
         if(index != undefined) {
           swiper.slideTo(Number(index), 0, false)
@@ -425,14 +427,12 @@ export default {
          // 自定义数据直接使用
         this.$set(this.bannerData, 'value', this.propData.bannerTable)
         this.showSwiper = true
-        this.initSwiper();
         return
       }else{
         // 开发环境使用假数据，深拷贝方式数据fix不更新
         if(this.moduleObject.env === 'develop') {
           this.bannerData = _.cloneDeep(data)
           this.showSwiper = true
-          this.initSwiper();
           return
         }
       }
@@ -455,11 +455,9 @@ export default {
             IDM.message.error(res.data.message)
           }
           this.showSwiper = true
-          this.initSwiper()
         })
         .catch((error) => {
           this.showSwiper = true
-          this.initSwiper()
       })
     },
     /**
