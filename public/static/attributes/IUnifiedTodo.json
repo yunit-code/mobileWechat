@@ -207,13 +207,13 @@
                     "bindKey": "box",
                     "default": {
                         "marginTopVal": "",
-                        "marginRightVal": "",
+                        "marginRightVal": "3%",
                         "marginBottomVal": "",
-                        "marginLeftVal": "",
-                        "paddingTopVal": "10px",
-                        "paddingRightVal": "10px",
-                        "paddingBottomVal": "10px",
-                        "paddingLeftVal": "10px"
+                        "marginLeftVal": "3%",
+                        "paddingTopVal": "",
+                        "paddingRightVal": "2%",
+                        "paddingBottomVal": "",
+                        "paddingLeftVal": "2%"
                     }
                 },
                 {

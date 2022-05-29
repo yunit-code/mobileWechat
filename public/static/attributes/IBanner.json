@@ -79,7 +79,7 @@
                     "bindKey": "maxHeight",
                     "width": "60px",
                     "default": {
-                        "inputVal": 40,
+                        "inputVal": 32,
                         "selectVal": "vw"
                     },
                     "dictionary": [
@@ -105,7 +105,7 @@
                     "bindKey": "height",
                     "width": "60px",
                     "default": {
-                        "inputVal": 240,
+                        "inputVal": 180,
                         "selectVal": "px"
                     },
                     "dictionary": [
@@ -129,7 +129,7 @@
                     "text": "大屏间隔",
                     "desc": "大屏幕时轮播图片间隔，大小屏幕以配置的分界点为准",
                     "bindKey": "bigScreenStretch",
-                    "default": "-5.5%"
+                    "default": "-6%"
                 },
                 {
                     "type": "input",
@@ -145,7 +145,7 @@
                     "text": "分界点",
                     "bindKey": "dividingPoint",
                     "desc": "宽度分界点，用于决定当前轮播图的高度，如果屏幕小于分界点则使用小屏高度的值，反之会使用大屏高度的值",
-                    "default": 600
+                    "default": 800
                 },
                 {
                     "type": "inputNumberUnit",
@@ -173,7 +173,7 @@
                     "text": "上外边距",
                     "bindKey": "marginTop",
                     "default": {
-                        "inputVal": 0,
+                        "inputVal": 10,
                         "selectVal": "px"
                     },
                     "dictionary": [
@@ -193,7 +193,7 @@
                     "text": "下外边距",
                     "bindKey": "marginBottom",
                     "default": {
-                        "inputVal": 0,
+                        "inputVal": 5,
                         "selectVal": "px"
                     },
                     "dictionary": [
