@@ -137,7 +137,7 @@
                             "text": "汇总标识",
                             "bindKey": "tabKey",
                             "desc": "设置当前汇总标识，用来获取对应汇总数据，例如：汇总1 - inbox，汇总2 - toread",
-                            "default": ""
+                            "default": "inbox"
                         },
                         {
                             "type": "input",
@@ -173,7 +173,7 @@
                             "ctrlAttrObject": {
                                 "width": "48px",
                                 "height": "",
-                                "cropper": true
+                                "cropper": false
                             }
                         }
                     ]
