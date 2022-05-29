@@ -355,7 +355,7 @@
             "tabText": "主题[index]",
             "children": [
                 {
-                    "type": "input",
+                    "type": "select",
                     "layoutType": "inline",
                     "text": "主题标识",
                     "bindKey": "key",
