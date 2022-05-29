@@ -78,7 +78,7 @@ export default {
       propData: this.$root.propData.compositeAttr || {
         htmlTitle: "广告轮播",
         width: "100%",
-        height: "240px",
+        height: "180px",
         limit: 5,
         showBullet: true,
         imgBorderRadius: {
