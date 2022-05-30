@@ -45,8 +45,8 @@
           <div v-for="(item, index) in propData.messageTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.tabTitle}}</div>
         </div>
       </div>
-      <div v-if="!pageLoading" class="idm-message-list-box-container">
-        <ul class="idm-message-list-box-list" v-if="propData.compStyle === 'styleFour' || propData.compStyle === 'styleOne'">
+      <div class="idm-message-list-box-container">
+        <ul class="idm-message-list-box-list" v-if="!pageLoading && (propData.compStyle === 'styleFour' || propData.compStyle === 'styleOne')">
           <li class="d-flex align-c" v-for="(item, index) in messageData.list" :key="index" @click="handleClickItem(item)">
             <!-- <span class="idm-message-list-box-list-style-square" v-if="propData.compStyle === 'styleFour'"></span>
             <span class="idm-message-list-box-list-style-square1" v-else></span> -->
@@ -55,7 +55,7 @@
             <span class="idm-message-list-box-list-time" v-if="propData.compStyle !== 'styleOne'">{{item.time}}</span>
             </li>
         </ul>
-        <ul class="idm-message-list-box-list2" v-if="propData.compStyle === 'styleTwo' || propData.compStyle === 'styleThree'">
+        <ul class="idm-message-list-box-list2" v-if="!pageLoading && (propData.compStyle === 'styleTwo' || propData.compStyle === 'styleThree')">
           <li class="d-flex" v-for="(item, index) in messageData.list" :key="index" @click="handleClickItem(item)">
             <img :src="item.image" :class="propData.compStyle === 'styleTwo' ? 'idm-message-list-box-list2-left-img' : 'idm-message-list-box-list2-left-img2'" alt="">
             <div style="overflow:hidden">
@@ -305,6 +305,8 @@ export default {
               styleObject["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
               break;
             case "subWidth":
+              subBoxStyleObj['width']=element;
+              break;
             case "subHeight":
               subBoxStyleObj['height']=element;
               break;
