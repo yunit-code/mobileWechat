@@ -378,8 +378,10 @@ export default {
                     switch (key) {
                         case "widthManage":
                             styleObject['width'] = element;
+                            break
                         case "titleWidth":
                             styleObjectTitle['width'] = element;
+                            break
                         case "heightManage":
                             styleObject['height'] = element;
                             break;
@@ -530,6 +532,7 @@ export default {
                         case "applicationImgWidthManage":
                             imgStyleObject['width'] = this.translatePxToAdaptation(element,true) + 'px'
                             imgStyleObject['height'] = this.translatePxToAdaptation(element,true) + 'px'
+                            break
                     }
                 }
             }

@@ -594,6 +594,7 @@ export default {
                         case "applicationImgWidth":
                             imgStyleObject['width'] = this.translatePxToAdaptation(element,true) + 'px'
                             imgStyleObject['height'] = this.translatePxToAdaptation(element,true) + 'px'
+                            break
                     }
                 }
             }

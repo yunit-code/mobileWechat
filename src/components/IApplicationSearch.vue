@@ -343,7 +343,7 @@ export default {
                         case "applicationImgWidthSearch":
                             imgStyleObject['width'] = this.translatePxToAdaptation(element) + 'px'
                             imgStyleObject['height'] = this.translatePxToAdaptation(element) + 'px'
-
+                            break
                     }
                 }
             }
