@@ -988,7 +988,7 @@ $scale: var(--i-schedule-scale);
 .i-schedule-outer {
   width: auto;
   box-sizing: border-box;
-  padding: calc(10px * #{ $scale }) calc(14px * #{ $scale });
+  padding: 10px;
   font-family: PingFangSC-Regular;
   color: #333333;
   background-color: #fff;
@@ -1010,7 +1010,6 @@ $scale: var(--i-schedule-scale);
     .i-schedule-header-main {
       display: flex;
       .i-schedule-header-tit {
-        margin-left: calc(6px * #{ $scale });
         font-family: PingFangSC-Regular;
         color: #333333;
         font-style: normal;
