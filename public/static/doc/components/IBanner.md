@@ -44,9 +44,25 @@ mobilewechat@1.0.7
 - 默认值: `5 `(最大值，如果总数量没有达到默认值，则显示总数量，例如：设置了5，总共4个，则显示4)
 
 ### 样式设置
-#### 轮播高度【height】
+#### 大屏高度【maxHeight】
+- 标识: `maxHeight`
+- 默认值: `32vw`
+
+#### 小屏高度【height】
 - 标识: `height`
-- 默认值: `240px`
+- 默认值: `180px`
+
+#### 大屏间隔【bigScreenStretch】
+- 标识: `bigScreenStretch`
+- 默认值: `-6%`
+
+#### 小屏间隔【smallScreenStretch】
+- 标识: `smallScreenStretch`
+- 默认值: `-7%`
+
+#### 分界点【dividingPoint】
+- 标识: `smallScreenStretch`
+- 默认值: `800`
 
 #### 图片圆角【imgBorderRadius】
 - 标识: `imgBorderRadius`
@@ -107,8 +123,15 @@ mobilewechat@1.0.7
 {
     "type": "uploadImage",
     "layoutType": "block",
-    "text": "轮播图片",
+    "text": "小屏图片",
     "bindKey": "image",
+    "default": ""
+}
+{
+    "type": "uploadImage",
+    "layoutType": "block",
+    "text": "大屏图片",
+    "bindKey": "imagexl",
     "default": ""
 }
 ```
@@ -117,8 +140,3 @@ mobilewechat@1.0.7
 用于选择数据源
 - 标识：`dataSource`
 - 默认值：`/ctrl/dataSource/getDatasourceByGroup`
-
-##### 显示字段【dataFiled】
-根据接口返回数据显示轮播图片字段
-- 标识：`dataFiled`
-- 默认值：'image'
