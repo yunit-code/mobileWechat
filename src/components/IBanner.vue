@@ -10,7 +10,6 @@
     :id="moduleObject.id"
     :idm-ctrl-id="moduleObject.id"
     :title="propData.htmlTitle"
-    v-show="propData.defaultStatus != 'hidden'"
     class="idm-banner-box"
   >
     <div class="idm-banner-box-swiper">

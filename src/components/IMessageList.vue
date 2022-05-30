@@ -8,8 +8,7 @@
   <div idm-ctrl="idm_module"
    :id="moduleObject.id" 
    :idm-ctrl-id="moduleObject.id" 
-   :title="propData.htmlTitle" 
-   v-show="propData.defaultStatus!='hidden'"
+   :title="propData.htmlTitle"
    class="idm-message-list-parent-box in-box"
    >
     <template v-if="propData.compStyle !== 'styleFour'">
@@ -459,12 +458,6 @@ export default {
       });
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list-time", {
         'font-size': getAdaptiveSize.call(this, 16) + 'px',
-      });
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list2-title-bottom", {
-        'font-size': getAdaptiveSize.call(this, 14) + 'px',
-      });
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list2-title-bottom", {
-        'font-size': getAdaptiveSize.call(this, 14) + 'px',
       });
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list2-title-bottom", {
         'font-size': getAdaptiveSize.call(this, 14) + 'px',
