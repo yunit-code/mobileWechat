@@ -306,7 +306,7 @@ export default {
               break;
             case "subWidth":
             case "subHeight":
-              subBoxStyleObj[key]=element;
+              subBoxStyleObj['height']=element;
               break;
             case "subBgColor":
               if(element&&element.hex8){
