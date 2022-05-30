@@ -1,6 +1,6 @@
 {
     "classId": "idm.componet.mobilewechat.messageList",
-    "comName": "统一待办",
+    "comName": "信息列表",
     "className": "IMessageList",
     "comType": "common",
     "comLangue": "vue",
