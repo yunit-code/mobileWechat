@@ -143,7 +143,7 @@ export default {
         compStyle: 'styleFour',
         maxGroupCount: 3,
         limit: 3,
-        messageTitleList: [{tabTitle: '页签名称', tabKey: '', isActive: false}]
+        messageTitleList: [{tabTitle: '今日信息', tabKey: 'todayInfos', isActive: false}]
       },
       messageData: {list: []},
       pageLoading: false,
