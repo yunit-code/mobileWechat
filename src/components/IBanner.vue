@@ -14,7 +14,7 @@
     class="idm-banner-box"
   >
     <div class="idm-banner-box-swiper">
-      <div class="idm-banner-box-swiper-container" v-if="showSwiper">
+      <div class="idm-banner-box-swiper-container">
         <ul class="swiper-wrapper">
           <li
             class="swiper-slide idm-banner-box-swiper-item-container banner-item-container"
@@ -74,7 +74,6 @@ export default {
     return {
       moduleObject: {},
       pageWidth: null,
-      showSwiper: true,
       propData: this.$root.propData.compositeAttr || {
         htmlTitle: "广告轮播",
         width: "100%",
@@ -119,6 +118,7 @@ export default {
   methods: {
     initSwiper() {
       this.$nextTick(()=> {
+        console.log('init...')
         let swiper = new Swiper('#'+this.moduleObject.id + " .idm-banner-box-swiper-container", {
           autoplay: 2000,                                           //自动播放
           speed: 500,                                               //播放速度
@@ -422,17 +422,14 @@ export default {
      * 加载动态数据
      */
     initData() {
-      this.showSwiper = false
       if(this.propData.dataType === 'custom'){
          // 自定义数据直接使用
         this.$set(this.bannerData, 'value', this.propData.bannerTable)
-        this.showSwiper = true
         return
       }else{
         // 开发环境使用假数据，深拷贝方式数据fix不更新
         if(this.moduleObject.env === 'develop') {
           this.bannerData = _.cloneDeep(data)
-          this.showSwiper = true
           return
         }
       }
@@ -454,10 +451,8 @@ export default {
           }else {
             IDM.message.error(res.data.message)
           }
-          this.showSwiper = true
         })
         .catch((error) => {
-          this.showSwiper = true
       })
     },
     /**
