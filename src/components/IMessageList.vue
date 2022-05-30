@@ -239,6 +239,10 @@ export default {
             continue;
           }
           switch (key) {
+            case "width":
+            case "height":
+              styleObject[key]=element;
+              break;
             case "bgColor":
               if(element&&element.hex8){
                 styleObject["background-color"]=element.hex8;

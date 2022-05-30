@@ -281,8 +281,10 @@ export default {
               }
               break;
             case "subWidth":
+              subBoxStyleObj['width']=element;
+              break;
             case "subHeight":
-              subBoxStyleObj[key]=element;
+              subBoxStyleObj['height']=element;
               break;
             case "subBgColor":
               if(element&&element.hex8){
