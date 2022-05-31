@@ -157,7 +157,7 @@ export default {
       if(this.propData.emptyImageSize){
         width = this.propData.emptyImageSize.inputVal + this.propData.emptyImageSize.selectVal
       }else{
-        width = (this.getScale() * 100) + "px"
+        width = (this.getScale() * 70) + "px"
       }
       return width
     }
@@ -1045,7 +1045,7 @@ $scale: var(--i-schedule-scale);
     padding: calc(10px * #{ $scale }) calc(14px * #{ $scale });
 
     ::v-deep .van-loading {
-      min-height: calc(210px * #{ $scale });
+      min-height: calc(179px * #{ $scale });
       justify-content: center;
     }
 
@@ -1202,6 +1202,10 @@ $scale: var(--i-schedule-scale);
       border:calc(1px * #{ $scale }) solid #f5dab1;
       border-radius: calc(4px * #{ $scale });;
     }
+  }
+
+  ::v-deep .van-empty {
+    padding: 0;
   }
 
   ::v-deep .van-empty__description {

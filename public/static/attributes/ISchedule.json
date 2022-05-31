@@ -122,7 +122,7 @@
                             "bindKey": "emptyImageSize",
                             "desc": "内容为空的时候为空图标大小",
                             "default": {
-                                "inputVal": 100,
+                                "inputVal": 70,
                                 "selectVal": "px"
                             },
                             "dictionary": [
