@@ -31,7 +31,7 @@
                 {
                     "type": "switch",
                     "layoutType": "inline",
-                    "text": "标题栏",
+                    "text": "显示标题",
                     "desc":"是否显示标题栏",
                     "bindKey": "isShowTitleBar",
                     "default": "true"
@@ -121,7 +121,24 @@
                             "text": "图标大小",
                             "bindKey": "emptyImageSize",
                             "desc": "内容为空的时候为空图标大小",
-                            "default": "100px"
+                            "default": {
+                                "inputVal": 100,
+                                "selectVal": "px"
+                            },
+                            "dictionary": [
+                                {
+                                    "label": "px",
+                                    "value": "px"
+                                },
+                                {
+                                    "label": "%",
+                                    "value": "%"
+                                },
+                                {
+                                    "label": "em",
+                                    "value": "em"
+                                }
+                            ]
                         },
                         {
                             "type": "box",
@@ -831,7 +848,7 @@
                     "layoutType": "inline",
                     "text": "刷新KEY",
                     "bindKey": "messageRefreshKey",
-                    "desc": "根据组件接受到的消息KEY来刷新数据",
+                    "desc": "根据组件接收到的消息KEY来刷新数据",
                     "default": "",
                     "multiple": true,
                     "placeholder": "示例：inbox,info",
