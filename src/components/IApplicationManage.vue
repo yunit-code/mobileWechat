@@ -297,8 +297,10 @@ export default {
                 appId: appId
             }).then((res) => {
                 if ( res.data && res.data.type == 'success' ) {
-                    Toast.success('添加应用成功');
+                    Toast.success(res.data.message);
                     this.is_edit = false;
+                } else {
+                    Toast.fail(res.data.message)
                 }
             }).catch(function (error) {
 

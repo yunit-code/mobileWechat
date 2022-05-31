@@ -68,10 +68,10 @@
                 </div>
             </div>
 
-            <van-popup id="application_manage_pop" v-model="is_application_manage_show" v-if="is_application_manage_show" overlay-class="application_manage_pop" @close="closeApplicationManage" closeable round>
+            <van-popup id="application_manage_pop" v-model="is_application_manage_show" overlay-class="application_manage_pop" @close="closeApplicationManage" closeable round>
                 <IApplicationManage :datas="propData" @openApplicationSearch="openApplicationSearch" v-if="is_application_manage_show"></IApplicationManage>
             </van-popup> 
-            <van-popup id="application_search_pop" v-model="is_application_search_show" v-if="is_application_search_show" overlay-class="application_search_pop" @close="closeApplicationSearch" closeable round>
+            <van-popup id="application_search_pop" v-model="is_application_search_show" overlay-class="application_search_pop" @close="closeApplicationSearch" closeable round>
                 <IApplicationSearch :datas="propData" v-if="is_application_search_show"></IApplicationSearch>
             </van-popup>
         </div>
