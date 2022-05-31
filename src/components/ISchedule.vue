@@ -435,8 +435,10 @@ export default {
               styleObject[key] = element;
               break;
             case "innerWidth":
+              innerCardStyleObject['width'] = element;
+              break
             case "innerHeight":
-              innerCardStyleObject[key] = element;
+              innerCardStyleObject['height'] = element;
               break;
             case "bgColor":
               if (element && element.hex8) {
