@@ -144,17 +144,7 @@
                             "type": "box",
                             "layoutType": "block",
                             "text": "内外边距",
-                            "bindKey": "emptyBox",
-                            "default":{
-                                "marginTopVal": "",
-                                "marginRightVal": "",
-                                "marginBottomVal": "",
-                                "marginLeftVal": "",
-                                "paddingTopVal": "60px",
-                                "paddingRightVal": "",
-                                "paddingBottomVal": "60px",
-                                "paddingLeftVal": ""
-                            }
+                            "bindKey": "emptyBox"
                         }
                     ]
                 }

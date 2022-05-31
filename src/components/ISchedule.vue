@@ -142,7 +142,6 @@ export default {
       moduleObject: {},
       propData: this.$root.propData.compositeAttr || {},
       simpleImage: Empty.PRESENTED_IMAGE_SIMPLE,
-      listData: [],
       nowDate: this.setNowDate(new Date(), "年月日"),
       currentIndex: new Date().getDay() - 1,
       currentList: [],
@@ -189,7 +188,11 @@ export default {
           }
           break;
         case 'linkageReload':
-          this.requsetList();
+          this.isLoading = true;
+          this.nowDate= this.setNowDate(new Date(), "年月日");
+          this.currentIndex = new Date().getDay() - 1;
+          this.init()
+          this.initSwiper();
           break;
         case 'pageResize':
           this.convertAttrToStyleObject(messageObject.message);
@@ -278,7 +281,10 @@ export default {
      * 处理返回结果
      */
     dealRes(res) {
-      const data = this.propData.dataFiled ? this.getExpressData("dataName",this.propData.dataFiled,res) : res;
+      let data = res;
+      if(this.moduleObject.env === "production") {
+        data = this.propData.dataFiled ? this.getExpressData("dataName",this.propData.dataFiled,res) : res;
+      }
       // 更多按钮地址
       if (data.moreUrl) {
         this.propData.moreUrl = this.propData.moreUrl
@@ -1045,7 +1051,7 @@ $scale: var(--i-schedule-scale);
     padding: calc(10px * #{ $scale }) calc(14px * #{ $scale });
 
     ::v-deep .van-loading {
-      min-height: calc(179px * #{ $scale });
+      min-height: calc(186px * #{ $scale });
       justify-content: center;
     }
 
