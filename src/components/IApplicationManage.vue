@@ -297,8 +297,10 @@ export default {
                 appId: appId
             }).then((res) => {
                 if ( res.data && res.data.type == 'success' ) {
-                    Toast.success('添加应用成功');
+                    Toast.success(res.data.message);
                     this.is_edit = false;
+                } else {
+                    Toast.fail(res.data.message)
                 }
             }).catch(function (error) {
 
@@ -378,8 +380,10 @@ export default {
                     switch (key) {
                         case "widthManage":
                             styleObject['width'] = element;
+                            break
                         case "titleWidth":
                             styleObjectTitle['width'] = element;
+                            break
                         case "heightManage":
                             styleObject['height'] = element;
                             break;
@@ -530,6 +534,7 @@ export default {
                         case "applicationImgWidthManage":
                             imgStyleObject['width'] = this.translatePxToAdaptation(element,true) + 'px'
                             imgStyleObject['height'] = this.translatePxToAdaptation(element,true) + 'px'
+                            break
                     }
                 }
             }

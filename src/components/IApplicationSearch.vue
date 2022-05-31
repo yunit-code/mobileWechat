@@ -343,7 +343,7 @@ export default {
                         case "applicationImgWidthSearch":
                             imgStyleObject['width'] = this.translatePxToAdaptation(element) + 'px'
                             imgStyleObject['height'] = this.translatePxToAdaptation(element) + 'px'
-
+                            break
                     }
                 }
             }
@@ -423,14 +423,13 @@ export default {
 <style lang="scss">
 .idm_iapplicationsearch {
     width: auto;
-    max-height: 100vh;
+    max-height: calc(90vh - 60px);
     position: relative;
     overflow-y: auto;
-    .search_box{
-        
-    }
     .idm_iapplicationsearch_main{
+        max-height: calc(90vh - 120px);
         padding: 0px 10px 20px 10px;
+        overflow-y: auto;
         .list{
             padding: 8px 0;
             border-bottom: 1px solid ghostwhite;

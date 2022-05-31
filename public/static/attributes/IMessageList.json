@@ -1,6 +1,6 @@
 {
     "classId": "idm.componet.mobilewechat.messageList",
-    "comName": "统一待办",
+    "comName": "信息列表",
     "className": "IMessageList",
     "comType": "common",
     "comLangue": "vue",
@@ -297,7 +297,7 @@
                             "layoutType": "inline",
                             "text": "显示名称",
                             "bindKey": "tabTitle",
-                            "default":"页签名称",
+                            "default":"今日信息",
                             "placeholder":"请输入名称"
                         },
                         {
@@ -306,7 +306,7 @@
                             "text": "页签标识",
                             "bindKey": "tabKey",
                             "desc": "设置当前页签标识，用来获取对应页签数据，例如：今日信息 - todayInfos，工作动态 - workDynamics",
-                            "default": ""
+                            "default": "todayInfos"
                         },
                         {
                             "type": "input",

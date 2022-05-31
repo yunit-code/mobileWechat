@@ -337,8 +337,10 @@ export default {
           }
           switch (key) {
             case "width2":
+              styleObject['width']=element;
+              break;
             case "height2":
-              styleObject[key]=element;
+              styleObject['height']=element;
               break;
             case "bgColor2":
               if(element&&element.hex8){

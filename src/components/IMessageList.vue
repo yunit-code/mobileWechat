@@ -8,8 +8,7 @@
   <div idm-ctrl="idm_module"
    :id="moduleObject.id" 
    :idm-ctrl-id="moduleObject.id" 
-   :title="propData.htmlTitle" 
-   v-show="propData.defaultStatus!='hidden'"
+   :title="propData.htmlTitle"
    class="idm-message-list-parent-box in-box"
    >
     <template v-if="propData.compStyle !== 'styleFour'">
@@ -46,8 +45,8 @@
           <div v-for="(item, index) in propData.messageTitleList" :key="index" :class="{active: defaultIndex === index}" @click="handleTitleClick(item,index)">{{item.tabTitle}}</div>
         </div>
       </div>
-      <div v-if="!pageLoading" class="idm-message-list-box-container">
-        <ul class="idm-message-list-box-list" v-if="propData.compStyle === 'styleFour' || propData.compStyle === 'styleOne'">
+      <div class="idm-message-list-box-container">
+        <ul class="idm-message-list-box-list" v-if="!pageLoading && (propData.compStyle === 'styleFour' || propData.compStyle === 'styleOne')">
           <li class="d-flex align-c" v-for="(item, index) in messageData.list" :key="index" @click="handleClickItem(item)">
             <!-- <span class="idm-message-list-box-list-style-square" v-if="propData.compStyle === 'styleFour'"></span>
             <span class="idm-message-list-box-list-style-square1" v-else></span> -->
@@ -56,7 +55,7 @@
             <span class="idm-message-list-box-list-time" v-if="propData.compStyle !== 'styleOne'">{{item.time}}</span>
             </li>
         </ul>
-        <ul class="idm-message-list-box-list2" v-if="propData.compStyle === 'styleTwo' || propData.compStyle === 'styleThree'">
+        <ul class="idm-message-list-box-list2" v-if="!pageLoading && (propData.compStyle === 'styleTwo' || propData.compStyle === 'styleThree')">
           <li class="d-flex" v-for="(item, index) in messageData.list" :key="index" @click="handleClickItem(item)">
             <img :src="item.image" :class="propData.compStyle === 'styleTwo' ? 'idm-message-list-box-list2-left-img' : 'idm-message-list-box-list2-left-img2'" alt="">
             <div style="overflow:hidden">
@@ -72,8 +71,8 @@
         <div v-if="!isFirst && ( !messageData.list || messageData.list.length === 0)" class="idm-message-list-box-empty">
           <van-empty :description="propData.emptyText || '数据为空'" image-size="60"/>
         </div>
+        <van-loading v-if="pageLoading" type="circular" vertical>加载中...</van-loading>
       </div>
-      <van-loading v-if="pageLoading" type="circular" vertical>加载中...</van-loading>
       <div class="idm-message-list-parent-box-mask" v-if="moduleObject.env === 'develop' && !propData.dataSource">
         <span>！未绑定数据源</span>
       </div>
@@ -144,7 +143,7 @@ export default {
         compStyle: 'styleFour',
         maxGroupCount: 3,
         limit: 3,
-        messageTitleList: [{tabTitle: '页签名称', tabKey: '', isActive: false}]
+        messageTitleList: [{tabTitle: '今日信息', tabKey: 'todayInfos', isActive: false}]
       },
       messageData: {list: []},
       pageLoading: false,
@@ -240,6 +239,10 @@ export default {
             continue;
           }
           switch (key) {
+            case "width":
+            case "height":
+              styleObject[key]=element;
+              break;
             case "bgColor":
               if(element&&element.hex8){
                 styleObject["background-color"]=element.hex8;
@@ -306,8 +309,10 @@ export default {
               styleObject["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
               break;
             case "subWidth":
+              subBoxStyleObj['width']=element;
+              break;
             case "subHeight":
-              subBoxStyleObj[key]=element;
+              subBoxStyleObj['height']=element;
               break;
             case "subBgColor":
               if(element&&element.hex8){
@@ -459,12 +464,6 @@ export default {
       });
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list-time", {
         'font-size': getAdaptiveSize.call(this, 16) + 'px',
-      });
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list2-title-bottom", {
-        'font-size': getAdaptiveSize.call(this, 14) + 'px',
-      });
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list2-title-bottom", {
-        'font-size': getAdaptiveSize.call(this, 14) + 'px',
       });
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list2-title-bottom", {
         'font-size': getAdaptiveSize.call(this, 14) + 'px',

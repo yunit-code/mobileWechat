@@ -7,9 +7,8 @@
   -->
   <div idm-ctrl="idm_module"
    :id="moduleObject.id" 
-   :idm-ctrl-id="moduleObject.id" 
-   :title="propData.htmlTitle" 
-   v-show="propData.defaultStatus!='hidden'"
+   :idm-ctrl-id="moduleObject.id"
+   :title="propData.htmlTitle"
    class="idm-unifie-todo-box in-box">
     <div class="idm-unifie-todo-box-title d-flex align-c just-b" v-if="propData.showTitle">
       <div class="d-flex align-c">
@@ -282,8 +281,10 @@ export default {
               }
               break;
             case "subWidth":
+              subBoxStyleObj['width']=element;
+              break;
             case "subHeight":
-              subBoxStyleObj[key]=element;
+              subBoxStyleObj['height']=element;
               break;
             case "subBgColor":
               if(element&&element.hex8){

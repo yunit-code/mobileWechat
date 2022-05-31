@@ -22,7 +22,7 @@
         </div>
         <div class="top-content">
           <div class="user-info" v-if="propData.userInfo">
-            <img class="default-logo" :src="logo ? logo : IDM.url.getModuleAssetsWebPath(require('../assets/default_headpic.jpeg'),moduleObject)" alt="">
+            <img class="default-logo" :src="logo ? logo : IDM.url.getModuleAssetsWebPath(require('../assets/default_headpic.png'),moduleObject)" alt="">
             <div>
               <div class="text">{{userName}}</div>
               <div class="text">{{userUnit}}</div>
