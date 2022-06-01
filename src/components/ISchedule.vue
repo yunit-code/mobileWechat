@@ -189,7 +189,6 @@ export default {
           }
           break;
         case 'linkageReload':
-          alert("日程组件监听到linkageReload");
           this.isLoading = true;
           this.mySwiper.destroy();
           this.mySwiper = null;
