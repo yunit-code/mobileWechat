@@ -1052,9 +1052,10 @@ $scale: var(--i-schedule-scale);
     background-color: #fff;
     border-radius: calc(10px * #{ $scale });
     padding: calc(10px * #{ $scale }) calc(14px * #{ $scale });
+    
 
     ::v-deep .van-loading {
-      min-height: calc(186px * #{ $scale });
+      min-height: calc(130px * #{ $scale });
       justify-content: center;
     }
 
@@ -1126,7 +1127,13 @@ $scale: var(--i-schedule-scale);
     .i-schedule-content-note {
       border-top: calc(1px * #{ $scale }) solid #eee;
       padding-top: calc(14px * #{ $scale });
-      min-height: 20vh;
+      height: calc(100% - calc(68px * #{ $scale }));
+      overflow-y: auto;
+      &::-webkit-scrollbar {
+        /*滚动条整体样式*/
+        width: 0px; /*高宽分别对应横竖滚动条的尺寸*/
+        height: 0px;
+      }
       
       ::v-deep .ant-tabs {
         color: currentColor;
