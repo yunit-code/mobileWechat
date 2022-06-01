@@ -583,7 +583,7 @@ export default {
           .then((res) => {
             if(res.status == 200 && res.data.code == 200){
               this.onceLoadData[el.tabKey] = res.data.data
-              this.messageData = this.onceLoadData[this.propData.messageTitleList[this.defaultIndex]]
+              this.messageData = this.onceLoadData[this.propData.messageTitleList[this.defaultIndex].tabKey]
             }else {
               IDM.message.error(res.data.message)
             }
