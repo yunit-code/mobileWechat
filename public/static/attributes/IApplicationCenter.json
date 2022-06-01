@@ -488,7 +488,7 @@
                     "layoutType": "inline",
                     "text": "刷新KEY",
                     "bindKey": "messageRefreshKey",
-                    "desc": "根据组件接受到的消息KEY来刷新数据，可选择多个",
+                    "desc": "根据组件接收到的消息KEY来刷新数据，可选择多个",
                     "default": "",
                     "placeholder": "请选择刷新KEY",
                     "multiple": true,
