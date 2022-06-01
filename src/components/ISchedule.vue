@@ -163,6 +163,7 @@ export default {
     }
   },
   created() {
+    alert("日程组件加载开始...");
     this.moduleObject = this.$root.moduleObject;
     this.convertThemeListAttrToStyleObject();
     this.convertAttrToStyleObject();
@@ -189,7 +190,7 @@ export default {
           }
           break;
         case 'linkageReload':
-          alert("日程组件监听到linkageReload")
+          alert("日程组件监听到linkageReload");
           this.isLoading = true;
           this.mySwiper.destroy();
           this.mySwiper = null;
