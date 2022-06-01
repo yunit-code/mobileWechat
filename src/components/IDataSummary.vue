@@ -41,7 +41,7 @@
               <!-- <div style="marginBottom: 5px" class="summary-name">{{v.name?v.name:IDM.express.replace("@[data."+v.dataFiled+".name]",data,true)}}</div> -->
               <!-- <div class="summary-num">{{v.count?v.count:IDM.express.replace("@[data."+v.dataFiled+".count]",data,true)}}</div> -->
               <div style="marginBottom: 5px" class="summary-name">{{v.name || v.name2 || '经办'}}</div>
-              <div class="summary-num">{{v.count}}</div>
+              <div class="summary-num">{{v.count || 0}}</div>
             </div>
           </li>
         </ul>

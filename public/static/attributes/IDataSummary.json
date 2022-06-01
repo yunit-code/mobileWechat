@@ -140,13 +140,6 @@
                             "default": "inbox"
                         },
                         {
-                            "type": "input",
-                            "layoutType": "inline",
-                            "text": "默认值",
-                            "bindKey": "count",
-                            "default": "--"
-                        },
-                        {
                             "type": "uploadImage",
                             "layoutType": "inline",
                             "text": "背景图片",
