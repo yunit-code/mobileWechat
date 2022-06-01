@@ -534,7 +534,7 @@
                     "styleType": "radio",
                     "text": "数据加载方式",
                     "bindKey": "dataLoadType",
-                    "desc": "如果选择一次性加载，多个tab页签的数据一次性加载完",
+                    "desc": "按需加载：一次只加载一个页签的数据; 一次性加载：多个tab页签的数据一次性加载完",
                     "dictionary": [
                         {
                             "label": "一次加载",
