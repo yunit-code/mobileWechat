@@ -157,7 +157,28 @@
                     "text": "背景图片",
                     "bindKey": "bgImgUrl",
                     "placeholder": "可输入图片地址或直接上传",
-                    "display": "@[key]"
+                    "display": "@[key]",
+                    "dictionary": [
+                        "/resource/idm/img/tbzj.png",
+                        "/resource/idm/img/tbzjbjl.png",
+                        "/resource/idm/img/tbzjbjl2.png",
+                        "/resource/idm/img/tbzjbjl3.png",
+                        "/resource/idm/img/tbzjbjl4.png",
+                        "/resource/idm/img/tbzjbjh.png",
+                        "/resource/idm/img/tbzjbjh2.png",
+                        "/resource/idm/img/tbzjbjh3.png",
+                        "/resource/idm/img/tbzjbjh4.png",
+                        "/resource/idm/img/tbzjbjlv.png",
+                        "/resource/idm/img/tbzjbjlv2.png",
+                        "/resource/idm/img/tbzjbjlv3.png",
+                        "/resource/idm/img/tbzjbjlv4.png"
+                    ],
+                    "ctrlAttrObject": {
+                        "maxSize": "2097152",
+                        "width": "48px",
+                        "height": "",
+                        "cropper": false
+                    }
                 },
                 {
                     "type": "inputNumberUnit",
@@ -376,7 +397,28 @@
                             "layoutType": "inline",
                             "text": "背景图片",
                             "bindKey": "bgImgUrl",
-                            "placeholder": "可输入图片地址或直接上传"
+                            "placeholder": "可输入图片地址或直接上传",
+                            "dictionary": [
+                                "/resource/idm/img/tbzj.png",
+                                "/resource/idm/img/tbzjbjl.png",
+                                "/resource/idm/img/tbzjbjl2.png",
+                                "/resource/idm/img/tbzjbjl3.png",
+                                "/resource/idm/img/tbzjbjl4.png",
+                                "/resource/idm/img/tbzjbjh.png",
+                                "/resource/idm/img/tbzjbjh2.png",
+                                "/resource/idm/img/tbzjbjh3.png",
+                                "/resource/idm/img/tbzjbjh4.png",
+                                "/resource/idm/img/tbzjbjlv.png",
+                                "/resource/idm/img/tbzjbjlv2.png",
+                                "/resource/idm/img/tbzjbjlv3.png",
+                                "/resource/idm/img/tbzjbjlv4.png"
+                            ],
+                            "ctrlAttrObject": {
+                                "maxSize": "2097152",
+                                "width": "48px",
+                                "height": "",
+                                "cropper": false
+                            }
                         },
                         {
                             "type": "inputNumberUnit",

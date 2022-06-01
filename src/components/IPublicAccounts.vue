@@ -27,8 +27,8 @@
         v-if="propData.dataSource"
       >
         <template #reference>
-          <img :style="{height: translatePxToAdaptation(propData.imgHeight || 32) + 'px', width: translatePxToAdaptation(propData.imgWidth || 32) + 'px'}" v-if="propData.accountUrl && accountList" :src="IDM.url.getWebPath(propData.accountUrl)" alt="">
-          <span class="drag-bar-mask" v-else>请上传或选择图标！</span>
+          <img :style="{height: translatePxToAdaptation(propData.imgHeight || 40) + 'px', width: translatePxToAdaptation(propData.imgWidth || 40) + 'px'}" v-if="accountList" :src="propData.accountUrl ? IDM.url.getWebPath(propData.accountUrl) : IDM.url.getModuleAssetsWebPath(require('../assets/default_accountpic.png'),moduleObject)" alt="">
+          <!-- <span class="drag-bar-mask" v-else>请上传或选择图标！</span> -->
         </template>
       </van-popover>
       <span class="drag-bar-mask" v-else>未绑定数据源！</span>
