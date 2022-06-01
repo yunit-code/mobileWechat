@@ -147,6 +147,7 @@ export default {
       currentList: [],
       scheduleList: [],
       pageScale:1,
+      mySwiper:null
     };
   },
   props: {},
@@ -188,8 +189,11 @@ export default {
           }
           break;
         case 'linkageReload':
+          alert("日程组件监听到linkageReload")
           this.isLoading = true;
-          this.nowDate= this.setNowDate(new Date(), "年月日");
+          this.mySwiper.destroy();
+          this.mySwiper = null;
+          this.nowDate = this.setNowDate(new Date(), "年月日");
           this.currentIndex = new Date().getDay() - 1;
           this.init()
           this.initSwiper();
@@ -865,14 +869,14 @@ export default {
      * 初始化滑块
      */
     initSwiper() {
-      var mySwiper = new Swiper(".swiper-container", {
+      this.mySwiper = new Swiper(".swiper-container", {
         observer: true,
         observeParents: true,
         observeSlideChildren: true,
         on: {
           slidePrevTransitionStart: () => {},
           slidePrevTransitionEnd: () => {
-            mySwiper.slideTo(1, 0, false);
+            this.mySwiper.slideTo(1, 0, false);
             let pre = this.setDate(this.addDate(this.currentFirstDate, -21)); //11
             let now = this.setDate(this.addDate(this.currentFirstDate, 7)); //18
             let next = this.setDate(this.addDate(this.currentFirstDate, 7)); //25
@@ -885,7 +889,7 @@ export default {
           },
           slideNextTransitionStart: () => {},
           slideNextTransitionEnd: () => {
-            mySwiper.slideTo(1, 0, false);
+            this.mySwiper.slideTo(1, 0, false);
             let pre = this.setDate(this.addDate(this.currentFirstDate, -7)); //18
             let now = this.setDate(this.addDate(this.currentFirstDate, 7)); //25
             let next = this.setDate(this.addDate(this.currentFirstDate, 7)); //32
@@ -898,7 +902,7 @@ export default {
           },
         },
       });
-      mySwiper.slideTo(1, 0, false);
+      this.mySwiper.slideTo(1, 0, false);
     },
     /**
      *
