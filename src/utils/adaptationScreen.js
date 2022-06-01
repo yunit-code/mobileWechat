@@ -7,6 +7,7 @@ export const titleDifferentValue = 0
 /**
  * 
  * @param {*} initSize 配置的初始尺寸
+ * @param {*} ratio    配置的适配比例
  * @returns  计算后的尺寸 type Number
  */
 export const getAdaptiveSize = function (initSize, ratio = 0) {

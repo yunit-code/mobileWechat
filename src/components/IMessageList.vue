@@ -141,14 +141,14 @@ export default {
         showTab: true,
         dataFiled: 'title',
         compStyle: 'styleFour',
-        maxGroupCount: 3,
         limit: 3,
         messageTitleList: [{tabTitle: '今日信息', tabKey: 'todayInfos', isActive: false}]
       },
       messageData: {list: []},
       pageLoading: false,
       isFirst: true,
-      pageWidth: null
+      pageWidth: null,
+      onceLoadData: {}
     }
   },
   created() {
@@ -199,7 +199,15 @@ export default {
     },
     // 顶部tabs点击
     handleTitleClick(item, index) {
-      this.defaultIndex = index
+      if(this.propData.dataLoadType === 'onceLoad') {
+        this.defaultIndex = index
+        if(Object.keys(this.onceLoadData).length > 0){
+          this.messageData = this.onceLoadData[item.tabKey]
+        }else{
+          this.messageData = { list: []}
+        }
+        return
+      }
       this.initData(item, index)
     },
     /**
@@ -472,6 +480,10 @@ export default {
         'padding-left': getAdaptiveSize.call(this, 15, 4.5) + 'px',
         'padding-right': getAdaptiveSize.call(this, 15, 4.5) + 'px',
       });
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-top2-left > div", {
+        'margin-left': getAdaptiveSize.call(this, 4, 4.5) + 'px',
+        'margin-right': getAdaptiveSize.call(this, 4, 4.5) + 'px',
+      });
       this.initData();
     },
     /**
@@ -557,6 +569,28 @@ export default {
       else this.defaultIndex = index //配置时或初始化时设置选中
       if(this.moduleObject.env === 'develop') {
         this.messageData = _.cloneDeep(messageData)
+        return
+      }
+      if(this.propData.dataLoadType === 'onceLoad'){
+        this.propData.messageTitleList.forEach(el => {
+          window.IDM.http.post(getDatasInterfaceUrl, {
+            id: this.propData.dataSource && this.propData.dataSource.value,
+            tabKey: el.tabKey,
+            limit: this.propData.limit,
+            type: '',
+            start: 0,
+          }, {headers: { "Content-Type": "application/json;charset=UTF-8" }})
+          .then((res) => {
+            if(res.status == 200 && res.data.code == 200){
+              this.onceLoadData[el.tabKey] = res.data.data
+              this.messageData = this.onceLoadData[this.propData.messageTitleList[this.defaultIndex]]
+            }else {
+              IDM.message.error(res.data.message)
+            }
+          }).finally(()=>{
+            this.isFirst = false
+          })
+        })
         return
       }
       this.pageLoading = true
