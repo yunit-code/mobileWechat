@@ -163,7 +163,6 @@ export default {
     }
   },
   created() {
-    alert("日程组件加载开始...");
     this.moduleObject = this.$root.moduleObject;
     this.convertThemeListAttrToStyleObject();
     this.convertAttrToStyleObject();
