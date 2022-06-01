@@ -817,7 +817,7 @@
                 {
                     "type": "font",
                     "layoutType": "block",
-                    "text": "标题文字",
+                    "text": "文字",
                     "bindKey": "font2",
                     "default":  {
                         "fontColors": {

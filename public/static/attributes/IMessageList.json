@@ -26,7 +26,7 @@
                     "text": "组件标题",
                     "bindKey": "htmlTitle",
                     "default": "信息列表",
-                    "display": "@[false]"
+                    "display": "@[compStyle !== 'styleFour']"
                 },
                 {
                     "type": "select",
@@ -527,6 +527,25 @@
                     "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData（自定义接口忽略）且它的值为{data:{filedName:[{\"text\":\"\",\"value\":\"\",\"check\":true}]}}，则这里应该填写data.filedName",
                     "default": "title",
                     "placeholder": "示例：data.filedName 或者 [0].data[0].filedName"
+                },
+                {
+                    "type": "radio",
+                    "layoutType": "block",
+                    "styleType": "radio",
+                    "text": "数据加载方式",
+                    "bindKey": "dataLoadType",
+                    "desc": "按需加载：一次只加载一个页签的数据; 一次性加载：多个tab页签的数据一次性加载完",
+                    "dictionary": [
+                        {
+                            "label": "一次加载",
+                            "value": "onceLoad"
+                        },
+                        {
+                            "label": "按需加载",
+                            "value": "needLoad"
+                        }
+                    ],
+                    "default": "needLoad"
                 },
                 {
                     "type": "actionSelect",

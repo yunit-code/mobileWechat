@@ -137,7 +137,7 @@ export default {
   methods:{
     // 快捷方式跳转
     goUrl(v) {
-      if (v.shotUrl) {
+      if (v.shotUrl && this.moduleObject.env=="production") {
         v.jumpType === 'new' &&  window.open(IDM.url.getWebPath(v.shotUrl))
         v.jumpType === 'current' && this.moduleObject.env=="production" && (window.location.href=IDM.url.getWebPath(v.shotUrl))
       }

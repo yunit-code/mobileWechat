@@ -87,7 +87,7 @@ export default {
   destroyed() {},
   methods:{
     goUrl(v) {
-      if (v.jumpUrl) {
+      if (v.jumpUrl && this.moduleObject.env=="production") {
         window.open(IDM.url.getWebPath(v.jumpUrl))
         // v.jumpType === 'current' && this.moduleObject.env=="production" && (window.location.href=IDM.url.getWebPath(v.jumpUrl))
       }
@@ -364,8 +364,10 @@ export default {
           }
           switch (key) {
             case "width2":
+              styleObject['width']=element;
+              break;
             case "height2":
-              styleObject[key]=element;
+              styleObject['height']=element;
               break;
             case "bgColor2":
               if(element&&element.hex8){
