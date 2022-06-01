@@ -128,7 +128,7 @@
                             "text": "名称",
                             "bindKey": "name",
                             "desc":"",
-                            "default":"经办",
+                            "default":"",
                             "placeholder":"请输入名称"
                         },
                         {

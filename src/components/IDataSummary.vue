@@ -40,7 +40,7 @@
               @click="goUrl(v)">
               <!-- <div style="marginBottom: 5px" class="summary-name">{{v.name?v.name:IDM.express.replace("@[data."+v.dataFiled+".name]",data,true)}}</div> -->
               <!-- <div class="summary-num">{{v.count?v.count:IDM.express.replace("@[data."+v.dataFiled+".count]",data,true)}}</div> -->
-              <div style="marginBottom: 5px" class="summary-name">{{v.name}}</div>
+              <div style="marginBottom: 5px" class="summary-name">{{v.name || v.name2 || '经办'}}</div>
               <div class="summary-num">{{v.count}}</div>
             </div>
           </li>
@@ -129,10 +129,17 @@ export default {
           if(res.status == 200 && res.data.code == 200){
             for (let iName in res.data.data) {
               const cItem = this.tempSummaryConfigList.find(item=> item.tabKey == iName);
+              const cItem2 = this.propData.summaryConfigList.find(item=> item.tabKey == iName);
               if(cItem) {
                 cItem.count = res.data.data[iName][this.propData.dataFiled||'count'];
-                cItem.name = res.data.data[iName].name;
+                cItem.name = cItem.name;
                 cItem.jumpUrl = res.data.data[iName].jumpUrl;
+                this.$set(cItem,'name2',res.data.data[iName].name);
+              }
+              if(cItem2) {
+                cItem2.count = res.data.data[iName][this.propData.dataFiled||'count'];
+                cItem2.jumpUrl = res.data.data[iName].jumpUrl;
+                this.$set(cItem2,'name2',res.data.data[iName].name);
               }
             }
           }else {
