@@ -484,6 +484,9 @@ export default {
         'margin-left': getAdaptiveSize.call(this, 4, 4.5) + 'px',
         'margin-right': getAdaptiveSize.call(this, 4, 4.5) + 'px',
       });
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-title-right", {
+        'font-size': getAdaptiveSize.call(this, 14) + 'px'
+      });
       this.initData();
     },
     /**
