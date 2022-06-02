@@ -19,7 +19,7 @@
      <div class="top-bg">
         <div class="top-set">
           <div :style="{height: propData.iconSize + 'px'}">
-            <svg-icon v-show="propData.set" @click.native="goUrl" icon-class="isort-set" class="svg" :style="{fontSize: propData.iconSize + 'px'}"/>
+            <svg-icon v-show="propData.set" @click.native="openSettingMenu" icon-class="isort-set" class="svg" :style="{fontSize: propData.iconSize + 'px'}"/>
           </div>
         </div>
         <div class="top-content">
@@ -40,12 +40,22 @@
           </div>
         </div>
       </div>
+      <van-popup id="top_setting_popup" v-model="settingMenuVisible" overlay-class="top_setting_popup" closeable round>
+        <ISort :datas="propData" v-if="settingMenuVisible" />
+      </van-popup>
   </div>
 </template>
 
 <script>
+import ISort from './ISort.vue';
+import { Popup } from 'vant';
+import 'vant/lib/popup/style';
 export default {
   name: 'ITop',
+  components: {
+    ISort,
+    [Popup.name]: Popup
+  },
   data(){
     return {
       moduleObject:{},
@@ -58,6 +68,7 @@ export default {
       city: '',
       // 当前设备宽度
       currentEquipWidth: 0,
+      settingMenuVisible: false,
       propData:this.$root.propData.compositeAttr||{
         userInfo:true,
         weather: true,
@@ -119,6 +130,13 @@ export default {
         this.propData.jumpType === 'current' && this.moduleObject.env=="production" && (window.location.href=IDM.url.getWebPath(url))
       }
     },
+    // 打开设置
+    openSettingMenu() {
+      if (this.moduleObject.env == 'develop') {
+        return
+      }
+      this.settingMenuVisible = true;
+    },
     /**
      * 提供父级组件调用的刷新prop数据组件
      */
@@ -147,16 +165,16 @@ export default {
     convertAttrToStyleObject(){
       let styleObject = {};
       let fontStyleObject = {};
-      if(this.propData.bgSize&&this.propData.bgSize=="custom"){
-        styleObject["background-size"]=(this.propData.bgSizeWidth?this.propData.bgSizeWidth.inputVal+this.propData.bgSizeWidth.selectVal:"auto")+" "+(this.propData.bgSizeHeight?this.propData.bgSizeHeight.inputVal+this.propData.bgSizeHeight.selectVal:"auto")
-      }else if(this.propData.bgSize){
-        styleObject["background-size"]=this.propData.bgSize;
+      if(this.propData.mainBgSize&&this.propData.mainBgSize=="custom"){
+        styleObject["background-size"]=(this.propData.mainBgSizeWidth?this.propData.mainBgSizeWidth.inputVal+this.propData.mainBgSizeWidth.selectVal:"auto")+" "+(this.propData.mainBgSizeHeight?this.propData.mainBgSizeHeight.inputVal+this.propData.mainBgSizeHeight.selectVal:"auto")
+      }else if(this.propData.mainBgSize){
+        styleObject["background-size"]=this.propData.mainBgSize;
       }
-      if(this.propData.positionX&&this.propData.positionX.inputVal){
-        styleObject["background-position-x"]=this.propData.positionX.inputVal+this.propData.positionX.selectVal;
+      if(this.propData.mainPositionX&&this.propData.mainPositionX.inputVal){
+        styleObject["background-position-x"]=this.propData.mainPositionX.inputVal+this.propData.mainPositionX.selectVal;
       }
-      if(this.propData.positionY&&this.propData.positionY.inputVal){
-        styleObject["background-position-y"]=this.propData.positionY.inputVal+this.propData.positionY.selectVal;
+      if(this.propData.mainPositionY&&this.propData.mainPositionY.inputVal){
+        styleObject["background-position-y"]=this.propData.mainPositionY.inputVal+this.propData.mainPositionY.selectVal;
       }
       for (const key in this.propData) {
         if (this.propData.hasOwnProperty.call(this.propData, key)) {
@@ -165,16 +183,16 @@ export default {
             continue;
           }
           switch (key) {
-            case "width":
-            case "height":
+            case "mainWidth":
+            case "mainHeight":
               styleObject[key]=element;
               break;
-            case "bgColor":
+            case "mainBgColor":
               if(element&&element.hex8){
                 styleObject["background-color"]=element.hex8;
               }
               break;
-            case "box":
+            case "mainbox":
               if(element.marginTopVal){
                 styleObject["margin-top"]=`${element.marginTopVal}`;
               }
@@ -200,26 +218,26 @@ export default {
                 styleObject["padding-left"]=`${element.paddingLeftVal}`;
               }
               break;
-            case "bgImgUrl":
+            case "mainBgImgUrl":
               styleObject["background-image"]=`url(${window.IDM.url.getWebPath(element)})`;
               break;
-            case "positionX":
+            case "mainPositionX":
               //背景横向偏移
               
               break;
-            case "positionY":
+            case "mainPositionY":
               //背景纵向偏移
               
               break;
-            case "bgRepeat":
+            case "mainBgRepeat":
               //平铺模式
                 styleObject["background-repeat"]=element;
               break;
-            case "bgAttachment":
+            case "mainBgAttachment":
               //背景模式
                 styleObject["background-attachment"]=element;
               break;
-            case "border":
+            case "mainBorder":
               if(element.border.top.width>0){
                 styleObject["border-top-width"]=element.border.top.width+element.border.top.widthUnit;
                 styleObject["border-top-style"]=element.border.top.style;
@@ -254,7 +272,7 @@ export default {
               styleObject["border-bottom-left-radius"]=element.radius.leftBottom.radius+element.radius.leftBottom.radiusUnit;
               styleObject["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
               break;
-            case "font":
+            case "mainFont":
               fontStyleObject["font-family"]=element.fontFamily;
               if(element.fontColors.hex8){
                 fontStyleObject["color"]=element.fontColors.hex8;
@@ -276,8 +294,8 @@ export default {
      * 主题颜色
      */
     convertThemeListAttrToStyleObject() {
-      var themeList = this.propData.themeList;
-      if (!themeList) {
+      var mainThemeList = this.propData.mainThemeList;
+      if (!mainThemeList) {
         return;
       }
       const themeNamePrefix =
@@ -286,8 +304,8 @@ export default {
         IDM.setting.applications.themeNamePrefix
           ? IDM.setting.applications.themeNamePrefix
           : "idm-theme-";
-      for (var i = 0; i < themeList.length; i++) {
-        var item = themeList[i];
+      for (var i = 0; i < mainThemeList.length; i++) {
+        var item = mainThemeList[i];
         //item.key：为主题样式的key
         //item.mainColor：主要颜色值
         //item.minorColor：次要颜色值
@@ -296,24 +314,24 @@ export default {
         //     continue;
         // }
         const cssObject_color_minor = {
-          color: item.minorColor ? item.minorColor.hex8 : "",
+          color: item.mainMinorColor ? item.mainMinorColor.hex8 : "",
         };
         let cssObject_background_detail = {};
-        if(item.bgSize&&item.bgSize=="custom"){
-          cssObject_background_detail["background-size"]=(item.bgSizeWidth?item.bgSizeWidth.inputVal+item.bgSizeWidth.selectVal:"auto")+" "+(item.bgSizeHeight?item.bgSizeHeight.inputVal+item.bgSizeHeight.selectVal:"auto")
-        }else if(item.bgSize){
-          cssObject_background_detail["background-size"]=item.bgSize;
+        if(item.mainBgSize&&item.mainBgSize=="custom"){
+          cssObject_background_detail["background-size"]=(item.mainBgSizeWidth?item.mainBgSizeWidth.inputVal+item.mainBgSizeWidth.selectVal:"auto")+" "+(item.mainBgSizeHeight?item.mainBgSizeHeight.inputVal+item.mainBgSizeHeight.selectVal:"auto")
+        }else if(item.mainBgSize){
+          cssObject_background_detail["background-size"]=item.mainBgSize;
         }
-        cssObject_background_detail["background-position-x"]=item.positionX&&item.positionX.inputVal ? item.positionX.inputVal+item.positionX.selectVal : '';
-        cssObject_background_detail["background-position-y"]= item.positionX&&item.positionX.inputVal ? item.positionY.inputVal+item.positionY.selectVal : '';
-        cssObject_background_detail["background-image"]=`url(${window.IDM.url.getWebPath(item.bgImgUrl)})`;
-        cssObject_background_detail["background-repeat"]=item.bgRepeat;
-        cssObject_background_detail["background-attachment"]=item.bgAttachment;
-        cssObject_background_detail["background-color"]=item.mainColor ? item.mainColor.hex8 : "";
+        cssObject_background_detail["background-position-x"]=item.mainPositionX&&item.mainPositionX.inputVal ? item.mainPositionX.inputVal+item.mainPositionX.selectVal : '';
+        cssObject_background_detail["background-position-y"]= item.mainPositionY&&item.mainPositionY.inputVal ? item.mainPositionY.inputVal+item.mainPositionY.selectVal : '';
+        cssObject_background_detail["background-image"]=`url(${window.IDM.url.getWebPath(item.mainBgImgUrl)})`;
+        cssObject_background_detail["background-repeat"]=item.mainBgRepeat;
+        cssObject_background_detail["background-attachment"]=item.mainBgAttachment;
+        cssObject_background_detail["background-color"]=item.mainMainColor ? item.mainMainColor.hex8 : "";
         IDM.setStyleToPageHead(
           "." +
             themeNamePrefix +
-            item.key +
+            item.mainKey +
             " #" +
             (this.moduleObject.packageid || "module_demo") + " .top-bg",
           cssObject_color_minor
@@ -321,7 +339,7 @@ export default {
         IDM.setStyleToPageHead(
           "." +
             themeNamePrefix +
-            item.key +
+            item.mainKey +
             " #" +
             (this.moduleObject.packageid || "module_demo") + " .idm_top_box",
           cssObject_background_detail
@@ -498,6 +516,13 @@ export default {
         display: inline-block;
       }
     }
+  }
+  .van-popup{
+    background-color: inherit;
+    width: 95% !important;
+    height: 90vh !important;
+    overflow-y: auto;
+    padding: 40px 0 20px 0;
   }
 }
 </style>
