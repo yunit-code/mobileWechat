@@ -13,7 +13,7 @@ export const titleDifferentValue = 0
 export const getAdaptiveSize = function (initSize, ratio = 0) {
   if(this.moduleObject.env == 'develop' && !this.pageWidth) return initSize
   initSize = Number(initSize)
-  const WINDOW_WIDTH = this.pageWidth || window.screen.width                              // 当前屏幕宽度
+  const WINDOW_WIDTH = this.pageWidth || window.innerWidth                                // 当前屏幕宽度
   const BASE_SIZE = Number(this.propData.baseSize) || 414                                 // 配置屏幕基准值宽度
   const ADAPTATION_RATIO = ratio || Number(this.propData.adaptationRatio) || 1.2          // 配置适配比例
   const FINAL_RESULT = initSize * ((WINDOW_WIDTH / BASE_SIZE - 1) * (ADAPTATION_RATIO - 1) + 1)

@@ -100,7 +100,7 @@ export default {
       if(this.moduleObject.env === 'develop') {
         width = this.pageWidth || 414
       }else{
-        width = this.pageWidth || window.screen.width
+        width = this.pageWidth || window.innerWidth
       }
       console.log(width, this.propData.dividingPoint > width)
       return this.propData.dividingPoint > width
