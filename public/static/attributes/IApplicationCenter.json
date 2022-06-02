@@ -53,7 +53,7 @@
                 },
                 {
                     "type": "switch",
-                    "layoutType": "inline",
+                    "layoutType": "block",
                     "text": "允许自定义",
                     "desc":"选项打开的时候，允许用户可以自己配置选择组件展示哪些应用",
                     "bindKey": "isMyApplication",

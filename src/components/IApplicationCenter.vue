@@ -291,9 +291,9 @@ export default {
             console.log('获取用户信息',user_info)
             let apps = []
             let have_power_application_data_ids = [];
-            if ( user_info && user_info.data && user_info.data.appRoleList && user_info.data.appRoleList.length ) {
-                apps = user_info.data.appRoleList
-                this.have_power_application_data = user_info.data.appRoleList;
+            if ( user_info && user_info.appRoleList && user_info.appRoleList.length ) {
+                apps = user_info.appRoleList
+                this.have_power_application_data = user_info.appRoleList;
             }
             apps.forEach((item) => {
                 have_power_application_data_ids.push(item.value)
