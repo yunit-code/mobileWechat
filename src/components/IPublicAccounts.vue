@@ -139,7 +139,7 @@ export default {
       if ( this.moduleObject.env == 'develop' ) {
           return
       } else {
-          this.currentEquipWidth = window.screen.width;
+          this.currentEquipWidth = window.innerWidth;
       }
     },
     // 实现移动端拖拽

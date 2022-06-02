@@ -117,7 +117,7 @@ export default {
       if ( this.moduleObject.env == 'develop' ) {
           return
       } else {
-          this.currentEquipWidth = window.screen.width;
+          this.currentEquipWidth = window.innerWidth;
       }
     },
     // 设置图标跳转
