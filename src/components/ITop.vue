@@ -184,8 +184,10 @@ export default {
           }
           switch (key) {
             case "mainWidth":
+              styleObject["width"]=element;
+              break;
             case "mainHeight":
-              styleObject[key]=element;
+              styleObject["height"]=element;
               break;
             case "mainBgColor":
               if(element&&element.hex8){
