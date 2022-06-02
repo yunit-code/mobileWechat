@@ -12,7 +12,7 @@
             <div class="idm_applicationmanage_block">
                 <div class="idm_applicationmanage_title flex_between">
                     <div class="idm_applicationcenter_title_left">
-                        <div class="idm_applicationmanage_title_left_text">我的应用</div>
+                        <div class="idm_applicationmanage_title_left_text">{{ propData.title || '我的应用' }}</div>
                     </div>
                     <div @click="manageApplication" class="idm_applicationcenter_title_right">管理</div>
                 </div>
@@ -258,23 +258,25 @@ export default {
                 return
             }
             this.is_loading_my_application = true;
-            window.IDM.http.get(base_url + '/ctrl/tencentApp/queryMyFavorite')
-                .then((res) => {
-                    this.is_loading_my_application = false;
-                    if ( res.data && res.data.type == 'success' ) {
-                        this.my_application_data = res.data.data
-                    }
-                }).catch(function (error) {
-                    this.is_loading_my_application = false;
-                    });
+            window.IDM.http.get(base_url + '/ctrl/tencentApp/queryMyFavorite',{
+                componentId: this.moduleObject ? this.moduleObject.id : ''
+            }).then((res) => {
+                this.is_loading_my_application = false;
+                if ( res.data && res.data.type == 'success' ) {
+                    this.my_application_data = res.data.data
+                }
+            }).catch(function (error) {
+                this.is_loading_my_application = false;
+            });
         },
         getAllApplicatinData() {
             if ( this.moduleObject.env == 'develop' ) {
                 return
             }
             this.is_loading_all_application = true;
-            window.IDM.http.post(base_url + '/ctrl/tencentApp/queryAppGroupByGrant')
-                .then((res) => {
+            window.IDM.http.post(base_url + '/ctrl/tencentApp/queryAppGroupByGrant',{
+                componentId: this.moduleObject ? this.moduleObject.id : ''
+            }).then((res) => {
                     this.is_loading_all_application = false;
                     if ( res.data && res.data.type == 'success' ) {
                         this.application_data = res.data.data
@@ -294,7 +296,8 @@ export default {
             })
             appId = appId_arr.join(',')
             window.IDM.http.post(base_url + '/ctrl/tencentApp/batchSetFavoriteApp',{
-                appId: appId
+                appId: appId,
+                componentId: this.moduleObject ? this.moduleObject.id : ''
             }).then((res) => {
                 if ( res.data && res.data.type == 'success' ) {
                     Toast.success(res.data.message);

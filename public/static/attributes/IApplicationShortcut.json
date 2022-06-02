@@ -76,46 +76,12 @@
                             "default": ""
                         },
                         {
-                            "type": "uploadImage",
-                            "layoutType": "inline",
-                            "text": "应用图标",
-                            "bindKey": "applicationIconUrl",
-                            "default": "",
-                            "dictionary": [
-                                "/resource/idm/img/6.png",
-                                "/resource/idm/img/12.png",
-                                "/resource/idm/img/14.png",
-                                "/resource/idm/img/19.png",
-                                "/resource/idm/img/bj.png",
-                                "/resource/idm/img/dywj.png",
-                                "/resource/idm/img/rcap.png",
-                                "/resource/idm/img/wdzx.png",
-                                "/resource/idm/img/wjjh.png",
-                                "/resource/idm/img/yqfk.png",
-                                "/resource/idm/img/zbzs.png",
-                                "/resource/idm/img/zxzys.png",
-                                "/resource/idm/img/zyzx.png"
-                            ],
-                            "ctrlAttrObject": {
-                                "width": "40px",
-                                "height": "40px",
-                                "maxSize": 2097152
-                            }
-                        },
-                        {
                             "type": "switch",
                             "layoutType": "inline",
                             "text": "权限过滤",
                             "desc":"设置应用是否开启权限过滤功能，如果开启，则会根据用户是否有权限来展示应用",
                             "bindKey": "applicationOpenValid",
                             "default": false
-                        },
-                        {
-                            "type": "input",
-                            "layoutType": "inline",
-                            "text": "应用链接",
-                            "bindKey": "applicationUrl",
-                            "default": ""
                         },
                         {
                             "type": "select",
@@ -142,6 +108,51 @@
                             "desc":"设置应用待办角标是否显示",
                             "bindKey": "showTodoNumber",
                             "default": false
+                        },
+                        {
+                            "type": "switch",
+                            "layoutType": "block",
+                            "text": "是否自定义",
+                            "desc":"当选项打开的时候，允许自定义应用的图标、应用的链接。",
+                            "bindKey": "isUserEditable",
+                            "default": false
+                        },
+                        {
+                            "type": "uploadImage",
+                            "layoutType": "inline",
+                            "text": "应用图标",
+                            "bindKey": "applicationIconUrl",
+                            "default": "",
+                            "dictionary": [
+                                "/resource/idm/img/6.png",
+                                "/resource/idm/img/12.png",
+                                "/resource/idm/img/14.png",
+                                "/resource/idm/img/19.png",
+                                "/resource/idm/img/bj.png",
+                                "/resource/idm/img/dywj.png",
+                                "/resource/idm/img/rcap.png",
+                                "/resource/idm/img/wdzx.png",
+                                "/resource/idm/img/wjjh.png",
+                                "/resource/idm/img/yqfk.png",
+                                "/resource/idm/img/zbzs.png",
+                                "/resource/idm/img/zxzys.png",
+                                "/resource/idm/img/zyzx.png"
+                            ],
+                            "ctrlAttrObject": {
+                                "width": "40px",
+                                "height": "40px",
+                                "maxSize": 2097152
+                            },
+                            "display": "@[isUserEditable]"
+                        },
+                       
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "应用链接",
+                            "bindKey": "applicationUrl",
+                            "default": "",
+                            "display": "@[isUserEditable]"
                         }
                     ]
                 }

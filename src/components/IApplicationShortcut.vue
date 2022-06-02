@@ -70,6 +70,7 @@ export default {
             },
             application_data: [ ],
             have_power_application_data_ids: [],//用户有权限的app
+            have_power_application_data: [],
             clientWidth: 414,
         }
     },
@@ -218,6 +219,7 @@ export default {
             let have_power_application_data_ids = [];
             if ( user_info && user_info.data && user_info.data.appRoleList && user_info.data.appRoleList.length ) {
                 apps = user_info.data.appRoleList
+                this.have_power_application_data = user_info.data.appRoleList;
             }
             apps.forEach((item) => {
                 have_power_application_data_ids.push(item.value)
@@ -226,7 +228,7 @@ export default {
         },
         initApplicationData() {
             if ( this.propData.applicationList && this.propData.applicationList.length ) {
-                let applicationList = JSON.parse(JSON.stringify(this.propData.applicationList))
+                let applicationList = this.changeApplicationIconAndUrl(this.propData.applicationList)
                 let application_data = [];
                 for( let i = 0,maxi = applicationList.length;i < maxi;i++ ) {
                     if ( this.moduleObject.env == 'develop' || !applicationList[i].applicationOpenValid ) {
@@ -241,6 +243,28 @@ export default {
             }
             this.changeLines()
             this.getApplicationMarkNumber()
+        },
+        changeApplicationIconAndUrl(data) {
+            if ( !data ) {
+                return []
+            }
+            let application_list = JSON.parse(JSON.stringify(data));
+            for( let i = 0,maxi = application_list.length;i < maxi;i++ ) {
+                if ( application_list[i] && application_list[i].selectApplication ) {
+                    let item = this.have_power_application_data.find((item) => {
+                        return item.value == application_list[i].selectApplication.value
+                    })
+                    if ( item ) {
+                        application_list[i].selectApplication.imageUrl = item.imageUrl;
+                        application_list[i].selectApplication.appUrl = item.appUrl;
+                        if ( !application_list[i].isUserEditable ) {
+                            application_list[i].applicationIconUrl = item.imageUrl;
+                            application_list[i].applicationUrl = item.appUrl;
+                        }
+                    }
+                }
+            }
+            return application_list
         },
         getApplicationMarkNumber() {
             console.log('application_data',this.application_data)

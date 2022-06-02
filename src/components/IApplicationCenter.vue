@@ -22,7 +22,7 @@
                     </svg>
                     <svg-icon v-else-if="propData.showTitleIcon && propData.titleIconPosition == 'right' && ((!propData.titleIconClass) || !propData.titleIconClass.length)" icon-class="application-icon" />
                 </div>
-                <div @click="toApplicationManage" v-if="propData.showConfig" class="idm_applicationcenter_title_right">
+                <div @click="toApplicationManage" v-if="propData.isMyApplication" class="idm_applicationcenter_title_right">
                     <van-icon class="idm-message-list-box-top-more" name="ellipsis" />
                 </div>
             </div>
@@ -105,15 +105,11 @@ export default {
         return {
             moduleObject: {},
             propData: this.$root.propData.compositeAttr || {
-                showTitle: true,
-                showConfig: true,
-                showTitleIcon: true,
-                titleIconPosition: 'right'
+
             },
-            application_data: [
-                {}
-            ],
-            have_power_application_data_ids: [],//用户有权限的app
+            application_data: [ ],
+            have_power_application_data_ids: [],//用户有权限的appid
+            have_power_application_data: [],//用户有权限的app
             is_application_manage_show: false,
             is_application_search_show: false,
             is_loading: false,
@@ -297,6 +293,7 @@ export default {
             let have_power_application_data_ids = [];
             if ( user_info && user_info.data && user_info.data.appRoleList && user_info.data.appRoleList.length ) {
                 apps = user_info.data.appRoleList
+                this.have_power_application_data = user_info.data.appRoleList;
             }
             apps.forEach((item) => {
                 have_power_application_data_ids.push(item.value)
@@ -308,7 +305,9 @@ export default {
                 this.getMyApplicatinData()
             } else {
                 if ( this.propData.applicationList && this.propData.applicationList.length ) {
-                    let applicationList = JSON.parse(JSON.stringify(this.propData.applicationList))
+
+                    let applicationList = this.changeApplicationIconAndUrl(this.propData.applicationList)
+
                     let application_data = [];
                     for( let i = 0,maxi = applicationList.length;i < maxi;i++ ) {
                         if ( this.moduleObject.env == 'develop' || !applicationList[i].applicationOpenValid ) {
@@ -325,20 +324,43 @@ export default {
                 this.getApplicationMarkNumber()
             }
         },
+        changeApplicationIconAndUrl(data) {
+            if ( !data ) {
+                return []
+            }
+            let application_list = JSON.parse(JSON.stringify(data));
+            for( let i = 0,maxi = application_list.length;i < maxi;i++ ) {
+                if ( application_list[i] && application_list[i].selectApplication ) {
+                    let item = this.have_power_application_data.find((item) => {
+                        return item.value == application_list[i].selectApplication.value
+                    })
+                    if ( item ) {
+                        application_list[i].selectApplication.imageUrl = item.imageUrl;
+                        application_list[i].selectApplication.appUrl = item.appUrl;
+                        if ( !application_list[i].isUserEditable ) {
+                            application_list[i].applicationIconUrl = item.imageUrl;
+                            application_list[i].applicationUrl = item.appUrl;
+                        }
+                    }
+                }
+            }
+            return application_list
+        },
         getMyApplicatinData() {
             if ( this.moduleObject.env == 'develop' ) {
                 return
             }
             this.is_loading = true
-            window.IDM.http.get(base_url + '/ctrl/tencentApp/queryMyFavorite')
-                .then((res) => {
-                    this.is_loading = false;
-                    if ( res.data && res.data.type == 'success' ) {
-                        this.makeMyApplicationData(res.data.data)
-                    }
-                }).catch(function (error) {
-                    this.is_loading = false;
-                });
+            window.IDM.http.get(base_url + '/ctrl/tencentApp/queryMyFavorite',{
+                componentId: this.moduleObject ? this.moduleObject.id : ''
+            }).then((res) => {
+                this.is_loading = false;
+                if ( res.data && res.data.type == 'success' ) {
+                    this.makeMyApplicationData(res.data.data)
+                }
+            }).catch(function (error) {
+                this.is_loading = false;
+            });
         },
         makeMyApplicationData(data) {
             let application_data = [];
@@ -347,6 +369,7 @@ export default {
                     selectApplication: data[i],
                     showTodoNumber: true,
                     todoNumber: 0,
+                    isUserEditable: false
                 })
             }
             this.application_data = application_data;
@@ -363,12 +386,16 @@ export default {
             }
         },
         getApplicationImgUrl(item) {
-            if ( item.applicationIconUrl ) {
-                return window.IDM.url.getWebPath(item.applicationIconUrl)
-            } else if ( item.selectApplication && item.selectApplication.imageUrl ) {
+            if ( item.selectApplication && item.selectApplication.imageUrl && !item.isUserEditable ) {
                 return item.selectApplication.imageUrl
-            } else {
-
+            } else if ( item.isUserEditable ) {
+                if ( item.applicationIconUrl ) {
+                    return window.IDM.url.getWebPath(item.applicationIconUrl)
+                } else if ( item.selectApplication && item.selectApplication.imageUrl ) {
+                    return item.selectApplication.imageUrl
+                } else {
+                    return 
+                }
             }
         },
         toApplication(item) {

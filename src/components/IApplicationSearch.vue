@@ -154,7 +154,8 @@ export default {
             }
             this.is_loading = true;
             window.IDM.http.post(base_url + '/ctrl/tencentApp/queryAppByGrant',{
-                appName: this.search_text
+                appName: this.search_text,
+                componentId: this.moduleObject ? this.moduleObject.id : ''
             }).then(result=>{
                 this.is_loading = false;
                 if(result && result.data && result.data.type == 'success'){
@@ -173,7 +174,8 @@ export default {
             }
             window.IDM.http.post(base_url + '/ctrl/tencentApp/setFavoriteApp',{
                 appId: item.value,
-                type: '1'
+                type: '1',
+                componentId: this.moduleObject ? this.moduleObject.id : ''
             }).then(result=>{
                 if(result && result.data && result.data.type == 'success'){
                     this.$set(item,'is_favorite','1')

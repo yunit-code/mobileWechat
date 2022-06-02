@@ -46,15 +46,6 @@
                 {
                     "type": "switch",
                     "layoutType": "inline",
-                    "text": "显示更多",
-                    "desc":"设置用户配置应用程序按钮是否显示",
-                    "bindKey": "showConfig",
-                    "default": false,
-                    "display": "@[showTitle]"
-                },
-                {
-                    "type": "switch",
-                    "layoutType": "inline",
                     "text": "左右滑动",
                     "desc":"设置是否使用左右可滑动模式，如果开启了左右滑动模式则只会在一行内显示图标",
                     "bindKey": "isSlide",
@@ -63,10 +54,11 @@
                 {
                     "type": "switch",
                     "layoutType": "inline",
-                    "text": "我的应用",
-                    "desc":"设置组件是否是我的应用模块",
+                    "text": "允许自定义",
+                    "desc":"选项打开的时候，允许用户可以自己配置选择组件展示哪些应用",
                     "bindKey": "isMyApplication",
-                    "default": false
+                    "default": false,
+                    "display": "@[showTitle]"
                 },
                 {
                     "type": "switch",
@@ -116,46 +108,12 @@
                             "default": ""
                         },
                         {
-                            "type": "uploadImage",
-                            "layoutType": "inline",
-                            "text": "应用图标",
-                            "bindKey": "applicationIconUrl",
-                            "default": "",
-                            "ctrlAttrObject": {
-                                "width": "40px",
-                                "height": "40px",
-                                "maxSize": 2097152
-                            },
-                            "dictionary": [
-                                "/resource/idm/img/6.png",
-                                "/resource/idm/img/12.png",
-                                "/resource/idm/img/14.png",
-                                "/resource/idm/img/19.png",
-                                "/resource/idm/img/bj.png",
-                                "/resource/idm/img/dywj.png",
-                                "/resource/idm/img/rcap.png",
-                                "/resource/idm/img/wdzx.png",
-                                "/resource/idm/img/wjjh.png",
-                                "/resource/idm/img/yqfk.png",
-                                "/resource/idm/img/zbzs.png",
-                                "/resource/idm/img/zxzys.png",
-                                "/resource/idm/img/zyzx.png"
-                            ]
-                        },
-                        {
                             "type": "switch",
                             "layoutType": "inline",
                             "text": "权限过滤",
                             "desc":"设置应用是否开启权限过滤功能，如果开启，则会根据用户是否有权限来展示应用",
                             "bindKey": "applicationOpenValid",
-                            "default": false
-                        },
-                        {
-                            "type": "input",
-                            "layoutType": "inline",
-                            "text": "应用链接",
-                            "bindKey": "applicationUrl",
-                            "default": ""
+                            "default": true
                         },
                         {
                             "type": "select",
@@ -182,6 +140,51 @@
                             "desc":"设置应用待办角标是否显示",
                             "bindKey": "showTodoNumber",
                             "default": false
+                        },
+                        {
+                            "type": "switch",
+                            "layoutType": "block",
+                            "text": "是否自定义",
+                            "desc":"当选项打开的时候，允许自定义应用的图标、应用的链接。",
+                            "bindKey": "isUserEditable",
+                            "default": false
+                        },
+                        {
+                            "type": "uploadImage",
+                            "layoutType": "inline",
+                            "text": "应用图标",
+                            "bindKey": "applicationIconUrl",
+                            "default": "",
+                            "ctrlAttrObject": {
+                                "width": "40px",
+                                "height": "40px",
+                                "maxSize": 2097152
+                            },
+                            "dictionary": [
+                                "/resource/idm/img/6.png",
+                                "/resource/idm/img/12.png",
+                                "/resource/idm/img/14.png",
+                                "/resource/idm/img/19.png",
+                                "/resource/idm/img/bj.png",
+                                "/resource/idm/img/dywj.png",
+                                "/resource/idm/img/rcap.png",
+                                "/resource/idm/img/wdzx.png",
+                                "/resource/idm/img/wjjh.png",
+                                "/resource/idm/img/yqfk.png",
+                                "/resource/idm/img/zbzs.png",
+                                "/resource/idm/img/zxzys.png",
+                                "/resource/idm/img/zyzx.png"
+                            ],
+                            "display": "@[isUserEditable]"
+
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "应用链接",
+                            "bindKey": "applicationUrl",
+                            "default": "",
+                            "display": "@[isUserEditable]"
                         }
                     ],
                     "display": "@[!isMyApplication]"
@@ -693,7 +696,7 @@
                     ]
                 }
             ],
-            "display": "@[showConfig]"
+            "display": "@[isMyApplication]"
         },
         {
             "type": "group",
@@ -915,7 +918,7 @@
                     ]
                 }
             ],
-            "display": "@[showConfig]"
+            "display": "@[isMyApplication]"
         }
     ]
 }
