@@ -15,7 +15,7 @@
       idm-ctrl-id：组件的id，这个必须不能为空
       idm-container-index  组件的内部容器索引，不重复唯一且不变，必选
     -->
-    <div v-if="accountList && accountList.length > 0" class="drag-bar-wrapper" @touchstart="down"  @touchmove="move"  @touchend="end" :style="{position: (moduleObject.env === 'production' || !IDM.env_dev) && propData.fixed && 'fixed',...offset}">    
+    <div v-if="accountList && accountList.length > 0" class="drag-bar-wrapper" @touchstart.stop="down"  @touchmove.stop="move"  @touchend.stop="end" :style="{position: (moduleObject.env === 'production' || !IDM.env_dev) && propData.fixed && 'fixed',...offset}">    
       <van-popover
         id="idm_publicAccounts_popover"
         v-model="showPopover"
@@ -423,7 +423,7 @@ export default {
 </script>
 <style lang="scss" scoped>
   .drag-bar-wrapper{
-    z-index: 99999;
+    z-index: 999;
     .drag-bar-mask {
         display: inline-block;
         white-space: nowrap;
