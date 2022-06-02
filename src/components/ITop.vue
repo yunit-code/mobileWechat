@@ -520,11 +520,11 @@ export default {
     }
   }
   .van-popup{
-    background-color: inherit;
+    // background-color: inherit;
     // width: 95% !important;
     // height: 90vh !important;
     overflow-y: auto;
-    padding: 40px 0 20px 0;
+    // padding: 40px 0 20px 0;
   }
 }
 </style>

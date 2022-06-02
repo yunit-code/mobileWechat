@@ -7,8 +7,8 @@
   -->
   <div
     idm-ctrl="idm_module"
-    :id="moduleObject.id"
-    :idm-ctrl-id="moduleObject.id"
+    :id="moduleObject.id + '_sort'"
+    :idm-ctrl-id="moduleObject.id + '_sort'"
     :title="propData.htmlTitle"
     class="i-sort-outer"
   >
@@ -509,10 +509,10 @@ export default {
           }
         }
       }
-      window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
-      window.IDM.setStyleToPageHead(this.moduleObject.id + ".i-sort-outer .i-sort-tip", tipStyleObject);
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .i-sort-item", cardStyleObject);
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .van-empty", emptyStyleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + ' #top_setting_popup', styleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + '_sort' + ".i-sort-outer .i-sort-tip", tipStyleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + '_sort' + " .i-sort-item", cardStyleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + '_sort' + " .van-empty", emptyStyleObject);
       // this.initData();
     },
     /**
@@ -544,11 +544,12 @@ export default {
 <style scoped lang="scss">
 $scale: var(--i-sort-scale);
 .i-sort-outer {
-  width: auto;
+  width: 100%;
+  height: 100%;
   box-sizing: border-box;
-  font-family: PingFangSC-Regular;
-  font-size: calc(16px * #{ $scale });
-  color: #333333;
+  // font-family: PingFangSC-Regular;
+  // font-size: calc(16px * #{ $scale });
+  // color: #333333;
 
   .i-sort-tip {
     background-color: #e6f7ff;

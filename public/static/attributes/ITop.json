@@ -700,7 +700,17 @@
                             "type": "box",
                             "layoutType": "block",
                             "text": "内外边距",
-                            "bindKey": "box"
+                            "bindKey": "box",
+                            "default":{
+                                "marginTopVal": "",
+                                "marginRightVal": "",
+                                "marginBottomVal": "",
+                                "marginLeftVal": "",
+                                "paddingTopVal": "40px",
+                                "paddingRightVal": "",
+                                "paddingBottomVal": "20px",
+                                "paddingLeftVal": ""
+                            }
                         },
                         {
                             "type": "inlineGroup",
@@ -713,7 +723,7 @@
                                     "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
                                     "bindKey": "width",
                                     "width": "60px",
-                                    "default": "auto"
+                                    "default": "95%"
                                 },
                                 {
                                     "type": "input",
@@ -722,7 +732,7 @@
                                     "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
                                     "bindKey": "height",
                                     "width": "60px",
-                                    "default": "auto"
+                                    "default": "90vh"
                                 }
                             ]
                         },
@@ -732,7 +742,19 @@
                             "text": "背景色",
                             "bindKey": "bgColor",
                             "placeholder": "请选择颜色",
-                            "default": {}
+                            "default": {
+                                "hex": "#FFFFFF",
+                                "hex8": "#FFFFFFFF",
+                                "rgba": {
+                                    "r": 255,
+                                    "g": 255,
+                                    "b": 255,
+                                    "a": 1
+                                },
+                                "oldHue": 0,
+                                "source": "hsva",
+                                "a": 1
+                            }
                         },
                         {
                             "type": "uploadImage",
@@ -914,7 +936,15 @@
                             "type": "font",
                             "layoutType": "block",
                             "text": "文字",
-                            "bindKey": "font"
+                            "bindKey": "font",
+                            "default":{
+                                "fontColors": {
+                                    "hex8": "#333333FF"
+                                },
+                                "fontFamily": "PingFangSC-Regular",
+                                "fontSize": 16,
+                                "fontSizeUnit": "px"
+                            }
                         }
                     ]
                 },
