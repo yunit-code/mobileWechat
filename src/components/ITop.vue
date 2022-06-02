@@ -521,8 +521,8 @@ export default {
   }
   .van-popup{
     background-color: inherit;
-    width: 95% !important;
-    height: 90vh !important;
+    // width: 95% !important;
+    // height: 90vh !important;
     overflow-y: auto;
     padding: 40px 0 20px 0;
   }
