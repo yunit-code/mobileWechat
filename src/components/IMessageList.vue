@@ -148,7 +148,7 @@ export default {
       pageLoading: false,
       isFirst: true,
       pageWidth: null,
-      onceLoadData: {}
+      onceLoadData: []
     }
   },
   created() {
@@ -201,8 +201,8 @@ export default {
     handleTitleClick(item, index) {
       if(this.propData.dataLoadType === 'onceLoad') {
         this.defaultIndex = index
-        if(Object.keys(this.onceLoadData).length > 0){
-          this.messageData = this.onceLoadData[item.tabKey]
+        if(this.onceLoadData.length > 0){
+          this.messageData = this.onceLoadData[index]
         }else{
           this.messageData = { list: []}
         }
@@ -575,25 +575,29 @@ export default {
         return
       }
       if(this.propData.dataLoadType === 'onceLoad'){
-        this.propData.messageTitleList.forEach(el => {
           window.IDM.http.post(getDatasInterfaceUrl, {
             id: this.propData.dataSource && this.propData.dataSource.value,
-            tabKey: el.tabKey,
             limit: this.propData.limit,
-            type: '',
             start: 0,
           }, {headers: { "Content-Type": "application/json;charset=UTF-8" }})
           .then((res) => {
             if(res.status == 200 && res.data.code == 200){
-              this.onceLoadData[el.tabKey] = res.data.data
-              this.messageData = this.onceLoadData[this.propData.messageTitleList[this.defaultIndex].tabKey]
+              this.activeIndex = 0
+              this.propData.messageTitleList = []
+              this.onceLoadData = []
+              res.data.data.forEach(el => {
+                const item = Object.values(el)[0]
+                this.propData.messageTitleList.push({tabTitle: item.tabName})
+                this.onceLoadData.push(item)
+              })
+              this.messageData = this.onceLoadData[this.defaultIndex]
+              // this.messageData = this.onceLoadData[this.propData.messageTitleList[this.defaultIndex].tabKey]
             }else {
               IDM.message.error(res.data.message)
             }
           }).finally(()=>{
             this.isFirst = false
           })
-        })
         return
       }
       this.pageLoading = true
