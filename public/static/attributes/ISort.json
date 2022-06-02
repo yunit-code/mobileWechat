@@ -21,14 +21,6 @@
             "desc": "提供设置组件能达到展示效果的基本属性设置信息",
             "children": [
                 {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "页面ID",
-                    "bindKey": "pageid",
-                    "desc":"当前页面的唯一值",
-                    "default": "pageid"
-                },
-                {
                     "type": "switch",
                     "layoutType": "inline",
                     "text": "显示提示",

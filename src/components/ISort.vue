@@ -210,7 +210,7 @@ export default {
      * 取页面默认数据
      */
     requestDefaultCustomization() {
-      const pageid = IDM.url.queryObject(window.location.href)[this.propData.pageid];
+      const pageid = this.commonParam()&& this.commonParam().pageId;
       const url = `/ctrl/idm/api/fetchPageSettingData?pageid=${pageid}&version=&savetype=`;
       IDM.http
         .get(url)
@@ -250,6 +250,21 @@ export default {
       this.listData = list;
       // 关闭加载状态
       this.isLoading = false;
+    },
+    /**
+     * 通用的url参数对象
+     * 所有地址的url参数转换
+     */
+    commonParam(){
+      let urlObject = IDM.url.queryObject();
+      var params = {
+        pageId:
+          window.IDM.broadcast && window.IDM.broadcast.pageModule
+            ? window.IDM.broadcast.pageModule.id
+            : "",
+        urlData: JSON.stringify(urlObject),
+      };
+      return params;
     },
     /**
      * 拖拽结束
