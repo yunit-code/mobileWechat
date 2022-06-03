@@ -467,7 +467,7 @@ export default {
             if ( this.moduleObject.env == 'develop' ) {
                 return
             } else {
-                this.clientWidth = window.outerWidth;
+                this.clientWidth = window.innerWidth;
             }
         },
         translatePxToAdaptation(data,is_img) {
