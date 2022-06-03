@@ -31,7 +31,7 @@
                     <van-loading />
                 </div>
                 <div v-else class="block">
-                    <div v-if="application_data && application_data.length" class="block">
+                    <div v-if="application_data && application_data.length && !propData.isMyApplication" class="block">
                         <div v-if="!propData.isSlide" class="block">
                             <van-grid :border="false" :column-num="propData.showColumn">
                                 <van-grid-item v-for="(item,index) in application_data" :key="item.key">
