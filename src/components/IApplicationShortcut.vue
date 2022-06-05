@@ -88,7 +88,10 @@ export default {
         'propData.applicationList': {
             handler(value) {
                 if ( this.propData.applicationList && this.propData.applicationList.length ) {
-                    this.application_data = JSON.parse(JSON.stringify(this.propData.applicationList))
+                    let applicationList = this.changeApplicationIconAndUrl(this.propData.applicationList)
+                    this.application_data = JSON.parse(JSON.stringify(applicationList))
+                } else {
+                    this.application_data = [];
                 }
                 this.changeLines()
             },
