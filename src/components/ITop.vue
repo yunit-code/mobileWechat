@@ -40,9 +40,11 @@
           </div>
         </div>
       </div>
-      <van-popup id="top_setting_popup" v-model="settingMenuVisible" overlay-class="top_setting_popup" closeable round @close="sortClose">
-        <ISort ref="iSort" :datas="propData" v-if="settingMenuVisible" />
-      </van-popup>
+      <div @touchmove.stop>
+        <van-popup id="top_setting_popup" v-model="settingMenuVisible" overlay-class="top_setting_popup" closeable round @close="sortClose">
+          <ISort ref="iSort" :datas="propData" v-if="settingMenuVisible" />
+        </van-popup>
+      </div>
   </div>
 </template>
 

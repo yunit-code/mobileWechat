@@ -19,7 +19,7 @@
     已添加的组件
   </div>
   <van-loading v-if="isLoading" size="24px" vertical>加载中...</van-loading>
-  <div v-if="!isLoading">
+  <div v-if="!isLoading" class="i-sort-drag-outer">
     <draggable
       class="i-sort-drag"
       handle=".i-sort-item-handle"
@@ -583,7 +583,6 @@ $scale: var(--i-sort-scale);
   .i-sort-header {
     background-color: #fff;
     padding: calc(14px * #{ $scale });
-    margin-bottom: calc(14px * #{ $scale });
     color: #888;
     font-size: calc(14px * #{ $scale });
   }
@@ -591,6 +590,12 @@ $scale: var(--i-sort-scale);
   ::v-deep .van-loading {
     min-height: calc(210px * #{ $scale });
     justify-content: center;
+  }
+
+  .i-sort-drag-outer {
+    padding-top: 14px;
+    height: calc(100% - calc(119px * #{ $scale }));
+    overflow: auto;
   }
 
   .i-sort-drag {
