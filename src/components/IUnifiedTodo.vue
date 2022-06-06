@@ -186,7 +186,19 @@ export default {
         });
       }else{
         if(item.jumpUrl) {
-          window.open(IDM.url.getWebPath(item.jumpUrl), this.propData.jumpStyle || '_self')
+          const url = IDM.url.getWebPath(item.jumpUrl)
+          if(this.propData.detailTarget && this.propData.detailTarget === "_auto"){
+            wx.invoke('openUrl', {
+                "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
+                "url": url, //url地址
+            }, function(res){
+                if (res.err_msg != "openUrl:ok") {
+                    //错误处理
+                }
+            });
+          }else{
+            window.open(url, this.propData.jumpStyle || '_self')
+          }
         }
       }
     },
@@ -203,7 +215,19 @@ export default {
         url = this.propData.moreListLink
       }
       if(url){
-        window.open(IDM.url.getWebPath(url), this.propData.jumpStyle || '_self')
+        url = IDM.url.getWebPath(url)
+        if(this.propData.detailTarget && this.propData.detailTarget === "_auto"){
+          wx.invoke('openUrl', {
+              "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
+              "url": url, //url地址
+          }, function(res){
+              if (res.err_msg != "openUrl:ok") {
+                  //错误处理
+              }
+          });
+        }else{
+          window.open(url, this.propData.jumpStyle || '_self')
+        }
       }
     },
     /**

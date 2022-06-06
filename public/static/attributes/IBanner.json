@@ -53,7 +53,7 @@
                         },
                         {
                             "label": "智能跳转打开",
-                            "value": "_brow"
+                            "value": "_auto"
                         }
                     ],
                     "default": "_self"
