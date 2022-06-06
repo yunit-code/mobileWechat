@@ -575,7 +575,7 @@ export default {
       } else {
         this.tempSummaryConfigList = [];
       }
-      // this.changeLines()
+      this.changeLines()
     },
     /**
      * 组件通信：接收消息的方法
