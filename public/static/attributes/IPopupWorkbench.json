@@ -143,11 +143,7 @@
           "bindKey": "mainColor",
           "desc": "主题的主要颜色，应用于被选中项的文字颜色，以及按钮图标颜色",
           "placeholder": "请选择颜色",
-          "display": "@[key]",
-          "default": {
-            "hex": "#3976c7",
-            "hex8": "#3976c7FF"
-          }
+          "display": "@[key]"
         },
         {
           "type": "colorPicker",
@@ -156,11 +152,7 @@
           "bindKey": "minorColor",
           "desc": "主题的次要颜色，应用于被选中项的背景颜色",
           "placeholder": "请选择颜色",
-          "display": "@[key]",
-          "default": {
-            "hex": "#ebedf0",
-            "hex8": "#ebedf0FF"
-          }
+          "display": "@[key]"
         }
       ]
     },

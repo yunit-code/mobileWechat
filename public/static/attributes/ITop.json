@@ -119,9 +119,9 @@
                 {
                     "type": "colorPicker",
                     "layoutType": "inline",
-                    "text": "次要颜色",
+                    "text": "文字颜色",
                     "bindKey": "mainMinorColor",
-                    "desc": "主题的次要颜色，应用于文字颜色",
+                    "desc": "应用于文字颜色",
                     "placeholder": "请选择颜色",
                     "display": "@[mainKey]"
                 },
