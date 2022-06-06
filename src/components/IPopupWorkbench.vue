@@ -206,24 +206,18 @@ export default {
       this.selectedKey = item.key;
       const url = window.location.href;
       const jumpUrl = url.split("#")[0] + "#/preview/" + item.pageId;
-      window.open(jumpUrl, this.propData.jumpStyle || "_self");
-      // 废弃先前的处理方法
-      // const changeUrl = '/ctrl/customizePortal/savePage'
-      // const layerIndex = IDM.layer.load();
-      // IDM.http
-      //   .post(changeUrl, { pageId: item.pageId })
-      //   .done((res) => {
-      //     IDM.layer.close(layerIndex);
-      //     if (res.type === "success") {
-      //       this.selectedKey = item.key;
-      //       const url = window.location.href;
-      //       const jumpUrl = url.split("#")[0] + "#/preview/" + item.pageId;
-      //       window.open(jumpUrl, this.propData.jumpStyle || "_self");
-      //     } else {
-      //       IDM.message.error(res.message);
-      //     }
-      //   })
-      //   .error((error) => {});
+      if (this.propData.jumpStyle && this.propData.jumpStyle === '_auto') {
+        wx.invoke('openUrl', {
+            "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
+            "url": jumpUrl, //url地址
+        }, function(res){
+            if (res.err_msg != "openUrl:ok") {
+                //错误处理
+            }
+        });
+      } else {
+        window.open(jumpUrl, this.propData.jumpStyle || "_self");
+      }
     },
     getMenuList() {
       if (this.moduleObject.env === "develop") {
