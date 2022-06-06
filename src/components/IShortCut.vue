@@ -138,8 +138,24 @@ export default {
     // 快捷方式跳转
     goUrl(v) {
       if (v.shotUrl && this.moduleObject.env=="production") {
-        v.jumpType === 'new' &&  window.open(IDM.url.getWebPath(v.shotUrl))
-        v.jumpType === 'current' && this.moduleObject.env=="production" && (window.location.href=IDM.url.getWebPath(v.shotUrl))
+        switch(v.jumpType) {
+          case 'new':
+            window.open(IDM.url.getWebPath(v.shotUrl))
+            break;
+          case 'current':
+            window.location.href=IDM.url.getWebPath(v.shotUrl)
+            break;
+          case 'new2':
+            wx.invoke('openUrl', {
+              "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
+              "url": v.shotUrl, //url地址
+            }, function(res){
+              if (res.err_msg != "openUrl:ok") {
+                  //错误处理
+              }
+            });
+            break;
+        }
       }
     },
     /**

@@ -171,6 +171,10 @@
                                 {
                                     "label": "新窗口打开",
                                     "value": "new"
+                                },
+                                {
+                                    "label": "智能跳转打开",
+                                    "value": "new2"
                                 }
                             ],
                             "default": "current"
