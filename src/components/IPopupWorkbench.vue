@@ -636,6 +636,7 @@ export default {
       } else if (messageObject.type && messageObject.type == "pageResize") {
         this.currentEquipWidth = messageObject.message.width;
         this.convertAttrToStyleObject();
+        this.convertThemeListAttrToStyleObject();
       }
     },
   },
