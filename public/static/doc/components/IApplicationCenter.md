@@ -20,63 +20,88 @@ mobilewechat@1.0.8
 <font color="#CCCCCC">此章节主要用于存放设置组件所需要的一些基本信息的属性，以达到组件具备使用的基础条件</font>
 
 #### 显示标题【showTitle】
-- showTitle: 是否是我的应用组件
+> 是否是我的应用组件
+- 标识：`showTitle`
 - 默认值: `打开`
 
 #### 标题【title】
-<font color="#CCCCCC">当前组件标题，用来增加组件辨识度</font>
+> 当前组件标题，用来增加组件辨识度
+- 标识：`title`
 
 #### 显示图标【showTitleIcon】
-- showTitleIcon: 是否是我的应用组件
-- 默认值: `打开`
-
-#### 我的应用【isMyApplication】
-- isMyApplication: 是否是我的应用组件
+> 是否展示标题图标
+- 标识：`showTitleIcon`
 - 默认值: `关闭`
 
-#### 显示更多【showConfig】
-> 设置用户是否可以配置我的应用里的数据
+#### 左右滑动【isSlide】
+> 设置是否使用左右可滑动模式，如果开启了左右滑动模式则只会在一行内显示图标
+- 标识：`isSlide`
+- 默认值: `关闭`
+
+#### 允许自定义【isMyApplication】
+> 选项打开的时候，允许用户可以自己配置选择组件展示哪些应用
+- 标识：`isMyApplication`
 - 默认值: `关闭`
 
 #### 显示角标【showTodoNumber】
 > 设置是否显示角标提示，如果配置了角标服务接口且有数量的时候会显示红色背景的数量角标
+- 标识：`showTodoNumber`
 - 默认值: `否`
 
 #### 展示列数【showColumn】
 > 设置组件一行展示多少列的应用
+- 标识：`showColumn`
 - 默认值: `5`
 
 #### 最多行数【showRows】
 > 设置组件最多展示多少行的应用，多出的应用会默认隐藏
+- 标识：`showRows`
 - 默认值: `2`
-
-#### 标题图标【titleIconClass】
-> 设置组件标题后的图标，可上传图标；空值时显示默认图标
-- 默认值: ``
-
-#### 图标颜色【titleIconFontColor】
-> 设置组件标题后的图标展示的颜色；空值时显示默认颜色
-- 默认值: ``
-
-#### 图标大小【titleIconFontSize】
-> 设置组件标题后的图标的大小
-- 默认值: `14`
 
 #### 应用配置【applicationList】
 > 设置组件展示的应用数据
-
 ##### 选择应用【selectApplication】
 > 应用库中选择应用，选择后会展示应用信息
+- 标识：`selectApplication`
 
 ##### 应用名称【applicationName】
 > 可输入应用的名称进行修改，输入口展示输入后的应用名称
+- 标识：`applicationName`
 
-##### 应用图标【applicationIconUrl】
-> 可上传应用的图标，上传后会覆盖应用的默认图标
+##### 权限过滤【applicationOpenValid】
+> 设置应用是否开启权限过滤功能，如果开启，则会根据用户是否有权限来展示应用
+- 标识：`applicationOpenValid`
+- 默认值: `是`
+
+##### 跳转方式【applicationJumpType】
+点击应用进去详情页的跳转方式
+1) _self:当前页，
+2) _blank:新窗口，
+3) _auto:智能跳转打开的方式是依据当前所在的环境并依据以下执行顺序来进行判定打开方式的：
+    1、优先判断是否在微信APP环境中，如果是在微信APP则会使用微信内置的新窗口方式打开
+    2、其次会执行其他环境的新窗口打开方式
+    3、最后如果所在环境不支持则会直接使用当前页跳转方式打开
+    如果以上智能打开方式不满足需求可以自行选择其他固定打开方式
+- 标识：`applicationJumpType`
+- 默认值：`_self`
 
 ##### 显示角标【showTodoNumber】
 > 是否展示应用的角标，可对单个应用进行单独的配置
+- 标识：`showTodoNumber`
 - 默认值: `否`
+
+##### 是否自定义【isUserEditable】
+> 当选项打开的时候，允许自定义应用的图标、应用的链接。
+- 标识：`isUserEditable`
+- 默认值: `否`
+
+##### 应用图标【applicationIconUrl】
+> 可上传应用的图标，上传后会覆盖应用的默认图标
+- 标识：`applicationIconUrl`
+
+##### 应用链接【applicationUrl】
+> 可输入应用点击后跳转的地址，输入后会覆盖应用的默认跳转地址
+- 标识：`applicationUrl`
 
 ### 标题容器样式
 #### 图标位置【titleIconPosition】

@@ -130,6 +130,11 @@
                                 {
                                     "label": "新窗口打开",
                                     "value": "_blank"
+                                },
+                                {
+                                    "label": "智能跳转",
+                                    "value": "_auto"
+                                    
                                 }
                             ],
                             "default": "_self"

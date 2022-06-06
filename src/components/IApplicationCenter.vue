@@ -407,10 +407,19 @@ export default {
             if ( this.moduleObject.env != 'develop' && item.selectApplication ) {
                 let url = item.applicationUrl ? item.applicationUrl : (item.selectApplication ? item.selectApplication.appUrl : '')
                 if ( url ) {
-                    if ( item.applicationJumpType == '_self' ) {
-                        window.location.href = url
-                    } else {
+                    if ( item.applicationJumpType == '_blank' ) {
                         window.open(url,item.applicationJumpType);
+                    } else if ( item.applicationJumpType == '_auto' ) {
+                        wx.invoke('openUrl', {
+                            "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
+                            "url": url, //url地址
+                        }, function(res){
+                            if (res.err_msg != "openUrl:ok") {
+                                //错误处理
+                            }
+                        });
+                    } else {
+                        window.location.href = url
                     }
                 }   
             }
