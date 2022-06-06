@@ -78,9 +78,13 @@
             {
               "label": "新窗口打开",
               "value": "_blank"
+            },
+            {
+              "label":"智能跳转打开",
+              "value":"_auto"
             }
           ],
-          "default": "_self"
+          "default": "_auto"
         },
         {
           "type": "iconSelect",
