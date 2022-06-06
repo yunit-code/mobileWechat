@@ -135,6 +135,7 @@ export default {
                   item.jumpUrl = res.data.data[iName].jumpUrl;
                   this.$set(item,'name2',res.data.data[iName].name);
                   this.$set(item,'count', res.data.data[iName][this.propData.dataFiled||'count']);
+                  this.$set(this.propData.summaryConfigList[index],'count', res.data.data[iName][this.propData.dataFiled||'count']);
                   this.$set(this.propData.summaryConfigList[index], 'name2', res.data.data[iName].name)
                 }
               })
@@ -145,6 +146,7 @@ export default {
                   item.jumpUrl = iItem.jumpUrl;
                   this.$set(item,'name2',iItem.name);
                   this.$set(item,'count',iItem[this.propData.dataFiled||'count']);
+                  this.$set(this.propData.summaryConfigList[index],'count',iItem[this.propData.dataFiled||'count']);
                   this.$set(this.propData.summaryConfigList[index], 'name2', iItem.name)
                 }
               })

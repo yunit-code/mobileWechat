@@ -515,6 +515,10 @@ export default {
         let fontActiveColorObj = {
           color: item.mainColor ? item.mainColor.hex8 : "",
         };
+        
+        let iconColorObj = {
+          fill: item.mainColor ? item.mainColor.hex8 : "",
+        };
         IDM.setStyleToPageHead(
           "." +
             themeNamePrefix +
@@ -532,6 +536,15 @@ export default {
             (this.moduleObject.packageid || "module_demo") +
             " .idm-message-list-box-top2-left .active",
           fontActiveColorObj
+        );
+        IDM.setStyleToPageHead(
+          "." +
+            themeNamePrefix +
+            item.key +
+            " #" +
+            (this.moduleObject.packageid || "module_demo") +
+            " .idm-message-list-box-title-icon",
+          iconColorObj
         );
       }
     },
