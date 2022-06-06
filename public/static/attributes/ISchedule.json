@@ -83,7 +83,7 @@
                             "value":"_auto"
                         }
                     ],
-                    "default":"_self"
+                    "default":"_auto"
                 },
                 {
                     "type": "select",
@@ -106,7 +106,7 @@
                             "value":"_auto"
                         }
                     ],
-                    "default":"_self"
+                    "default":"_auto"
                 },
                 {
                     "type": "group",
