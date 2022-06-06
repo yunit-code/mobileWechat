@@ -412,15 +412,19 @@ export default {
                     } else if ( item.applicationJumpType == '_self' ) {
                         window.location.href = url
                     } else {
-                        wx.invoke('openUrl', {
-                            "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
-                            "url": url, //url地址
-                        }, function(res){
-                            if (res.err_msg != "openUrl:ok") {
-                                window.location.href = url
-                                //错误处理
-                            }
-                        });
+                        if ( wx && wx.invoke ) {
+                            wx.invoke('openUrl', {
+                                "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
+                                "url": url, //url地址
+                            }, function(res){
+                                if (res.err_msg != "openUrl:ok") {
+                                    window.location.href = url
+                                    //错误处理
+                                }
+                            });
+                        } else {
+                            window.location.href = url
+                        }
                     }
                 }   
             }
