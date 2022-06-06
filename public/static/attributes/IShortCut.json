@@ -34,7 +34,8 @@
                     "text": "标题",
                     "bindKey": "comTitle",
                     "default": "快捷方式",
-                    "display": "@[isShowTitle]"
+                    "display": "@[isShowTitle]",
+                    "desc": "组件标题"
                 },
                 {
                     "type": "radio",
