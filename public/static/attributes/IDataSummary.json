@@ -133,6 +133,16 @@
                             "placeholder":"请输入名称"
                         },
                         {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "名称",
+                            "bindKey": "name2",
+                            "desc":"",
+                            "default":"",
+                            "placeholder":"请输入名称",
+                            "display": "@[none]"
+                        },
+                        {
                             "type": "uploadImage",
                             "layoutType": "inline",
                             "text": "背景图片",

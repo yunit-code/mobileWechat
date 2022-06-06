@@ -135,8 +135,7 @@ export default {
                   item.count = res.data.data[iName][this.propData.dataFiled||'count'];
                   item.jumpUrl = res.data.data[iName].jumpUrl;
                   this.$set(item,'name2',res.data.data[iName].name);
-                  const cItem = this.propData.summaryConfigList[index];
-                  this.$set(cItem,'name2',res.data.data[iName].name);
+                  this.$set(this.propData.summaryConfigList[index], 'name2', res.data.data[iName].name)
                 }
               })
             }else if(Object.prototype.toString.call(res.data.data) === '[object Array]') {
@@ -146,8 +145,7 @@ export default {
                   item.count = iItem[this.propData.dataFiled||'count'];
                   item.jumpUrl = iItem.jumpUrl;
                   this.$set(item,'name2',iItem.name);
-                  const cItem = this.propData.summaryConfigList[index];
-                  this.$set(cItem,'name2',iItem.name);
+                  this.$set(this.propData.summaryConfigList[index], 'name2', iItem.name)
                 }
               })
             }
