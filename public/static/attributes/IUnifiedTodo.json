@@ -23,7 +23,8 @@
                 {
                     "type": "input",
                     "layoutType": "inline",
-                    "text": "组件标题",
+                    "text": "标题",
+                    "desc": "组件标题文字",
                     "bindKey": "htmlTitle",
                     "default": "待办事项"
                 },
