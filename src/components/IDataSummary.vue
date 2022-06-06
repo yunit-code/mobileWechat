@@ -69,35 +69,6 @@ export default {
   },
   props: {
   },
-  watch: {
-    'propData.summaryConfigList': {
-      handler() {
-        if ( this.propData.summaryConfigList && this.propData.summaryConfigList.length) {
-          const tempArr = [];
-          this.propData.summaryConfigList.forEach((item, index)=> {
-            const a = {}
-            const cItem = this.tempSummaryConfigList[index];
-            a.name = item.name;
-            if(cItem) {
-              a.name2 = cItem.name2;
-              a.count = cItem.count;
-              a.bgUrl = item.bgUrl;
-            }else {
-              a.name2 = item.name2;
-              a.count = item.count;
-              a.bgUrl = item.bgUrl;
-            }
-            tempArr.push(a)
-          })
-          this.tempSummaryConfigList = tempArr;
-        } else {
-          this.tempSummaryConfigList = [];
-        }
-        this.changeLines()
-      },
-      deep: true
-    },
-  },
   created() {
     this.moduleObject = this.$root.moduleObject
     this.convertAttrToStyleObject();
@@ -582,11 +553,28 @@ export default {
      * 加载动态数据
      */
     initData(){
-      // if ( this.propData.summaryConfigList && this.propData.summaryConfigList.length ) {
-      //   this.tempSummaryConfigList = JSON.parse(JSON.stringify(this.propData.summaryConfigList))
-      // } else {
-      //   this.tempSummaryConfigList = [];
-      // }
+      if ( this.propData.summaryConfigList && this.propData.summaryConfigList.length ) {
+        // this.tempSummaryConfigList = JSON.parse(JSON.stringify(this.propData.summaryConfigList))
+        const tempArr = [];
+        this.propData.summaryConfigList.forEach((item, index)=> {
+          const a = {}
+          const cItem = this.tempSummaryConfigList[index];
+          a.name = item.name;
+          if(cItem) {
+            a.name2 = cItem.name2;
+            a.count = cItem.count;
+            a.bgUrl = item.bgUrl;
+          }else {
+            a.name2 = item.name2;
+            a.count = item.count;
+            a.bgUrl = item.bgUrl;
+          }
+          tempArr.push(a)
+        })
+        this.tempSummaryConfigList = tempArr;
+      } else {
+        this.tempSummaryConfigList = [];
+      }
       // this.changeLines()
     },
     /**
