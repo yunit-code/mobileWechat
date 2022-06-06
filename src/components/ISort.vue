@@ -79,7 +79,7 @@ export default {
   props: {},
   created() {
     this.moduleObject = this.$root.moduleObject;
-    this.convertThemeListAttrToStyleObject();
+    // this.convertThemeListAttrToStyleObject();
     this.convertAttrToStyleObject();
     this.initData();
   },
@@ -299,7 +299,7 @@ export default {
      */
     propDataWatchHandle(propData) {
       this.propData = propData.compositeAttr || {};
-      this.convertThemeListAttrToStyleObject();
+      // this.convertThemeListAttrToStyleObject();
       this.convertAttrToStyleObject();
     },
     /**
@@ -307,7 +307,7 @@ export default {
      */
     convertAttrToStyleObject(pageSize = {}) {
       var styleObject = {};
-      var tipStyleObject = {};
+      // var tipStyleObject = {};
       var cardStyleObject = {};
       var emptyStyleObject = {};
 
@@ -352,11 +352,11 @@ export default {
                 styleObject["background-color"] = element.hex8;
               }
               break;
-            case "tipBgColor":
-              if (element && element.hex8) {
-                tipStyleObject["background-color"] = element.hex8;
-              }
-              break;
+            // case "tipBgColor":
+            //   if (element && element.hex8) {
+            //     tipStyleObject["background-color"] = element.hex8;
+            //   }
+            //   break;
             case "box":
               if (element.marginTopVal) {
                 styleObject["margin-top"] = `${element.marginTopVal}`;
@@ -503,29 +503,29 @@ export default {
               styleObject["text-align"] = element.fontTextAlign;
               styleObject["text-decoration"] = element.fontDecoration;
               break;
-            case "tipFont":
-              tipStyleObject["font-family"] = element.fontFamily;
-              if (element.fontColors.hex8) {
-                tipStyleObject["color"] = element.fontColors.hex8;
-              }
-              tipStyleObject["font-weight"] =
-                element.fontWeight && element.fontWeight.split(" ")[0];
-              tipStyleObject["font-style"] = element.fontStyle;
-              tipStyleObject["font-size"] =
-                element.fontSize + element.fontSizeUnit;
-              tipStyleObject["line-height"] =
-                element.fontLineHeight +
-                (element.fontLineHeightUnit == "-"
-                  ? ""
-                  : element.fontLineHeightUnit);
-              tipStyleObject["text-align"] = element.fontTextAlign;
-              tipStyleObject["text-decoration"] = element.fontDecoration;
-              break;
+            // case "tipFont":
+            //   tipStyleObject["font-family"] = element.fontFamily;
+            //   if (element.fontColors.hex8) {
+            //     tipStyleObject["color"] = element.fontColors.hex8;
+            //   }
+            //   tipStyleObject["font-weight"] =
+            //     element.fontWeight && element.fontWeight.split(" ")[0];
+            //   tipStyleObject["font-style"] = element.fontStyle;
+            //   tipStyleObject["font-size"] =
+            //     element.fontSize + element.fontSizeUnit;
+            //   tipStyleObject["line-height"] =
+            //     element.fontLineHeight +
+            //     (element.fontLineHeightUnit == "-"
+            //       ? ""
+            //       : element.fontLineHeightUnit);
+            //   tipStyleObject["text-align"] = element.fontTextAlign;
+            //   tipStyleObject["text-decoration"] = element.fontDecoration;
+            //   break;
           }
         }
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id + ' #top_setting_popup', styleObject);
-      window.IDM.setStyleToPageHead(this.moduleObject.id + '_sort' + ".i-sort-outer .i-sort-tip", tipStyleObject);
+      // window.IDM.setStyleToPageHead(this.moduleObject.id + '_sort' + ".i-sort-outer .i-sort-tip", tipStyleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + '_sort' + " .i-sort-item", cardStyleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + '_sort' + " .van-empty", emptyStyleObject);
       // this.initData();

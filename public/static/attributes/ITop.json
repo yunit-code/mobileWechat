@@ -661,29 +661,6 @@
                 },
                 {
                     "type": "group",
-                    "text": "提示信息容器样式",
-                    "desc": "点击？查看样式设置用法指南",
-                    "helpUrl": "",
-                    "display": "@[showTip]",
-                    "children": [
-                        {
-                            "type": "font",
-                            "layoutType": "block",
-                            "text": "文字",
-                            "bindKey": "tipFont"
-                        },
-                        {
-                            "type": "colorPicker",
-                            "layoutType": "inline",
-                            "text": "背景色",
-                            "bindKey": "tipBgColor",
-                            "placeholder": "请选择颜色",
-                            "default": {}
-                        }
-                    ]
-                },
-                {
-                    "type": "group",
                     "text": "容器样式",
                     "desc": "点击？查看样式设置用法指南",
                     "helpUrl": "",
