@@ -500,7 +500,7 @@ export default {
               styleObject["font-weight"] =
                 element.fontWeight && element.fontWeight.split(" ")[0];
               styleObject["font-style"] = element.fontStyle;
-              styleObject["font-size"] =
+              styleObject["font-size"] = element.fontSizeUnit ==='px' ? element.fontSize * scale + element.fontSizeUnit :
                 element.fontSize + element.fontSizeUnit;
               styleObject["line-height"] =
                 element.fontLineHeight +
