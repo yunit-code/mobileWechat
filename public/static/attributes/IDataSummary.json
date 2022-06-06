@@ -151,7 +151,15 @@
                             "dictionary":[
                                 "/resource/idm/img/kjyy01.png",
                                 "/resource/idm/img/kjyy02.png",
-                                "/resource/idm/img/kjyy03.png"
+                                "/resource/idm/img/kjyy03.png",
+                                "/resource/idm/img/kjfs01.png",
+                                "/resource/idm/img/kjfs02.png",
+                                "/resource/idm/img/kjfs03.png",
+                                "/resource/idm/img/kjfs04.png",
+                                "/resource/idm/img/kjfs05.png",
+                                "/resource/idm/img/kjfs06.png",
+                                "/resource/idm/img/kjfs07.png",
+                                "/resource/idm/img/kjfs08.png"
                             ],
                             "ctrlAttrObject": {
                                 "width": "48px",

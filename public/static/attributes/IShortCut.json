@@ -177,7 +177,7 @@
                                     "value": "new2"
                                 }
                             ],
-                            "default": "current"
+                            "default": "new2"
                         },
                         {
                             "type": "textarea",
@@ -207,9 +207,27 @@
                                 "/resource/idm/img/zbzs.png",
                                 "/resource/idm/img/zxzys.png",
                                 "/resource/idm/img/zyzx.png",
+                                "/resource/idm/img/ykg1.png",
+                                "/resource/idm/img/ykg2.png",
+                                "/resource/idm/img/ykg3.png",
+                                "/resource/idm/img/ykg4.png",
+                                "/resource/idm/img/ykg5.png",
+                                "/resource/idm/img/ykg6.png",
+                                "/resource/idm/img/ykg7.png",
+                                "/resource/idm/img/ykg8.png",
+                                "/resource/idm/img/ykg9.png",
+                                "/resource/idm/img/ykg10.png",
                                 "/resource/idm/img/kjyy01.png",
                                 "/resource/idm/img/kjyy02.png",
-                                "/resource/idm/img/kjyy03.png"
+                                "/resource/idm/img/kjyy03.png",
+                                "/resource/idm/img/kjfs01.png",
+                                "/resource/idm/img/kjfs02.png",
+                                "/resource/idm/img/kjfs03.png",
+                                "/resource/idm/img/kjfs04.png",
+                                "/resource/idm/img/kjfs05.png",
+                                "/resource/idm/img/kjfs06.png",
+                                "/resource/idm/img/kjfs07.png",
+                                "/resource/idm/img/kjfs08.png"
                             ],
                             "ctrlAttrObject": {
                                 "width": "48px",
