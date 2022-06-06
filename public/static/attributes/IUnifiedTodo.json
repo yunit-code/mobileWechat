@@ -323,7 +323,7 @@
                     "text": "空白文字",
                     "desc": "无数据时，提示文字",
                     "bindKey": "emptyText",
-                    "default": "数据为空"
+                    "default": "暂无数据"
                 },
                 {
                     "type": "inputNumberUnit",
