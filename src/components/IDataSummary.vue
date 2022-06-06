@@ -40,7 +40,7 @@
               @click="goUrl(v)">
               <!-- <div style="marginBottom: 5px" class="summary-name">{{v.name?v.name:IDM.express.replace("@[data."+v.dataFiled+".name]",data,true)}}</div> -->
               <!-- <div class="summary-num">{{v.count?v.count:IDM.express.replace("@[data."+v.dataFiled+".count]",data,true)}}</div> -->
-              <div style="marginBottom: 5px" class="summary-name">{{v.name || v.name2 || '经办'}}</div>
+              <div style="marginBottom: 5px" class="summary-name">{{v.name || v.name2 || '--'}}</div>
               <div class="summary-num">{{v.count || 0}}</div>
             </div>
           </li>
@@ -68,6 +68,35 @@ export default {
     }
   },
   props: {
+  },
+  watch: {
+    'propData.summaryConfigList': {
+      handler() {
+        if ( this.propData.summaryConfigList && this.propData.summaryConfigList.length) {
+          const tempArr = [];
+          this.propData.summaryConfigList.forEach((item, index)=> {
+            const a = {}
+            const cItem = this.tempSummaryConfigList[index];
+            a.name = item.name;
+            if(cItem) {
+              a.name2 = cItem.name2;
+              a.count = cItem.count;
+              a.bgUrl = item.bgUrl;
+            }else {
+              a.name2 = item.name2;
+              a.count = item.count;
+              a.bgUrl = item.bgUrl;
+            }
+            tempArr.push(a)
+          })
+          this.tempSummaryConfigList = tempArr;
+        } else {
+          this.tempSummaryConfigList = [];
+        }
+        this.changeLines()
+      },
+      deep: true
+    },
   },
   created() {
     this.moduleObject = this.$root.moduleObject
@@ -553,12 +582,12 @@ export default {
      * 加载动态数据
      */
     initData(){
-      if ( this.propData.summaryConfigList && this.propData.summaryConfigList.length ) {
-        this.tempSummaryConfigList = JSON.parse(JSON.stringify(this.propData.summaryConfigList))
-      } else {
-        this.tempSummaryConfigList = [];
-      }
-      this.changeLines()
+      // if ( this.propData.summaryConfigList && this.propData.summaryConfigList.length ) {
+      //   this.tempSummaryConfigList = JSON.parse(JSON.stringify(this.propData.summaryConfigList))
+      // } else {
+      //   this.tempSummaryConfigList = [];
+      // }
+      // this.changeLines()
     },
     /**
      * 组件通信：接收消息的方法
