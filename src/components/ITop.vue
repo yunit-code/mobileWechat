@@ -41,7 +41,7 @@
         </div>
       </div>
       <van-popup id="top_setting_popup" v-model="settingMenuVisible" overlay-class="top_setting_popup" closeable round @close="sortClose">
-        <ISort :datas="propData" v-if="settingMenuVisible" />
+        <ISort ref="iSort" :datas="propData" v-if="settingMenuVisible" />
       </van-popup>
   </div>
 </template>
@@ -480,7 +480,7 @@ export default {
      * 排序弹出层关闭回调
      */
     sortClose(){
-      location.reload()
+      if(this.$refs.iSort && this.$refs.iSort.listData && this.$refs.iSort.baseListData && JSON.stringify(this.$refs.iSort.listData) !== JSON.stringify(this.$refs.iSort.baseListData)) location.reload()
     }
   }
 }

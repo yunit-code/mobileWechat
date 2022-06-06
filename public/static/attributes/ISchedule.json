@@ -764,6 +764,20 @@
             "desc": "点击？查看主题设置用法指南",
             "bindKey": "themeList",
             "tabText": "主题[index]",
+            "default":[
+                {
+                    "key":"green",
+                    "mainColor":"#207B39"
+                },
+                {
+                    "key":"blue",
+                    "mainColor":"#0073CA"
+                },
+                {
+                    "key":"red",
+                    "mainColor":"#C7393D"
+                }
+            ],
             "children": [
                 {
                     "type": "select",

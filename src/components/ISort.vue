@@ -76,7 +76,9 @@ export default {
       pageInfo: {},
       pageId: "",
       pageVersion: "",
-      whiteList:['工作台切换','公共账号']
+      whiteList:['工作台切换','公共账号'],
+      isUpload:false,
+      baseListData:[]
     };
   },
   props: {},
@@ -251,6 +253,8 @@ export default {
       });
       // 保存列表信息
       this.listData = list;
+      // 备份
+      this.baseListData = JSON.parse(JSON.stringify(list))
       // 关闭加载状态
       this.isLoading = false;
     },
