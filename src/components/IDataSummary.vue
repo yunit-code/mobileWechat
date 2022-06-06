@@ -127,20 +127,29 @@ export default {
         },{headers: {"Content-Type": "application/json;charset=UTF-8"}})
         .then((res) => {
           if(res.status == 200 && res.data.code == 200){
-            for (let iName in res.data.data) {
-              const cItem = this.tempSummaryConfigList.find(item=> item.tabKey == iName);
-              const cItem2 = this.propData.summaryConfigList.find(item=> item.tabKey == iName);
-              if(cItem) {
-                cItem.count = res.data.data[iName][this.propData.dataFiled||'count'];
-                cItem.name = cItem.name;
-                cItem.jumpUrl = res.data.data[iName].jumpUrl;
-                this.$set(cItem,'name2',res.data.data[iName].name);
-              }
-              if(cItem2) {
-                cItem2.count = res.data.data[iName][this.propData.dataFiled||'count'];
-                cItem2.jumpUrl = res.data.data[iName].jumpUrl;
-                this.$set(cItem2,'name2',res.data.data[iName].name);
-              }
+            if(Object.prototype.toString.call(res.data.data) === '[object Object]') {
+              const temArr = Object.keys(res.data.data);
+              this.tempSummaryConfigList.forEach((item, index)=> {
+                const iName = temArr[index];
+                if(iName) {
+                  item.count = res.data.data[iName][this.propData.dataFiled||'count'];
+                  item.jumpUrl = res.data.data[iName].jumpUrl;
+                  this.$set(item,'name2',res.data.data[iName].name);
+                  const cItem = this.propData.summaryConfigList[index];
+                  this.$set(cItem,'name2',res.data.data[iName].name);
+                }
+              })
+            }else if(Object.prototype.toString.call(res.data.data) === '[object Array]') {
+              this.tempSummaryConfigList.forEach((item, index)=> {
+                const iItem = res.data.data[index];
+                if(iItem) {
+                  item.count = iItem[this.propData.dataFiled||'count'];
+                  item.jumpUrl = iItem.jumpUrl;
+                  this.$set(item,'name2',iItem.name);
+                  const cItem = this.propData.summaryConfigList[index];
+                  this.$set(cItem,'name2',iItem.name);
+                }
+              })
             }
           }else {
             IDM.message.error(res.data.message)

@@ -133,14 +133,6 @@
                             "placeholder":"请输入名称"
                         },
                         {
-                            "type": "input",
-                            "layoutType": "inline",
-                            "text": "汇总标识",
-                            "bindKey": "tabKey",
-                            "desc": "设置当前汇总标识，用来获取对应汇总数据，例如：汇总1 - inbox，汇总2 - toread",
-                            "default": "inbox"
-                        },
-                        {
                             "type": "uploadImage",
                             "layoutType": "inline",
                             "text": "背景图片",
