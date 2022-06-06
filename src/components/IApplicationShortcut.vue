@@ -359,7 +359,7 @@ export default {
             return translatePxToAdaptationApi(data,this.propData.adaptationBase,this.propData.adaptationPercent,this.clientWidth,is_img)
         },
         convertAttrToStyleObject() {
-            this.convertThemeListAttrToStyleObject()
+            // this.convertThemeListAttrToStyleObject()
             var styleObject = {};
             var fontStyleObject = {};
             var imgStyleObject = {};
