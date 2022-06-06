@@ -32,6 +32,7 @@
                     "layoutType": "inline",
                     "text": "标题",
                     "bindKey": "title",
+                    "desc": "组件标题",
                     "default": "应用中心",
                     "display": "@[showTitle]"
                 },
