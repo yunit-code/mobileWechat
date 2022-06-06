@@ -767,15 +767,24 @@
             "default":[
                 {
                     "key":"green",
-                    "mainColor":"#207B39"
+                    "mainColor":{
+                        "hex": "#207B39",
+                        "hex8": "#207B39FF"
+                    }
                 },
                 {
                     "key":"blue",
-                    "mainColor":"#0073CA"
+                    "mainColor":{
+                        "hex": "#0073CA",
+                        "hex8": "#0073CAFF"
+                    }
                 },
                 {
                     "key":"red",
-                    "mainColor":"#C7393D"
+                    "mainColor":{
+                        "hex": "#C7393D",
+                        "hex8": "#C7393DFF"
+                    }
                 }
             ],
             "children": [
