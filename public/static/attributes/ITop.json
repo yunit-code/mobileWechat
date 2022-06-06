@@ -897,7 +897,7 @@
                             "type": "input",
                             "layoutType": "inline",
                             "text": "卡片阴影",
-                            "desc": "填写格式如下：10px 10px 5px #888888，更多请点击查看详细填写说明",
+                            "desc": "填写格式如下：0px 0px 3px rgba(0,0,0,0.1)。参数说明：阴影水平方向的偏移、阴影竖直方向的偏移、阴影的模糊半径、阴影颜色。",
                             "bindKey": "boxShadow",
                             "default": "0px 0px 3px rgba(0,0,0,0.1)"
                         },
