@@ -58,7 +58,7 @@
         <ul class="idm-message-list-box-list2" v-if="!pageLoading && (propData.compStyle === 'styleTwo' || propData.compStyle === 'styleThree')">
           <li class="d-flex" v-for="(item, index) in messageData.list" :key="index" @click="handleClickItem(item)">
             <img :src="item.image" :class="propData.compStyle === 'styleTwo' ? 'idm-message-list-box-list2-left-img' : 'idm-message-list-box-list2-left-img2'" alt="">
-            <div style="overflow:hidden">
+            <div style="overflow:hidden; flex: 1">
               <div class="idm-message-list-box-list2-title" :class="propData.compStyle === 'styleTwo' ? 'idm-message-list-box-list2-title' : 'idm-message-list-box-list2-title2'">
                 {{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}
               </div>
