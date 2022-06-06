@@ -112,7 +112,9 @@ export default {
     this.convertThemeListAttrToStyleObject()
   },
   mounted() {
-    this.initSwiper();
+    if(this.moduleObject.env === 'develop') {
+      this.initSwiper();
+    }
   },
   methods: {
     initSwiper() {
@@ -122,7 +124,7 @@ export default {
           autoplay: 2000,                                           //自动播放
           speed: 500,                                               //播放速度
           loop: true,                                               //循环播放
-          loopedSlides: 100,                                        //循环个数
+          loopedSlides: 10,                                        //循环个数
           slidesPerView: 'auto',                                    //预览slide个数
           effect: 'coverflow',                                      //特效组件
           pagination: !this.propData.showBullet ? '' :  { //指示器
@@ -424,6 +426,9 @@ export default {
       if(this.propData.dataType === 'custom'){
          // 自定义数据直接使用
         this.$set(this.bannerData, 'value', this.propData.bannerTable)
+        if(this.moduleObject.env === 'production') {
+          this.initSwiper()
+        }
         return
       }else{
         // 开发环境使用假数据，深拷贝方式数据fix不更新
@@ -447,12 +452,12 @@ export default {
           //res.data
           if(res.status == 200 && res.data.code == 200){
             this.bannerData = res.data.data
+            this.initSwiper()
           }else {
             IDM.message.error(res.data.message)
           }
         })
-        .catch((error) => {
-      })
+        .catch((error) => {})
     },
     /**
      * 通用的获取表达式匹配后的结果
