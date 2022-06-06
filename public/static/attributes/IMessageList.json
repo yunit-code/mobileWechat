@@ -306,7 +306,7 @@
                             "text": "页签标识",
                             "bindKey": "tabKey",
                             "desc": "设置当前页签标识，用来获取对应页签数据，例如：今日信息 - todayInfos，工作动态 - workDynamics",
-                            "default": "todayInfos"
+                            "default": ""
                         },
                         {
                             "type": "input",
