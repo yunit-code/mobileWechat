@@ -476,7 +476,7 @@ export default {
           }
         }
       }
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .summary-bg", styleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_shortcut_cont", styleObject);
       this.initData();
     },
     /**
