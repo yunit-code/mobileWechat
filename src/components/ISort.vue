@@ -27,26 +27,28 @@
       animation="200"
       @end="dragEnd"
     >
-      <div
-        class="i-sort-item"
-        v-for="(item, index) in listData"
-        :key="`sort-${index}`"
-      >
-        <div class="i-sort-item-handle">
-          <svg-icon icon-class="isort-drag" />
+      <template v-for="(item, index) in listData">
+        <div
+          v-if="!whiteList.includes(item.asName)"
+          class="i-sort-item"
+          :key="`sort-${index}`"
+        >
+          <div class="i-sort-item-handle">
+            <svg-icon icon-class="isort-drag" />
+          </div>
+          <div class="i-sort-item-name">{{ item.asName }}</div>
+          <div class="i-sort-item-operation">
+            <span @click="toppingClick(index)">
+              <svg-icon v-show="index !== 0" icon-class="isort-topping" />
+            </span>
+            <span @click="visibleClick(item)">
+              <svg-icon
+                :icon-class="!item.hidden ? 'isort-visible' : 'isort-invisible'"
+              />
+            </span>
+          </div>
         </div>
-        <div class="i-sort-item-name">{{ item.asName }}</div>
-        <div class="i-sort-item-operation">
-          <span @click="toppingClick(index)">
-            <svg-icon v-show="index !== 0" icon-class="isort-topping" />
-          </span>
-          <span @click="visibleClick(item)">
-            <svg-icon
-              :icon-class="!item.hidden ? 'isort-visible' : 'isort-invisible'"
-            />
-          </span>
-        </div>
-      </div>
+      </template>
     </draggable>
     <van-empty v-if="!listData || listData.length === 0" :image-size="propData.emptyImageSize || '100px'" :description="propData.emptyDescription || '暂无数据'" />
   </div>
@@ -74,6 +76,7 @@ export default {
       pageInfo: {},
       pageId: "",
       pageVersion: "",
+      whiteList:['工作台切换','公共账号']
     };
   },
   props: {},
@@ -139,7 +142,7 @@ export default {
       if (!this.moduleObject.env || this.moduleObject.env === "develop") {
         setTimeout(() => {
           //开发模式下给例子数据
-          this.listData = [
+          this.dealRes([
             {
               comId: "1",
               asName: "广告轮播",
@@ -148,12 +151,11 @@ export default {
             {
               comId: "2",
               asName: "统一待办",
-              hidden: false,
+              hidden: true,
             },
             {
               comId: "3",
               asName: "待办列表",
-              hidden: false,
             },
             {
               comId: "4",
@@ -162,10 +164,10 @@ export default {
             },
             {
               comId: "5",
-              asName: "信息列表",
+              asName: "工作台切换",
               hidden: false,
             },
-          ];
+          ])
           this.isLoading = false
         }, 1000);
       }else if(this.moduleObject.env ===  "production"){
@@ -182,7 +184,7 @@ export default {
      * 取用户定制化数据
      */
     requestUserCustomization(defaultList) {
-      const pageid = IDM.url.queryObject(window.location.href)[this.propData.pageid];
+      const pageid = this.commonParam()&& this.commonParam().pageId;
       const url = `/ctrl/idm/api/fetchUserCustomization?pageid=${pageid}&version=${this.pageVersion}`;
       IDM.http
         .get(url)
@@ -241,6 +243,7 @@ export default {
      * 处理返回列表数据
      */
     dealRes(list) {
+      const con = []
       // 添加隐藏数据
       list.forEach((item) => {
         if (item.hidden === undefined) item.hidden = false;

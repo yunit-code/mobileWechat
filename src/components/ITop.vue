@@ -40,7 +40,7 @@
           </div>
         </div>
       </div>
-      <van-popup id="top_setting_popup" v-model="settingMenuVisible" overlay-class="top_setting_popup" closeable round>
+      <van-popup id="top_setting_popup" v-model="settingMenuVisible" overlay-class="top_setting_popup" closeable round @close="sortClose">
         <ISort :datas="propData" v-if="settingMenuVisible" />
       </van-popup>
   </div>
@@ -475,6 +475,12 @@ export default {
         // this.propData.fontContent = this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data);
         this.$set(this.propData,"summaryConfigList",object.data);
       }
+    },
+    /**
+     * 排序弹出层关闭回调
+     */
+    sortClose(){
+      location.reload()
     }
   }
 }
