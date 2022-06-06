@@ -435,6 +435,30 @@
             "desc": "点击？查看主题设置用法指南",
             "bindKey": "themeList",
             "tabText": "主题[index]",
+            
+            "default":[
+                {
+                    "key":"green",
+                    "mainColor":{
+                        "hex": "#207B39",
+                        "hex8": "#207B39FF"
+                    }
+                },
+                {
+                    "key":"blue",
+                    "mainColor":{
+                        "hex": "#0073CA",
+                        "hex8": "#0073CAFF"
+                    }
+                },
+                {
+                    "key":"red",
+                    "mainColor":{
+                        "hex": "#C7393D",
+                        "hex8": "#C7393DFF"
+                    }
+                }
+            ],
             "children": [
                 {
                     "type": "select",
