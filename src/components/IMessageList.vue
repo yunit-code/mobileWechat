@@ -892,7 +892,7 @@ export default {
         white-space: nowrap;
         color: #999;
         font-size: 16px;
-        margin: 0 0 0 20px;
+        margin: 0 0 0 10px;
       }
     }
     &-list2{
