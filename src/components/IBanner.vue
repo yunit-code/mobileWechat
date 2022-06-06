@@ -91,7 +91,8 @@ export default {
         bigScreenStretch: '-5.5%',
         smallScreenStretch: '-7%',
       },
-      bannerData: {value: []}
+      bannerData: {value: []},
+      swiperObj: null
     };
   },
   computed: {
@@ -112,13 +113,16 @@ export default {
     this.convertThemeListAttrToStyleObject()
   },
   mounted() {
-    this.initSwiper();
+    if(this.moduleObject.env === 'develop'){
+      this.initSwiper();
+    }
   },
   methods: {
     initSwiper() {
+      if(!this.swiperObj)
       this.$nextTick(()=> {
         console.log('init...')
-        let swiper = new Swiper('#'+this.moduleObject.id + " .idm-banner-box-swiper-container", {
+        this.swiperObj = new Swiper('#'+this.moduleObject.id + " .idm-banner-box-swiper-container", {
           autoplay: 2000,                                           //自动播放
           speed: 500,                                               //播放速度
           loop: true,                                               //循环播放
@@ -150,10 +154,10 @@ export default {
             },
           }
         });
-        swiper.pagination.update()
+        this.swiperObj.pagination.update()
         const index = window.sessionStorage.swiperClickedIndex
         if(index != undefined) {
-          swiper.slideTo(Number(index), 0, false)
+          this.swiperObj.slideTo(Number(index), 0, false)
         }
       })
     },
@@ -424,6 +428,9 @@ export default {
       if(this.propData.dataType === 'custom'){
          // 自定义数据直接使用
         this.$set(this.bannerData, 'value', this.propData.bannerTable)
+        if(this.moduleObject.env === 'production') {
+          this.initSwiper();
+        }
         return
       }else{
         // 开发环境使用假数据，深拷贝方式数据fix不更新
@@ -447,6 +454,7 @@ export default {
           //res.data
           if(res.status == 200 && res.data.code == 200){
             this.bannerData = res.data.data
+            this.initSwiper();
           }else {
             IDM.message.error(res.data.message)
           }
