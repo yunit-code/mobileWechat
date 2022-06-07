@@ -413,7 +413,7 @@ export default {
               subBoxStyleObj["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
               break;
             case "titleIconFontColor":
-                styleObjectTitleIcon["fill"] = element.hex;
+                styleObjectTitleIcon["fill"] = element.hex8;
                 break
             case "titleIconFontSize":
                 styleObjectTitleIcon["font-size"] = getAdaptiveSize.call(this,element) + "px";
