@@ -112,6 +112,41 @@
       "desc": "点击？查看主题设置用法指南",
       "bindKey": "themeList",
       "tabText": "主题[index]",
+      "default": [
+        {
+            "key": "blue",
+            "mainColor": {
+                "hex": "#0073CA",
+                "hex8": "#0073CAFF"
+            },
+            "minorColor": {
+                "hex": "#ebedf0",
+                "hex8": "#ebedf0FF"
+            }
+        },
+        {
+            "key": "red",
+            "mainColor": {
+                "hex": "#E21A1A",
+                "hex8": "#E21A1AFF"
+            },
+            "minorColor": {
+                "hex": "#ebedf0",
+                "hex8": "#ebedf0FF"
+            }
+        },
+        {
+            "key": "green",
+            "mainColor": {
+                "hex": "#0EAF64",
+                "hex8": "#0EAF64FF"
+            },
+            "minorColor": {
+                "hex": "#ebedf0",
+                "hex8": "#ebedf0FF"
+            }
+        }
+    ],
       "children": [
         {
           "type": "select",
