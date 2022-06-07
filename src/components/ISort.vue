@@ -35,6 +35,7 @@
           v-if="!whiteList.includes(item.asName)"
           class="i-sort-item"
           :key="`sort-${index}`"
+          :data-id="item.id"
         >
           <div class="i-sort-item-handle">
             <svg-icon icon-class="isort-drag" />
@@ -190,7 +191,7 @@ export default {
           ];
           const userlist = [
             {
-              id: "1",
+              id: "10",
               asName: "广告轮播",
               hidden: false,
             },
@@ -290,33 +291,34 @@ export default {
      * 处理返回列表数据
      */
     dealRes(userlist,defaultList) {
+      let list = []
       if(defaultList){
-        // 删除没有的
-        userlist.forEach((uItem,uIndex) => {
-          let flag = false
+        // 保留相同的
+        userlist.forEach(uItem => {
           defaultList.forEach(dItem => {
-            if(uItem.id === dItem.id) flag = true
+            if(uItem.id === dItem.id) list.push(uItem)
           })
-          if(!flag) userlist.splice(uIndex,1)
         });
         // 添加新增的
-        defaultList.forEach((uItem) => {
+        defaultList.forEach(uItem => {
           let flag = true
           userlist.forEach(dItem => {
             if(uItem.id === dItem.id) flag = false
           })
-          if(flag) userlist.push(uItem)
+          if(flag) list.push(uItem)
         });
+      }else{
+        list = userlist
       }
       // 删除子节点 添加隐藏数据
-      userlist.forEach((item) => {
+      list.forEach((item) => {
         if (item.hidden === undefined) item.hidden = false;
         if(item.children) delete item.children
       });
       // 保存列表信息
-      this.listData = JSON.parse(JSON.stringify(userlist));
+      this.listData = JSON.parse(JSON.stringify(list));
       // 备份
-      this.baseListData = JSON.parse(JSON.stringify(userlist))
+      this.baseListData = JSON.parse(JSON.stringify(list))
       // 关闭加载状态
       this.isLoading = false;
     },
