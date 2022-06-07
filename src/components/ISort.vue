@@ -671,7 +671,7 @@ $scale: var(--i-sort-scale);
 
   .i-sort-drag-outer {
     padding-top: 14px;
-    height: calc(100% - calc(119px * #{ $scale }));
+    height: calc(100% - calc(164px * #{ $scale }));
     overflow: auto;
   }
 
