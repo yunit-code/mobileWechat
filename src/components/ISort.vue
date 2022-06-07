@@ -23,8 +23,9 @@
     <draggable
       class="i-sort-drag"
       handle=".i-sort-item-handle"
+      :scroll="false"
       v-model="listData"
-      animation="200"
+      animation="300"
       @end="dragEnd"
     >
       <template v-for="(item, index) in listData">
@@ -144,7 +145,37 @@ export default {
       if (!this.moduleObject.env || this.moduleObject.env === "develop") {
         setTimeout(() => {
           //开发模式下给例子数据
-          this.dealRes([
+          const defaultList = [
+            {
+              comId: "1",
+              asName: "广告轮播",
+              hidden: false,
+            },
+            {
+              comId: "6",
+              asName: "新增1",
+            },
+            {
+              comId: "2",
+              asName: "统一待办",
+              hidden: true,
+            },
+            {
+              comId: "3",
+              asName: "待办列表",
+            },
+            {
+              comId: "4",
+              asName: "应用中心",
+              hidden: false,
+            },
+            {
+              comId: "7",
+              asName: "新增2",
+              hidden: false,
+            },
+          ];
+          const userlist = [
             {
               comId: "1",
               asName: "广告轮播",
@@ -169,7 +200,8 @@ export default {
               asName: "工作台切换",
               hidden: false,
             },
-          ])
+          ];
+          this.dealRes(userlist,defaultList)
           this.isLoading = false
         }, 1000);
       }else if(this.moduleObject.env ===  "production"){
@@ -194,7 +226,7 @@ export default {
           if (res&&res.code === "200" && res.data) {
             const list = JSON.parse(res.data.customData).children
             if (list && list.length > 0) {
-              this.dealRes(list);
+              this.dealRes(list,defaultList);
             } else {
               this.dealRes(defaultList)
             }
@@ -244,17 +276,34 @@ export default {
     /**
      * 处理返回列表数据
      */
-    dealRes(list) {
-      const con = []
-      // 添加隐藏数据
-      list.forEach((item) => {
+    dealRes(userlist,defaultList) {
+      if(defaultList){
+        // 删除没有的
+        userlist.forEach((uItem,uIndex) => {
+          let flag = false
+          defaultList.forEach(dItem => {
+            if(uItem.comId === dItem.comId) flag = true
+          })
+          if(!flag) userlist.splice(uIndex,1)
+        });
+        // 添加新增的
+        defaultList.forEach((uItem) => {
+          let flag = true
+          userlist.forEach(dItem => {
+            if(uItem.comId === dItem.comId) flag = false
+          })
+          if(flag) userlist.push(uItem)
+        });
+      }
+      // 删除子节点 添加隐藏数据
+      userlist.forEach((item) => {
         if (item.hidden === undefined) item.hidden = false;
         if(item.children) delete item.children
       });
       // 保存列表信息
-      this.listData = list;
+      this.listData = userlist;
       // 备份
-      this.baseListData = JSON.parse(JSON.stringify(list))
+      this.baseListData = JSON.parse(JSON.stringify(userlist))
       // 关闭加载状态
       this.isLoading = false;
     },
