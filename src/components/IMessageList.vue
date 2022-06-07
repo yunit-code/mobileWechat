@@ -496,7 +496,7 @@ export default {
         'font-size': getAdaptiveSize.call(this, 10) + 'px'
       });
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list-time", {
-        'font-size': getAdaptiveSize.call(this, 16) + 'px',
+        'font-size': getAdaptiveSize.call(this, 14) + 'px',
       });
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list2-title-bottom", {
         'font-size': getAdaptiveSize.call(this, 14) + 'px',
@@ -916,7 +916,7 @@ export default {
       &-time{
         white-space: nowrap;
         color: #999;
-        font-size: 16px;
+        font-size: 14px;
         margin: 0 0 0 10px;
       }
     }
