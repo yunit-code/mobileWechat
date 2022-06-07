@@ -186,7 +186,7 @@ export default {
                 }
                 IDM.setStyleToPageHead(
                     "." + themeNamePrefix + item.key + " #" + (this.moduleObject.packageid || "module_demo") +
-                        " .idm_applicationcenter_title_left .idm_filed_svg_icon",
+                        " .idm_applicationcenter_title_left",
                     fontStyleObject
                 );
                 // IDM.setStyleToPageHead(
@@ -409,17 +409,22 @@ export default {
                 if ( url ) {
                     if ( item.applicationJumpType == '_blank' ) {
                         window.open(url,item.applicationJumpType);
-                    } else if ( item.applicationJumpType == '_auto' ) {
-                        wx.invoke('openUrl', {
-                            "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
-                            "url": url, //url地址
-                        }, function(res){
-                            if (res.err_msg != "openUrl:ok") {
-                                //错误处理
-                            }
-                        });
-                    } else {
+                    } else if ( item.applicationJumpType == '_self' ) {
                         window.location.href = url
+                    } else {
+                        try {
+                            wx.invoke('openUrl', {
+                                "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
+                                "url": url, //url地址
+                            }, function(res){
+                                if (res.err_msg != "openUrl:ok") {
+                                    window.location.href = url
+                                    //错误处理
+                                }
+                            });
+                        } catch (error) {
+                            window.location.href = url
+                        }
                     }
                 }   
             }
@@ -625,7 +630,7 @@ export default {
                             styleObjectTitle["text-decoration"] = element.fontDecoration;
                             break;
                         case "titleIconFontColor":
-                            styleObjectTitleIcon["color"] = element.hex;
+                            styleObjectTitleIcon["color"] = element.hex8;
                             break
                         case "titleIconFontSize":
                             styleObjectTitleIcon["font-size"] = this.translatePxToAdaptation(element) + "px";

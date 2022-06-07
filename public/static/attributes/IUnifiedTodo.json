@@ -36,19 +36,19 @@
                     "desc": "设置组件点击链接跳转方式",
                     "dictionary": [
                         {
+                            "label": "智能跳转打开",
+                            "value": "_auto"
+                        },
+                        {
                             "label": "当前页跳转",
                             "value": "_self"
                         },
                         {
                             "label": "新窗口打开",
                             "value": "_blank"
-                        },
-                        {
-                            "label": "智能跳转打开",
-                            "value": "_auto"
                         }
                     ],
-                    "default": "_self"
+                    "default": "_auto"
                 },
                 {
                     "type": "switch",
@@ -417,8 +417,8 @@
                 {
                     "key":"green",
                     "mainColor":{
-                        "hex": "#207B39",
-                        "hex8": "#207B39FF"
+                        "hex": "#0EAF64",
+                        "hex8": "#0EAF64FF"
                     }
                 },
                 {
@@ -431,8 +431,8 @@
                 {
                     "key":"red",
                     "mainColor":{
-                        "hex": "#C7393D",
-                        "hex8": "#C7393DFF"
+                        "hex": "#E21A1A",
+                        "hex8": "#E21A1AFF"
                     }
                 }
             ],

@@ -32,13 +32,6 @@
             "comLangue": "vue"
         },
         {
-            "classId": "idm.componet.mobilewechat.applicationshortcut",
-            "comName": "应用中心快捷方式",
-            "className": "IApplicationShortcut",
-            "comType": "common",
-            "comLangue": "vue"
-        },
-        {
             "classId": "idm.componet.mobilewechat.messageList",
             "comName": "信息列表",
             "className": "IMessageList",

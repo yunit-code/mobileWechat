@@ -165,16 +165,16 @@
                             "desc": "设置组件点击链接跳转方式",
                             "dictionary": [
                                 {
+                                    "label": "智能跳转打开",
+                                    "value": "new2"
+                                },
+                                {
                                     "label": "当前页跳转",
                                     "value": "current"
                                 },
                                 {
                                     "label": "新窗口打开",
                                     "value": "new"
-                                },
-                                {
-                                    "label": "智能跳转打开",
-                                    "value": "new2"
                                 }
                             ],
                             "default": "new2"
@@ -859,6 +859,29 @@
             "desc": "点击？查看主题设置用法指南",
             "bindKey": "themeList",
             "tabText": "主题[index]",
+            "default":[
+                {
+                    "key":"green",
+                    "mainColor":{
+                        "hex": "#207B39",
+                        "hex8": "#207B39FF"
+                    }
+                },
+                {
+                    "key":"blue",
+                    "mainColor":{
+                        "hex": "#0073CA",
+                        "hex8": "#0073CAFF"
+                    }
+                },
+                {
+                    "key":"red",
+                    "mainColor":{
+                        "hex": "#E21A1A",
+                        "hex8": "#E21A1AFF"
+                    }
+                }
+            ],
             "children": [
                 {
                     "type": "select",

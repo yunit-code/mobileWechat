@@ -427,7 +427,7 @@ export default {
               styleObject["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
               break;
             case "titleIconFontColor":
-                styleObjectTitleIcon["fill"] = element.hex + ' !important';
+                styleObjectTitleIcon["fill"] = element.hex8 + ' !important';
                 break
             case "titleIconFontSize":
                 styleObjectTitleIcon["font-size"] = getAdaptiveSize.call(this, element) + "px";
@@ -474,7 +474,7 @@ export default {
               emptyBoxHeightObj['height'] = element.inputVal + element.selectVal
               break;
             case "readIconColor":
-                readIconObj["fill"] = element.hex;
+                readIconObj["fill"] = element.hex8;
                 break
             case "readIconSize":
                 readIconObj["font-size"] = getAdaptiveSize.call(this, element) + "px";
@@ -482,7 +482,7 @@ export default {
                 readIconObj["height"] = getAdaptiveSize.call(this, element) + "px";
                 break
             case "noReadIconColor":
-                noReadIconObj["fill"] = element.hex;
+                noReadIconObj["fill"] = element.hex8;
                 break
             case "noReadIconSize":
                 noReadIconObj["font-size"] = getAdaptiveSize.call(this, element) + "px";

@@ -124,20 +124,20 @@
                             "desc": "设置组件显示风格",
                             "dictionary": [
                                 {
+                                    "label": "智能跳转",
+                                    "value": "_auto"
+                                    
+                                },
+                                {
                                     "label": "当前页跳转",
                                     "value": "_self"
                                 },
                                 {
                                     "label": "新窗口打开",
                                     "value": "_blank"
-                                },
-                                {
-                                    "label": "智能跳转",
-                                    "value": "_auto"
-                                    
                                 }
                             ],
-                            "default": "_self"
+                            "default": "_auto"
                         },
                         {
                             "type": "switch",
@@ -179,7 +179,17 @@
                                 "/resource/idm/img/yqfk.png",
                                 "/resource/idm/img/zbzs.png",
                                 "/resource/idm/img/zxzys.png",
-                                "/resource/idm/img/zyzx.png"
+                                "/resource/idm/img/zyzx.png",
+                                "/resource/idm/img/ykg1.png",
+                                "/resource/idm/img/ykg2.png",
+                                "/resource/idm/img/ykg3.png",
+                                "/resource/idm/img/ykg4.png",
+                                "/resource/idm/img/ykg5.png",
+                                "/resource/idm/img/ykg6.png",
+                                "/resource/idm/img/ykg7.png",
+                                "/resource/idm/img/ykg8.png",
+                                "/resource/idm/img/ykg9.png",
+                                "/resource/idm/img/ykg10.png"
                             ],
                             "display": "@[isUserEditable]"
 
@@ -401,6 +411,29 @@
             "desc": "点击？查看主题设置用法指南",
             "bindKey": "themeList",
             "tabText": "主题[index]",
+            "default":[
+                {
+                    "key":"green",
+                    "mainColor":{
+                        "hex": "#207B39",
+                        "hex8": "#207B39FF"
+                    }
+                },
+                {
+                    "key":"blue",
+                    "mainColor":{
+                        "hex": "#0073CA",
+                        "hex8": "#0073CAFF"
+                    }
+                },
+                {
+                    "key":"red",
+                    "mainColor":{
+                        "hex": "#C7393D",
+                        "hex8": "#C7393DFF"
+                    }
+                }
+            ],
             "children": [
                 {
                     "type": "select",
@@ -606,6 +639,29 @@
                     "desc": "点击？查看主题设置用法指南",
                     "bindKey": "themeListManage",
                     "tabText": "主题[index]",
+                    "default":[
+                        {
+                            "key":"green",
+                            "mainColor":{
+                                "hex": "#207B39",
+                                "hex8": "#207B39FF"
+                            }
+                        },
+                        {
+                            "key":"blue",
+                            "mainColor":{
+                                "hex": "#0073CA",
+                                "hex8": "#0073CAFF"
+                            }
+                        },
+                        {
+                            "key":"red",
+                            "mainColor":{
+                                "hex": "#C7393D",
+                                "hex8": "#C7393DFF"
+                            }
+                        }
+                    ],
                     "children": [
                         {
                             "type": "select",
@@ -828,6 +884,29 @@
                     "desc": "点击？查看主题设置用法指南",
                     "bindKey": "themeListSearch",
                     "tabText": "主题[index]",
+                    "default":[
+                        {
+                            "key":"green",
+                            "mainColor":{
+                                "hex": "#207B39",
+                                "hex8": "#207B39FF"
+                            }
+                        },
+                        {
+                            "key":"blue",
+                            "mainColor":{
+                                "hex": "#0073CA",
+                                "hex8": "#0073CAFF"
+                            }
+                        },
+                        {
+                            "key":"red",
+                            "mainColor":{
+                                "hex": "#C7393D",
+                                "hex8": "#C7393DFF"
+                            }
+                        }
+                    ],
                     "children": [
                         {
                             "type": "select",
