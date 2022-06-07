@@ -186,7 +186,7 @@ export default {
                 }
                 IDM.setStyleToPageHead(
                     "." + themeNamePrefix + item.key + " #" + (this.moduleObject.packageid || "module_demo") +
-                        " .idm_applicationcenter_title_left .idm_filed_svg_icon",
+                        " .idm_applicationcenter_title_left",
                     fontStyleObject
                 );
                 // IDM.setStyleToPageHead(
@@ -630,7 +630,7 @@ export default {
                             styleObjectTitle["text-decoration"] = element.fontDecoration;
                             break;
                         case "titleIconFontColor":
-                            styleObjectTitleIcon["color"] = element.hex;
+                            styleObjectTitleIcon["color"] = element.hex8;
                             break
                         case "titleIconFontSize":
                             styleObjectTitleIcon["font-size"] = this.translatePxToAdaptation(element) + "px";

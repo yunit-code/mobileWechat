@@ -124,17 +124,17 @@
                             "desc": "设置组件显示风格",
                             "dictionary": [
                                 {
+                                    "label": "智能跳转",
+                                    "value": "_auto"
+                                    
+                                },
+                                {
                                     "label": "当前页跳转",
                                     "value": "_self"
                                 },
                                 {
                                     "label": "新窗口打开",
                                     "value": "_blank"
-                                },
-                                {
-                                    "label": "智能跳转",
-                                    "value": "_auto"
-                                    
                                 }
                             ],
                             "default": "_auto"
