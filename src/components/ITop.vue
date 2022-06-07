@@ -40,11 +40,23 @@
           </div>
         </div>
       </div>
-      <div @touchmove.stop>
+      <!-- <div @touchmove.stop>
         <van-popup id="top_setting_popup" v-model="settingMenuVisible" overlay-class="top_setting_popup" closeable round @close="sortClose">
-          <ISort ref="iSort" :datas="propData" v-if="settingMenuVisible" />
+          <ISort ref="iSort" :datas="propData" v-show="settingMenuVisible" />
         </van-popup>
-      </div>
+      </div> -->
+      <a-modal
+        id="top_setting_popup"
+        :visible="settingMenuVisible"
+        :destroyOnClose="true"
+        :footer="null"
+        :closable="false"
+        :bodyStyle="{
+          padding:0
+        }"
+      >
+        <ISort ref="iSort" :datas="propData"  @close="settingMenuClose" />
+      </a-modal>
   </div>
 </template>
 
@@ -115,6 +127,9 @@ export default {
   },
   destroyed() {},
   methods:{
+    settingMenuClose(){
+      this.settingMenuVisible = false;
+    },
     getClientWidth() {
       if ( this.moduleObject.env == 'develop' ) {
           return
@@ -527,12 +542,29 @@ export default {
       }
     }
   }
-  .van-popup{
-    // background-color: inherit;
-    // width: 95% !important;
-    // height: 90vh !important;
-    overflow-y: auto;
-    // padding: 40px 0 20px 0;
-  }
 }
+#top_setting_popup .ant-modal-wrap  {
+  overflow: hidden;
+  .ant-modal {
+    width: 100%!important;
+    height: 100%!important;
+    max-width: initial;
+    margin: 0!important;
+    top:0;
+    padding: 0;
+    .ant-modal-content {
+      background: transparent;
+      height: 100%;
+      box-shadow:none;
+      border-radius: 0;
+      .ant-modal-body {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+    }
+  }
+} 
 </style>

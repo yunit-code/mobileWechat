@@ -12,6 +12,9 @@
     :title="propData.htmlTitle"
     class="i-sort-outer"
   >
+  <div class="close-box" @click="close">
+    <a-icon type="close"  />
+  </div>
   <div class="i-sort-tip" v-if="propData.showTip === undefined ? true : propData.showTip">
     {{ propData.tipText || '你可以通过拖拽对功能组件进行排序，点击置顶图标快速置顶重要组件，点击隐藏图标隐藏当前组件。'}}
   </div>
@@ -23,7 +26,6 @@
     <draggable
       class="i-sort-drag"
       handle=".i-sort-item-handle"
-      :scroll="false"
       v-model="listData"
       animation="300"
       @end="dragEnd"
@@ -92,6 +94,12 @@ export default {
   mounted() {},
   destroyed() {},
   methods: {
+    /**
+     * 关闭回调
+     */
+    close(){
+      this.$emit("close")
+    },
     /**
      * 组件通信：接收消息的方法
      */
@@ -580,7 +588,7 @@ export default {
           }
         }
       }
-      window.IDM.setStyleToPageHead(this.moduleObject.id + ' #top_setting_popup', styleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + '_sort', styleObject);
       // window.IDM.setStyleToPageHead(this.moduleObject.id + '_sort' + ".i-sort-outer .i-sort-tip", tipStyleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + '_sort' + " .i-sort-item", cardStyleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + '_sort' + " .van-empty", emptyStyleObject);
@@ -615,12 +623,30 @@ export default {
 <style scoped lang="scss">
 $scale: var(--i-sort-scale);
 .i-sort-outer {
-  width: 100%;
-  height: 100%;
+  background-color: #FFFFFFFF;
+  height: 90vh;
+  width: 95%;
   box-sizing: border-box;
-  // font-family: PingFangSC-Regular;
-  // font-size: calc(16px * #{ $scale });
-  // color: #333333;
+  font-family: PingFangSC-Regular;
+  font-size: calc(16px * #{ $scale });
+  color: #333333;
+  border-radius: 16px;
+
+  .close-box {
+    width: 100%;
+    text-align: right;
+    padding: calc(10px * #{ $scale });
+    i {
+      display: inline-block;
+      width: calc(40px * #{ $scale });
+      height: calc(20px * #{ $scale });
+      line-height: calc(20px * #{ $scale });
+      color: #c8c9cc;
+      font-size: calc(18px * #{ $scale });
+      cursor: pointer;
+      text-align: center;
+    }
+  }
 
   .i-sort-tip {
     background-color: #e6f7ff;
