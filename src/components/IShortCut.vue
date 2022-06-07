@@ -611,7 +611,7 @@ export default {
                   this.$set(item, "todoNumber", result.data.data[item.dataFiled||'count']);
               }
           }else {
-            IDM.message.error(res.data.message)
+            IDM.message.error(result.data.message)
           }
       })
     },

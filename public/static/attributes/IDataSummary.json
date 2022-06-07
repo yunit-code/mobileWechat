@@ -143,6 +143,28 @@
                             "display": "@[none]"
                         },
                         {
+                            "type": "select",
+                            "layoutType": "inline",
+                            "text": "跳转方式",
+                            "bindKey": "jumpType",
+                            "desc": "设置组件点击链接跳转方式",
+                            "dictionary": [
+                                {
+                                    "label": "智能跳转打开",
+                                    "value": "new2"
+                                },
+                                {
+                                    "label": "当前页跳转",
+                                    "value": "current"
+                                },
+                                {
+                                    "label": "新窗口打开",
+                                    "value": "new"
+                                }
+                            ],
+                            "default": "new2"
+                        },
+                        {
                             "type": "uploadImage",
                             "layoutType": "inline",
                             "text": "背景图片",
@@ -674,13 +696,6 @@
             "tabText": "主题[index]",
             "default":[
                 {
-                    "key":"green",
-                    "mainColor":{
-                        "hex": "#207B39",
-                        "hex8": "#207B39FF"
-                    }
-                },
-                {
                     "key":"blue",
                     "mainColor":{
                         "hex": "#0073CA",
@@ -692,6 +707,13 @@
                     "mainColor":{
                         "hex": "#E21A1A",
                         "hex8": "#E21A1AFF"
+                    }
+                },
+                {
+                    "key":"green",
+                    "mainColor":{
+                        "hex": "#0EAF64",
+                        "hex8": "#0EAF64FF"
                     }
                 }
             ],
