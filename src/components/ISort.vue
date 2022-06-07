@@ -39,7 +39,7 @@
           <div class="i-sort-item-handle">
             <svg-icon icon-class="isort-drag" />
           </div>
-          <div class="i-sort-item-name">{{ item.asName }}</div>
+          <div class="i-sort-item-name">{{ (item.props && item.props.compositeAttr && item.props.compositeAttr.title)|| item.asName }}</div>
           <div class="i-sort-item-operation">
             <span @click="toppingClick(index)">
               <svg-icon v-show="index !== 0" icon-class="isort-topping" />
@@ -162,6 +162,11 @@ export default {
             {
               id: "6",
               asName: "新增1",
+              props:{
+                compositeAttr:{
+                  title:"我看下"
+                }
+              }
             },
             {
               id: "2",
