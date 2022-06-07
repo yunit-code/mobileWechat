@@ -128,6 +128,7 @@ export default {
   destroyed() {},
   methods:{
     settingMenuClose(){
+      if(this.$refs.iSort && this.$refs.iSort.listData && this.$refs.iSort.baseListData && JSON.stringify(this.$refs.iSort.listData) !== JSON.stringify(this.$refs.iSort.baseListData)) location.reload()
       this.settingMenuVisible = false;
     },
     getClientWidth() {
@@ -492,12 +493,6 @@ export default {
         // this.propData.fontContent = this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data);
         this.$set(this.propData,"summaryConfigList",object.data);
       }
-    },
-    /**
-     * 排序弹出层关闭回调
-     */
-    sortClose(){
-      if(this.$refs.iSort && this.$refs.iSort.listData && this.$refs.iSort.baseListData && JSON.stringify(this.$refs.iSort.listData) !== JSON.stringify(this.$refs.iSort.baseListData)) location.reload()
     }
   }
 }

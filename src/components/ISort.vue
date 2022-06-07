@@ -155,56 +155,56 @@ export default {
           //开发模式下给例子数据
           const defaultList = [
             {
-              comId: "1",
+              id: "1",
               asName: "广告轮播",
               hidden: false,
             },
             {
-              comId: "6",
+              id: "6",
               asName: "新增1",
             },
             {
-              comId: "2",
+              id: "2",
               asName: "统一待办",
               hidden: true,
             },
             {
-              comId: "3",
+              id: "3",
               asName: "待办列表",
             },
             {
-              comId: "4",
+              id: "4",
               asName: "应用中心",
               hidden: false,
             },
             {
-              comId: "7",
+              id: "7",
               asName: "新增2",
               hidden: false,
             },
           ];
           const userlist = [
             {
-              comId: "1",
+              id: "1",
               asName: "广告轮播",
               hidden: false,
             },
             {
-              comId: "2",
+              id: "2",
               asName: "统一待办",
               hidden: true,
             },
             {
-              comId: "3",
+              id: "3",
               asName: "待办列表",
             },
             {
-              comId: "4",
+              id: "4",
               asName: "应用中心",
               hidden: false,
             },
             {
-              comId: "5",
+              id: "5",
               asName: "工作台切换",
               hidden: false,
             },
@@ -290,7 +290,7 @@ export default {
         userlist.forEach((uItem,uIndex) => {
           let flag = false
           defaultList.forEach(dItem => {
-            if(uItem.comId === dItem.comId) flag = true
+            if(uItem.id === dItem.id) flag = true
           })
           if(!flag) userlist.splice(uIndex,1)
         });
@@ -298,7 +298,7 @@ export default {
         defaultList.forEach((uItem) => {
           let flag = true
           userlist.forEach(dItem => {
-            if(uItem.comId === dItem.comId) flag = false
+            if(uItem.id === dItem.id) flag = false
           })
           if(flag) userlist.push(uItem)
         });
@@ -309,7 +309,7 @@ export default {
         if(item.children) delete item.children
       });
       // 保存列表信息
-      this.listData = userlist;
+      this.listData = JSON.parse(JSON.stringify(userlist));
       // 备份
       this.baseListData = JSON.parse(JSON.stringify(userlist))
       // 关闭加载状态
@@ -334,7 +334,7 @@ export default {
      * 拖拽结束
      */
     dragEnd() {
-      const { id, comName,packageid } = this.pageInfo;
+      const { id,comName,packageid } = this.pageInfo;
       const url = "/ctrl/idm/api/saveUserCustomization";
       const customData = {
         id,
