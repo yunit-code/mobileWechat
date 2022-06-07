@@ -568,7 +568,7 @@ export default {
             item.key +
             " #" +
             (this.moduleObject.packageid || "module_demo") +
-            " .idm-message-list-box-title-icon",
+            " .idm-message-list-box-title .idm-message-list-box-title-icon",
           iconColorObj
         );
       }
