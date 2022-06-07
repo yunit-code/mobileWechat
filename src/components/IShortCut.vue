@@ -310,8 +310,11 @@ export default {
               styleObject["text-decoration"]=element.fontDecoration;
               break;
             case "titleIconFontColor":
-                styleObjectTitleIcon["color"] = element.hex;
-                break
+              if(element) {
+                styleObjectTitleIcon["color"] = element.hex8?element.hex8:"";
+                styleObjectTitleIcon["fill"] = element.hex8?element.hex8:"";
+              }
+              break
             case "titleIconFontSize":
                 styleObjectTitleIcon["font-size"]= `${this.funScreenAdaptation(element)}px`;
                 styleObjectTitleIcon["width"] = `${this.funScreenAdaptation(element)}px`;
@@ -321,7 +324,7 @@ export default {
         }
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id,styleObject);
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_applicationcenter_title_left_icon .idm_filed_svg_icon", styleObjectTitleIcon);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .com-title .idm_applicationcenter_title_left_icon .idm_filed_svg_icon", styleObjectTitleIcon);
       this.initData();
     },
     

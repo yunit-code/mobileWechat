@@ -165,16 +165,16 @@
                             "desc": "设置组件点击链接跳转方式",
                             "dictionary": [
                                 {
+                                    "label": "智能跳转打开",
+                                    "value": "new2"
+                                },
+                                {
                                     "label": "当前页跳转",
                                     "value": "current"
                                 },
                                 {
                                     "label": "新窗口打开",
                                     "value": "new"
-                                },
-                                {
-                                    "label": "智能跳转打开",
-                                    "value": "new2"
                                 }
                             ],
                             "default": "new2"

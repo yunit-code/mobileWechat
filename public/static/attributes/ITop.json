@@ -79,6 +79,41 @@
             "desc": "点击？查看主题设置用法指南",
             "bindKey": "mainThemeList",
             "tabText": "主题[index]",
+            "default": [
+                {
+                    "mainKey": "blue",
+                    "mainMainColor": {
+                        "hex": "#0073CA",
+                        "hex8": "#0073CAFF"
+                    },
+                    "mainMinorColor": {
+                        "hex": "#FFFFFF",
+                        "hex8": "#FFFFFFFF"
+                    }
+                },
+                {
+                    "mainKey": "red",
+                    "mainMainColor": {
+                        "hex": "#E21A1A",
+                        "hex8": "#E21A1AFF"
+                    },
+                    "mainMinorColor": {
+                        "hex": "#FFFFFF",
+                        "hex8": "#FFFFFFFF"
+                    }
+                },
+                {
+                    "mainKey": "green",
+                    "mainMainColor": {
+                        "hex": "#0EAF64",
+                        "hex8": "#0EAF64FF"
+                    },
+                    "mainMinorColor": {
+                        "hex": "#FFFFFF",
+                        "hex8": "#FFFFFFFF"
+                    }
+                }
+            ],
             "children": [
                 {
                     "type": "select",
@@ -670,7 +705,7 @@
                             "layoutType": "block",
                             "text": "内外边距",
                             "bindKey": "box",
-                            "default":{
+                            "default": {
                                 "marginTopVal": "",
                                 "marginRightVal": "",
                                 "marginBottomVal": "",
@@ -906,7 +941,7 @@
                             "layoutType": "block",
                             "text": "文字",
                             "bindKey": "font",
-                            "default":{
+                            "default": {
                                 "fontColors": {
                                     "hex8": "#333333FF"
                                 },

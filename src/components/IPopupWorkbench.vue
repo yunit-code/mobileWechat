@@ -207,14 +207,18 @@ export default {
       const url = window.location.href;
       const jumpUrl = url.split("#")[0] + "#/preview/" + item.pageId;
       if (this.propData.jumpStyle && this.propData.jumpStyle === '_auto') {
-        wx.invoke('openUrl', {
+        try {
+          wx.invoke('openUrl', {
             "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
             "url": jumpUrl, //url地址
-        }, function(res){
+          }, function(res){
             if (res.err_msg != "openUrl:ok") {
                 //错误处理
             }
-        });
+          });
+        } catch (error) {
+          window.open(jumpUrl, "_self");
+        }
       } else {
         window.open(jumpUrl, this.propData.jumpStyle || "_self");
       }
