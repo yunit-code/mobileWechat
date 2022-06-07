@@ -13,7 +13,7 @@
     class="i-sort-outer"
   >
   <div class="close-box" @click="close">
-    <a-icon type="close"  />
+    <svg-icon icon-class="isort-close" />
   </div>
   <div class="i-sort-tip" v-if="propData.showTip === undefined ? true : propData.showTip">
     {{ propData.tipText || '你可以通过拖拽对功能组件进行排序，点击置顶图标快速置顶重要组件，点击隐藏图标隐藏当前组件。'}}
@@ -631,12 +631,14 @@ $scale: var(--i-sort-scale);
   font-size: calc(16px * #{ $scale });
   color: #333333;
   border-radius: 16px;
+  padding-bottom: 20px;
+  overflow: hidden;
 
   .close-box {
     width: 100%;
     text-align: right;
     padding: calc(10px * #{ $scale });
-    i {
+    svg {
       display: inline-block;
       width: calc(40px * #{ $scale });
       height: calc(20px * #{ $scale });

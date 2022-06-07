@@ -704,17 +704,7 @@
                             "type": "box",
                             "layoutType": "block",
                             "text": "内外边距",
-                            "bindKey": "box",
-                            "default": {
-                                "marginTopVal": "",
-                                "marginRightVal": "",
-                                "marginBottomVal": "",
-                                "marginLeftVal": "",
-                                "paddingTopVal": "40px",
-                                "paddingRightVal": "",
-                                "paddingBottomVal": "20px",
-                                "paddingLeftVal": ""
-                            }
+                            "bindKey": "box"
                         },
                         {
                             "type": "inlineGroup",
