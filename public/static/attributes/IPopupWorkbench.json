@@ -72,16 +72,16 @@
           "desc": "设置跳转方式",
           "dictionary": [
             {
+              "label":"智能跳转打开",
+              "value":"_auto"
+            },
+            {
               "label": "当前页跳转",
               "value": "_self"
             },
             {
               "label": "新窗口打开",
               "value": "_blank"
-            },
-            {
-              "label":"智能跳转打开",
-              "value":"_auto"
             }
           ],
           "default": "_auto"
