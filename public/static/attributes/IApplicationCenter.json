@@ -179,7 +179,17 @@
                                 "/resource/idm/img/yqfk.png",
                                 "/resource/idm/img/zbzs.png",
                                 "/resource/idm/img/zxzys.png",
-                                "/resource/idm/img/zyzx.png"
+                                "/resource/idm/img/zyzx.png",
+                                "/resource/idm/img/ykg1.png",
+                                "/resource/idm/img/ykg2.png",
+                                "/resource/idm/img/ykg3.png",
+                                "/resource/idm/img/ykg4.png",
+                                "/resource/idm/img/ykg5.png",
+                                "/resource/idm/img/ykg6.png",
+                                "/resource/idm/img/ykg7.png",
+                                "/resource/idm/img/ykg8.png",
+                                "/resource/idm/img/ykg9.png",
+                                "/resource/idm/img/ykg10.png"
                             ],
                             "display": "@[isUserEditable]"
 
