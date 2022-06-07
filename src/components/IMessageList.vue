@@ -413,7 +413,7 @@ export default {
               subBoxStyleObj["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
               break;
             case "titleIconFontColor":
-                styleObjectTitleIcon["fill"] = element.hex8;
+                styleObjectTitleIcon["fill"] = element.hex8 + ' !important';
                 break
             case "titleIconFontSize":
                 styleObjectTitleIcon["font-size"] = getAdaptiveSize.call(this,element) + "px";
@@ -568,7 +568,7 @@ export default {
             item.key +
             " #" +
             (this.moduleObject.packageid || "module_demo") +
-            " .idm-message-list-box-title-icon",
+            " .idm-message-list-box-title .idm-message-list-box-title-icon",
           iconColorObj
         );
       }
