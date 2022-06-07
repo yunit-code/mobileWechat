@@ -88,8 +88,24 @@ export default {
   methods:{
     goUrl(v) {
       if (v.jumpUrl && this.moduleObject.env=="production") {
-        window.open(IDM.url.getWebPath(v.jumpUrl))
-        // v.jumpType === 'current' && this.moduleObject.env=="production" && (window.location.href=IDM.url.getWebPath(v.jumpUrl))
+        switch(v.jumpType) {
+          case 'new':
+            window.open(IDM.url.getWebPath(v.jumpUrl))
+            break;
+          case 'current':
+            window.location.href=IDM.url.getWebPath(v.jumpUrl)
+            break;
+          case 'new2':
+            wx.invoke('openUrl', {
+              "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
+              "url": v.jumpUrl, //url地址
+            }, function(res){
+              if (res.err_msg != "openUrl:ok") {
+                  //错误处理
+              }
+            });
+            break;
+        }
       }
     },
     changeLines() {
@@ -567,10 +583,12 @@ export default {
             a.name2 = cItem.name2;
             a.count = cItem.count;
             a.bgUrl = item.bgUrl;
+            a.jumpType = cItem.jumpType;
           }else {
             a.name2 = item.name2;
             a.count = item.count;
             a.bgUrl = item.bgUrl;
+            a.jumpType = item.jumpType;
           }
           tempArr.push(a)
         })
