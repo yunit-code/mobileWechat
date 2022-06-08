@@ -24,14 +24,6 @@ mobileWechat@1.0.8
 用于设置标题
 - 标识：`标题【comTitle】`
 - 默认值：`快捷方式`
-#### 图标位置【titleIconPosition】
-用于设置标题图标位置
-- 标识：`图标位置【titleIconPosition】`
-- 默认值：`右侧`
-##### 标题图标【titleIconClass】
-用于设置标题图标
-- 标识：`标题【titleIconClass】`
-- 默认值：`空`
 #### 快捷方式样式【shortCutStyle】
 用于设置快捷方式样式
 - 标识：`是否显示标题【shortCutStyle】`
@@ -47,7 +39,7 @@ mobileWechat@1.0.8
 #### 每项高度【shortItemHeight】
 用于设置每项高度
 - 标识：`每项高度【shortItemHeight】`
-- 默认值：`72.5px`
+- 默认值：`45px`
 #### 快捷方式配置【子表】【shortConfigList】
 ##### 名称【name】
 用于设置卡片内容的名称
@@ -138,7 +130,15 @@ mobileWechat@1.0.8
 
 - 标识：`dataFiled`
 - 默认值：`count`
-### 标题容器样式设置
+### 标题容器样式
+#### 图标位置【titleIconPosition】
+用于设置标题图标位置
+- 标识：`图标位置【titleIconPosition】`
+- 默认值：`右侧`
+##### 标题图标【titleIconClass】
+用于设置标题图标
+- 标识：`标题【titleIconClass】`
+- 默认值：`空`
 #### 图标颜色
 设置组件的title图标的颜色
 - 标识：`titleIconFontColor`
@@ -312,7 +312,7 @@ mobileWechat@1.0.8
 - 标识：`font`
 
 - 默认值：空
-### 内容容器样式设置
+### 内容容器样式
 #### 背景设置
 ##### 背景色【bgColor】
 设置组件的整体背景颜色

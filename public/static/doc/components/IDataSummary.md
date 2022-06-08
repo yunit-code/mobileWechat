@@ -24,34 +24,18 @@ mobileWechat@1.0.8
 用于设置title
 - 标识：`标题【comTitle】`
 - 默认值：`快捷方式`
-#### 图标位置【titleIconPosition】
-用于设置标题图标位置
-- 标识：`图标位置【titleIconPosition】`
-- 默认值：`右侧`
 #### 最多显示【maxNumber】
 用于设置组件展示多少卡片
 - 标识：`最多显示【maxNumber】`
-- 默认值：`4`
-#### 标题图标【titleIconClass】
-用于设置标题右侧的图标
-- 标识：`标题图标【titleIconClass】`
-- 默认值：``
-#### 图标颜色【titleIconFontColor】
-用于设置标题右侧的图标的色值
-- 标识：`图标颜色【titleIconFontColor】`
-- 默认值：``
-#### 图标大小【titleIconFontSize】
-用于设置标题右侧的图标的大小
-- 标识：`图标大小【titleIconFontSize】`
-- 默认值：``
+- 默认值：`2`
 #### 每行展示【maxNumber】
 用于设置每行展示多少卡片
 - 标识：`每行展示【maxNumber】`
-- 默认值：`3`
+- 默认值：`2`
 #### 每项高度【shortItemHeight】
 用于设置每行展示多少卡片
 - 标识：`每项高度【shortItemHeight】`
-- 默认值：`72.5px`
+- 默认值：`50px`
 #### 数据汇总配置【子表】【summaryConfigList】
 ##### 名称【name】
 用于设置卡片内容的名称
@@ -76,7 +60,23 @@ mobileWechat@1.0.8
 用于设置卡片的背景图
 - 标识：`背景图片【bgUrl】`
 - 默认值：`渐变色`
-### 标题容器样式设置
+### 标题容器样式
+#### 图标位置【titleIconPosition】
+用于设置标题图标位置
+- 标识：`图标位置【titleIconPosition】`
+- 默认值：`右侧`
+#### 标题图标【titleIconClass】
+用于设置标题右侧的图标
+- 标识：`标题图标【titleIconClass】`
+- 默认值：``
+#### 图标颜色【titleIconFontColor】
+用于设置标题右侧的图标的色值
+- 标识：`图标颜色【titleIconFontColor】`
+- 默认值：``
+#### 图标大小【titleIconFontSize】
+用于设置标题右侧的图标的大小
+- 标识：`图标大小【titleIconFontSize】`
+- 默认值：``
 #### 内外边距【box】
 设置组件的最外围的外边距和内边距
 - 标识：`box`
@@ -177,7 +177,7 @@ mobileWechat@1.0.8
 - 标识：`font`
 
 - 默认值：空
-### 内容容器样式设置
+### 内容容器样式
 #### 背景设置
 ##### 背景色【bgColor】
 设置组件的整体背景颜色
