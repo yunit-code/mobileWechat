@@ -9,7 +9,7 @@
     idm-ctrl="idm_module"
     :id="moduleObject.id"
     :idm-ctrl-id="moduleObject.id"
-    :title="propData.htmlTitle"
+    :title="propData.title"
     class="idm-banner-box"
   >
     <div class="idm-banner-box-swiper">
@@ -74,7 +74,7 @@ export default {
       moduleObject: {},
       pageWidth: null,
       propData: this.$root.propData.compositeAttr || {
-        htmlTitle: "广告轮播",
+        title: "广告轮播",
         width: "100%",
         height: {
           inputVal: 180,

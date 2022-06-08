@@ -24,7 +24,7 @@
                     "type": "input",
                     "layoutType": "inline",
                     "text": "标题",
-                    "bindKey": "htmlTitle",
+                    "bindKey": "title",
                     "default": "广告轮播",
                     "display": "@[false]"
                 },

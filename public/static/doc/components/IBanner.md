@@ -19,10 +19,10 @@ mobilewechat@1.0.7
 ### 基本属性
 <font color="#CCCCCC">此章节主要用于存放设置组件所需要的一些基本信息的属性，以达到组件具备使用的基础条件</font>
 
-#### 组件标题【htmlTitle】
+#### 组件标题【title】
 <font color="#CCCCCC">当前组件标题，页面中不显示，用来增加组件辨识度</font>
 
-- 标识: `htmlTitle`
+- 标识: `title`
 - 默认值: 广告轮播
 
 #### 显示方块【showBullet】
@@ -34,7 +34,7 @@ mobilewechat@1.0.7
 #### 跳转方式【jumpStyle】
 > 点击事件跳转方式
 
-- 标识: `htmlTitle`
+- 标识: `jumpStyle`
 - _self:当前页跳转
 - _blank:新开窗口跳转
 - _auto: 智能跳转打开

@@ -8,7 +8,7 @@
   <div idm-ctrl="idm_module"
    :id="moduleObject.id" 
    :idm-ctrl-id="moduleObject.id"
-   :title="propData.htmlTitle"
+   :title="propData.title"
    class="idm-unifie-todo-box in-box">
     <div class="idm-unifie-todo-box-title d-flex align-c just-b" v-if="propData.showTitle">
       <div class="d-flex align-c">
@@ -18,7 +18,7 @@
           </svg>
           <svg-icon v-else icon-class="threeLine" className="idm-unifie-todo-box-title-icon"></svg-icon>
         </div>
-        <span class="idm-unifie-todo-box-title-font">{{propData.htmlTitle}}</span>
+        <span class="idm-unifie-todo-box-title-font">{{propData.title}}</span>
         <div v-if="propData.showIcon && propData.titleIconPosition == 'right'" class="idm-unifie-todo-box-right-icon">
           <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm-unifie-todo-box-title-icon" aria-hidden="true" >
             <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
@@ -123,7 +123,7 @@ export default {
     return {
       moduleObject:{},
       propData:this.$root.propData.compositeAttr||{
-        htmlTitle:"待办事项",
+        title:"待办事项",
         width: '100%',
         height: 'auto',
         borderRadius: '5px',

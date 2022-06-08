@@ -17,10 +17,10 @@ mobilewechat@1.0.6
 ### 唯一标识【ctrlId】
 ### 基本属性
 此章节主要介绍该组件的每个属性的含义以及如何使用说明
-#### 组件标题【htmlTitle】
+#### 组件标题【title】
 <font color="#CCCCCC">当前组件标题，用来增加组件辨识度</font>
 
-- 标识：`htmlTitle`
+- 标识：`title`
 - 默认值： 信息列表
 
 #### 跳转方式【jumpStyle】

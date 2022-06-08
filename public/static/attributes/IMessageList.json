@@ -24,7 +24,7 @@
                     "type": "input",
                     "layoutType": "inline",
                     "text": "标题",
-                    "bindKey": "htmlTitle",
+                    "bindKey": "title",
                     "desc": "组件标题文字",
                     "default": "信息列表",
                     "display": "@[compStyle !== 'styleFour']"

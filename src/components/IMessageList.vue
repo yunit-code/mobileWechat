@@ -8,7 +8,7 @@
   <div idm-ctrl="idm_module"
    :id="moduleObject.id" 
    :idm-ctrl-id="moduleObject.id" 
-   :title="propData.htmlTitle"
+   :title="propData.title"
    class="idm-message-list-parent-box in-box"
    >
     <template v-if="propData.compStyle !== 'styleFour'">
@@ -20,7 +20,7 @@
             </svg>
             <svg-icon v-else icon-class="threeLine" className="idm-message-list-box-title-icon"></svg-icon>
           </div>
-          <span class="idm-message-list-box-title-font">{{propData.htmlTitle}}</span>
+          <span class="idm-message-list-box-title-font">{{propData.title}}</span>
           <div class="idm-message-list-box-title-right-icon" v-if="propData.showIcon && propData.titleIconPosition == 'right'">
             <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm-message-list-box-title-icon" aria-hidden="true" >
               <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
@@ -127,7 +127,7 @@ export default {
       moduleObject:{},
       defaultIndex: 0,
       propData:this.$root.propData.compositeAttr||{
-        htmlTitle:"信息列表",
+        title:"信息列表",
         width: '100%',
         height: 'auto',
         bgColor: {hex8: ''},
