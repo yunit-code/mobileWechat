@@ -12,6 +12,9 @@
     :title="propData.htmlTitle"
     class="i-sort-outer"
   >
+  <div class="close-box" @click="close">
+    <svg-icon icon-class="isort-close" />
+  </div>
   <div class="i-sort-tip" v-if="propData.showTip === undefined ? true : propData.showTip">
     {{ propData.tipText || '你可以通过拖拽对功能组件进行排序，点击置顶图标快速置顶重要组件，点击隐藏图标隐藏当前组件。'}}
   </div>
@@ -24,7 +27,7 @@
       class="i-sort-drag"
       handle=".i-sort-item-handle"
       v-model="listData"
-      animation="200"
+      animation="300"
       @end="dragEnd"
     >
       <template v-for="(item, index) in listData">
@@ -32,11 +35,12 @@
           v-if="!whiteList.includes(item.asName)"
           class="i-sort-item"
           :key="`sort-${index}`"
+          :data-id="item.id"
         >
           <div class="i-sort-item-handle">
             <svg-icon icon-class="isort-drag" />
           </div>
-          <div class="i-sort-item-name">{{ item.asName }}</div>
+          <div class="i-sort-item-name">{{ (item.props && item.props.compositeAttr && item.props.compositeAttr.title)|| item.asName }}</div>
           <div class="i-sort-item-operation">
             <span @click="toppingClick(index)">
               <svg-icon v-show="index !== 0" icon-class="isort-topping" />
@@ -92,6 +96,12 @@ export default {
   destroyed() {},
   methods: {
     /**
+     * 关闭回调
+     */
+    close(){
+      this.$emit("close")
+    },
+    /**
      * 组件通信：接收消息的方法
      */
     receiveBroadcastMessage(messageObject) {
@@ -144,32 +154,68 @@ export default {
       if (!this.moduleObject.env || this.moduleObject.env === "develop") {
         setTimeout(() => {
           //开发模式下给例子数据
-          this.dealRes([
+          const defaultList = [
             {
-              comId: "1",
+              id: "1",
               asName: "广告轮播",
               hidden: false,
             },
             {
-              comId: "2",
+              id: "6",
+              asName: "新增1",
+              props:{
+                compositeAttr:{
+                  title:"我看下"
+                }
+              }
+            },
+            {
+              id: "2",
               asName: "统一待办",
               hidden: true,
             },
             {
-              comId: "3",
+              id: "3",
               asName: "待办列表",
             },
             {
-              comId: "4",
+              id: "4",
               asName: "应用中心",
               hidden: false,
             },
             {
-              comId: "5",
+              id: "7",
+              asName: "新增2",
+              hidden: false,
+            },
+          ];
+          const userlist = [
+            {
+              id: "10",
+              asName: "广告轮播",
+              hidden: false,
+            },
+            {
+              id: "2",
+              asName: "统一待办",
+              hidden: true,
+            },
+            {
+              id: "3",
+              asName: "待办列表",
+            },
+            {
+              id: "4",
+              asName: "应用中心",
+              hidden: false,
+            },
+            {
+              id: "5",
               asName: "工作台切换",
               hidden: false,
             },
-          ])
+          ];
+          this.dealRes(userlist,defaultList)
           this.isLoading = false
         }, 1000);
       }else if(this.moduleObject.env ===  "production"){
@@ -194,7 +240,7 @@ export default {
           if (res&&res.code === "200" && res.data) {
             const list = JSON.parse(res.data.customData).children
             if (list && list.length > 0) {
-              this.dealRes(list);
+              this.dealRes(list,defaultList);
             } else {
               this.dealRes(defaultList)
             }
@@ -244,15 +290,33 @@ export default {
     /**
      * 处理返回列表数据
      */
-    dealRes(list) {
-      const con = []
-      // 添加隐藏数据
+    dealRes(userlist,defaultList) {
+      let list = []
+      if(defaultList){
+        // 保留相同的
+        userlist.forEach(uItem => {
+          defaultList.forEach(dItem => {
+            if(uItem.id === dItem.id) list.push(uItem)
+          })
+        });
+        // 添加新增的
+        defaultList.forEach(uItem => {
+          let flag = true
+          userlist.forEach(dItem => {
+            if(uItem.id === dItem.id) flag = false
+          })
+          if(flag) list.push(uItem)
+        });
+      }else{
+        list = userlist
+      }
+      // 删除子节点 添加隐藏数据
       list.forEach((item) => {
         if (item.hidden === undefined) item.hidden = false;
         if(item.children) delete item.children
       });
       // 保存列表信息
-      this.listData = list;
+      this.listData = JSON.parse(JSON.stringify(list));
       // 备份
       this.baseListData = JSON.parse(JSON.stringify(list))
       // 关闭加载状态
@@ -277,7 +341,7 @@ export default {
      * 拖拽结束
      */
     dragEnd() {
-      const { id, comName,packageid } = this.pageInfo;
+      const { id,comName,packageid } = this.pageInfo;
       const url = "/ctrl/idm/api/saveUserCustomization";
       const customData = {
         id,
@@ -531,7 +595,7 @@ export default {
           }
         }
       }
-      window.IDM.setStyleToPageHead(this.moduleObject.id + ' #top_setting_popup', styleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + '_sort', styleObject);
       // window.IDM.setStyleToPageHead(this.moduleObject.id + '_sort' + ".i-sort-outer .i-sort-tip", tipStyleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + '_sort' + " .i-sort-item", cardStyleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + '_sort' + " .van-empty", emptyStyleObject);
@@ -566,12 +630,32 @@ export default {
 <style scoped lang="scss">
 $scale: var(--i-sort-scale);
 .i-sort-outer {
-  width: 100%;
-  height: 100%;
+  background-color: #FFFFFFFF;
+  height: 90vh;
+  width: 95%;
   box-sizing: border-box;
-  // font-family: PingFangSC-Regular;
-  // font-size: calc(16px * #{ $scale });
-  // color: #333333;
+  font-family: PingFangSC-Regular;
+  font-size: calc(16px * #{ $scale });
+  color: #333333;
+  border-radius: 16px;
+  padding-bottom: 20px;
+  overflow: hidden;
+
+  .close-box {
+    width: 100%;
+    text-align: right;
+    padding: calc(10px * #{ $scale });
+    svg {
+      display: inline-block;
+      width: calc(40px * #{ $scale });
+      height: calc(20px * #{ $scale });
+      line-height: calc(20px * #{ $scale });
+      color: #c8c9cc;
+      font-size: calc(18px * #{ $scale });
+      cursor: pointer;
+      text-align: center;
+    }
+  }
 
   .i-sort-tip {
     background-color: #e6f7ff;
@@ -594,7 +678,7 @@ $scale: var(--i-sort-scale);
 
   .i-sort-drag-outer {
     padding-top: 14px;
-    height: calc(100% - calc(119px * #{ $scale }));
+    height: calc(100% - calc(164px * #{ $scale }));
     overflow: auto;
   }
 
