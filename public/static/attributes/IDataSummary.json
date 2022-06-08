@@ -38,50 +38,6 @@
                     "desc": "组件标题"
                 },
                 {
-                    "type": "radio",
-                    "styleType": "radio",
-                    "layoutType": "inline",
-                    "text": "图标位置",
-                    "desc": "设置组件标题图标位置",
-                    "bindKey": "titleIconPosition",
-                    "display": "@[isShowTitle]",
-                    "dictionary": [
-                        {
-                            "label": "左边",
-                            "value": "left"
-                        },
-                        {
-                            "label": "右边",
-                            "value": "right"
-                        }
-                    ],
-                    "default": "right"
-                },
-                {
-                    "type": "iconSelect",
-                    "layoutType": "inline",
-                    "text": "标题图标",
-                    "bindKey": "titleIconClass",
-                    "default": "",
-                    "display": "@[isShowTitle]"
-                },
-                {
-                    "type": "colorPicker",
-                    "layoutType": "inline",
-                    "text": "图标颜色",
-                    "bindKey": "titleIconFontColor",
-                    "default": "",
-                    "display": "@[isShowTitle]"
-                },
-                {
-                    "type": "inputNumber",
-                    "layoutType": "inline",
-                    "text": "图标大小",
-                    "bindKey": "titleIconFontSize",
-                    "default": 14,
-                    "display": "@[isShowTitle]"
-                },
-                {
                     "type": "inputNumber",
                     "layoutType": "inline",
                     "text": "展示列数",
@@ -195,10 +151,54 @@
         },
         {
             "type": "group",
-            "text": "标题容器样式设置",
+            "text": "标题容器样式",
             "desc": "提供标题样式等属性配置",
             "helpUrl": "",
             "children": [
+                {
+                    "type": "radio",
+                    "styleType": "radio",
+                    "layoutType": "inline",
+                    "text": "图标位置",
+                    "desc": "设置组件标题图标位置",
+                    "bindKey": "titleIconPosition",
+                    "display": "@[isShowTitle]",
+                    "dictionary": [
+                        {
+                            "label": "左边",
+                            "value": "left"
+                        },
+                        {
+                            "label": "右边",
+                            "value": "right"
+                        }
+                    ],
+                    "default": "right"
+                },
+                {
+                    "type": "iconSelect",
+                    "layoutType": "inline",
+                    "text": "标题图标",
+                    "bindKey": "titleIconClass",
+                    "default": "",
+                    "display": "@[isShowTitle]"
+                },
+                {
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "图标颜色",
+                    "bindKey": "titleIconFontColor",
+                    "default": "",
+                    "display": "@[isShowTitle]"
+                },
+                {
+                    "type": "inputNumber",
+                    "layoutType": "inline",
+                    "text": "图标大小",
+                    "bindKey": "titleIconFontSize",
+                    "default": 14,
+                    "display": "@[isShowTitle]"
+                },
                 {
                     "type": "box",
                     "layoutType": "block",
@@ -441,7 +441,7 @@
         },
         {
             "type": "group",
-            "text": "内容容器样式设置",
+            "text": "内容容器样式",
             "desc": "提供设置内容样式等属性配置",
             "children":[
                 {

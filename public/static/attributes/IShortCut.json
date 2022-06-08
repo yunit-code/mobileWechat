@@ -38,34 +38,6 @@
                     "desc": "组件标题"
                 },
                 {
-                    "type": "radio",
-                    "styleType": "radio",
-                    "layoutType": "inline",
-                    "text": "图标位置",
-                    "desc": "设置组件标题图标位置",
-                    "bindKey": "titleIconPosition",
-                    "display": "@[isShowTitle]",
-                    "dictionary": [
-                        {
-                            "label": "左边",
-                            "value": "left"
-                        },
-                        {
-                            "label": "右边",
-                            "value": "right"
-                        }
-                    ],
-                    "default": "right"
-                },
-                {
-                    "type": "iconSelect",
-                    "layoutType": "inline",
-                    "text": "标题图标",
-                    "bindKey": "titleIconClass",
-                    "default": "",
-                    "display": "@[isShowTitle]"
-                },
-                {
                     "type": "select",
                     "layoutType": "inline",
                     "text": "快捷方式样式",
@@ -359,9 +331,37 @@
         },
         {
             "type": "group",
-            "text": "标题容器样式设置",
+            "text": "标题容器样式",
             "desc": "提供设置标题样式等属性",
             "children":[
+                {
+                    "type": "radio",
+                    "styleType": "radio",
+                    "layoutType": "inline",
+                    "text": "图标位置",
+                    "desc": "设置组件标题图标位置",
+                    "bindKey": "titleIconPosition",
+                    "display": "@[isShowTitle]",
+                    "dictionary": [
+                        {
+                            "label": "左边",
+                            "value": "left"
+                        },
+                        {
+                            "label": "右边",
+                            "value": "right"
+                        }
+                    ],
+                    "default": "right"
+                },
+                {
+                    "type": "iconSelect",
+                    "layoutType": "inline",
+                    "text": "标题图标",
+                    "bindKey": "titleIconClass",
+                    "default": "",
+                    "display": "@[isShowTitle]"
+                },
                 {
                     "type": "colorPicker",
                     "layoutType": "inline",
@@ -620,7 +620,7 @@
         },
         {
             "type": "group",
-            "text": "内容容器样式设置",
+            "text": "内容容器样式",
             "desc": "提供设置内容样式等属性",
             "children":[
                 {
