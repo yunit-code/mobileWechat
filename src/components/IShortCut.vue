@@ -23,7 +23,7 @@
             </svg>
             <svg-icon v-else icon-class="application-icon" />
         </div>
-        <span style="margin-right: 5px">{{propData.comTitle}}</span>
+        <span>{{propData.title}}</span>
         <div class="idm_applicationcenter_title_left_icon" v-if="propData.titleIconPosition === 'right'" style="margin-left: 5px">
             <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm_filed_svg_icon" aria-hidden="true" >
                 <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>

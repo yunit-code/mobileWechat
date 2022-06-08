@@ -32,7 +32,7 @@
                     "type": "input",
                     "layoutType": "inline",
                     "text": "标题",
-                    "bindKey": "comTitle",
+                    "bindKey": "title",
                     "default": "快捷方式",
                     "display": "@[isShowTitle]",
                     "desc": "组件标题"
