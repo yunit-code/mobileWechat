@@ -20,9 +20,9 @@ mobileWechat@1.0.8
 用于设置title是否显示
 - 标识：`是否显示标题【isShowTitle】`
 - 默认值：`显示`
-#### 标题【comTitle】
+#### 标题【title】
 用于设置title
-- 标识：`标题【comTitle】`
+- 标识：`标题【title】`
 - 默认值：`快捷方式`
 #### 最多显示【maxNumber】
 用于设置组件展示多少卡片
