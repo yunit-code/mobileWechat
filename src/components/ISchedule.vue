@@ -320,7 +320,7 @@ export default {
         return;
       }
       url = IDM.url.getWebPath(url)
-      if(this.propData.detailTarget && this.propData.detailTarget === "_auto"){
+      if(this.propData.detailTarget && this.propData.detailTarget === "_auto" && wx.invoke){
         wx.invoke('openUrl', {
             "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
             "url": url, //url地址
@@ -998,7 +998,7 @@ export default {
         return;
       }
       const url = IDM.url.getWebPath(this.propData.moreUrl)
-      if(this.propData.moreTarget && this.propData.moreTarget === "_auto"){
+      if(this.propData.moreTarget && this.propData.moreTarget === "_auto" && wx.invoke){
         wx.invoke('openUrl', {
             "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
             "url": url, //url地址
