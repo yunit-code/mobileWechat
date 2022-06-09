@@ -81,6 +81,7 @@
 <script>
 import { base_url } from '../api/config.js'
 import { translatePxToAdaptationApi } from '@/utils/adaptationScreen'
+import { isRunMobile } from '@/utils/index'
 import { Grid, GridItem, Icon, Popup, Empty, Loading } from 'vant';
 import 'vant/lib/grid/style';
 import 'vant/lib/icon/style';
@@ -424,6 +425,27 @@ export default {
                     }
                 }   
             }
+        },
+        toApplicationNative(item) {
+            let is_run_mobile = isRunMobile()
+            if ( is_run_mobile ) {
+                var data = {
+                    "agentid": item.value, //去管理平台对应的应用设置界面查询 
+                    "extended_param":"timestamp=123455&amp;ticket=12345&amp;other_param=****",
+                }
+            } else {
+                var data = {
+                    "agentid": item.value, //去管理平台对应的应用设置界面查询 
+                    "extended_param":"timestamp=123455&amp;ticket=12345&amp;other_param=****",
+                    "target": "out"
+                }
+                
+            }
+            wx.invoke('openEnterpriseApp', data, function(res){ 
+                if(res.err_msg != "openEnterpriseApp:ok"){ 
+                    //错误处理 
+                } 
+            });
         },
         toApplicationManage() {
             if ( this.moduleObject.env == 'develop' ) {
