@@ -326,18 +326,15 @@ export default {
             }
         },
         changeApplicationIconAndUrl(data) {
-            console.log('更改服务器域名',data)
             if ( !data ) {
                 return []
             }
             let application_list = JSON.parse(JSON.stringify(data));
-            console.log('更改服务器域名-have_power_application_data',this.have_power_application_data)
             for( let i = 0,maxi = application_list.length;i < maxi;i++ ) {
                 if ( application_list[i] && application_list[i].selectApplication ) {
                     let item = this.have_power_application_data.find((item1) => {
                         return item1.value == application_list[i].selectApplication.value
                     })
-                    console.log('更改服务器域名-item',item)
                     if ( item ) {
                         application_list[i].selectApplication.imageUrl = item.imageUrl;
                         application_list[i].selectApplication.appUrl = item.appUrl;
@@ -348,7 +345,6 @@ export default {
                     }
                 }
             }
-            console.log('更改服务器域名-application_list',application_list)
             return application_list
         },
         getMyApplicatinData() {
