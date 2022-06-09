@@ -289,11 +289,7 @@ export default {
         data = this.propData.dataFiled ? this.getExpressData("dataName",this.propData.dataFiled,res) : res;
       }
       // 更多按钮地址
-      if (data.moreUrl) {
-        this.propData.moreUrl = this.propData.moreUrl
-          ? this.propData.moreUrl
-          : res.moreUrl;
-      }
+      this.propData.moreUrl = (data.moreUrl && !this.propData.moreUrl) ? this.propData.moreUrl : data.moreUrl;
       // 日程列表
       const scheduleList = [];
       if (data.value.length > 0) {
