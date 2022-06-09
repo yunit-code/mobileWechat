@@ -23,7 +23,7 @@
             </svg>
             <svg-icon v-else icon-class="application-icon" />
         </div>
-        <span>{{propData.title}}</span>
+        <span>{{propData.title || propData.comTitle || '数据汇总'}}</span>
         <div class="idm_applicationcenter_title_left_icon" v-if="propData.titleIconPosition === 'right'" style="margin-left: 5px">
             <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm_filed_svg_icon" aria-hidden="true" >
                 <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
@@ -96,14 +96,19 @@ export default {
             window.location.href=IDM.url.getWebPath(v.jumpUrl)
             break;
           case 'new2':
-            wx.invoke('openUrl', {
-              "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
-              "url": v.jumpUrl, //url地址
-            }, function(res){
-              if (res.err_msg != "openUrl:ok") {
+            try {
+              wx.invoke('openUrl', {
+                "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
+                "url": IDM.url.getWebPath(v.jumpUrl), //url地址
+              }, function(res){
+                if (res.err_msg != "openUrl:ok") {
+                  window.location.href = IDM.url.getWebPath(v.jumpUrl)
                   //错误处理
-              }
-            });
+                }
+              });
+            } catch (error) {
+              window.location.href = IDM.url.getWebPath(v.jumpUrl)
+            }
             break;
         }
       }
