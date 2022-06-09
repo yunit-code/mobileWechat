@@ -9,9 +9,8 @@
     idm-ctrl="idm_module"
     :id="moduleObject.id + '_sort'"
     :idm-ctrl-id="moduleObject.id + '_sort'"
-    :title="propData.htmlTitle"
     class="i-sort-outer"
-    @touchmove.prevent
+    @touchmove.stop
   >
   <div class="close-box" @click="close">
     <svg-icon icon-class="isort-close" />
