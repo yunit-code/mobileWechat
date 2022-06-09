@@ -233,7 +233,7 @@ export default {
                 ],
               }
             ],
-            moreUrl: "更多跳转地址",
+            moreUrl: "",
           };
           this.dealRes(mock);
           this.isLoading = false;
@@ -880,7 +880,7 @@ export default {
      * 初始化滑块
      */
     initSwiper() {
-      this.mySwiper = new Swiper(".swiper-container", {
+      this.mySwiper = new Swiper("#" + this.moduleObject.id + " .swiper-container", {
         observer: true,
         observeParents: true,
         observeSlideChildren: true,
@@ -1058,6 +1058,12 @@ $scale: var(--i-schedule-scale);
         flex-direction: row;
         font-size: calc(16px * #{ $scale });
 
+        span {
+          margin: 0 5px;
+        }
+        
+        transform: translateX(-5px);
+
         .idm_filed_svg_icon {
           font-size: calc(14px * #{ $scale });
           width: calc(14px * #{ $scale });
@@ -1089,6 +1095,7 @@ $scale: var(--i-schedule-scale);
 
     .i-schedule-content-calendar.swiper-container {
       position: relative;
+      width: 100%;
       overflow: hidden;
       .swiper-wrapper {
         height: calc(68px * #{ $scale });
