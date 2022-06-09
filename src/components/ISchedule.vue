@@ -233,7 +233,7 @@ export default {
                 ],
               }
             ],
-            moreUrl: "",
+            // moreUrl: "",
           };
           this.dealRes(mock);
           this.isLoading = false;
