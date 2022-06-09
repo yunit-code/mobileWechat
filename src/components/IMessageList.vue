@@ -195,7 +195,7 @@ export default {
             window.open(url, this.propData.jumpStyle || '_blank')
           }
         }
-        }
+        
       }
     },
     /**
