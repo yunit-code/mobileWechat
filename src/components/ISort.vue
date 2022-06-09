@@ -10,7 +10,6 @@
     :id="moduleObject.id + '_sort'"
     :idm-ctrl-id="moduleObject.id + '_sort'"
     class="i-sort-outer"
-    @touchmove.stop
   >
   <div class="close-box" @click="close">
     <svg-icon icon-class="isort-close" />

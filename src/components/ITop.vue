@@ -130,6 +130,7 @@ export default {
     settingMenuClose(){
       if(this.$refs.iSort && this.$refs.iSort.listData && this.$refs.iSort.baseListData && JSON.stringify(this.$refs.iSort.listData) !== JSON.stringify(this.$refs.iSort.baseListData)) location.reload()
       this.settingMenuVisible = false;
+      IDM.page.startPullToRefresh();
     },
     getClientWidth() {
       if ( this.moduleObject.env == 'develop' ) {
@@ -154,6 +155,7 @@ export default {
         return
       }
       this.settingMenuVisible = true;
+      IDM.page.stopPullToRefresh();
     },
     /**
      * 提供父级组件调用的刷新prop数据组件
