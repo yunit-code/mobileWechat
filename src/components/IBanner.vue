@@ -513,7 +513,7 @@ export default {
       
       if(item.jumpUrl) {
         const url = IDM.url.getWebPath(item.jumpUrl)
-        if(this.propData.detailTarget && this.propData.detailTarget === "_auto"){
+        if(this.propData.jumpStyle && this.propData.jumpStyle === "_auto" && wx &&  wx.invoke){
           wx.invoke('openUrl', {
               "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
               "url": url, //url地址
@@ -523,7 +523,7 @@ export default {
               }
           });
         }else{
-          window.open(url, this.propData.jumpStyle || '_self')
+          window.open(url, '_blank')
         }
       }
     },
