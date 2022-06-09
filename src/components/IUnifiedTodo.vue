@@ -187,17 +187,21 @@ export default {
       }else{
         if(item.jumpUrl) {
           const url = IDM.url.getWebPath(item.jumpUrl)
-          if(this.propData.jumpStyle && this.propData.jumpStyle === "_auto" && wx &&  wx.invoke){
-            wx.invoke('openUrl', {
-                "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
-                "url": url, //url地址
-            }, function(res){
-                if (res.err_msg != "openUrl:ok") {
-                    //错误处理
-                }
-            });
+          if(this.propData.jumpStyle && this.propData.jumpStyle === "_auto" ){
+            if(wx &&  wx.invoke) {
+              wx.invoke('openUrl', {
+                  "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
+                  "url": url, //url地址
+              }, function(res){
+                  if (res.err_msg != "openUrl:ok") {
+                      //错误处理
+                  }
+              });
+            }else{
+              window.open(url, '_blank')
+            }
           }else{
-            window.open(url, '_blank')
+            window.open(url, this.propData.jumpStyle || '_blank')
           }
         }
       }
@@ -216,17 +220,21 @@ export default {
       }
       if(url){
         url = IDM.url.getWebPath(url)
-        if(this.propData.detailTarget && this.propData.detailTarget === "_auto"){
-          wx.invoke('openUrl', {
-              "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
-              "url": url, //url地址
-          }, function(res){
-              if (res.err_msg != "openUrl:ok") {
-                  //错误处理
-              }
-          });
+        if(this.propData.jumpStyle && this.propData.jumpStyle === "_auto" ){
+          if(wx &&  wx.invoke) {
+            wx.invoke('openUrl', {
+                "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
+                "url": url, //url地址
+            }, function(res){
+                if (res.err_msg != "openUrl:ok") {
+                    //错误处理
+                }
+            });
+          }else{
+            window.open(url, '_blank')
+          }
         }else{
-          window.open(url, this.propData.jumpStyle || '_self')
+          window.open(url, this.propData.jumpStyle || '_blank')
         }
       }
     },
