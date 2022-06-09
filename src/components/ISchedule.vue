@@ -289,11 +289,7 @@ export default {
         data = this.propData.dataFiled ? this.getExpressData("dataName",this.propData.dataFiled,res) : res;
       }
       // 更多按钮地址
-      if (data.moreUrl) {
-        this.propData.moreUrl = this.propData.moreUrl
-          ? this.propData.moreUrl
-          : res.moreUrl;
-      }
+      this.propData.moreUrl = (data.moreUrl && !this.propData.moreUrl) ? this.propData.moreUrl : data.moreUrl;
       // 日程列表
       const scheduleList = [];
       if (data.value.length > 0) {
@@ -320,6 +316,10 @@ export default {
      * 日程详情
      */
     detailClick(url) {
+      if (!this.moduleObject.env || this.moduleObject.env == "develop") {
+        return;
+      }
+      url = IDM.url.getWebPath(url)
       if(this.propData.detailTarget && this.propData.detailTarget === "_auto"){
         wx.invoke('openUrl', {
             "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
@@ -330,7 +330,7 @@ export default {
             }
         });
       }else{
-        window.open(this.propData.url, this.propData.detailTarget);
+        window.open(url, this.propData.detailTarget || '_self');
       }
     },
     /**
@@ -997,17 +997,18 @@ export default {
       if (!this.moduleObject.env || this.moduleObject.env == "develop") {
         return;
       }
+      const url = IDM.url.getWebPath(this.propData.moreUrl)
       if(this.propData.moreTarget && this.propData.moreTarget === "_auto"){
         wx.invoke('openUrl', {
             "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
-            "url": this.propData.moreUrl, //url地址
+            "url": url, //url地址
         }, function(res){
             if (res.err_msg != "openUrl:ok") {
                 //错误处理
             }
         });
       }else{
-        window.open(this.propData.moreUrl, this.propData.moreTarget);
+        window.open(url, this.propData.moreTarget || '_self');
       }
     },
   },

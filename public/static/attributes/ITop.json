@@ -89,6 +89,16 @@
                     "mainMinorColor": {
                         "hex": "#FFFFFF",
                         "hex8": "#FFFFFFFF"
+                    },
+                    "mainBgImgUrl": "/resource/idm/img/tbzjbjl3.png",
+                    "mainBgSize": "custom",
+                    "mainBgSizeWidth": {
+                        "inputVal": "100",
+                        "selectVal": "%"
+                    },
+                    "mainBgSizeHeight": {
+                        "inputVal": "100",
+                        "selectVal": "%"
                     }
                 },
                 {
@@ -100,6 +110,16 @@
                     "mainMinorColor": {
                         "hex": "#FFFFFF",
                         "hex8": "#FFFFFFFF"
+                    },
+                    "mainBgImgUrl": "/resource/idm/img/tbzjbjh3.png",
+                    "mainBgSize": "custom",
+                    "mainBgSizeWidth": {
+                        "inputVal": "100",
+                        "selectVal": "%"
+                    },
+                    "mainBgSizeHeight": {
+                        "inputVal": "100",
+                        "selectVal": "%"
                     }
                 },
                 {
@@ -111,6 +131,16 @@
                     "mainMinorColor": {
                         "hex": "#FFFFFF",
                         "hex8": "#FFFFFFFF"
+                    },
+                    "mainBgImgUrl": "/resource/idm/img/tbzjbjlv3.png",
+                    "mainBgSize": "custom",
+                    "mainBgSizeWidth": {
+                        "inputVal": "100",
+                        "selectVal": "%"
+                    },
+                    "mainBgSizeHeight": {
+                        "inputVal": "100",
+                        "selectVal": "%"
                     }
                 }
             ],

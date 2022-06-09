@@ -96,14 +96,19 @@ export default {
             window.location.href=IDM.url.getWebPath(v.jumpUrl)
             break;
           case 'new2':
-            wx.invoke('openUrl', {
-              "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
-              "url": v.jumpUrl, //url地址
-            }, function(res){
-              if (res.err_msg != "openUrl:ok") {
+            try {
+              wx.invoke('openUrl', {
+                "type": 0, //0或不填表示使用内部浏览器新窗口打开，1表示用系统浏览器打开
+                "url": IDM.url.getWebPath(v.jumpUrl), //url地址
+              }, function(res){
+                if (res.err_msg != "openUrl:ok") {
+                  window.location.href = IDM.url.getWebPath(v.jumpUrl)
                   //错误处理
-              }
-            });
+                }
+              });
+            } catch (error) {
+              window.location.href = IDM.url.getWebPath(v.jumpUrl)
+            }
             break;
         }
       }
