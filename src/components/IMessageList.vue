@@ -800,6 +800,7 @@ export default {
 
 <style lang="scss">
 .idm-message-list-parent-box{
+  overflow: hidden;
   position: relative;
   .idm-message-list-box{
     overflow: hidden;
