@@ -487,11 +487,20 @@ mobileWechat@1.0.8
 ### 高级
 <font color="#CCCCCC">用于对组件高级设置的属性的分组。</font>
 
-#### 基准值属性【screenReferValue】
+#### 适配设置
+通过设置属性来适配移动端页面尺寸
+
+##### 基准值属性【screenReferValue】
 用于设置页面适配基准值属性
 - 标识：`页面适配基准值属性【screenReferValue】`
 - 默认值：`414`
-#### 适配比例属性【screenAdaptiveRatio】
+##### 适配比例属性【screenAdaptiveRatio】
 用于设置页面适配比例属性
 - 标识：`适配比例属性【screenAdaptiveRatio】`
 - 默认值：`1.2`
+
+#### 刷新KEY【messageRefreshKey】
+根据组件接受到的消息KEY来刷新数据，可配置多个，以英文逗号分开
+
+- 标识：`messageRefreshKey`
+- 默认值：``
