@@ -21,8 +21,8 @@
             :key="index"
             @click="handleClick(item, index)"
           >
-            <img v-if="isSmallScreen || !item.imagexl" :src="item.image && IDM.url.getWebPath(item.image)"  class="slider-img" alt="" />
-            <img v-else :src="item.imagexl && IDM.url.getWebPath(item.image)"  class="slider-img" alt="" />
+            <img v-if="isSmallScreen || !item.imagexl" :src="item.image && getImageUrl(item.image)"  class="slider-img" alt="" />
+            <img v-else :src="getImageUrl(item.imagexl) && getImageUrl(item.image)"  class="slider-img" alt="" />
             <span class="idm-banner-box-swiper-text">{{item.title}}</span>
           </li>
         </ul>
@@ -40,32 +40,35 @@ import Swiper from "swiper";
 import "swiper/css/swiper.min.css";
 import { getDatasInterfaceUrl } from '@/api/config'
 import { getAdaptiveSize } from '@/utils/adaptationScreen'
-const data = {
-  value: [{
-    jumpUrl: '/dreamweb/',
-    image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp7.itc.cn%2Fimages01%2F20200903%2F9f80293e09644046a408f8be7359d4ff.jpeg&refer=http%3A%2F%2Fp7.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654761049&t=b2726a52f403b5d4dcca968820d55109",
-    title:
-      "主持召开省政府常务会议研究",
-  },
-  {
-    jumpUrl: '/dreamweb/',
-    image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp6.itc.cn%2Fimages01%2F20201012%2F19ebfe9ad37b4e29bac785eb0146d02e.jpeg&refer=http%3A%2F%2Fp6.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654761049&t=5100670fe8877ffd3ad76e0f0f7bb6a0",
-    title:
-      "山东“职教高地”建设提质培优",
-  },
-  {
-    jumpUrl: '/dreamweb/',
-    image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp1.itc.cn%2Fq_70%2Fimages03%2F20210129%2Fcb5a1f799b364202beed7f122e87bf8a.png&refer=http%3A%2F%2Fp1.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654761049&t=8a20f26c2574d17e04376728ba796324",
-    title:
-      "营商环境优，引得“近邻”来",
-  },
-  {
-    jumpUrl: '/dreamweb/',
-    image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp6.itc.cn%2Fimages01%2F20201012%2F19ebfe9ad37b4e29bac785eb0146d02e.jpeg&refer=http%3A%2F%2Fp6.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654761049&t=5100670fe8877ffd3ad76e0f0f7bb6a0",
-    title:
-      "[发文] 关于扎实做好近期疫情防控有关工作的通知",
-  }],
-  moreUrl: "更多跳转地址"
+function getDefault () {
+  const _this = this
+  return {
+    value: [{
+      jumpUrl: '/dreamweb/',
+      image: IDM.url.getModuleAssetsWebPath(require("../assets/banner1.jpg"), _this.moduleObject),
+      title:
+        "主持召开省政府常务会议研究",
+    },
+    {
+      jumpUrl: '/dreamweb/',
+      image: IDM.url.getModuleAssetsWebPath(require("../assets/banner2.jpg"), _this.moduleObject),
+      title:
+        "山东“职教高地”建设提质培优",
+    },
+    {
+      jumpUrl: '/dreamweb/',
+      image: IDM.url.getModuleAssetsWebPath(require("../assets/banner3.jpg"), _this.moduleObject),
+      title:
+        "营商环境优，引得“近邻”来",
+    },
+    {
+      jumpUrl: '/dreamweb/',
+      image: IDM.url.getModuleAssetsWebPath(require("../assets/banner1.jpg"), _this.moduleObject),
+      title:
+        "[发文] 关于扎实做好近期疫情防控有关工作的通知",
+    }],
+    moreUrl: "更多跳转地址"
+  }
 }
 export default {
   name: "IBanner",
@@ -118,8 +121,14 @@ export default {
     }
   },
   methods: {
+    getImageUrl(url) {
+      if(url.indexOf('/DreamWeb') == -1){
+        return IDM.url.getWebPath(url)
+      }
+      return url
+    },
     initSwiper() {
-      if(!this.swiperObj)
+      if(this.swiperObj) return
       this.$nextTick(()=> {
         console.log('init...')
         this.swiperObj = new Swiper('#'+this.moduleObject.id + " .idm-banner-box-swiper-container", {
@@ -427,7 +436,8 @@ export default {
     initData() {
       if(this.propData.dataType === 'custom'){
          // 自定义数据直接使用
-        this.$set(this.bannerData, 'value', this.propData.bannerTable)
+        console.log(this.propData.bannerTable)
+        this.$set(this.bannerData, 'value', _.cloneDeep(this.propData.bannerTable))
         if(this.moduleObject.env === 'production') {
           this.initSwiper();
         }
@@ -435,6 +445,7 @@ export default {
       }else{
         // 开发环境使用假数据，深拷贝方式数据fix不更新
         if(this.moduleObject.env === 'develop') {
+          const data = getDefault.call(this)
           this.bannerData = _.cloneDeep(data)
           return
         }

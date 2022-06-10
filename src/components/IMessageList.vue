@@ -69,7 +69,9 @@
           </li>
         </ul>
         <div v-if="!isFirst && ( !messageData.list || messageData.list.length === 0)" class="idm-message-list-box-empty">
-          <van-empty :description="propData.emptyText || '数据为空'" image-size="60"/>
+          <van-empty :description="propData.emptyText || '数据为空'" >
+            <van-image width="60" height="60" :src="IDM.url.getModuleAssetsWebPath(require('../assets/empty-default.png'), moduleObject)" />
+          </van-empty>
         </div>
         <van-loading v-if="pageLoading" type="circular" vertical>加载中...</van-loading>
       </div>
@@ -82,10 +84,11 @@
 
 <script>
 
-import { Icon, Loading, Empty } from 'vant';
+import { Icon, Loading, Empty, Image as VanImage } from 'vant';
 import 'vant/lib/icon/style';
 import 'vant/lib/loading/style';
 import 'vant/lib/empty/style';
+import 'vant/lib/image/style';
 import { getAdaptiveSize } from '@/utils/adaptationScreen'
 
 import { getDatasInterfaceUrl } from '@/api/config'
@@ -121,6 +124,7 @@ export default {
     [Icon.name]: Icon,
     [Loading.name]: Loading,
     [Empty.name]: Empty,
+    [VanImage.name]: VanImage,
   },
   data(){
     return {
