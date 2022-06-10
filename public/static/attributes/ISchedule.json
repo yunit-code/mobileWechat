@@ -450,6 +450,20 @@
                     "text": "边框",
                     "bindKey": "border",
                     "default":{
+                        "border": {
+                            "top": {
+                                "width": 0
+                            },
+                            "right": {
+                                "width": 0
+                            },
+                            "bottom": {
+                                "width": 0
+                            },
+                            "left": {
+                                "width": 0
+                            }
+                        },
                         "radius": {
                             "leftTop": {
                                 "radius": 8,
