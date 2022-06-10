@@ -675,6 +675,15 @@ export default {
         this.currentEquipWidth = object.message.width;
         this.convertAttrToStyleObject();
         this.convertAttrToStyleObject2();
+      } else if(object.type&&object.type=== "websocket") {
+        // 配置了刷新KEY，消息类型是websocket，收到的消息对象有message并不为空
+        if(this.propData.messageRefreshKey && this.propData.messageRefreshKey.length && object.message){
+          const messageData = typeof object.message === 'string' && JSON.parse(object.message) || object.message
+          const arr = this.propData.messageRefreshKey || []
+          if(messageData.badgeType && arr.includes(messageData.badgeType)){
+            this.getApplicationMarkNumber()
+          }
+        }
       }
     },
     /**
