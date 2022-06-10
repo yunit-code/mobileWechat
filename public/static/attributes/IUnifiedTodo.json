@@ -212,9 +212,9 @@
                     "bindKey": "box",
                     "default":{
                         "marginTopVal": "2%",
-                        "marginRightVal": "",
+                        "marginRightVal": "2%",
                         "marginBottomVal": "2%",
-                        "marginLeftVal": "",
+                        "marginLeftVal": "2%",
                         "paddingTopVal": "",
                         "paddingRightVal": "",
                         "paddingBottomVal": "",
