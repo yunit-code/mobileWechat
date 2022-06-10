@@ -10,6 +10,12 @@
     :id="moduleObject.id"
     :idm-ctrl-id="moduleObject.id"
     class="idm_popupWorkbench_box"
+    :style="
+      moduleObject.env === 'develop' && {
+        display: 'flex',
+        'justify-content': this.propData.position === 'left' ? 'flex-start' : 'flex-end',
+      }
+    "
   >
     <div
       v-show="
