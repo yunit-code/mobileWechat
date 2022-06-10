@@ -402,6 +402,10 @@ export default {
         },
         toApplication(item) {
             if ( this.moduleObject.env != 'develop' && item.selectApplication ) {
+                if ( item.status == '1' ) {
+                    this.toApplicationNative(item)
+                    return
+                }
                 let url = item.applicationUrl ? item.applicationUrl : (item.selectApplication ? item.selectApplication.appUrl : '')
                 if ( url ) {
                     if ( item.applicationJumpType == '_blank' ) {
