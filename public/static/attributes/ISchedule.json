@@ -452,16 +452,36 @@
                     "default":{
                         "border": {
                             "top": {
-                                "width": 0
+                                "style": "solid",
+                                "width": 0,
+                                "widthUnit": "px",
+                                "colors": {
+                                    "hex8":"#000000FF"
+                                }
                             },
                             "right": {
-                                "width": 0
+                                "style": "solid",
+                                "width": 0,
+                                "widthUnit": "px",
+                                "colors": {
+                                    "hex8":"#000000FF"
+                                }
                             },
                             "bottom": {
-                                "width": 0
+                                "style": "solid",
+                                "width": 0,
+                                "widthUnit": "px",
+                                "colors": {
+                                    "hex8":"#000000FF"
+                                }
                             },
                             "left": {
-                                "width": 0
+                                "style": "solid",
+                                "width": 0,
+                                "widthUnit": "px",
+                                "colors": {
+                                    "hex8":"#000000FF"
+                                }
                             }
                         },
                         "radius": {
