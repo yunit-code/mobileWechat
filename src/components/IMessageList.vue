@@ -484,11 +484,11 @@ export default {
         window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-container", subBoxStyleObj);
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-title .idm-message-list-box-title-icon", styleObjectTitleIcon);
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-top-left", tabFontStyleObj);
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-top2-left", tabFontStyleObj);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-top-left span", tabFontStyleObj);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-top2-left div", tabFontStyleObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-title-font", titleFontStyleObj);
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-top-left .active", titleFontStyleActiveObj);
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-top2-left .active", titleFontStyleActiveObj);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-top-left span.active", titleFontStyleActiveObj);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-top2-left div.active", titleFontStyleActiveObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list-content", messageItemFontStyleObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-message-list-box-list2-title", messageItemFontStyleObj);
 

@@ -387,8 +387,10 @@
                         },
                         "fontSize": 16,
                         "fontWeight": "600",
-                        "fontSizeUnit": "px"
-                    }
+                        "fontSizeUnit": "px",
+                        "fontDecoration": "none"
+                    },
+                    "display": "@[showTab == true]"
                 },
                 {
                     "type": "font",
