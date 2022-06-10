@@ -387,14 +387,21 @@ export default {
                 return '应用名称'
             }
         },
+        replaceApplicationImgWord(str) {
+            if ( !str ) {
+                return
+            }
+            let result = str.replace(/\/0$/,'')
+            return result
+        },
         getApplicationImgUrl(item) {
             if ( item.selectApplication && item.selectApplication.imageUrl && !item.isUserEditable ) {
-                return item.selectApplication.imageUrl
+                return this.replaceApplicationImgWord( item.selectApplication.imageUrl ) 
             } else if ( item.isUserEditable ) {
                 if ( item.applicationIconUrl ) {
-                    return window.IDM.url.getWebPath(item.applicationIconUrl)
+                    return window.IDM.url.getWebPath(this.replaceApplicationImgWord(item.applicationIconUrl))
                 } else if ( item.selectApplication && item.selectApplication.imageUrl ) {
-                    return item.selectApplication.imageUrl
+                    return this.replaceApplicationImgWord( item.selectApplication.imageUrl ) 
                 } else {
                     return 
                 }
