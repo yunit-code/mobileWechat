@@ -72,10 +72,6 @@
           "desc": "设置跳转方式",
           "dictionary": [
             {
-              "label":"智能跳转打开",
-              "value":"_auto"
-            },
-            {
               "label": "当前页跳转",
               "value": "_self"
             },
@@ -84,7 +80,7 @@
               "value": "_blank"
             }
           ],
-          "default": "_auto"
+          "default": "_self"
         },
         {
           "type": "iconSelect",
