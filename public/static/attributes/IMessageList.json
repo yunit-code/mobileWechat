@@ -279,20 +279,74 @@
                     "bindKey": "box",
                     "default": {
                         "marginTopVal": "",
-                        "marginRightVal": "3%",
+                        "marginRightVal": "2%",
                         "marginBottomVal": "",
-                        "marginLeftVal": "3%",
+                        "marginLeftVal": "2%",
                         "paddingTopVal": "",
-                        "paddingRightVal": "2%",
+                        "paddingRightVal": "",
                         "paddingBottomVal": "",
-                        "paddingLeftVal": "2%"
+                        "paddingLeftVal": ""
                     }
                 },
                 {
                     "type": "border",
                     "layoutType": "block",
                     "text": "边框",
-                    "bindKey": "border"
+                    "bindKey": "border",
+                    "default":{
+                        "border": {
+                            "top": {
+                                "style": "solid",
+                                "width": 0,
+                                "widthUnit": "px",
+                                "colors": {
+                                    "hex8":"#000000FF"
+                                }
+                            },
+                            "right": {
+                                "style": "solid",
+                                "width": 0,
+                                "widthUnit": "px",
+                                "colors": {
+                                    "hex8":"#000000FF"
+                                }
+                            },
+                            "bottom": {
+                                "style": "solid",
+                                "width": 0,
+                                "widthUnit": "px",
+                                "colors": {
+                                    "hex8":"#000000FF"
+                                }
+                            },
+                            "left": {
+                                "style": "solid",
+                                "width": 0,
+                                "widthUnit": "px",
+                                "colors": {
+                                    "hex8":"#000000FF"
+                                }
+                            }
+                        },
+                        "radius": {
+                            "leftTop": {
+                                "radius": 8,
+                                "radiusUnit": "px"
+                            },
+                            "rightTop": {
+                                "radius": 8,
+                                "radiusUnit": "px"
+                            },
+                            "leftBottom": {
+                                "radius": 8,
+                                "radiusUnit": "px"
+                            },
+                            "rightBottom": {
+                                "radius": 8,
+                                "radiusUnit": "px"
+                            }
+                        }
+                    }
                 }
             ]
         },
