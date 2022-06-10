@@ -60,12 +60,6 @@ function getDefault () {
       image: IDM.url.getModuleAssetsWebPath(require("../assets/banner3.jpg"), _this.moduleObject),
       title:
         "营商环境优，引得“近邻”来",
-    },
-    {
-      jumpUrl: '/dreamweb/',
-      image: IDM.url.getModuleAssetsWebPath(require("../assets/banner1.jpg"), _this.moduleObject),
-      title:
-        "[发文] 关于扎实做好近期疫情防控有关工作的通知",
     }],
     moreUrl: "更多跳转地址"
   }
@@ -83,7 +77,7 @@ export default {
           inputVal: 180,
           selectVal: 'px'
         },
-        limit: 5,
+        limit: 3,
         showBullet: true,
         imgBorderRadius: {
           inputVal: 8,
@@ -135,7 +129,7 @@ export default {
           autoplay: 2000,                                           //自动播放
           speed: 500,                                               //播放速度
           loop: true,                                               //循环播放
-          loopedSlides: 10,                                        //循环个数
+          loopedSlides: 1,                                        //循环个数
           slidesPerView: 'auto',                                    //预览slide个数
           effect: 'coverflow',                                      //特效组件
           pagination: !this.propData.showBullet ? '' :  { //指示器
@@ -143,6 +137,7 @@ export default {
             bulletClass : 'idm-banner-my-bullet',                   //指示器单个元素类名
             bulletActiveClass: 'idm-banner-my-bullet-active',       //指示器单个元素当前激活类名
           },
+          slideDuplicateClass: 'idm-banner-slide-duplicate',
           centeredSlides: true,                                     //居中
           coverflowEffect: {                                        //特效组件属性
             rotate: 0,                                              //旋转度数
@@ -436,10 +431,11 @@ export default {
     initData() {
       if(this.propData.dataType === 'custom'){
          // 自定义数据直接使用
-        console.log(this.propData.bannerTable)
         this.$set(this.bannerData, 'value', _.cloneDeep(this.propData.bannerTable))
         if(this.moduleObject.env === 'production') {
           this.initSwiper();
+        }else{
+          this.fixSwiper()
         }
         return
       }else{
@@ -447,6 +443,8 @@ export default {
         if(this.moduleObject.env === 'develop') {
           const data = getDefault.call(this)
           this.bannerData = _.cloneDeep(data)
+          this.fixSwiper()
+          this.swiperObj.slideTo(1, 0, false)
           return
         }
       }
@@ -472,6 +470,13 @@ export default {
         })
         .catch((error) => {
       })
+    },
+    fixSwiper() {
+      const elements = document.getElementsByClassName('idm-banner-slide-duplicate')
+      elements[0].getElementsByTagName('img')[0].src = this.bannerData.value[this.bannerData.value.length - 1].image
+      elements[0].getElementsByTagName('span')[0].innerHTML = this.bannerData.value[this.bannerData.value.length - 1].title
+      elements[1].getElementsByTagName('img')[0].src = this.bannerData.value[0].image
+      elements[1].getElementsByTagName('span')[0].innerHTML = this.bannerData.value[0].title
     },
     /**
      * 通用的获取表达式匹配后的结果
