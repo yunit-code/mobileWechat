@@ -473,9 +473,9 @@ export default {
     },
     fixSwiper() {
       const elements = document.getElementsByClassName('idm-banner-slide-duplicate')
-      elements[0].getElementsByTagName('img')[0].src = this.bannerData.value[this.bannerData.value.length - 1].image
+      elements[0].getElementsByTagName('img')[0].src = this.getImageUrl(this.bannerData.value[this.bannerData.value.length - 1].image)
       elements[0].getElementsByTagName('span')[0].innerHTML = this.bannerData.value[this.bannerData.value.length - 1].title
-      elements[1].getElementsByTagName('img')[0].src = this.bannerData.value[0].image
+      elements[1].getElementsByTagName('img')[0].src = this.getImageUrl(this.bannerData.value[0].image)
       elements[1].getElementsByTagName('span')[0].innerHTML = this.bannerData.value[0].title
     },
     /**
