@@ -23,7 +23,7 @@
           >
             <img v-if="isSmallScreen || !item.imagexl" :src="item.image && getImageUrl(item.image)"  class="slider-img" alt="" />
             <img v-else :src="getImageUrl(item.imagexl) && getImageUrl(item.image)"  class="slider-img" alt="" />
-            <span class="idm-banner-box-swiper-text">{{item.title}}</span>
+            <span class="idm-banner-box-swiper-text" v-if="item.title">{{item.title}}</span>
           </li>
         </ul>
         <div class="idm-banner-swiper-pagination" v-show="propData.showBullet"></div>
