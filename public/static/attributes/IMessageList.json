@@ -246,7 +246,10 @@
                     "text": "背景色",
                     "bindKey": "bgColor",
                     "placeholder": "请选择颜色",
-                    "default": {}
+                    "default": {
+                        "hex": "#FFFFFF",
+                        "hex8": "#FFFFFFFF"
+                    }
                 },
                 {
                     "type": "inlineGroup",
