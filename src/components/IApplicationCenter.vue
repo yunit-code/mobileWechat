@@ -106,9 +106,9 @@ export default {
         return {
             moduleObject: {},
             propData: this.$root.propData.compositeAttr || {
-
+                
             },
-            application_data: [ ],
+            application_data: [],
             have_power_application_data_ids: [],//用户有权限的appid
             have_power_application_data: [],//用户有权限的app
             is_application_manage_show: false,
@@ -937,9 +937,9 @@ export default {
                 position: relative;
             }
             .number{
-                width: 15px;
-                height: 15px;
-                line-height: 15px;
+                width: 18px;
+                height: 18px;
+                line-height: 18px;
                 position: absolute;
                 top: -7px;
                 right: -7px;
