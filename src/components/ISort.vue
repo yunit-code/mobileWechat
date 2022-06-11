@@ -53,7 +53,11 @@
         </div>
       </template>
     </draggable>
-    <van-empty v-if="!listData || listData.length === 0" :image-size="propData.emptyImageSize || '100px'" :description="propData.emptyDescription || '暂无数据'" />
+    <van-empty v-if="!listData || listData.length === 0" :image-size="propData.emptyImageSize || '100px'" :description="propData.emptyDescription || '暂无数据'">
+      <template #image>
+        <van-image :src="IDM.url.getModuleAssetsWebPath(require('../assets/empty-default.png'), moduleObject)" />
+      </template>
+    </van-empty>
   </div>
 </div>
 </template>
@@ -131,8 +135,8 @@ export default {
         var item = themeList[i];
         
         let tipStyleObject = {
-          "color": item.mainColor ? item.mainColor.hex8 : "",
-          "background-color": item.minorColor ? item.minorColor.hex8 : "",
+          "color": item.mainColor ? item.mainColor.hex : "",
+          "background-color": item.minorColor ? item.minorColor.hex : "",
         };
 
         IDM.setStyleToPageHead(
@@ -418,13 +422,13 @@ export default {
               styleObject[key] = element;
               break;
             case "bgColor":
-              if (element && element.hex8) {
-                styleObject["background-color"] = element.hex8;
+              if (element && element.hex) {
+                styleObject["background-color"] = element.hex;
               }
               break;
             // case "tipBgColor":
-            //   if (element && element.hex8) {
-            //     tipStyleObject["background-color"] = element.hex8;
+            //   if (element && element.hex) {
+            //     tipStyleObject["background-color"] = element.hex;
             //   }
             //   break;
             case "box":
@@ -505,18 +509,18 @@ export default {
                 styleObject["border-top-width"] =
                   element.border.top.width + element.border.top.widthUnit;
                 styleObject["border-top-style"] = element.border.top.style;
-                if (element.border.top.colors.hex8) {
+                if (element.border.top.colors.hex) {
                   styleObject["border-top-color"] =
-                    element.border.top.colors.hex8;
+                    element.border.top.colors.hex;
                 }
               }
               if (element.border.right.width > 0) {
                 styleObject["border-right-width"] =
                   element.border.right.width + element.border.right.widthUnit;
                 styleObject["border-right-style"] = element.border.right.style;
-                if (element.border.right.colors.hex8) {
+                if (element.border.right.colors.hex) {
                   styleObject["border-right-color"] =
-                    element.border.right.colors.hex8;
+                    element.border.right.colors.hex;
                 }
               }
               if (element.border.bottom.width > 0) {
@@ -524,18 +528,18 @@ export default {
                   element.border.bottom.width + element.border.bottom.widthUnit;
                 styleObject["border-bottom-style"] =
                   element.border.bottom.style;
-                if (element.border.bottom.colors.hex8) {
+                if (element.border.bottom.colors.hex) {
                   styleObject["border-bottom-color"] =
-                    element.border.bottom.colors.hex8;
+                    element.border.bottom.colors.hex;
                 }
               }
               if (element.border.left.width > 0) {
                 styleObject["border-left-width"] =
                   element.border.left.width + element.border.left.widthUnit;
                 styleObject["border-left-style"] = element.border.left.style;
-                if (element.border.left.colors.hex8) {
+                if (element.border.left.colors.hex) {
                   styleObject["border-left-color"] =
-                    element.border.left.colors.hex8;
+                    element.border.left.colors.hex;
                 }
               }
 
@@ -557,8 +561,8 @@ export default {
               break;
             case "font":
               styleObject["font-family"] = element.fontFamily;
-              if (element.fontColors.hex8) {
-                styleObject["color"] = element.fontColors.hex8;
+              if (element.fontColors.hex) {
+                styleObject["color"] = element.fontColors.hex;
               }
               styleObject["font-weight"] =
                 element.fontWeight && element.fontWeight.split(" ")[0];
@@ -575,8 +579,8 @@ export default {
               break;
             // case "tipFont":
             //   tipStyleObject["font-family"] = element.fontFamily;
-            //   if (element.fontColors.hex8) {
-            //     tipStyleObject["color"] = element.fontColors.hex8;
+            //   if (element.fontColors.hex) {
+            //     tipStyleObject["color"] = element.fontColors.hex;
             //   }
             //   tipStyleObject["font-weight"] =
             //     element.fontWeight && element.fontWeight.split(" ")[0];

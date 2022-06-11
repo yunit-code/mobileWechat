@@ -633,7 +633,8 @@
                     "bindKey": "mainFont",
                     "default": {
                         "fontColors": {
-                            "hex8": ""
+                            "hex8": "",
+                            "hex": ""
                         },
                         "fontSize": 18,
                         "fontSizeUnit": "px"
@@ -975,7 +976,7 @@
                             "bindKey": "font",
                             "default": {
                                 "fontColors": {
-                                    "hex8": "#333333FF"
+                                    "hex": "#333333"
                                 },
                                 "fontFamily": "PingFangSC-Regular",
                                 "fontSize": 16,

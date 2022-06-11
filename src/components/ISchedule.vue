@@ -109,9 +109,9 @@
               :image-size="emptyImageSize"
               :description="propData.emptyDescription || '暂无日程'"
             >
-              <template  #image>
-                <van-image width="60" height="60" :src="IDM.url.getModuleAssetsWebPath(require('../assets/empty-default.png'), moduleObject)" />
-            </template>
+              <template #image>
+                <van-image :src="IDM.url.getModuleAssetsWebPath(require('../assets/empty-default.png'), moduleObject)" />
+              </template>
             </van-empty>
           </a-tab-pane>
         </a-tabs>
@@ -120,8 +120,8 @@
           :image-size="emptyImageSize"
           :description="propData.emptyDescription || '暂无日程'"
         >
-          <template  #image>
-              <van-image width="60" height="60" :src="IDM.url.getModuleAssetsWebPath(require('../assets/empty-default.png'), moduleObject)" />
+          <template #image>
+              <van-image :src="IDM.url.getModuleAssetsWebPath(require('../assets/empty-default.png'), moduleObject)" />
           </template>
         </van-empty>
       </div>
