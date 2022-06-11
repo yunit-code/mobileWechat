@@ -108,14 +108,22 @@
               "
               :image-size="emptyImageSize"
               :description="propData.emptyDescription || '暂无日程'"
-            />
+            >
+              <template  #image>
+                <van-image width="60" height="60" :src="IDM.url.getModuleAssetsWebPath(require('../assets/empty-default.png'), moduleObject)" />
+            </template>
+            </van-empty>
           </a-tab-pane>
         </a-tabs>
         <van-empty
           v-if="!scheduleList || scheduleList.length == 0"
           :image-size="emptyImageSize"
           :description="propData.emptyDescription || '暂无日程'"
-        />
+        >
+          <template  #image>
+              <van-image width="60" height="60" :src="IDM.url.getModuleAssetsWebPath(require('../assets/empty-default.png'), moduleObject)" />
+          </template>
+        </van-empty>
       </div>
     </div>
     <div class="i-schedule-mask" v-if="moduleObject.env !== 'production' && !propData.dataSource">
@@ -462,13 +470,13 @@ export default {
               innerCardStyleObject['height'] = element;
               break;
             case "bgColor":
-              if (element && element.hex8) {
-                styleObject["background-color"] = element.hex8;
+              if (element && element.hex) {
+                styleObject["background-color"] = element.hex;
               }
               break;
             case "innerBgColor":
-              if (element && element.hex8) {
-                innerCardStyleObject["background-color"] = element.hex8;
+              if (element && element.hex) {
+                innerCardStyleObject["background-color"] = element.hex;
               }
               break;
             case "box":
@@ -610,18 +618,18 @@ export default {
                 styleObject["border-top-width"] =
                   element.border.top.width + element.border.top.widthUnit;
                 styleObject["border-top-style"] = element.border.top.style;
-                if (element.border.top.colors.hex8) {
+                if (element.border.top.colors.hex) {
                   styleObject["border-top-color"] =
-                    element.border.top.colors.hex8;
+                    element.border.top.colors.hex;
                 }
               }
               if (element.border.right.width > 0) {
                 styleObject["border-right-width"] =
                   element.border.right.width + element.border.right.widthUnit;
                 styleObject["border-right-style"] = element.border.right.style;
-                if (element.border.right.colors.hex8) {
+                if (element.border.right.colors.hex) {
                   styleObject["border-right-color"] =
-                    element.border.right.colors.hex8;
+                    element.border.right.colors.hex;
                 }
               }
               if (element.border.bottom.width > 0) {
@@ -629,18 +637,18 @@ export default {
                   element.border.bottom.width + element.border.bottom.widthUnit;
                 styleObject["border-bottom-style"] =
                   element.border.bottom.style;
-                if (element.border.bottom.colors.hex8) {
+                if (element.border.bottom.colors.hex) {
                   styleObject["border-bottom-color"] =
-                    element.border.bottom.colors.hex8;
+                    element.border.bottom.colors.hex;
                 }
               }
               if (element.border.left.width > 0) {
                 styleObject["border-left-width"] =
                   element.border.left.width + element.border.left.widthUnit;
                 styleObject["border-left-style"] = element.border.left.style;
-                if (element.border.left.colors.hex8) {
+                if (element.border.left.colors.hex) {
                   styleObject["border-left-color"] =
-                    element.border.left.colors.hex8;
+                    element.border.left.colors.hex;
                 }
               }
 
@@ -663,9 +671,9 @@ export default {
                   element.border.top.width + element.border.top.widthUnit;
                 innerCardStyleObject["border-top-style"] =
                   element.border.top.style;
-                if (element.border.top.colors.hex8) {
+                if (element.border.top.colors.hex) {
                   innerCardStyleObject["border-top-color"] =
-                    element.border.top.colors.hex8;
+                    element.border.top.colors.hex;
                 }
               }
               if (element.border.right.width > 0) {
@@ -673,9 +681,9 @@ export default {
                   element.border.right.width + element.border.right.widthUnit;
                 innerCardStyleObject["border-right-style"] =
                   element.border.right.style;
-                if (element.border.right.colors.hex8) {
+                if (element.border.right.colors.hex) {
                   innerCardStyleObject["border-right-color"] =
-                    element.border.right.colors.hex8;
+                    element.border.right.colors.hex;
                 }
               }
               if (element.border.bottom.width > 0) {
@@ -683,9 +691,9 @@ export default {
                   element.border.bottom.width + element.border.bottom.widthUnit;
                 innerCardStyleObject["border-bottom-style"] =
                   element.border.bottom.style;
-                if (element.border.bottom.colors.hex8) {
+                if (element.border.bottom.colors.hex) {
                   innerCardStyleObject["border-bottom-color"] =
-                    element.border.bottom.colors.hex8;
+                    element.border.bottom.colors.hex;
                 }
               }
               if (element.border.left.width > 0) {
@@ -693,9 +701,9 @@ export default {
                   element.border.left.width + element.border.left.widthUnit;
                 innerCardStyleObject["border-left-style"] =
                   element.border.left.style;
-                if (element.border.left.colors.hex8) {
+                if (element.border.left.colors.hex) {
                   innerCardStyleObject["border-left-color"] =
-                    element.border.left.colors.hex8;
+                    element.border.left.colors.hex;
                 }
               }
 
@@ -714,8 +722,8 @@ export default {
               break;
             case "font":
               styleObject["font-family"] = element.fontFamily;
-              if (element.fontColors.hex8) {
-                styleObject["color"] = element.fontColors.hex8;
+              if (element.fontColors.hex) {
+                styleObject["color"] = element.fontColors.hex;
               }
               styleObject["font-weight"] =
                 element.fontWeight && element.fontWeight.split(" ")[0];
@@ -732,8 +740,8 @@ export default {
               break;
             case "titleFont":
               titleStyleObject["font-family"] = element.fontFamily;
-              if (element.fontColors.hex8) {
-                titleStyleObject["color"] = element.fontColors.hex8;
+              if (element.fontColors.hex) {
+                titleStyleObject["color"] = element.fontColors.hex;
               }
               titleStyleObject["font-weight"] =
                 element.fontWeight && element.fontWeight.split(" ")[0];
@@ -749,7 +757,7 @@ export default {
               titleStyleObject["text-decoration"] = element.fontDecoration;
               break;
             case "titleIconColor":
-              iconStyleObject["fill"] = element.hex8 + '!important';
+              iconStyleObject["fill"] = element.hex + '!important';
               break;
             case "titleIconSize":
               iconStyleObject["font-size"] = (element * scale) + "px";
@@ -795,13 +803,13 @@ export default {
         var item = themeList[i];
         
         let dateNumStyleObject = {
-          "background-color": item.mainColor ? item.mainColor.hex8 : "",
+          "background-color": item.mainColor ? item.mainColor.hex : "",
         };
         let todayStyleObject = {
-          "color": item.mainColor ? item.mainColor.hex8 : "",
+          "color": item.mainColor ? item.mainColor.hex : "",
         };
         let titleSvgStyleObject = {
-          "fill": item.mainColor ? item.mainColor.hex8 : "",
+          "fill": item.mainColor ? item.mainColor.hex : "",
         };
 
         console.log("." +

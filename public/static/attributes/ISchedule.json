@@ -202,7 +202,10 @@
                             "type": "colorPicker",
                             "layoutType": "inline",
                             "text": "图标颜色",
-                            "bindKey": "titleIconColor"
+                            "bindKey": "titleIconColor",
+                            "ctrlAttrObject": {
+                                "disabledInput": true
+                            }
                         },
                         {
                             "type": "inputNumber",
@@ -280,7 +283,10 @@
                     "text": "背景色",
                     "bindKey": "bgColor",
                     "placeholder": "请选择颜色",
-                    "default": {}
+                    "default": {},
+                    "ctrlAttrObject": {
+                        "disabledInput": true
+                    }
                 },
                 {
                     "type": "uploadImage",
@@ -456,7 +462,7 @@
                                 "width": 0,
                                 "widthUnit": "px",
                                 "colors": {
-                                    "hex8":"#000000FF"
+                                    "hex":"#000000"
                                 }
                             },
                             "right": {
@@ -464,7 +470,7 @@
                                 "width": 0,
                                 "widthUnit": "px",
                                 "colors": {
-                                    "hex8":"#000000FF"
+                                    "hex":"#000000"
                                 }
                             },
                             "bottom": {
@@ -472,7 +478,7 @@
                                 "width": 0,
                                 "widthUnit": "px",
                                 "colors": {
-                                    "hex8":"#000000FF"
+                                    "hex":"#000000"
                                 }
                             },
                             "left": {
@@ -480,7 +486,7 @@
                                 "width": 0,
                                 "widthUnit": "px",
                                 "colors": {
-                                    "hex8":"#000000FF"
+                                    "hex":"#000000"
                                 }
                             }
                         },
@@ -561,6 +567,9 @@
                     "placeholder": "请选择颜色",
                     "default": {
                         "hex": "#FFFFFF"
+                    },
+                    "ctrlAttrObject": {
+                        "disabledInput": true
                     }
                 },
                 {
@@ -885,7 +894,10 @@
                     "bindKey": "mainColor",
                     "desc":"主题的主要颜色",
                     "placeholder": "请选择颜色",
-                    "display":"@[key]"
+                    "display":"@[key]",
+                    "ctrlAttrObject": {
+                        "disabledInput": true
+                    }
                 }
             ]
         },
@@ -894,6 +906,29 @@
             "text": "高级",
             "desc": "点击？查看高级设置用法指南",
             "children": [
+                {
+                    "type": "group",
+                    "text": "适配设置",
+                    "desc":"通过设置属性来适配移动端页面尺寸",
+                    "children": [
+                        {
+                            "type": "inputNumber",
+                            "layoutType": "inline",
+                            "text": "基准值",
+                            "desc": "此属性用于标记当前组件在显示效果最完美情况下的宽度大小（px），例如：此组件显示效果最佳宽度为414px，则此处设置为414即可，如果此组件最佳效果为当前配置的屏幕宽（px）的一半则只需要除以2即可。",
+                            "bindKey": "baseValue",
+                            "default": "414"
+                        },
+                        {
+                            "type": "inputNumber",
+                            "layoutType": "inline",
+                            "text": "适配比例",
+                            "desc": "与基准值配合使用，如果在实际预览屏幕宽为基准值的两倍，则此组件所有可适配的内容都会基于此处设置的适配比例相对应的进行放大缩小，例如此处设置1.2，则会相对应的放大至1.2倍",
+                            "bindKey": "adaptationRatio",
+                            "default": "1.2"
+                        }
+                    ]
+                },
                 {
                     "type": "treeSelect",
                     "layoutType": "inline",
@@ -931,29 +966,6 @@
                         {
                             "label": "info",
                             "value": "info"
-                        }
-                    ]
-                },
-                {
-                    "type": "group",
-                    "text": "适配设置",
-                    "desc":"通过设置属性来适配移动端页面尺寸",
-                    "children": [
-                        {
-                            "type": "inputNumber",
-                            "layoutType": "inline",
-                            "text": "基准值",
-                            "desc": "此属性用于标记当前组件在显示效果最完美情况下的宽度大小（px），例如：此组件显示效果最佳宽度为414px，则此处设置为414即可，如果此组件最佳效果为当前配置的屏幕宽（px）的一半则只需要除以2即可。",
-                            "bindKey": "baseValue",
-                            "default": "414"
-                        },
-                        {
-                            "type": "inputNumber",
-                            "layoutType": "inline",
-                            "text": "适配比例",
-                            "desc": "与基准值配合使用，如果在实际预览屏幕宽为基准值的两倍，则此组件所有可适配的内容都会基于此处设置的适配比例相对应的进行放大缩小，例如此处设置1.2，则会相对应的放大至1.2倍",
-                            "bindKey": "adaptationRatio",
-                            "default": "1.2"
                         }
                     ]
                 }
