@@ -109,15 +109,15 @@ export default {
             for (var i = 0; i < themeList.length; i++) {
                 var item = themeList[i];
                 let styleObject = {
-                    "background-color": item.minorColor ? item.minorColor.hex8 : "",
-                    "color": item.mainColor ? item.mainColor.hex8 : "",
+                    "background-color": item.minorColor ? item.minorColor.hex : "",
+                    "color": item.mainColor ? item.mainColor.hex : "",
                 };
                 let fontStyleObject = {
-                    "color": item.mainColor ? item.mainColor.hex8 : "",
+                    "color": item.mainColor ? item.mainColor.hex : "",
                 }
                 let borderStyleObject = { }
-                if ( item.mainColor && item.mainColor.hex8 ) {
-                    borderStyleObject['border-bottom'] = '1px solid ' + item.mainColor.hex8
+                if ( item.mainColor && item.mainColor.hex ) {
+                    borderStyleObject['border-bottom'] = '1px solid ' + item.mainColor.hex
                 } 
                 // IDM.setStyleToPageHead(
                 //     "." +
@@ -231,8 +231,8 @@ export default {
                             styleObject['height'] = element;
                             break;
                         case "bgColorSearch":
-                            if (element && element.hex8) {
-                                styleObject["background-color"] = element.hex8;
+                            if (element && element.hex) {
+                                styleObject["background-color"] = element.hex;
                             }
                             break;
                         case "boxSearch":
@@ -265,29 +265,29 @@ export default {
                             if (element.border.top.width > 0) {
                                 styleObject["border-top-width"] = element.border.top.width + element.border.top.widthUnit;
                                 styleObject["border-top-style"] = element.border.top.style;
-                                if (element.border.top.colors.hex8) {
-                                    styleObject["border-top-color"] = element.border.top.colors.hex8;
+                                if (element.border.top.colors.hex) {
+                                    styleObject["border-top-color"] = element.border.top.colors.hex;
                                 }
                             }
                             if (element.border.right.width > 0) {
                                 styleObject["border-right-width"] = element.border.right.width + element.border.right.widthUnit;
                                 styleObject["border-right-style"] = element.border.right.style;
-                                if (element.border.right.colors.hex8) {
-                                    styleObject["border-right-color"] = element.border.right.colors.hex8;
+                                if (element.border.right.colors.hex) {
+                                    styleObject["border-right-color"] = element.border.right.colors.hex;
                                 }
                             }
                             if (element.border.bottom.width > 0) {
                                 styleObject["border-bottom-width"] = element.border.bottom.width + element.border.bottom.widthUnit;
                                 styleObject["border-bottom-style"] = element.border.bottom.style;
-                                if (element.border.bottom.colors.hex8) {
-                                    styleObject["border-bottom-color"] = element.border.bottom.colors.hex8;
+                                if (element.border.bottom.colors.hex) {
+                                    styleObject["border-bottom-color"] = element.border.bottom.colors.hex;
                                 }
                             }
                             if (element.border.left.width > 0) {
                                 styleObject["border-left-width"] = element.border.left.width + element.border.left.widthUnit;
                                 styleObject["border-left-style"] = element.border.left.style;
-                                if (element.border.left.colors.hex8) {
-                                    styleObject["border-left-color"] = element.border.left.colors.hex8;
+                                if (element.border.left.colors.hex) {
+                                    styleObject["border-left-color"] = element.border.left.colors.hex;
                                 }
                             }
 
@@ -298,8 +298,8 @@ export default {
                             break;
                         case "fontSearch":
                             styleObject["font-family"] = element.fontFamily;
-                            if (element.fontColors.hex8) {
-                                styleObject["color"] = element.fontColors.hex8;
+                            if (element.fontColors.hex) {
+                                styleObject["color"] = element.fontColors.hex;
                             }
                             styleObject["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                             styleObject["font-style"] = element.fontStyle;
@@ -309,14 +309,14 @@ export default {
                             styleObject["text-decoration"] = element.fontDecoration;
                             break;
                         case "bgColorButton":
-                            if (element && element.hex8) {
-                                styleObjectButton["background-color"] = element.hex8;
+                            if (element && element.hex) {
+                                styleObjectButton["background-color"] = element.hex;
                             }
                             break;
                         case "fontButton":
                             styleObjectButton["font-family"] = element.fontFamily;
-                            if (element.fontColors.hex8) {
-                                styleObjectButton["color"] = element.fontColors.hex8;
+                            if (element.fontColors.hex) {
+                                styleObjectButton["color"] = element.fontColors.hex;
                             }
                             styleObjectButton["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                             styleObjectButton["font-style"] = element.fontStyle;
@@ -326,14 +326,14 @@ export default {
                             styleObjectButton["text-decoration"] = element.fontDecoration;
                             break;
                         case "bgColorButtonDisabled":
-                            if (element && element.hex8) {
-                                styleObjectButtonDisabled["background-color"] = element.hex8;
+                            if (element && element.hex) {
+                                styleObjectButtonDisabled["background-color"] = element.hex;
                             }
                             break;
                         case "fontButtonDisabled":
                             styleObjectButtonDisabled["font-family"] = element.fontFamily;
-                            if (element.fontColors.hex8) {
-                                styleObjectButtonDisabled["color"] = element.fontColors.hex8;
+                            if (element.fontColors.hex) {
+                                styleObjectButtonDisabled["color"] = element.fontColors.hex;
                             }
                             styleObjectButtonDisabled["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                             styleObjectButtonDisabled["font-style"] = element.fontStyle;
