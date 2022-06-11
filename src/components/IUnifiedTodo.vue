@@ -92,7 +92,7 @@ const todoData = {
     readStatusText: '未读',
     sendUserName: '文档处',
     time: '2022-04-21 12:56',
-    title: '关于扎实做好近期疫情防控有关工作的通知,关于扎实做好近期疫情防控有关工作的通知,关于扎实做好近期疫情防控有关工作的通知'
+    title: '关于扎实做好近期疫情防控有关工作的通知'
   },{
     jumpUrl: '',
     isHot: '-1',
