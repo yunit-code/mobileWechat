@@ -295,8 +295,8 @@ export default {
               styleObject[key]=element;
               break;
             case "bgColor":
-              if(element&&element.hex8){
-                styleObject["background-color"]=element.hex8;
+              if(element&&element.hex){
+                styleObject["background-color"]=element.hex;
               }
               break;
             case "box":
@@ -332,8 +332,8 @@ export default {
               subBoxStyleObj['height']=element;
               break;
             case "subBgColor":
-              if(element&&element.hex8){
-                subBoxStyleObj["background-color"]=element.hex8;
+              if(element&&element.hex){
+                subBoxStyleObj["background-color"]=element.hex;
               }
               break;
             case "subBox":
@@ -366,29 +366,29 @@ export default {
               if(element.border.top.width>0){
                 subBoxStyleObj["border-top-width"]=element.border.top.width+element.border.top.widthUnit;
                 subBoxStyleObj["border-top-style"]=element.border.top.style;
-                if(element.border.top.colors.hex8){
-                  subBoxStyleObj["border-top-color"]=element.border.top.colors.hex8;
+                if(element.border.top.colors.hex){
+                  subBoxStyleObj["border-top-color"]=element.border.top.colors.hex;
                 }
               }
               if(element.border.right.width>0){
                 subBoxStyleObj["border-right-width"]=element.border.right.width+element.border.right.widthUnit;
                 subBoxStyleObj["border-right-style"]=element.border.right.style;
-                if(element.border.right.colors.hex8){
-                  subBoxStyleObj["border-right-color"]=element.border.right.colors.hex8;
+                if(element.border.right.colors.hex){
+                  subBoxStyleObj["border-right-color"]=element.border.right.colors.hex;
                 }
               }
               if(element.border.bottom.width>0){
                 subBoxStyleObj["border-bottom-width"]=element.border.bottom.width+element.border.bottom.widthUnit;
                 subBoxStyleObj["border-bottom-style"]=element.border.bottom.style;
-                if(element.border.bottom.colors.hex8){
-                  subBoxStyleObj["border-bottom-color"]=element.border.bottom.colors.hex8;
+                if(element.border.bottom.colors.hex){
+                  subBoxStyleObj["border-bottom-color"]=element.border.bottom.colors.hex;
                 }
               }
               if(element.border.left.width>0){
                 subBoxStyleObj["border-left-width"]=element.border.left.width+element.border.left.widthUnit;
                 subBoxStyleObj["border-left-style"]=element.border.left.style;
-                if(element.border.left.colors.hex8){
-                  subBoxStyleObj["border-left-color"]=element.border.left.colors.hex8;
+                if(element.border.left.colors.hex){
+                  subBoxStyleObj["border-left-color"]=element.border.left.colors.hex;
                 }
               }
               subBoxStyleObj["border-top-left-radius"]=element.radius.leftTop.radius+element.radius.leftTop.radiusUnit;
@@ -417,29 +417,29 @@ export default {
               if(element.border.top.width>0){
                 styleObject["border-top-width"]=element.border.top.width+element.border.top.widthUnit;
                 styleObject["border-top-style"]=element.border.top.style;
-                if(element.border.top.colors.hex8){
-                  styleObject["border-top-color"]=element.border.top.colors.hex8;
+                if(element.border.top.colors.hex){
+                  styleObject["border-top-color"]=element.border.top.colors.hex;
                 }
               }
               if(element.border.right.width>0){
                 styleObject["border-right-width"]=element.border.right.width+element.border.right.widthUnit;
                 styleObject["border-right-style"]=element.border.right.style;
-                if(element.border.right.colors.hex8){
-                  styleObject["border-right-color"]=element.border.right.colors.hex8;
+                if(element.border.right.colors.hex){
+                  styleObject["border-right-color"]=element.border.right.colors.hex;
                 }
               }
               if(element.border.bottom.width>0){
                 styleObject["border-bottom-width"]=element.border.bottom.width+element.border.bottom.widthUnit;
                 styleObject["border-bottom-style"]=element.border.bottom.style;
-                if(element.border.bottom.colors.hex8){
-                  styleObject["border-bottom-color"]=element.border.bottom.colors.hex8;
+                if(element.border.bottom.colors.hex){
+                  styleObject["border-bottom-color"]=element.border.bottom.colors.hex;
                 }
               }
               if(element.border.left.width>0){
                 styleObject["border-left-width"]=element.border.left.width+element.border.left.widthUnit;
                 styleObject["border-left-style"]=element.border.left.style;
-                if(element.border.left.colors.hex8){
-                  styleObject["border-left-color"]=element.border.left.colors.hex8;
+                if(element.border.left.colors.hex){
+                  styleObject["border-left-color"]=element.border.left.colors.hex;
                 }
               }
               styleObject["border-top-left-radius"]=element.radius.leftTop.radius+element.radius.leftTop.radiusUnit;
@@ -448,7 +448,7 @@ export default {
               styleObject["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
               break;
             case "titleIconFontColor":
-                styleObjectTitleIcon["fill"] = element.hex8 + ' !important';
+                styleObjectTitleIcon["fill"] = element.hex + ' !important';
                 break
             case "titleIconFontSize":
                 styleObjectTitleIcon["font-size"] = getAdaptiveSize.call(this, element) + "px";
@@ -457,8 +457,8 @@ export default {
                 break
             case 'titleFontStyle':
               titleFontStyleObj["font-family"] = element.fontFamily;
-              if (element.fontColors.hex8) {
-                  titleFontStyleObj["color"] = element.fontColors.hex8;
+              if (element.fontColors.hex) {
+                  titleFontStyleObj["color"] = element.fontColors.hex;
               }
               titleFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
               titleFontStyleObj["font-style"] = element.fontStyle;
@@ -469,8 +469,8 @@ export default {
               break
             case 'todoFontStyle':
               todoFontStyleObj["font-family"] = element.fontFamily;
-              if (element.fontColors.hex8) {
-                  todoFontStyleObj["color"] = element.fontColors.hex8;
+              if (element.fontColors.hex) {
+                  todoFontStyleObj["color"] = element.fontColors.hex;
               }
               todoFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
               todoFontStyleObj["font-style"] = element.fontStyle;
@@ -481,10 +481,10 @@ export default {
               break
             case 'readFontStyle':
               readFontStyleObj["font-family"] = element.fontFamily;
-              if (element.fontColors.hex8) {
-                  readFontStyleObj["color"] = element.fontColors.hex8;
-                  subBoxReadObj["color"] = element.fontColors.hex8;
-                  subBoxReadObj["fill"] = element.fontColors.hex8;
+              if (element.fontColors.hex) {
+                  readFontStyleObj["color"] = element.fontColors.hex;
+                  subBoxReadObj["color"] = element.fontColors.hex;
+                  subBoxReadObj["fill"] = element.fontColors.hex;
               }
               readFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
               subBoxReadObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
@@ -498,7 +498,7 @@ export default {
               emptyBoxHeightObj['height'] = element.inputVal + element.selectVal
               break;
             case "readIconColor":
-                readIconObj["fill"] = element.hex8;
+                readIconObj["fill"] = element.hex;
                 break
             case "readIconSize":
                 readIconObj["font-size"] = getAdaptiveSize.call(this, element) + "px";
@@ -506,7 +506,7 @@ export default {
                 readIconObj["height"] = getAdaptiveSize.call(this, element) + "px";
                 break
             case "noReadIconColor":
-                noReadIconObj["fill"] = element.hex8;
+                noReadIconObj["fill"] = element.hex;
                 break
             case "noReadIconSize":
                 noReadIconObj["font-size"] = getAdaptiveSize.call(this, element) + "px";
@@ -557,7 +557,7 @@ export default {
         //     continue;
         // }
         let iconColorObj = {
-          fill: item.mainColor ? item.mainColor.hex8 : "",
+          fill: item.mainColor ? item.mainColor.hex : "",
         };
         IDM.setStyleToPageHead(
           "." +
