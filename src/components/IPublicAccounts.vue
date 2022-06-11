@@ -275,8 +275,8 @@ export default {
               if (element.fontFamily) {
                 titleStyleObject["font-family"] = element.fontFamily;
               }
-              if (element.fontColors.hex8) {
-                titleStyleObject["color"] = element.fontColors.hex8;
+              if (element.fontColors.hex) {
+                titleStyleObject["color"] = element.fontColors.hex;
               }
               if (element.fontWeight) {
                 titleStyleObject["font-weight"] =

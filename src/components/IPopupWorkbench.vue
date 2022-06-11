@@ -134,27 +134,7 @@ export default {
         width: "32px",
         dataFiled: "title",
         menuWidth: "80%",
-        iconSize: "24px",
-        themeList: [
-          {
-            key: "blue",
-            mainColor: {
-              hex8: "#3976c7ff",
-            },
-            minorColor: {
-              hex8: "#ebedf0ff",
-            },
-          },
-          {
-            key: "red",
-            mainColor: {
-              hex8: "red",
-            },
-            minorColor: {
-              hex8: "red",
-            },
-          },
-        ],
+        iconSize: "24px"
       },
       visible: false,
       selectedKey: "",
@@ -277,10 +257,6 @@ export default {
             case "btnTop":
               btnStyleObject["top"] = element;
               break;
-            case "themeColor":
-              btnStyleObject["color"] = element.hex8;
-              cellSelectedStyleObject["color"] = element.hex8;
-              break;
             case "bdShadow":
               popupStyleObject["box-shadow"] = element;
               btnStyleObject["box-shadow"] = element;
@@ -301,8 +277,8 @@ export default {
               if (element.fontFamily) {
                 titleStyleObject["font-family"] = element.fontFamily;
               }
-              if (element.fontColors.hex8) {
-                titleStyleObject["color"] = element.fontColors.hex8;
+              if (element.fontColors.hex) {
+                titleStyleObject["color"] = element.fontColors.hex;
               }
               if (element.fontWeight) {
                 titleStyleObject["font-weight"] =
@@ -372,9 +348,9 @@ export default {
                 popupStyleObject["border-top-width"] =
                   element.border.top.width + element.border.top.widthUnit;
                 popupStyleObject["border-top-style"] = element.border.top.style;
-                if (element.border.top.colors.hex8) {
+                if (element.border.top.colors.hex) {
                   popupStyleObject["border-top-color"] =
-                    element.border.top.colors.hex8;
+                    element.border.top.colors.hex;
                 }
               }
               if (element.border.right.width > 0) {
@@ -382,9 +358,9 @@ export default {
                   element.border.right.width + element.border.right.widthUnit;
                 popupStyleObject["border-right-style"] =
                   element.border.right.style;
-                if (element.border.right.colors.hex8) {
+                if (element.border.right.colors.hex) {
                   popupStyleObject["border-right-color"] =
-                    element.border.right.colors.hex8;
+                    element.border.right.colors.hex;
                 }
               }
               if (element.border.bottom.width > 0) {
@@ -392,9 +368,9 @@ export default {
                   element.border.bottom.width + element.border.bottom.widthUnit;
                 popupStyleObject["border-bottom-style"] =
                   element.border.bottom.style;
-                if (element.border.bottom.colors.hex8) {
+                if (element.border.bottom.colors.hex) {
                   popupStyleObject["border-bottom-color"] =
-                    element.border.bottom.colors.hex8;
+                    element.border.bottom.colors.hex;
                 }
               }
               if (element.border.left.width > 0) {
@@ -402,9 +378,9 @@ export default {
                   element.border.left.width + element.border.left.widthUnit;
                 popupStyleObject["border-left-style"] =
                   element.border.left.style;
-                if (element.border.left.colors.hex8) {
+                if (element.border.left.colors.hex) {
                   popupStyleObject["border-left-color"] =
-                    element.border.left.colors.hex8;
+                    element.border.left.colors.hex;
                 }
               }
               popupStyleObject["border-top-left-radius"] =
@@ -453,9 +429,9 @@ export default {
                 btnStyleObject["border-top-width"] =
                   element.border.top.width + element.border.top.widthUnit;
                 btnStyleObject["border-top-style"] = element.border.top.style;
-                if (element.border.top.colors.hex8) {
+                if (element.border.top.colors.hex) {
                   btnStyleObject["border-top-color"] =
-                    element.border.top.colors.hex8;
+                    element.border.top.colors.hex;
                 }
               }
               if (element.border.right.width > 0) {
@@ -463,9 +439,9 @@ export default {
                   element.border.right.width + element.border.right.widthUnit;
                 btnStyleObject["border-right-style"] =
                   element.border.right.style;
-                if (element.border.right.colors.hex8) {
+                if (element.border.right.colors.hex) {
                   btnStyleObject["border-right-color"] =
-                    element.border.right.colors.hex8;
+                    element.border.right.colors.hex;
                 }
               }
               if (element.border.bottom.width > 0) {
@@ -473,18 +449,18 @@ export default {
                   element.border.bottom.width + element.border.bottom.widthUnit;
                 btnStyleObject["border-bottom-style"] =
                   element.border.bottom.style;
-                if (element.border.bottom.colors.hex8) {
+                if (element.border.bottom.colors.hex) {
                   btnStyleObject["border-bottom-color"] =
-                    element.border.bottom.colors.hex8;
+                    element.border.bottom.colors.hex;
                 }
               }
               if (element.border.left.width > 0) {
                 btnStyleObject["border-left-width"] =
                   element.border.left.width + element.border.left.widthUnit;
                 btnStyleObject["border-left-style"] = element.border.left.style;
-                if (element.border.left.colors.hex8) {
+                if (element.border.left.colors.hex) {
                   btnStyleObject["border-left-color"] =
-                    element.border.left.colors.hex8;
+                    element.border.left.colors.hex;
                 }
               }
               btnStyleObject["border-top-left-radius"] =
@@ -557,13 +533,13 @@ export default {
         //     continue;
         // }
         const cssObject_color_main = {
-          color: item.mainColor ? item.mainColor.hex8 : "",
+          color: item.mainColor ? item.mainColor.hex : "",
         };
         const cssObject_background_minor = {
-          "background-color": item.minorColor ? item.minorColor.hex8 : "",
+          "background-color": item.minorColor ? item.minorColor.hex : "",
         };
         const cssObject_boderColor_minor = {
-          "border-bottom-color": item.minorColor ? item.minorColor.hex8 : "",
+          "border-bottom-color": item.minorColor ? item.minorColor.hex : "",
         };
         IDM.setStyleToPageHead(
           "." +
