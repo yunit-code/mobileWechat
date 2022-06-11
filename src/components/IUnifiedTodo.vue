@@ -755,6 +755,10 @@ export default {
   >>> .van-empty{
     padding: 0;
   }
+  >>> .van-empty{
+    width: 60px;
+    height: 60px;
+  }
 }
 </style>
 
