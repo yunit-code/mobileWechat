@@ -192,7 +192,8 @@ export default {
       this.selectedKey = item.key;
       const url = window.location.href;
       const jumpUrl = url.split("#")[0] + "#/preview/" + item.pageId;
-      window.open(jumpUrl, this.propData.jumpStyle || "_self");
+      this.propData.jumpStyle === '_blank' ? window.open(jumpUrl, "_blank") : window.location.href = jumpUrl;
+      // window.open(jumpUrl, this.propData.jumpStyle || "_self");
     },
     getMenuList() {
       if (this.moduleObject.env === "develop") {
