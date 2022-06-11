@@ -49,14 +49,20 @@
                 <svg v-if="propData.noReadIcon && propData.noReadIcon.length > 0 && item.readStatus != '1'" class="idm-unifie-todo-box-sub-icon-no-read" aria-hidden="true" >
                   <use :xlink:href="`#${propData.noReadIcon[0]}`"></use>
                 </svg>
-                <span>{{item.readStatusText}}</span> 
+                <span :class="getExpressData('data', propData.readExpression, item) ?'idm-unifie-todo-box-sub-hasRead-font' : ''">{{item.readStatusText}}</span> 
               </div>
               <div class="d-flex align-c">
-                <svg-icon iconClass="person" class="idm-unifie-todo-box-sub-icon"></svg-icon> 
-                <span>{{item.sendUserName}}</span> </div>
+                <svg class="idm-unifie-todo-box-sub-icon" aria-hidden="true" :class="getExpressData('data', propData.readExpression, item) ?'idm-unifie-todo-box-sub-hasRead-font' : ''">
+                  <use xlink:href="#idm-icon-ren"></use>
+                </svg>
+                <!-- <svg-icon iconClass="person" class="idm-unifie-todo-box-sub-icon" :class="getExpressData('data', propData.readExpression, item) ?'idm-unifie-todo-box-sub-hasRead-font' : ''"></svg-icon>  -->
+                <span :class="getExpressData('data', propData.readExpression, item) ?'idm-unifie-todo-box-sub-hasRead-font' : ''">{{item.sendUserName}}</span> </div>
               <div class="d-flex align-c">
-                <svg-icon iconClass="time" class="idm-unifie-todo-box-sub-icon"></svg-icon>
-                <span>{{item.time}}</span>
+                <svg class="idm-unifie-todo-box-sub-icon" aria-hidden="true" :class="getExpressData('data', propData.readExpression, item) ?'idm-unifie-todo-box-sub-hasRead-font' : ''">
+                  <use xlink:href="#idm-icon-shijian"></use>
+                </svg>
+                <!-- <svg-icon iconClass="time" class="idm-unifie-todo-box-sub-icon" :class="getExpressData('data', propData.readExpression, item) ?'idm-unifie-todo-box-sub-hasRead-font' : ''"></svg-icon> -->
+                <span :class="getExpressData('data', propData.readExpression, item) ?'idm-unifie-todo-box-sub-hasRead-font' : ''">{{item.time}}</span>
               </div>
             </div>
           </div>
@@ -64,8 +70,10 @@
       </div>
       <div v-if="!isFirst && ( !todoData[listKey] || todoData[listKey].length === 0)" class="idm-unifie-todo-box-empty">
         <van-empty :description="propData.emptyText || '数据为空'" >
-            <van-image width="60" height="60" :src="IDM.url.getModuleAssetsWebPath(require('../assets/empty-default.png'), moduleObject)" />
-          </van-empty>
+          <template  #image>
+              <van-image width="60" height="60" :src="IDM.url.getModuleAssetsWebPath(require('../assets/empty-default.png'), moduleObject)" />
+          </template>
+        </van-empty>
       </div>
     </div>
     <van-loading v-if="pageLoading" type="circular" vertical>加载中...</van-loading>
@@ -263,6 +271,7 @@ export default {
       let readIconObj = {}
       let noReadIconObj = {}
       let subBoxStyleObj = {}
+      let subBoxReadObj = {}
       if(this.propData.bgSize&&this.propData.bgSize=="custom"){
         styleObject["background-size"]=(this.propData.bgSizeWidth?this.propData.bgSizeWidth.inputVal+this.propData.bgSizeWidth.selectVal:"auto")+" "+(this.propData.bgSizeHeight?this.propData.bgSizeHeight.inputVal+this.propData.bgSizeHeight.selectVal:"auto")
       }else if(this.propData.bgSize){
@@ -474,8 +483,11 @@ export default {
               readFontStyleObj["font-family"] = element.fontFamily;
               if (element.fontColors.hex8) {
                   readFontStyleObj["color"] = element.fontColors.hex8;
+                  subBoxReadObj["color"] = element.fontColors.hex8;
+                  subBoxReadObj["fill"] = element.fontColors.hex8;
               }
               readFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
+              subBoxReadObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
               readFontStyleObj["font-style"] = element.fontStyle;
               readFontStyleObj["font-size"] = element.fontSize + element.fontSizeUnit;
               readFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
@@ -513,11 +525,12 @@ export default {
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-title-font", titleFontStyleObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-content", todoFontStyleObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-hasRead", readFontStyleObj);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-hasRead-font", subBoxReadObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-empty", emptyBoxHeightObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-icon-has-read", readIconObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-icon-no-read", noReadIconObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-intr", {'font-size': getAdaptiveSize.call(this, 14) + 'px'});
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-icon", {'font-size': getAdaptiveSize.call(this, 15) + 'px'});
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-icon", {'width': getAdaptiveSize.call(this, 18) + 'px', 'height': getAdaptiveSize.call(this, 18) + 'px'});
       this.initData();
     },
     /**
@@ -833,8 +846,8 @@ export default {
       border-bottom: 0
     }
     &-icon{
-      font-size: 14px;
-      width: 14px;
+      width: 18px;
+      height: 18px;
       fill: currentColor;
       vertical-align: -0.15em;
       outline: none;

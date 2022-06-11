@@ -70,7 +70,9 @@
         </ul>
         <div v-if="!isFirst && ( !messageData.list || messageData.list.length === 0)" class="idm-message-list-box-empty">
           <van-empty :description="propData.emptyText || '数据为空'" >
-            <van-image width="60" height="60" :src="IDM.url.getModuleAssetsWebPath(require('../assets/empty-default.png'), moduleObject)" />
+            <template  #image>
+              <van-image width="60" height="60" :src="IDM.url.getModuleAssetsWebPath(require('../assets/empty-default.png'), moduleObject)" />
+            </template>
           </van-empty>
         </div>
         <van-loading v-if="pageLoading" type="circular" vertical>加载中...</van-loading>

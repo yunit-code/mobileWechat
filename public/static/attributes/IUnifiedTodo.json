@@ -216,9 +216,9 @@
                         "marginBottomVal": "2%",
                         "marginLeftVal": "2%",
                         "paddingTopVal": "",
-                        "paddingRightVal": "",
+                        "paddingRightVal": "2%",
                         "paddingBottomVal": "",
-                        "paddingLeftVal": ""
+                        "paddingLeftVal": "2%"
                     }
                 },
                 {

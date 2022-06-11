@@ -382,26 +382,6 @@
                             "default": ""
                         }
                     ],
-                    "default": [
-                        {
-                            "title": "轮播图1",
-                            "jumpUrl": "",
-                            "image": "",
-                            "imagexl": ""
-                        },
-                        {
-                            "title": "轮播图2",
-                            "jumpUrl": "",
-                            "image": "",
-                            "imagexl": ""
-                        },
-                        {
-                            "title": "轮播图3",
-                            "jumpUrl": "",
-                            "image": "",
-                            "imagexl": ""
-                        }
-                    ],
                     "display": "@[dataType === 'custom']"
                 },
                 {

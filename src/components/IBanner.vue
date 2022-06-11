@@ -44,19 +44,19 @@ function getDefault () {
   const _this = this
   return {
     value: [{
-      jumpUrl: '/dreamweb/',
+      jumpUrl: '',
       image: IDM.url.getModuleAssetsWebPath(require("../assets/banner1.jpg"), _this.moduleObject),
       title:
         "主持召开省政府常务会议研究",
     },
     {
-      jumpUrl: '/dreamweb/',
+      jumpUrl: '',
       image: IDM.url.getModuleAssetsWebPath(require("../assets/banner2.jpg"), _this.moduleObject),
       title:
         "山东“职教高地”建设提质培优",
     },
     {
-      jumpUrl: '/dreamweb/',
+      jumpUrl: '',
       image: IDM.url.getModuleAssetsWebPath(require("../assets/banner3.jpg"), _this.moduleObject),
       title:
         "营商环境优，引得“近邻”来",
@@ -110,13 +110,13 @@ export default {
     this.convertThemeListAttrToStyleObject()
   },
   mounted() {
-    if(this.moduleObject.env === 'develop'){
-      this.initSwiper();
-    }
+    // if(this.moduleObject.env === 'develop'){
+    //   this.initSwiper();
+    // }
   },
   methods: {
     getImageUrl(url) {
-      if(url.indexOf('/DreamWeb') == -1){
+      if(url && url.indexOf('/DreamWeb') == -1){
         return IDM.url.getWebPath(url)
       }
       return url
@@ -150,6 +150,12 @@ export default {
           observeParents: true,                                     //监视父级元素变化,例如show/hide、第一级子元素增加/删除等，则更新Swiper 并触发 observerUpdate 事件
           observeSlideChildren: true,                               //监视监测Swiper 的子元素（wrapper、pagination、navigation、scrollbar）。 当新增/删除这些子元素时，则更新Swiper 并触发 observerUpdate 事件
           on: {
+            slideChange(){
+                console.log('改变了，activeIndex为'+this.activeIndex);
+            },
+            loopFix:function(){
+                console.log('fix');
+            },
             observerUpdate: function(){
               console.log('Swiper更新了');
             },
@@ -435,7 +441,9 @@ export default {
         if(this.moduleObject.env === 'production') {
           this.initSwiper();
         }else{
-          this.fixSwiper()
+          this.swiperObj && this.swiperObj.destroy(true, true)
+          this.swiperObj = null
+          this.initSwiper()
         }
         return
       }else{
@@ -443,8 +451,9 @@ export default {
         if(this.moduleObject.env === 'develop') {
           const data = getDefault.call(this)
           this.bannerData = _.cloneDeep(data)
-          this.fixSwiper()
-          this.swiperObj.slideTo(1, 0, false)
+          this.swiperObj && this.swiperObj.destroy(true, true)
+          this.swiperObj = null
+          this.initSwiper()
           return
         }
       }
@@ -470,13 +479,6 @@ export default {
         })
         .catch((error) => {
       })
-    },
-    fixSwiper() {
-      const elements = document.getElementsByClassName('idm-banner-slide-duplicate')
-      elements[0].getElementsByTagName('img')[0].src = this.getImageUrl(this.bannerData.value[this.bannerData.value.length - 1].image)
-      elements[0].getElementsByTagName('span')[0].innerHTML = this.bannerData.value[this.bannerData.value.length - 1].title
-      elements[1].getElementsByTagName('img')[0].src = this.getImageUrl(this.bannerData.value[0].image)
-      elements[1].getElementsByTagName('span')[0].innerHTML = this.bannerData.value[0].title
     },
     /**
      * 通用的获取表达式匹配后的结果
