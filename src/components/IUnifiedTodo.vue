@@ -39,7 +39,7 @@
         <div class="idm-unifie-todo-box-sub-title" :class="{'idm-unifie-todo-box-sub-no-read': true}">
           <div class="flex-1">
             <div class="idm-unifie-todo-box-sub-content" :class="getExpressData('data', propData.readExpression, item) ?'idm-unifie-todo-box-sub-hasRead' : ''">
-              <span v-if="item.moduleName">【{{item.moduleName}}】</span>{{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}
+              <span v-if="item.moduleName" class="ml-7">【{{item.moduleName}}】</span>{{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}
             </div>
             <div class="idm-unifie-todo-box-sub-intr">
               <div class="d-flex align-c">
@@ -92,7 +92,7 @@ const todoData = {
     readStatusText: '未读',
     sendUserName: '文档处',
     time: '2022-04-21 12:56',
-    title: '关于扎实做好近期疫情防控有关工作的通知'
+    title: '关于扎实做好近期疫情防控有关工作的通知,关于扎实做好近期疫情防控有关工作的通知,关于扎实做好近期疫情防控有关工作的通知'
   },{
     jumpUrl: '',
     isHot: '-1',
@@ -810,6 +810,9 @@ export default {
       overflow: hidden;
       letter-spacing: 1px;
       font-size: 15px;
+      .ml-7{
+        margin-left: -7px;
+      }
     }
     &-no-read{
       color: #000;
