@@ -433,10 +433,7 @@
                             "text": "背景色",
                             "bindKey": "bgColor",
                             "placeholder": "请选择颜色",
-                            "default": {},
-                            "ctrlAttrObject": {
-                                "disabledInput": true
-                            }
+                            "default": {}
                         },
                         {
                             "type": "uploadImage",
@@ -671,10 +668,7 @@
                             "text": "背景色",
                             "bindKey": "bgColor2",
                             "placeholder": "请选择颜色",
-                            "default": {},
-                            "ctrlAttrObject": {
-                                "disabledInput": true
-                            }
+                            "default": {}
                         },
                         {
                             "type": "uploadImage",
@@ -926,10 +920,7 @@
                     "bindKey": "mainColor",
                     "desc":"主题的主要颜色",
                     "placeholder": "请选择颜色",
-                    "display":"@[key]",
-                    "ctrlAttrObject": {
-                        "disabledInput": true
-                    }
+                    "display":"@[key]"
                 }
             ]
         },
