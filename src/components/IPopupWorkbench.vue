@@ -192,7 +192,7 @@ export default {
       this.selectedKey = item.key;
       const url = window.location.href;
       const jumpUrl = url.split("#")[0] + "#/preview/" + item.pageId;
-      this.propData.jumpStyle === '_blank' ? window.open(jumpUrl, "_blank") : window.location.replace(jumpUrl);
+      this.propData.jumpStyle === '_replace' ? window.location.replace(jumpUrl) : window.open(jumpUrl, this.propData.jumpStyle || "_self");
       // window.open(jumpUrl, this.propData.jumpStyle || "_self");
     },
     getMenuList() {
