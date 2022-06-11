@@ -57,7 +57,7 @@
         </ul>
         <ul class="idm-message-list-box-list2" v-if="!pageLoading && (propData.compStyle === 'styleTwo' || propData.compStyle === 'styleThree')">
           <li class="d-flex" v-for="(item, index) in messageData.list" :key="index" @click="handleClickItem(item)">
-            <img :src="item.image" :class="propData.compStyle === 'styleTwo' ? 'idm-message-list-box-list2-left-img' : 'idm-message-list-box-list2-left-img2'" alt="">
+            <img :src="getImageUrl(item.image)" :class="propData.compStyle === 'styleTwo' ? 'idm-message-list-box-list2-left-img' : 'idm-message-list-box-list2-left-img2'" alt="">
             <div style="overflow:hidden; flex: 1">
               <div class="idm-message-list-box-list2-title" :class="propData.compStyle === 'styleTwo' ? 'idm-message-list-box-list2-title' : 'idm-message-list-box-list2-title2'">
                 {{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}
@@ -94,24 +94,26 @@ import 'vant/lib/image/style';
 import { getAdaptiveSize } from '@/utils/adaptationScreen'
 
 import { getDatasInterfaceUrl } from '@/api/config'
-const messageData = {
+function getDefault () {
+  const _this = this
+return {
     list:[{
       title: "营商环境优，引得“近邻”来",
-      image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.xntv.tv%2Fd%2Ffile%2F2018-04-26%2Ffa767ea3d7f35f9d44531daa96fd32a4.jpg&refer=http%3A%2F%2Fwww.xntv.tv&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1655102114&t=f60af982a9e9191280839e5d2a4cafd1",
+      image: 'data:image/jpeg;base64,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',
       jumpUrl: "",
       time: "2022-04-15",
       author: "作者"
     },
     {
       title: "山东“职教高地”建设提质培优",
-      image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fq_70%2Cc_zoom%2Cw_640%2Fimages%2F20190329%2F3dfe53bbc72945efa027676bc250d87c.jpeg&refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1655102114&t=d03ee07e0978bf8c3483099216cdac6c",
+      image: 'data:image/jpeg;base64,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',
       jumpUrl: "",
       time: "2022-04-14",
       author: "作者"
     },
     {
       title: "山东省人民政府办公厅关于印发",
-      image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.xntv.tv%2Fd%2Ffile%2F2018-04-26%2Ffa767ea3d7f35f9d44531daa96fd32a4.jpg&refer=http%3A%2F%2Fwww.xntv.tv&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1655102114&t=f60af982a9e9191280839e5d2a4cafd1",
+      image: 'data:image/jpeg;base64,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',
       jumpUrl: "",
       time: "2022-04-13",
       author: "作者"
@@ -119,6 +121,7 @@ const messageData = {
     moreUrl: "",
     total:"99"
   }
+}
 
 export default {
   name: 'IMessageList',
@@ -163,6 +166,15 @@ export default {
     this.convertThemeListAttrToStyleObject()
   },
   methods:{
+    getImageUrl(url) {
+      if(url && url.indexOf('base64') > -1){
+        return url
+      }
+      if(url && url.indexOf('/DreamWeb') == -1){
+        return IDM.url.getWebPath(url)
+      }
+      return url
+    },
     /**
      * 单个信息点击事件
      * @param {单个信息} item
@@ -623,6 +635,7 @@ export default {
       if(index === -1) this.defaultIndex = activeIndex
       else this.defaultIndex = index //配置时或初始化时设置选中
       if(this.moduleObject.env === 'develop') {
+        let messageData = getDefault.call(this)
         this.messageData = _.cloneDeep(messageData)
         return
       }

@@ -109,6 +109,15 @@ export default {
     this.convertAttrToStyleObject();
     this.convertThemeListAttrToStyleObject()
   },
+  watch: {
+    isSmallScreen: {
+      handler() {
+        this.swiperObj && this.swiperObj.destroy(true, true)
+        this.swiperObj = null
+        this.initSwiper()
+      }
+    }
+  },
   mounted() {
     // if(this.moduleObject.env === 'develop'){
     //   this.initSwiper();
@@ -123,13 +132,14 @@ export default {
     },
     initSwiper() {
       if(this.swiperObj) return
+      const _this = this
       this.$nextTick(()=> {
         console.log('init...')
         this.swiperObj = new Swiper('#'+this.moduleObject.id + " .idm-banner-box-swiper-container", {
           autoplay: 2000,                                           //自动播放
           speed: 500,                                               //播放速度
           loop: true,                                               //循环播放
-          loopedSlides: 1,                                        //循环个数
+          loopedSlides: 4,                                        //循环个数
           slidesPerView: 'auto',                                    //预览slide个数
           effect: 'coverflow',                                      //特效组件
           pagination: !this.propData.showBullet ? '' :  { //指示器
@@ -152,6 +162,9 @@ export default {
           on: {
             slideChange(){
                 console.log('改变了，activeIndex为'+this.activeIndex);
+                if(this.activeIndex === _this.bannerData.value.length + 1) {
+                  _this.swiperObj.slideToLoop(1, 500, false)
+                }
             },
             loopFix:function(){
                 console.log('fix');
