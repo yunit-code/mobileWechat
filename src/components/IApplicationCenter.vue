@@ -180,10 +180,10 @@ export default {
             for (var i = 0; i < themeList.length; i++) {
                 var item = themeList[i];
                 let styleObject = {
-                    "background-color": item.minorColor ? item.minorColor.hex8 : "",
+                    "background-color": item.minorColor ? item.minorColor.hex : "",
                 };
                 let fontStyleObject = {
-                    "color": item.mainColor ? item.mainColor.hex8 : "",
+                    "color": item.mainColor ? item.mainColor.hex : "",
                 }
                 IDM.setStyleToPageHead(
                     "." + themeNamePrefix + item.key + " #" + (this.moduleObject.packageid || "module_demo") +
@@ -392,7 +392,7 @@ export default {
                 return
             }
             let result = str.replace(/\/0$/,'')
-            return result
+            return str
         },
         getApplicationImgUrl(item) {
             if ( item.selectApplication && item.selectApplication.imageUrl && !item.isUserEditable ) {
@@ -550,8 +550,8 @@ export default {
                             styleObject[key] = element;
                             break;
                         case "bgColor":
-                            if (element && element.hex8) {
-                                styleObject["background-color"] = element.hex8;
+                            if (element && element.hex) {
+                                styleObject["background-color"] = element.hex;
                             }
                             break;
                         case "box":
@@ -603,29 +603,29 @@ export default {
                             if (element.border.top.width > 0) {
                                 styleObject["border-top-width"] = element.border.top.width + element.border.top.widthUnit;
                                 styleObject["border-top-style"] = element.border.top.style;
-                                if (element.border.top.colors.hex8) {
-                                    styleObject["border-top-color"] = element.border.top.colors.hex8;
+                                if (element.border.top.colors.hex) {
+                                    styleObject["border-top-color"] = element.border.top.colors.hex;
                                 }
                             }
                             if (element.border.right.width > 0) {
                                 styleObject["border-right-width"] = element.border.right.width + element.border.right.widthUnit;
                                 styleObject["border-right-style"] = element.border.right.style;
-                                if (element.border.right.colors.hex8) {
-                                    styleObject["border-right-color"] = element.border.right.colors.hex8;
+                                if (element.border.right.colors.hex) {
+                                    styleObject["border-right-color"] = element.border.right.colors.hex;
                                 }
                             }
                             if (element.border.bottom.width > 0) {
                                 styleObject["border-bottom-width"] = element.border.bottom.width + element.border.bottom.widthUnit;
                                 styleObject["border-bottom-style"] = element.border.bottom.style;
-                                if (element.border.bottom.colors.hex8) {
-                                    styleObject["border-bottom-color"] = element.border.bottom.colors.hex8;
+                                if (element.border.bottom.colors.hex) {
+                                    styleObject["border-bottom-color"] = element.border.bottom.colors.hex;
                                 }
                             }
                             if (element.border.left.width > 0) {
                                 styleObject["border-left-width"] = element.border.left.width + element.border.left.widthUnit;
                                 styleObject["border-left-style"] = element.border.left.style;
-                                if (element.border.left.colors.hex8) {
-                                    styleObject["border-left-color"] = element.border.left.colors.hex8;
+                                if (element.border.left.colors.hex) {
+                                    styleObject["border-left-color"] = element.border.left.colors.hex;
                                 }
                             }
 
@@ -636,8 +636,8 @@ export default {
                             break;
                         case "font":
                             fontStyleObject["font-family"] = element.fontFamily;
-                            if (element.fontColors.hex8) {
-                                fontStyleObject["color"] = element.fontColors.hex8;
+                            if (element.fontColors.hex) {
+                                fontStyleObject["color"] = element.fontColors.hex;
                             }
                             fontStyleObject["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                             fontStyleObject["font-style"] = element.fontStyle;
@@ -648,8 +648,8 @@ export default {
                             break;
                         case "titleFont":
                             styleObjectTitle["font-family"] = element.fontFamily;
-                            if (element.fontColors.hex8) {
-                                styleObjectTitle["color"] = element.fontColors.hex8;
+                            if (element.fontColors.hex) {
+                                styleObjectTitle["color"] = element.fontColors.hex;
                             }
                             styleObjectTitle["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                             styleObjectTitle["font-style"] = element.fontStyle;
@@ -659,7 +659,7 @@ export default {
                             styleObjectTitle["text-decoration"] = element.fontDecoration;
                             break;
                         case "titleIconFontColor":
-                            styleObjectTitleIcon["color"] = element.hex8;
+                            styleObjectTitleIcon["color"] = element.hex;
                             break
                         case "titleIconFontSize":
                             styleObjectTitleIcon["font-size"] = this.translatePxToAdaptation(element) + "px";
@@ -711,8 +711,8 @@ export default {
                             styleObject['height'] = element;
                             break;
                         case "bgColorInner":
-                            if (element && element.hex8) {
-                                styleObject["background-color"] = element.hex8;
+                            if (element && element.hex) {
+                                styleObject["background-color"] = element.hex;
                             }
                             break;
                         case "boxInner":
@@ -764,29 +764,29 @@ export default {
                             if (element.border.top.width > 0) {
                                 styleObject["border-top-width"] = element.border.top.width + element.border.top.widthUnit;
                                 styleObject["border-top-style"] = element.border.top.style;
-                                if (element.border.top.colors.hex8) {
-                                    styleObject["border-top-color"] = element.border.top.colors.hex8;
+                                if (element.border.top.colors.hex) {
+                                    styleObject["border-top-color"] = element.border.top.colors.hex;
                                 }
                             }
                             if (element.border.right.width > 0) {
                                 styleObject["border-right-width"] = element.border.right.width + element.border.right.widthUnit;
                                 styleObject["border-right-style"] = element.border.right.style;
-                                if (element.border.right.colors.hex8) {
-                                    styleObject["border-right-color"] = element.border.right.colors.hex8;
+                                if (element.border.right.colors.hex) {
+                                    styleObject["border-right-color"] = element.border.right.colors.hex;
                                 }
                             }
                             if (element.border.bottom.width > 0) {
                                 styleObject["border-bottom-width"] = element.border.bottom.width + element.border.bottom.widthUnit;
                                 styleObject["border-bottom-style"] = element.border.bottom.style;
-                                if (element.border.bottom.colors.hex8) {
-                                    styleObject["border-bottom-color"] = element.border.bottom.colors.hex8;
+                                if (element.border.bottom.colors.hex) {
+                                    styleObject["border-bottom-color"] = element.border.bottom.colors.hex;
                                 }
                             }
                             if (element.border.left.width > 0) {
                                 styleObject["border-left-width"] = element.border.left.width + element.border.left.widthUnit;
                                 styleObject["border-left-style"] = element.border.left.style;
-                                if (element.border.left.colors.hex8) {
-                                    styleObject["border-left-color"] = element.border.left.colors.hex8;
+                                if (element.border.left.colors.hex) {
+                                    styleObject["border-left-color"] = element.border.left.colors.hex;
                                 }
                             }
 
