@@ -353,7 +353,7 @@
                             "layoutType": "inline",
                             "text": "图标大小",
                             "bindKey": "readIconSize",
-                            "default": 18
+                            "default": 15
                         }
                     ]
                 },
@@ -385,7 +385,7 @@
                             "layoutType": "inline",
                             "text": "图标大小",
                             "bindKey": "noReadIconSize",
-                            "default": 18
+                            "default": 15
                         }
                     ]
                 },
