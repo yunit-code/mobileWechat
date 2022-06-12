@@ -309,7 +309,7 @@ export default {
           }
         }
       }
-      window.IDM.setStyleToPageHead(this.moduleObject.id,styleObject);
+      window.IDM.setStyleToPageHead((this.moduleObject.packageid || "module_demo") + " #" + this.moduleObject.id, styleObject);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .top-bg .top-content .text",fontStyleObject);
     },
     /**
@@ -362,8 +362,7 @@ export default {
           "." +
             themeNamePrefix +
             item.mainKey +
-            " #" +
-            (this.moduleObject.packageid || "module_demo") + " .idm_top_box",
+            " #" + this.moduleObject.id,
           cssObject_background_detail
         );
       }
