@@ -241,7 +241,7 @@ export default {
               }
               break;
             case "mainBgImgUrl":
-              styleObject["background-image"]=`url(${window.IDM.url.getWebPath(element)})`;
+              styleObject["background-image"]=element && `url(${window.IDM.url.getWebPath(element)})`;
               break;
             case "mainPositionX":
               //背景横向偏移
@@ -346,7 +346,7 @@ export default {
         }
         cssObject_background_detail["background-position-x"]=item.mainPositionX&&item.mainPositionX.inputVal ? item.mainPositionX.inputVal+item.mainPositionX.selectVal : '';
         cssObject_background_detail["background-position-y"]= item.mainPositionY&&item.mainPositionY.inputVal ? item.mainPositionY.inputVal+item.mainPositionY.selectVal : '';
-        cssObject_background_detail["background-image"]=`url(${window.IDM.url.getWebPath(item.mainBgImgUrl)})`;
+        cssObject_background_detail["background-image"]=item.mainBgImgUrl && `url(${window.IDM.url.getWebPath(item.mainBgImgUrl)})`;
         cssObject_background_detail["background-repeat"]=item.mainBgRepeat;
         cssObject_background_detail["background-attachment"]=item.mainBgAttachment;
         cssObject_background_detail["background-color"]=item.mainMainColor ? item.mainMainColor.hex : "";
