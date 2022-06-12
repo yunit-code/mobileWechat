@@ -306,7 +306,8 @@
                         },
                         "fontSize": 15,
                         "fontSizeUnit": "px",
-                        "fontWeight": "500"
+                        "fontWeight": "500",
+                        "fontFamily": "PingFangSC-Regular"
                     }
                 },
                 {
@@ -320,10 +321,10 @@
                         },
                         "fontSize": 15,
                         "fontSizeUnit": "px",
-                        "fontWeight": "500"
+                        "fontWeight": "500",
+                        "fontFamily": "PingFangSC-Regular"
                     }
                 },
-                
                 {
                     "type": "group",
                     "text": "已读图标设置",

@@ -49,20 +49,18 @@
                 <svg v-if="propData.noReadIcon && propData.noReadIcon.length > 0 && item.readStatus != '1'" class="idm-unifie-todo-box-sub-icon-no-read" aria-hidden="true" >
                   <use :xlink:href="`#${propData.noReadIcon[0]}`"></use>
                 </svg>
-                <span :class="getExpressData('data', propData.readExpression, item) ?'idm-unifie-todo-box-sub-hasRead-font' : ''">{{item.readStatusText}}</span> 
+                <span>{{item.readStatusText}}</span> 
               </div>
               <div class="d-flex align-c">
-                <svg class="idm-unifie-todo-box-sub-icon" aria-hidden="true" :class="getExpressData('data', propData.readExpression, item) ?'idm-unifie-todo-box-sub-hasRead-font' : ''">
+                <svg class="idm-unifie-todo-box-sub-icon" aria-hidden="true">
                   <use xlink:href="#idm-icon-ren"></use>
                 </svg>
-                <!-- <svg-icon iconClass="person" class="idm-unifie-todo-box-sub-icon" :class="getExpressData('data', propData.readExpression, item) ?'idm-unifie-todo-box-sub-hasRead-font' : ''"></svg-icon>  -->
-                <span :class="getExpressData('data', propData.readExpression, item) ?'idm-unifie-todo-box-sub-hasRead-font' : ''">{{item.sendUserName}}</span> </div>
+                <span>{{item.sendUserName}}</span> </div>
               <div class="d-flex align-c">
-                <svg class="idm-unifie-todo-box-sub-icon" aria-hidden="true" :class="getExpressData('data', propData.readExpression, item) ?'idm-unifie-todo-box-sub-hasRead-font' : ''">
+                <svg class="idm-unifie-todo-box-sub-icon" aria-hidden="true">
                   <use xlink:href="#idm-icon-shijian"></use>
                 </svg>
-                <!-- <svg-icon iconClass="time" class="idm-unifie-todo-box-sub-icon" :class="getExpressData('data', propData.readExpression, item) ?'idm-unifie-todo-box-sub-hasRead-font' : ''"></svg-icon> -->
-                <span :class="getExpressData('data', propData.readExpression, item) ?'idm-unifie-todo-box-sub-hasRead-font' : ''">{{item.time}}</span>
+                <span>{{item.time}}</span>
               </div>
             </div>
           </div>
@@ -271,7 +269,6 @@ export default {
       let readIconObj = {}
       let noReadIconObj = {}
       let subBoxStyleObj = {}
-      let subBoxReadObj = {}
       if(this.propData.bgSize&&this.propData.bgSize=="custom"){
         styleObject["background-size"]=(this.propData.bgSizeWidth?this.propData.bgSizeWidth.inputVal+this.propData.bgSizeWidth.selectVal:"auto")+" "+(this.propData.bgSizeHeight?this.propData.bgSizeHeight.inputVal+this.propData.bgSizeHeight.selectVal:"auto")
       }else if(this.propData.bgSize){
@@ -483,11 +480,8 @@ export default {
               readFontStyleObj["font-family"] = element.fontFamily;
               if (element.fontColors.hex) {
                   readFontStyleObj["color"] = element.fontColors.hex;
-                  subBoxReadObj["color"] = element.fontColors.hex;
-                  subBoxReadObj["fill"] = element.fontColors.hex;
               }
               readFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
-              subBoxReadObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
               readFontStyleObj["font-style"] = element.fontStyle;
               readFontStyleObj["font-size"] = element.fontSize + element.fontSizeUnit;
               readFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
@@ -525,7 +519,6 @@ export default {
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-title-font", titleFontStyleObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-content", todoFontStyleObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-hasRead", readFontStyleObj);
-      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-hasRead-font", subBoxReadObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-empty", emptyBoxHeightObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-icon-has-read", readIconObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-unifie-todo-box-sub-icon-no-read", noReadIconObj);
@@ -845,6 +838,7 @@ export default {
       justify-content: space-between;
       color: #999;
       font-size: 15px;
+      font-family: PingFangSC-Regular;
     }
     &:last-child{
       border-bottom: 0

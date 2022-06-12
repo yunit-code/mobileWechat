@@ -231,7 +231,8 @@
                             "hex": "#333333"
                         },
                         "fontSize": 16,
-                        "fontSizeUnit": "px"
+                        "fontSizeUnit": "px",
+                        "fontFamily": "PingFangSC-Regular"
                     },
                     "display": "@[compStyle !== 'styleFour']"
                 }
@@ -377,7 +378,8 @@
                             "hex": "#888888"
                         },
                         "fontSize": 16,
-                        "fontSizeUnit": "px"
+                        "fontSizeUnit": "px",
+                        "fontFamily": "PingFangSC-Regular"
                     },
                     "display": "@[showTab == true]"
                 },
@@ -394,7 +396,8 @@
                         "fontSize": 16,
                         "fontWeight": "600",
                         "fontSizeUnit": "px",
-                        "fontDecoration": "none"
+                        "fontDecoration": "none",
+                        "fontFamily": "PingFangSC-Regular"
                     },
                     "display": "@[showTab == true]"
                 },
@@ -408,7 +411,8 @@
                             "hex": "#000000"
                         },
                         "fontSize": 16,
-                        "fontSizeUnit": "px"
+                        "fontSizeUnit": "px",
+                        "fontFamily": "PingFangSC-Regular"
                     }
                 },
                 {
