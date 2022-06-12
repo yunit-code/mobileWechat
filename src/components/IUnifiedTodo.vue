@@ -836,7 +836,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      color: #999;
+      color: #666;
       font-size: 15px;
       font-family: PingFangSC-Regular;
     }

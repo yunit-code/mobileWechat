@@ -306,8 +306,8 @@
                         },
                         "fontSize": 15,
                         "fontSizeUnit": "px",
-                        "fontWeight": "500",
-                        "fontFamily": "PingFangSC-Regular"
+                        "fontWeight": "600",
+                        "fontFamily": "AlibabaPuHuiTi-Regular"
                     }
                 },
                 {
@@ -317,12 +317,12 @@
                     "bindKey": "readFontStyle",
                     "default": {
                         "fontColors": {
-                            "hex": "#999999"
+                            "hex": "#333333"
                         },
                         "fontSize": 15,
                         "fontSizeUnit": "px",
                         "fontWeight": "500",
-                        "fontFamily": "PingFangSC-Regular"
+                        "fontFamily": "AlibabaPuHuiTi-Regular"
                     }
                 },
                 {
