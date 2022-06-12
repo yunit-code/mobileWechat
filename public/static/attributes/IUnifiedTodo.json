@@ -317,7 +317,7 @@
                     "bindKey": "readFontStyle",
                     "default": {
                         "fontColors": {
-                            "hex": "#333333"
+                            "hex": "#343434"
                         },
                         "fontSize": 15,
                         "fontSizeUnit": "px",
