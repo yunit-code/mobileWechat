@@ -915,8 +915,13 @@ export default {
             color: #333333;
             font-weight: 600;
             line-height: 23px;
+            white-space: nowrap;
+            overflow: hidden;
+            max-width: 250px;
+            text-overflow: ellipsis;
         }
         .idm_applicationcenter_title_right{
+            flex-shrink: 0;
             line-height: 1;
             i{
                 font-size: 23px;
