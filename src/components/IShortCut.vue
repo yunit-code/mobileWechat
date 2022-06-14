@@ -568,18 +568,19 @@ export default {
           })
         }else if(this.propData.shortCutStyle === 'default2') {
           let styleObjects = {};
-          styleObjects['width'] = `${this.funScreenAdaptationHeight(40, 0.5)}px`;
-          styleObjects['height'] = `${this.funScreenAdaptationHeight(40, 0.5)}px`;
+          styleObjects['width'] = `${this.funScreenAdaptationHeight(this.propData.shortItemWidth2 || 40, 0.5)}px`;
+          styleObjects['height'] = `${this.funScreenAdaptationHeight(this.propData.shortItemWidth2 || 40, 0.5)}px`;
+          window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_shortcut_cont .img_box", styleObjects);
           window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_shortcut_cont .img_box", styleObjects);
         }else {
           let styleObjects = {};
           let styleObjects2 = {};
           let styleObjects3 = {};
-          styleObjects['width'] = `${this.funScreenAdaptationHeight(45, 0.5)}px`;
-          styleObjects['height'] = `${this.funScreenAdaptationHeight(50, 0.5)}px`;
-          styleObjects2['width'] = `${this.funScreenAdaptationHeight(50, 0.5)}px`;
-          styleObjects2['height'] = `${this.funScreenAdaptationHeight(40, 0.5)}px`;
+          styleObjects['width'] = `${this.funScreenAdaptationHeight(this.propData.shortItemWidth3 || 45, 0.5)}px`;
+          styleObjects['height'] = `${this.funScreenAdaptationHeight(this.propData.shortItemWidth3 +5 || 50, 0.5)}px`;
           styleObjects['margin-bottom'] = `-${this.funScreenAdaptationHeight(30, 0.5)}px`;
+          styleObjects2['width'] = `${this.funScreenAdaptationHeight(this.propData.shortItemWidth3 +5 || 50, 0.5)}px`;
+          styleObjects2['height'] = `${this.funScreenAdaptationHeight(40, 0.5)}px`;
           styleObjects3['top'] = `${this.funScreenAdaptationHeight(8, 0.5)}px`;
           window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_shortcut_cont .img_box", styleObjects);
           window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm_shortcut_cont .empty-view", styleObjects2);

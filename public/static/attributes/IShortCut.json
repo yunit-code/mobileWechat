@@ -92,6 +92,24 @@
                     "display": "@[shortCutStyle=='default']"
                 },
                 {
+                    "type": "inputNumber",
+                    "layoutType": "inline",
+                    "text": "每项宽度",
+                    "desc": "填写应用图片的宽度，单位px",
+                    "bindKey": "shortItemWidth2",
+                    "default": 40,
+                    "display": "@[shortCutStyle=='default2']"
+                },
+                {
+                    "type": "inputNumber",
+                    "layoutType": "inline",
+                    "text": "每项宽度",
+                    "desc": "填写应用图片的宽度，单位px",
+                    "bindKey": "shortItemWidth3",
+                    "default": 45,
+                    "display": "@[shortCutStyle=='default3']"
+                },
+                {
                     "type": "inputNumberUnit",
                     "layoutType": "inline",
                     "text": "每项高度",
@@ -226,7 +244,7 @@
                                     "value": "em"
                                 }
                             ],
-                            "display": "@[bgUrl]"
+                            "display": "@[bgUrl && shortCutStyle=='default']"
                         },
                         {
                             "type": "inputNumberUnit",
@@ -247,7 +265,7 @@
                                     "value": "em"
                                 }
                             ],
-                            "display": "@[bgUrl]"
+                            "display": "@[bgUrl && shortCutStyle=='default']"
                         },
                         {
                             "type": "radio",
@@ -276,7 +294,7 @@
                                     "value": "inherit"
                                 }
                             ],
-                            "display": "@[bgUrl]"
+                            "display": "@[bgUrl && shortCutStyle=='default']"
                         },
                         {
                             "type": "radio",
@@ -297,7 +315,7 @@
                                     "value": "inherit"
                                 }
                             ],
-                            "display": "@[bgUrl]"
+                            "display": "@[bgUrl && shortCutStyle=='default']"
                         },
                         {
                             "type": "switch",
