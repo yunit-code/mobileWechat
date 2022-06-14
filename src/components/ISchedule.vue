@@ -1055,6 +1055,7 @@ $scale: var(--i-schedule-scale);
     justify-content: space-between;
 
     .i-schedule-header-main {
+      width: 90%;
       display: flex;
       .i-schedule-header-tit {
         font-family: PingFangSC-Regular;
@@ -1065,9 +1066,14 @@ $scale: var(--i-schedule-scale);
         align-items: center;
         flex-direction: row;
         font-size: calc(16px * #{ $scale });
+        max-width: 60%;
 
         span {
           margin: 0 5px;
+          width: 90%;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
         }
         
         transform: translateX(-5px);
