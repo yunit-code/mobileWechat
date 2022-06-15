@@ -15,12 +15,12 @@
                     <svg v-if="propData.showTitleIcon && propData.titleIconPosition == 'left' && propData.titleIconClass && propData.titleIconClass.length" class="idm_filed_svg_icon idm_applicationcenter_title_left_icon1" aria-hidden="true" >
                         <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
                     </svg>
-                    <svg-icon v-else-if="propData.showTitleIcon && propData.titleIconPosition == 'left' && ((!propData.titleIconClass) || !propData.titleIconClass.length)" icon-class="application-icon" />
+                    <svg-icon class="svg_icon_default" v-else-if="propData.showTitleIcon && propData.titleIconPosition == 'left' && ((!propData.titleIconClass) || !propData.titleIconClass.length)" icon-class="application-icon" />
                     <div class="idm_applicationcenter_title_left_text">{{ propData.title || '应用中心' }}</div>
                     <svg v-if="propData.showTitleIcon && propData.titleIconPosition == 'right' && propData.titleIconClass && propData.titleIconClass.length" class="idm_filed_svg_icon idm_applicationcenter_title_left_icon2" aria-hidden="true" >
                         <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
                     </svg>
-                    <svg-icon v-else-if="propData.showTitleIcon && propData.titleIconPosition == 'right' && ((!propData.titleIconClass) || !propData.titleIconClass.length)" icon-class="application-icon" />
+                    <svg-icon class="svg_icon_default" v-else-if="propData.showTitleIcon && propData.titleIconPosition == 'right' && ((!propData.titleIconClass) || !propData.titleIconClass.length)" icon-class="application-icon" />
                 </div>
                 <div @click="toApplicationManage" v-if="propData.isMyApplication" class="idm_applicationcenter_title_right">
                     <van-icon class="idm-message-list-box-top-more" name="ellipsis" />
@@ -908,6 +908,9 @@ export default {
         .idm_applicationcenter_title_left_icon1{
             margin-right: 5px;
         }
+        .svg_icon_default{
+            flex-shrink: 0;
+        }
         .idm_applicationcenter_title_left_text{
             margin-right: 5px;
             font-family: PingFangSC-Medium;
@@ -915,12 +918,11 @@ export default {
             color: #333333;
             font-weight: 600;
             line-height: 23px;
-            white-space: nowrap;
-            overflow: hidden;
-            max-width: 250px;
-            text-overflow: ellipsis;
+            word-break: break-all;
+            text-align: left;
         }
         .idm_applicationcenter_title_right{
+            margin-left: 20px;
             flex-shrink: 0;
             line-height: 1;
             i{
@@ -992,6 +994,7 @@ export default {
     fill: currentColor;
     vertical-align: -0.15em;
     outline: none;
+    flex-shrink: 0;
 }
 .idm_applicationcenter{
     .van-popup--center{
