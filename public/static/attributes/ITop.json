@@ -788,9 +788,6 @@
                                 "oldHue": 0,
                                 "source": "hsva",
                                 "a": 1
-                            },
-                            "ctrlAttrObject": {
-                                "disabledInput": true
                             }
                         },
                         {
@@ -976,7 +973,7 @@
                             "bindKey": "font",
                             "default": {
                                 "fontColors": {
-                                    "hex": "#333333"
+                                    "hex8": "#333333FF"
                                 },
                                 "fontFamily": "PingFangSC-Regular",
                                 "fontSize": 16,
