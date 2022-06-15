@@ -138,6 +138,7 @@
                     "bindKey": "fontStyle",
                     "default": {
                         "fontColors": {
+                            "hex": "#333333",
                             "hex8": "#333333FF"
                         },
                         "fontSize": 14,

@@ -179,10 +179,7 @@
                     "bindKey": "mainMainColor",
                     "desc": "主题的主要颜色，应用于背景颜色",
                     "placeholder": "请选择颜色",
-                    "display": "@[mainKey]",
-                    "ctrlAttrObject": {
-                        "disabledInput": true
-                    }
+                    "display": "@[mainKey]"
                 },
                 {
                     "type": "colorPicker",
@@ -191,10 +188,7 @@
                     "bindKey": "mainMinorColor",
                     "desc": "应用于文字颜色",
                     "placeholder": "请选择颜色",
-                    "display": "@[mainKey]",
-                    "ctrlAttrObject": {
-                        "disabledInput": true
-                    }
+                    "display": "@[mainKey]"
                 },
                 {
                     "type": "uploadImage",
@@ -435,10 +429,7 @@
                             "layoutType": "inline",
                             "text": "背景色",
                             "bindKey": "mainBgColor",
-                            "placeholder": "请选择颜色",
-                            "ctrlAttrObject": {
-                                "disabledInput": true
-                            }
+                            "placeholder": "请选择颜色"
                         },
                         {
                             "type": "uploadImage",
@@ -973,6 +964,7 @@
                             "bindKey": "font",
                             "default": {
                                 "fontColors": {
+                                    "hex": "#333333",
                                     "hex8": "#333333FF"
                                 },
                                 "fontFamily": "PingFangSC-Regular",

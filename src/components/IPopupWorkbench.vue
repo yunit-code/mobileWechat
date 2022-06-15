@@ -278,8 +278,8 @@ export default {
               if (element.fontFamily) {
                 titleStyleObject["font-family"] = element.fontFamily;
               }
-              if (element.fontColors.hex) {
-                titleStyleObject["color"] = element.fontColors.hex;
+              if (element.fontColors.hex8) {
+                titleStyleObject["color"] = IDM.hex8ToRgbaString(element.fontColors.hex8);
               }
               if (element.fontWeight) {
                 titleStyleObject["font-weight"] =
@@ -349,9 +349,9 @@ export default {
                 popupStyleObject["border-top-width"] =
                   element.border.top.width + element.border.top.widthUnit;
                 popupStyleObject["border-top-style"] = element.border.top.style;
-                if (element.border.top.colors.hex) {
+                if (element.border.top.colors.hex8) {
                   popupStyleObject["border-top-color"] =
-                    element.border.top.colors.hex;
+                    IDM.hex8ToRgbaString(element.border.top.colors.hex8);
                 }
               }
               if (element.border.right.width > 0) {
@@ -359,9 +359,9 @@ export default {
                   element.border.right.width + element.border.right.widthUnit;
                 popupStyleObject["border-right-style"] =
                   element.border.right.style;
-                if (element.border.right.colors.hex) {
+                if (element.border.right.colors.hex8) {
                   popupStyleObject["border-right-color"] =
-                    element.border.right.colors.hex;
+                    IDM.hex8ToRgbaString(element.border.right.colors.hex8);
                 }
               }
               if (element.border.bottom.width > 0) {
@@ -369,9 +369,9 @@ export default {
                   element.border.bottom.width + element.border.bottom.widthUnit;
                 popupStyleObject["border-bottom-style"] =
                   element.border.bottom.style;
-                if (element.border.bottom.colors.hex) {
+                if (element.border.bottom.colors.hex8) {
                   popupStyleObject["border-bottom-color"] =
-                    element.border.bottom.colors.hex;
+                    IDM.hex8ToRgbaString(element.border.bottom.colors.hex8);
                 }
               }
               if (element.border.left.width > 0) {
@@ -379,9 +379,9 @@ export default {
                   element.border.left.width + element.border.left.widthUnit;
                 popupStyleObject["border-left-style"] =
                   element.border.left.style;
-                if (element.border.left.colors.hex) {
+                if (element.border.left.colors.hex8) {
                   popupStyleObject["border-left-color"] =
-                    element.border.left.colors.hex;
+                    IDM.hex8ToRgbaString(element.border.left.colors.hex8);
                 }
               }
               popupStyleObject["border-top-left-radius"] =
@@ -430,9 +430,9 @@ export default {
                 btnStyleObject["border-top-width"] =
                   element.border.top.width + element.border.top.widthUnit;
                 btnStyleObject["border-top-style"] = element.border.top.style;
-                if (element.border.top.colors.hex) {
+                if (element.border.top.colors.hex8) {
                   btnStyleObject["border-top-color"] =
-                    element.border.top.colors.hex;
+                    IDM.hex8ToRgbaString(element.border.top.colors.hex8);
                 }
               }
               if (element.border.right.width > 0) {
@@ -440,9 +440,9 @@ export default {
                   element.border.right.width + element.border.right.widthUnit;
                 btnStyleObject["border-right-style"] =
                   element.border.right.style;
-                if (element.border.right.colors.hex) {
+                if (element.border.right.colors.hex8) {
                   btnStyleObject["border-right-color"] =
-                    element.border.right.colors.hex;
+                    IDM.hex8ToRgbaString(element.border.right.colors.hex8);
                 }
               }
               if (element.border.bottom.width > 0) {
@@ -450,18 +450,18 @@ export default {
                   element.border.bottom.width + element.border.bottom.widthUnit;
                 btnStyleObject["border-bottom-style"] =
                   element.border.bottom.style;
-                if (element.border.bottom.colors.hex) {
+                if (element.border.bottom.colors.hex8) {
                   btnStyleObject["border-bottom-color"] =
-                    element.border.bottom.colors.hex;
+                    IDM.hex8ToRgbaString(element.border.bottom.colors.hex8);
                 }
               }
               if (element.border.left.width > 0) {
                 btnStyleObject["border-left-width"] =
                   element.border.left.width + element.border.left.widthUnit;
                 btnStyleObject["border-left-style"] = element.border.left.style;
-                if (element.border.left.colors.hex) {
+                if (element.border.left.colors.hex8) {
                   btnStyleObject["border-left-color"] =
-                    element.border.left.colors.hex;
+                    IDM.hex8ToRgbaString(element.border.left.colors.hex8);
                 }
               }
               btnStyleObject["border-top-left-radius"] =
@@ -534,13 +534,13 @@ export default {
         //     continue;
         // }
         const cssObject_color_main = {
-          color: item.mainColor ? item.mainColor.hex : "",
+          color: item.mainColor ? IDM.hex8ToRgbaString(item.mainColor.hex8) : "",
         };
         const cssObject_background_minor = {
-          "background-color": item.minorColor ? item.minorColor.hex : "",
+          "background-color": item.minorColor ? IDM.hex8ToRgbaString(item.minorColor.hex8) : "",
         };
         const cssObject_boderColor_minor = {
-          "border-bottom-color": item.minorColor ? item.minorColor.hex : "",
+          "border-bottom-color": item.minorColor ? IDM.hex8ToRgbaString(item.minorColor.hex8) : "",
         };
         IDM.setStyleToPageHead(
           "." +
