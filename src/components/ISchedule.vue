@@ -1050,13 +1050,16 @@ $scale: var(--i-schedule-scale);
 
   .i-schedule-header {
     display: flex;
-    height: calc(40px * #{ $scale });
-    line-height: calc(40px * #{ $scale });
+    // height: calc(40px * #{ $scale });
+    // line-height: calc(40px * #{ $scale });
     justify-content: space-between;
+    align-items: center;
 
     .i-schedule-header-main {
       width: 90%;
       display: flex;
+      align-items: center;
+
       .i-schedule-header-tit {
         font-family: PingFangSC-Regular;
         color: #333333;
@@ -1072,8 +1075,8 @@ $scale: var(--i-schedule-scale);
           margin: 0 5px;
           width: 90%;
           overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
+          // white-space: nowrap;
+          // text-overflow: ellipsis;
         }
         
         transform: translateX(-5px);
