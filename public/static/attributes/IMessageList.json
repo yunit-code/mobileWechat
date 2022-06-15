@@ -206,10 +206,7 @@
                             "type": "colorPicker",
                             "layoutType": "inline",
                             "text": "图标颜色",
-                            "bindKey": "titleIconFontColor",
-                            "ctrlAttrObject": {
-                                "disabledInput": true
-                            }
+                            "bindKey": "titleIconFontColor"
                         },
                         {
                             "type": "inputNumber",
@@ -253,9 +250,6 @@
                     "default": {
                         "hex": "#FFFFFF",
                         "hex8": "#FFFFFFFF"
-                    },
-                    "ctrlAttrObject": {
-                        "disabledInput": true
                     }
                 },
                 {
@@ -420,10 +414,7 @@
                     "layoutType": "inline",
                     "text": "背景色",
                     "bindKey": "subBgColor",
-                    "placeholder": "请选择颜色",
-                    "ctrlAttrObject": {
-                        "disabledInput": true
-                    }
+                    "placeholder": "请选择颜色"
                 },
                 {
                     "type": "inlineGroup",
@@ -566,10 +557,7 @@
                     "bindKey": "mainColor",
                     "desc":"主题的主要颜色",
                     "placeholder": "请选择颜色",
-                    "display":"@[key]",
-                    "ctrlAttrObject": {
-                        "disabledInput": true
-                    }
+                    "display":"@[key]"
                 }
             ]
         },

@@ -139,10 +139,7 @@
                             "desc": "设置图标颜色，会覆盖主题色",
                             "text": "图标颜色",
                             "bindKey": "titleIconFontColor",
-                            "default": "",
-                            "ctrlAttrObject": {
-                                "disabledInput": true
-                            }
+                            "default": ""
                         },
                         {
                             "type": "inputNumber",
@@ -182,10 +179,7 @@
                     "text": "背景色",
                     "bindKey": "bgColor",
                     "placeholder": "请选择颜色",
-                    "default": {},
-                    "ctrlAttrObject": {
-                        "disabledInput": true
-                    }
+                    "default": {}
                 },
                 {
                     "type": "inlineGroup",
@@ -343,10 +337,7 @@
                             "layoutType": "inline",
                             "text": "图标颜色",
                             "bindKey": "readIconColor",
-                            "default": "",
-                            "ctrlAttrObject": {
-                                "disabledInput": true
-                            }
+                            "default": ""
                         },
                         {
                             "type": "inputNumber",
@@ -375,10 +366,7 @@
                             "layoutType": "inline",
                             "text": "图标颜色",
                             "bindKey": "noReadIconColor",
-                            "default": "",
-                            "ctrlAttrObject": {
-                                "disabledInput": true
-                            }
+                            "default": ""
                         },
                         {
                             "type": "inputNumber",
@@ -424,10 +412,7 @@
                     "text": "背景色",
                     "bindKey": "subBgColor",
                     "placeholder": "请选择颜色",
-                    "default": {},
-                    "ctrlAttrObject": {
-                        "disabledInput": true
-                    }
+                    "default": {}
                 },
                 {
                     "type": "inlineGroup",
@@ -540,10 +525,7 @@
                     "bindKey": "mainColor",
                     "desc":"主题的主要颜色",
                     "placeholder": "请选择颜色",
-                    "display":"@[key]",
-                    "ctrlAttrObject": {
-                        "disabledInput": true
-                    }
+                    "display":"@[key]"
                 }
             ]
         },
