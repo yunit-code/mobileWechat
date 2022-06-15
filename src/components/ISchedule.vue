@@ -470,13 +470,13 @@ export default {
               innerCardStyleObject['height'] = element;
               break;
             case "bgColor":
-              if (element && element.hex) {
-                styleObject["background-color"] = element.hex;
+              if (element && element.hex8) {
+                styleObject["background-color"] = IDM.hex8ToRgbaString(element.hex8);
               }
               break;
             case "innerBgColor":
-              if (element && element.hex) {
-                innerCardStyleObject["background-color"] = element.hex;
+              if (element && element.hex8) {
+                innerCardStyleObject["background-color"] = IDM.hex8ToRgbaString(element.hex8);
               }
               break;
             case "box":
@@ -618,18 +618,18 @@ export default {
                 styleObject["border-top-width"] =
                   element.border.top.width + element.border.top.widthUnit;
                 styleObject["border-top-style"] = element.border.top.style;
-                if (element.border.top.colors.hex) {
+                if (element.border.top.colors.hex8) {
                   styleObject["border-top-color"] =
-                    element.border.top.colors.hex;
+                    IDM.hex8ToRgbaString(element.border.top.colors.hex8);
                 }
               }
               if (element.border.right.width > 0) {
                 styleObject["border-right-width"] =
                   element.border.right.width + element.border.right.widthUnit;
                 styleObject["border-right-style"] = element.border.right.style;
-                if (element.border.right.colors.hex) {
+                if (element.border.right.colors.hex8) {
                   styleObject["border-right-color"] =
-                    element.border.right.colors.hex;
+                    IDM.hex8ToRgbaString(element.border.right.colors.hex8);
                 }
               }
               if (element.border.bottom.width > 0) {
@@ -637,18 +637,18 @@ export default {
                   element.border.bottom.width + element.border.bottom.widthUnit;
                 styleObject["border-bottom-style"] =
                   element.border.bottom.style;
-                if (element.border.bottom.colors.hex) {
+                if (element.border.bottom.colors.hex8) {
                   styleObject["border-bottom-color"] =
-                    element.border.bottom.colors.hex;
+                    IDM.hex8ToRgbaString(element.border.bottom.colors.hex8);
                 }
               }
               if (element.border.left.width > 0) {
                 styleObject["border-left-width"] =
                   element.border.left.width + element.border.left.widthUnit;
                 styleObject["border-left-style"] = element.border.left.style;
-                if (element.border.left.colors.hex) {
+                if (element.border.left.colors.hex8) {
                   styleObject["border-left-color"] =
-                    element.border.left.colors.hex;
+                    IDM.hex8ToRgbaString(element.border.left.colors.hex8);
                 }
               }
 
@@ -671,9 +671,9 @@ export default {
                   element.border.top.width + element.border.top.widthUnit;
                 innerCardStyleObject["border-top-style"] =
                   element.border.top.style;
-                if (element.border.top.colors.hex) {
+                if (element.border.top.colors.hex8) {
                   innerCardStyleObject["border-top-color"] =
-                    element.border.top.colors.hex;
+                    IDM.hex8ToRgbaString(element.border.top.colors.hex8);
                 }
               }
               if (element.border.right.width > 0) {
@@ -681,9 +681,9 @@ export default {
                   element.border.right.width + element.border.right.widthUnit;
                 innerCardStyleObject["border-right-style"] =
                   element.border.right.style;
-                if (element.border.right.colors.hex) {
+                if (element.border.right.colors.hex8) {
                   innerCardStyleObject["border-right-color"] =
-                    element.border.right.colors.hex;
+                    IDM.hex8ToRgbaString(element.border.right.colors.hex8);
                 }
               }
               if (element.border.bottom.width > 0) {
@@ -691,9 +691,9 @@ export default {
                   element.border.bottom.width + element.border.bottom.widthUnit;
                 innerCardStyleObject["border-bottom-style"] =
                   element.border.bottom.style;
-                if (element.border.bottom.colors.hex) {
+                if (element.border.bottom.colors.hex8) {
                   innerCardStyleObject["border-bottom-color"] =
-                    element.border.bottom.colors.hex;
+                    IDM.hex8ToRgbaString(element.border.bottom.colors.hex8);
                 }
               }
               if (element.border.left.width > 0) {
@@ -701,9 +701,9 @@ export default {
                   element.border.left.width + element.border.left.widthUnit;
                 innerCardStyleObject["border-left-style"] =
                   element.border.left.style;
-                if (element.border.left.colors.hex) {
+                if (element.border.left.colors.hex8) {
                   innerCardStyleObject["border-left-color"] =
-                    element.border.left.colors.hex;
+                    IDM.hex8ToRgbaString(element.border.left.colors.hex8);
                 }
               }
 
@@ -722,8 +722,8 @@ export default {
               break;
             case "font":
               styleObject["font-family"] = element.fontFamily;
-              if (element.fontColors.hex) {
-                styleObject["color"] = element.fontColors.hex;
+              if (element.fontColors.hex8) {
+                styleObject["color"] = IDM.hex8ToRgbaString(element.fontColors.hex8);
               }
               styleObject["font-weight"] =
                 element.fontWeight && element.fontWeight.split(" ")[0];
@@ -740,8 +740,8 @@ export default {
               break;
             case "titleFont":
               titleStyleObject["font-family"] = element.fontFamily;
-              if (element.fontColors.hex) {
-                titleStyleObject["color"] = element.fontColors.hex;
+              if (element.fontColors.hex8) {
+                titleStyleObject["color"] = IDM.hex8ToRgbaString(element.fontColors.hex8);
               }
               titleStyleObject["font-weight"] =
                 element.fontWeight && element.fontWeight.split(" ")[0];
@@ -757,7 +757,7 @@ export default {
               titleStyleObject["text-decoration"] = element.fontDecoration;
               break;
             case "titleIconColor":
-              iconStyleObject["fill"] = element.hex + '!important';
+              iconStyleObject["fill"] = IDM.hex8ToRgbaString(element.hex8) + '!important';
               break;
             case "titleIconSize":
               iconStyleObject["font-size"] = (element * scale) + "px";
@@ -803,13 +803,13 @@ export default {
         var item = themeList[i];
         
         let dateNumStyleObject = {
-          "background-color": item.mainColor ? item.mainColor.hex : "",
+          "background-color": item.mainColor ? IDM.hex8ToRgbaString(item.mainColor.hex8) : "",
         };
         let todayStyleObject = {
-          "color": item.mainColor ? item.mainColor.hex : "",
+          "color": item.mainColor ? IDM.hex8ToRgbaString(item.mainColor.hex8) : "",
         };
         let titleSvgStyleObject = {
-          "fill": item.mainColor ? item.mainColor.hex : "",
+          "fill": item.mainColor ? IDM.hex8ToRgbaString(item.mainColor.hex8) : "",
         };
 
         console.log("." +

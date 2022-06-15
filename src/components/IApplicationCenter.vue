@@ -39,7 +39,7 @@
                                         <div class="img_box">
                                             <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
                                             <svg-icon v-else icon-class="application" />
-                                            <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
+                                            <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ caculateApplicationNumber(item.todoNumber) }}</div>
                                         </div>
                                         <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
                                     </div>
@@ -52,7 +52,7 @@
                                     <div class="img_box">
                                         <img v-if="(item.selectApplication && item.selectApplication.imageUrl) || item.applicationIconUrl" :src="getApplicationImgUrl(item)">
                                         <svg-icon v-else icon-class="application" />
-                                        <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ item.todoNumber }}</div>
+                                        <div v-if="propData.showTodoNumber && item.showTodoNumber && item.todoNumber" class="number">{{ caculateApplicationNumber(item.todoNumber) }}</div>
                                     </div>
                                     <div class="idm_applicationcenter_main_list_name">{{ getApplicationName(item) }}</div>
                                 </span>
@@ -153,6 +153,16 @@ export default {
     },
     destroyed() { },
     methods: {
+        caculateApplicationNumber(number) {
+            if ( !number ) {
+                return ''
+            }
+            if ( parseInt(number) < 100 ) {
+                return number
+            } else {
+                return '99+'
+            }
+        },
         openApplicationSearch() {
             this.is_application_manage_show = false;
             this.is_application_search_show = true;

@@ -202,10 +202,7 @@
                             "type": "colorPicker",
                             "layoutType": "inline",
                             "text": "图标颜色",
-                            "bindKey": "titleIconColor",
-                            "ctrlAttrObject": {
-                                "disabledInput": true
-                            }
+                            "bindKey": "titleIconColor"
                         },
                         {
                             "type": "inputNumber",
@@ -225,7 +222,7 @@
                     "default": {
                         "fontWeight": "800",
                         "fontColors": {
-                            "hex": "#333333"
+                            "hex8": "#333333FF"
                         }
                     }
                 }
@@ -283,10 +280,7 @@
                     "text": "背景色",
                     "bindKey": "bgColor",
                     "placeholder": "请选择颜色",
-                    "default": {},
-                    "ctrlAttrObject": {
-                        "disabledInput": true
-                    }
+                    "default": {}
                 },
                 {
                     "type": "uploadImage",
@@ -462,7 +456,7 @@
                                 "width": 0,
                                 "widthUnit": "px",
                                 "colors": {
-                                    "hex":"#000000"
+                                    "hex8":"#000000FF"
                                 }
                             },
                             "right": {
@@ -470,7 +464,7 @@
                                 "width": 0,
                                 "widthUnit": "px",
                                 "colors": {
-                                    "hex":"#000000"
+                                    "hex8":"#000000FF"
                                 }
                             },
                             "bottom": {
@@ -478,7 +472,7 @@
                                 "width": 0,
                                 "widthUnit": "px",
                                 "colors": {
-                                    "hex":"#000000"
+                                    "hex8":"#000000FF"
                                 }
                             },
                             "left": {
@@ -486,7 +480,7 @@
                                 "width": 0,
                                 "widthUnit": "px",
                                 "colors": {
-                                    "hex":"#000000"
+                                    "hex8":"#000000FF"
                                 }
                             }
                         },
@@ -566,10 +560,7 @@
                     "bindKey": "innerBgColor",
                     "placeholder": "请选择颜色",
                     "default": {
-                        "hex": "#FFFFFF"
-                    },
-                    "ctrlAttrObject": {
-                        "disabledInput": true
+                        "hex8": "#FFFFFFFF"
                     }
                 },
                 {
@@ -894,10 +885,7 @@
                     "bindKey": "mainColor",
                     "desc":"主题的主要颜色",
                     "placeholder": "请选择颜色",
-                    "display":"@[key]",
-                    "ctrlAttrObject": {
-                        "disabledInput": true
-                    }
+                    "display":"@[key]"
                 }
             ]
         },
