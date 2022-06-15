@@ -19,7 +19,7 @@
             <img v-else :src="getImageUrl(item.imagexl) || getImageUrl(item.image)"  class="slider-img" alt="" />
             <span class="idm-banner-box-swiper-text" v-if="item.title">{{item.title}}</span>
         </swiper-slide>
-        <div class="idm-banner-swiper-pagination" slot="pagination"></div>
+        <div v-show="propData.showBullet" class="idm-banner-swiper-pagination" slot="pagination"></div>
       </swiper>
       <div class="idm-banner-box-swiper-container">
         <ul class="swiper-wrapper">
@@ -166,6 +166,7 @@ export default {
         }else{
           this.$refs.swiper.$swiper.autoplay.stop()
         }
+        this.$refs.swiper.$swiper.slideToLoop(0, 0, false)
       })
     },
     /**
@@ -432,7 +433,6 @@ export default {
      * 加载动态数据
      */
     initData() {
-      this.initSwiper()
       if(this.propData.dataType === 'custom'){
         this.propData.bannerTable && this.propData.bannerTable.forEach(el => {
           if(el.image === 'defaultImage') {
@@ -441,12 +441,14 @@ export default {
         })
          // 自定义数据直接使用
         this.$set(this.bannerData, 'value', _.cloneDeep(this.propData.bannerTable))
+        this.initSwiper()
         return
       }else{
         // 开发环境使用假数据，深拷贝方式数据fix不更新
         if(this.moduleObject.env === 'develop') {
           const data = getDefault.call(this)
           this.bannerData = _.cloneDeep(data)
+          this.initSwiper()
           return
         }
       }
@@ -465,6 +467,7 @@ export default {
           //res.data
           if(res.status == 200 && res.data.code == 200){
             this.bannerData = res.data.data
+            this.initSwiper()
           }else {
             IDM.message.error(res.data.message)
           }

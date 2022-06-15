@@ -29,7 +29,7 @@
           </div>
         </div>
         <div class="idm-message-list-box-title-right" v-if="propData.showMore" @click="handleClickMore">
-          <span v-if="propData.showTotalNumber">{{messageData.total}}</span> <span v-else>更多</span> <van-icon name="arrow" />
+          <span v-if="propData.showTotalNumber">{{Number(messageData.total) > 99 ? '99+' : messageData.total || 0}}</span> <span v-else>更多</span> <van-icon name="arrow" />
         </div>
       </div>
     </template>

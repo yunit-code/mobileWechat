@@ -28,7 +28,7 @@
       </div>
       <div v-if="propData.showMore" class="d-flex align-c"  @click="handleClickMore">
         <span v-if="propData.showTodoNumber">
-          <span class="idm-unifie-todo-box-title-number">{{todoData[countKey] || 0}}</span>
+          <span class="idm-unifie-todo-box-title-number">{{Number(todoData[countKey]) > 99 ? '99+' : todoData[countKey] || 0}}</span>
           <van-icon name="arrow" />
         </span>
         <van-icon v-else  class="idm-unifie-todo-box-title-more" name="ellipsis" />
