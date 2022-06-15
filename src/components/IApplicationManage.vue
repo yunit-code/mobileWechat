@@ -172,11 +172,11 @@ export default {
             for (var i = 0; i < themeList.length; i++) {
                 var item = themeList[i];
                 let styleObject = {
-                    "color": item.mainColor ? item.mainColor.hex : "",
-                    "background-color": item.minorColor ? item.minorColor.hex : "",
+                    "color": item.mainColor ? IDM.hex8ToRgbaString(item.mainColor.hex8) : "",
+                    "background-color": item.minorColor ? IDM.hex8ToRgbaString(item.minorColor.hex8) : "",
                 };
                 let fontStyleObject = {
-                    "color": item.mainColor ? item.mainColor.hex : "",
+                    "color": item.mainColor ? IDM.hex8ToRgbaString(item.mainColor.hex8) : "",
                 }
                 
                 // IDM.setStyleToPageHead(
@@ -356,7 +356,7 @@ export default {
             return translatePxToAdaptationApi(data,this.propData.adaptationBaseManage,this.propData.adaptationPercentManage,this.clientWidth,is_img)
         },
         convertAttrToStyleObject() {
-            this.convertThemeListAttrToStyleObject()
+            // this.convertThemeListAttrToStyleObject()
             var styleObject = {};
             var styleObjectTitle = {};
             var fontStyleObject = {};
@@ -394,14 +394,14 @@ export default {
                             styleObjectTitle['height'] = element;
                             break;
                         case "bgColorManage":
-                            if (element && element.hex) {
-                                styleObject["background-color"] = element.hex;
-                                navStyleBackground["background-color"] = element.hex;
+                            if (element && element.hex8) {
+                                styleObject["background-color"] = IDM.hex8ToRgbaString(element.hex8);
+                                navStyleBackground["background-color"] = IDM.hex8ToRgbaString(element.hex8);
                             }
                             break;
                         case "titleBgColor":
-                            if (element && element.hex) {
-                                styleObjectTitle["background-color"] = element.hex;
+                            if (element && element.hex8) {
+                                styleObjectTitle["background-color"] = IDM.hex8ToRgbaString(element.hex8);
                             }
                             break;
                         case "boxManage":
@@ -479,29 +479,29 @@ export default {
                             if (element.border.top.width > 0) {
                                 styleObject["border-top-width"] = element.border.top.width + element.border.top.widthUnit;
                                 styleObject["border-top-style"] = element.border.top.style;
-                                if (element.border.top.colors.hex) {
-                                    styleObject["border-top-color"] = element.border.top.colors.hex;
+                                if (element.border.top.colors.hex8) {
+                                    styleObject["border-top-color"] = IDM.hex8ToRgbaString(element.border.top.colors.hex8);
                                 }
                             }
                             if (element.border.right.width > 0) {
                                 styleObject["border-right-width"] = element.border.right.width + element.border.right.widthUnit;
                                 styleObject["border-right-style"] = element.border.right.style;
-                                if (element.border.right.colors.hex) {
-                                    styleObject["border-right-color"] = element.border.right.colors.hex;
+                                if (element.border.right.colors.hex8) {
+                                    styleObject["border-right-color"] = IDM.hex8ToRgbaString(element.border.right.colors.hex8);
                                 }
                             }
                             if (element.border.bottom.width > 0) {
                                 styleObject["border-bottom-width"] = element.border.bottom.width + element.border.bottom.widthUnit;
                                 styleObject["border-bottom-style"] = element.border.bottom.style;
-                                if (element.border.bottom.colors.hex) {
-                                    styleObject["border-bottom-color"] = element.border.bottom.colors.hex;
+                                if (element.border.bottom.colors.hex8) {
+                                    styleObject["border-bottom-color"] = IDM.hex8ToRgbaString(element.border.bottom.colors.hex8);
                                 }
                             }
                             if (element.border.left.width > 0) {
                                 styleObject["border-left-width"] = element.border.left.width + element.border.left.widthUnit;
                                 styleObject["border-left-style"] = element.border.left.style;
-                                if (element.border.left.colors.hex) {
-                                    styleObject["border-left-color"] = element.border.left.colors.hex;
+                                if (element.border.left.colors.hex8) {
+                                    styleObject["border-left-color"] = IDM.hex8ToRgbaString(element.border.left.colors.hex8);
                                 }
                             }
 
@@ -512,8 +512,8 @@ export default {
                             break;
                         case "fontManage":
                             fontStyleObject["font-family"] = element.fontFamily;
-                            if (element.fontColors.hex) {
-                                fontStyleObject["color"] = element.fontColors.hex;
+                            if (element.fontColors.hex8) {
+                                fontStyleObject["color"] = IDM.hex8ToRgbaString(element.fontColors.hex8);
                             }
                             fontStyleObject["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                             fontStyleObject["font-style"] = element.fontStyle;
@@ -524,8 +524,8 @@ export default {
                             break;
                         case "titleFontManage":
                             styleObjectTitle["font-family"] = element.fontFamily;
-                            if (element.fontColors.hex) {
-                                styleObjectTitle["color"] = element.fontColors.hex;
+                            if (element.fontColors.hex8) {
+                                styleObjectTitle["color"] = IDM.hex8ToRgbaString(element.fontColors.hex8);
                             }
                             styleObjectTitle["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                             styleObjectTitle["font-style"] = element.fontStyle;
