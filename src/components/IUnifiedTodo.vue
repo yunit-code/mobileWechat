@@ -483,7 +483,7 @@ export default {
               }
               readFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
               readFontStyleObj["font-style"] = element.fontStyle;
-              readFontStyleObj["font-size"] = element.fontSize + element.fontSizeUnit;
+              readFontStyleObj["font-size"] = getAdaptiveSize.call(this, element.fontSize) + element.fontSizeUnit;
               readFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
               readFontStyleObj["text-align"] = element.fontTextAlign;
               readFontStyleObj["text-decoration"] = element.fontDecoration;
