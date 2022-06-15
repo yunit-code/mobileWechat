@@ -13,6 +13,14 @@
     class="idm-banner-box"
   >
     <div class="idm-banner-box-swiper">
+      <swiper ref="swiper" class="swiper" :options="swiperOption">
+        <swiper-slide class="swiper-slide idm-banner-box-swiper-item-container banner-item-container" v-for="(item, index) in bannerData.value" :key="index" @click.native="handleClick(item, index)">
+          <img v-if="isSmallScreen || !item.imagexl" :src="item.image && getImageUrl(item.image)"  class="slider-img" alt="" />
+            <img v-else :src="getImageUrl(item.imagexl) || getImageUrl(item.image)"  class="slider-img" alt="" />
+            <span class="idm-banner-box-swiper-text" v-if="item.title">{{item.title}}</span>
+        </swiper-slide>
+        <div class="idm-banner-swiper-pagination" slot="pagination"></div>
+      </swiper>
       <div class="idm-banner-box-swiper-container">
         <ul class="swiper-wrapper">
           <li
@@ -36,7 +44,7 @@
 </template>
 
 <script>
-import Swiper from "swiper";
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import "swiper/css/swiper.min.css";
 import { getDatasInterfaceUrl } from '@/api/config'
 import { getAdaptiveSize } from '@/utils/adaptationScreen'
@@ -64,9 +72,15 @@ function getDefault () {
     moreUrl: "更多跳转地址"
   }
 }
+
 export default {
   name: "IBanner",
+  components: {
+    Swiper,
+    SwiperSlide
+  },
   data() {
+    const _this = this
     return {
       moduleObject: {},
       pageWidth: null,
@@ -88,11 +102,37 @@ export default {
         bigScreenStretch: '-5.5%',
         smallScreenStretch: '-7%',
       },
-      bannerData: {value: []},
-      swiperObj: null
+      bannerData: {value: []}
     };
   },
   computed: {
+    swiperOption() {
+      return {
+          autoplay: {                      //自动播放
+            delay: this.propData.delay || 3000,
+            disableOnInteraction: false
+          },
+          speed: 500,                                               //播放速度
+          loop: true,                                               //循环播放
+          effect: 'coverflow',
+          centeredSlides: true,
+          slidesPerView: 'auto',
+          slideDuplicateClass: 'idm-banner-slide-duplicate',
+          coverflowEffect: {
+            rotate: 0,                                              //旋转度数
+            // stretch: this.isSmallScreen ? this.propData.smallScreenStretch : this.propData.bigScreenStretch,
+            stretch: '-7%',
+            depth: 100,                                             //位置深度，越大越小
+            modifier: 1,                                            //depth和rotate和stretch的倍率
+            slideShadows: false,                                    //阴影
+          },
+          pagination: { //指示器
+            el: '.idm-banner-swiper-pagination',                    //指示器元素
+            bulletClass : 'idm-banner-my-bullet',                   //指示器单个元素类名
+            bulletActiveClass: 'idm-banner-my-bullet-active',       //指示器单个元素当前激活类名
+          },
+      }
+    },
     isSmallScreen() {
       let width = null
       if(this.moduleObject.env === 'develop') {
@@ -100,7 +140,6 @@ export default {
       }else{
         width = this.pageWidth || window.innerWidth
       }
-      console.log(width, this.propData.dividingPoint > width)
       return this.propData.dividingPoint > width
     }
   },
@@ -109,19 +148,7 @@ export default {
     this.convertAttrToStyleObject();
     this.convertThemeListAttrToStyleObject()
   },
-  watch: {
-    isSmallScreen: {
-      handler() {
-        this.swiperObj && this.swiperObj.destroy(true, true)
-        this.swiperObj = null
-        this.initSwiper()
-      }
-    }
-  },
   mounted() {
-    // if(this.moduleObject.env === 'develop'){
-    //   this.initSwiper();
-    // }
   },
   methods: {
     getImageUrl(url) {
@@ -131,56 +158,13 @@ export default {
       return url
     },
     initSwiper() {
-      if(this.swiperObj) return
-      const _this = this
-      this.$nextTick(()=> {
-        console.log('init...')
-        this.swiperObj = new Swiper('#'+this.moduleObject.id + " .idm-banner-box-swiper-container", {
-          autoplay: 2000,                                           //自动播放
-          speed: 500,                                               //播放速度
-          loop: true,                                               //循环播放
-          loopedSlides: 4,                                        //循环个数
-          slidesPerView: 'auto',                                    //预览slide个数
-          effect: 'coverflow',                                      //特效组件
-          pagination: !this.propData.showBullet ? '' :  { //指示器
-            el: '.idm-banner-swiper-pagination',                    //指示器元素
-            bulletClass : 'idm-banner-my-bullet',                   //指示器单个元素类名
-            bulletActiveClass: 'idm-banner-my-bullet-active',       //指示器单个元素当前激活类名
-          },
-          slideDuplicateClass: 'idm-banner-slide-duplicate',
-          centeredSlides: true,                                     //居中
-          coverflowEffect: {                                        //特效组件属性
-            rotate: 0,                                              //旋转度数
-            stretch: this.isSmallScreen ? this.propData.smallScreenStretch : this.propData.bigScreenStretch,                                         //左右拉伸
-            depth: 100,                                             //位置深度，越大越小
-            modifier: 1,                                            //depth和rotate和stretch的倍率
-            slideShadows: false,                                    //阴影
-          },
-          observer: true,                                           //监视器，开启时下面两个才生效
-          observeParents: true,                                     //监视父级元素变化,例如show/hide、第一级子元素增加/删除等，则更新Swiper 并触发 observerUpdate 事件
-          observeSlideChildren: true,                               //监视监测Swiper 的子元素（wrapper、pagination、navigation、scrollbar）。 当新增/删除这些子元素时，则更新Swiper 并触发 observerUpdate 事件
-          on: {
-            slideChange(){
-                console.log('改变了，activeIndex为'+this.activeIndex);
-                if(this.activeIndex === _this.bannerData.value.length + 1) {
-                  _this.swiperObj.slideToLoop(1, 500, false)
-                }
-            },
-            loopFix:function(){
-                console.log('fix');
-            },
-            observerUpdate: function(){
-              console.log('Swiper更新了');
-            },
-            paginationUpdate: function(){
-              console.log('pagination更新了')
-            },
-          }
-        });
-        this.swiperObj.pagination.update()
-        const index = window.sessionStorage.swiperClickedIndex
-        if(index != undefined) {
-          this.swiperObj.slideTo(Number(index), 0, false)
+      this.$nextTick(() =>{
+        // console.log(this.swiperOption, this.$refs.swiper, '<----------------')
+        // this.$refs.swiper.updateSwiper()
+        if(this.propData.autoplay) {
+          this.$refs.swiper.$swiper.autoplay.start()
+        }else{
+          this.$refs.swiper.$swiper.autoplay.stop()
         }
       })
     },
@@ -448,25 +432,21 @@ export default {
      * 加载动态数据
      */
     initData() {
+      this.initSwiper()
       if(this.propData.dataType === 'custom'){
+        this.propData.bannerTable && this.propData.bannerTable.forEach(el => {
+          if(el.image === 'defaultImage') {
+            el.image = IDM.url.getModuleAssetsWebPath(require("../assets/banner1.jpg"), this.moduleObject)
+          }
+        })
          // 自定义数据直接使用
         this.$set(this.bannerData, 'value', _.cloneDeep(this.propData.bannerTable))
-        if(this.moduleObject.env === 'production') {
-          this.initSwiper();
-        }else{
-          this.swiperObj && this.swiperObj.destroy(true, true)
-          this.swiperObj = null
-          this.initSwiper()
-        }
         return
       }else{
         // 开发环境使用假数据，深拷贝方式数据fix不更新
         if(this.moduleObject.env === 'develop') {
           const data = getDefault.call(this)
           this.bannerData = _.cloneDeep(data)
-          this.swiperObj && this.swiperObj.destroy(true, true)
-          this.swiperObj = null
-          this.initSwiper()
           return
         }
       }
@@ -485,7 +465,6 @@ export default {
           //res.data
           if(res.status == 200 && res.data.code == 200){
             this.bannerData = res.data.data
-            this.initSwiper();
           }else {
             IDM.message.error(res.data.message)
           }
@@ -641,7 +620,7 @@ export default {
     overflow: hidden;
   }
   & &-swiper-item-container {
-    width: 90%;
+    width: 86%;
     height: 100%;
     margin: 0 auto;
     position: relative;
@@ -663,6 +642,7 @@ export default {
     font-size: 14px;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+    text-align: left;
   }
   &-mask {
     position: absolute;
@@ -734,4 +714,26 @@ li {
     height: 100%;
   }
 }
+
+.example-3d {
+    width: 100%;
+    height: 400px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  .swiper {
+    height: 100%;
+    width: 100%;
+
+    .swiper-slide {
+      width: 86%;
+    }
+
+    .swiper-pagination {
+      >>> .swiper-pagination-bullet.swiper-pagination-bullet-active {
+        background-color: #fff;
+      }
+    }
+  }
 </style>

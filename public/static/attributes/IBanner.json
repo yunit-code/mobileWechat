@@ -37,6 +37,34 @@
                     "default": true
                 },
                 {
+                    "type": "radio",
+                    "styleType": "radio",
+                    "layoutType": "inline",
+                    "text": "自动播放",
+                    "bindKey": "autoplay",
+                    "desc": "设置点击轮播图片数据模式",
+                    "dictionary": [
+                        {
+                            "label": "是",
+                            "value": true
+                        },
+                        {
+                            "label": "否",
+                            "value": false
+                        }
+                    ],
+                    "default": true
+                },
+                {
+                    "type": "inputNumber",
+                    "layoutType": "inline",
+                    "text": "停留时间",
+                    "bindKey": "delay",
+                    "desc": "自动播放停留时间，单位：毫秒",
+                    "default": 3000,
+                    "display": "@[autoplay == true]"
+                },
+                {
                     "type": "select",
                     "layoutType": "inline",
                     "text": "跳转方式",
@@ -126,22 +154,6 @@
                             "value": "vw"
                         }
                     ]
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "大屏间隔",
-                    "desc": "大屏幕时轮播图片间隔，大小屏幕以配置的分界点为准",
-                    "bindKey": "bigScreenStretch",
-                    "default": "-6%"
-                },
-                {
-                    "type": "input",
-                    "layoutType": "inline",
-                    "text": "小屏间隔",
-                    "desc": "小屏幕时轮播图片间隔，大小屏幕以配置的分界点为准",
-                    "bindKey": "smallScreenStretch",
-                    "default": "-7%"
                 },
                 {
                     "type": "inputNumber",
@@ -375,7 +387,7 @@
                             "layoutType": "block",
                             "text": "小屏图片",
                             "bindKey": "image",
-                            "default": ""
+                            "default": "defaultImage"
                         },
                         {
                             "type": "uploadImage",
