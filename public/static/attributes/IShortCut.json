@@ -342,6 +342,22 @@
                             "default": "count",
                             "placeholder": "示例:count",
                             "display": "@[showTodoNumber]"
+                        },
+                        {
+                            "type": "switch",
+                            "layoutType": "inline",
+                            "text": "权限过滤",
+                            "desc":"设置快捷方式列表角标是否显示",
+                            "bindKey": "shortOpenValid",
+                            "default": false
+                        },
+                        {
+                            "type": "treeSelect",
+                            "layoutType": "inline",
+                            "text": "权限列表",
+                            "bindKey": "dataSource2",
+                            "dataSourceUrl":"/ctrl/role/getSelfTree",
+                            "display": "@[shortOpenValid]"
                         }
                     ]
                 }

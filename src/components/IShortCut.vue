@@ -867,7 +867,7 @@ export default {
         background: #E81B1B;
         border-radius: 10px;
         &.number2 {
-          width: 25px;
+          width: 30px;
         }
       }
     }
@@ -951,7 +951,7 @@ export default {
         background: #E81B1B;
         border-radius: 10px;
         &.number2 {
-          width: 25px;
+          width: 30px;
         }
       }
     }
@@ -983,7 +983,7 @@ export default {
         background: #E81B1B;
         border-radius: 10px;
         &.number2 {
-          width: 25px;
+          width: 30px;
         }
       }
     }
