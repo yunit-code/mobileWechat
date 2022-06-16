@@ -23,7 +23,7 @@
             </svg>
             <svg-icon v-else icon-class="application-icon" />
         </div>
-        <span>{{propData.title || propData.comTitle || '快捷方式'}}</span>
+        <span>{{propData.title}}</span>
         <div class="idm_applicationcenter_title_left_icon" v-if="propData.titleIconPosition === 'right'" style="margin-left: 5px">
             <svg v-if="propData.titleIconClass && propData.titleIconClass.length" class="idm_filed_svg_icon" aria-hidden="true" >
                 <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
@@ -34,55 +34,67 @@
       <div class="idm_shortcut_cont">
         <template v-if="propData.shortCutStyle === 'default'">
           <ul class="short-box">
-            <li v-for="(v,i) in propData.shortConfigList" :key="i" class="short-item"
-              :style="{width: `${100/propData.maxNumber}%`}">
-              <div class="short-bg"
-               :style="v.styles"
-               @click="goUrl(v)">
-                <span>{{v.name}}</span>
-                <div v-if="v.showTodoNumber && v.todoNumber" class="number">{{ v.todoNumber > 99? '99+' : v.todoNumber}}</div>
-              </div>
-            </li>
+            <template v-for="(v,i) in propData.shortConfigList">
+              <li :key="i" class="short-item"
+                v-if="v.isShow"
+                :style="{width: `${100/propData.maxNumber}%`}">
+                <div class="short-bg"
+                :style="v.styles"
+                @click="goUrl(v)">
+                  <span>{{v.name}}</span>
+                  <!-- <div v-if="v.showTodoNumber && v.todoNumber" class="number">{{ v.todoNumber }}</div> -->
+                  <div v-if="v.showTodoNumber && v.todoNumber && v.todoNumber<=99" class="number">{{ v.todoNumber }}</div>
+                  <div v-if="v.showTodoNumber && v.todoNumber && v.todoNumber>99" class="number number2">{{ v.todoNumber }}</div>
+                </div>
+              </li>
+            </template>
           </ul>
         </template>
         <template v-else-if="propData.shortCutStyle === 'default2'">
           <van-grid :border="false" :column-num="propData.maxNumber">
-            <van-grid-item v-for="(v,i) in propData.shortConfigList" :key="i">
-              <div @click="goUrl(v)" class="idm_applicationcenter_main_list">
-                <div class="img_box">
-                  <img v-if="v.bgUrl" :src="IDM.url.getWebPath(v.bgUrl)">
-                  <svg-icon v-else icon-class="application" />
-                  <div v-if="v.showTodoNumber && v.todoNumber" class="number">{{ v.todoNumber > 99? '99+' : v.todoNumber}}</div>
+            <template v-for="(v,i) in propData.shortConfigList">
+              <van-grid-item :key="i" v-if="v.isShow">
+                <div @click="goUrl(v)" class="idm_applicationcenter_main_list">
+                  <div class="img_box">
+                    <img v-if="v.bgUrl" :src="IDM.url.getWebPath(v.bgUrl)">
+                    <svg-icon v-else icon-class="application" />
+                    <div v-if="v.showTodoNumber && v.todoNumber && v.todoNumber<=99" class="number">{{ v.todoNumber }}</div>
+                    <div v-if="v.showTodoNumber && v.todoNumber && v.todoNumber>99" class="number number2">{{ v.todoNumber }}</div>
+                  </div>
+                  <div class="idm_applicationcenter_main_list_name">{{ v.name }}</div>
                 </div>
-                <div class="idm_applicationcenter_main_list_name">{{ v.name }}</div>
-              </div>
-            </van-grid-item>
+              </van-grid-item>
+            </template>
           </van-grid>
         </template>
         <template v-else>
           <van-grid :border="false" :column-num="propData.maxNumber">
-            <van-grid-item v-for="(v,i) in propData.shortConfigList" :key="i">
-              <div @click="goUrl(v)" class="idm_applicationcenter_main_list-three">
-                <!-- <div class="img_box"> -->
-                  <div class="img_box">
-                    <div class="two">
-                      <div class="three">
-                        <img v-if="v.bgUrl" :src="IDM.url.getWebPath(v.bgUrl)">
-                        <svg-icon v-else icon-class="application" />
+            <template v-for="(v,i) in propData.shortConfigList">
+              <van-grid-item :key="i" v-if="v.isShow">
+                <div @click="goUrl(v)" class="idm_applicationcenter_main_list-three">
+                  <!-- <div class="img_box"> -->
+                    <div class="img_box">
+                      <div class="two">
+                        <div class="three">
+                          <img v-if="v.bgUrl" :src="IDM.url.getWebPath(v.bgUrl)">
+                          <svg-icon v-else icon-class="application" />
+                        </div>
                       </div>
-                    </div>
-                  <!-- </div> -->
-                  <!-- <img v-if="v.bgUrl" :src="IDM.url.getWebPath(v.bgUrl)">
-                  <svg-icon v-else icon-class="application" />
-                  <div v-if="v.showTodoNumber && v.todoNumber" class="number">{{ v.todoNumber }}</div> -->
+                    <!-- </div> -->
+                    <!-- <img v-if="v.bgUrl" :src="IDM.url.getWebPath(v.bgUrl)">
+                    <svg-icon v-else icon-class="application" />
+                    <div v-if="v.showTodoNumber && v.todoNumber" class="number">{{ v.todoNumber }}</div> -->
+                  </div>
+                  <!-- <div v-if="v.showTodoNumber && v.todoNumber" class="number">{{ v.todoNumber }}</div> -->
+                  <div v-if="v.showTodoNumber && v.todoNumber && v.todoNumber<=99" class="number">{{ v.todoNumber }}</div>
+                  <div v-if="v.showTodoNumber && v.todoNumber && v.todoNumber>99" class="number number2">{{ v.todoNumber }}</div>
+                  <div class="idm_applicationcenter_main_list_name">
+                    <div class="empty-view"></div>
+                    <div class="tit">{{ v.name }}</div>
+                  </div>
                 </div>
-                <div v-if="v.showTodoNumber && v.todoNumber" class="number">{{ v.todoNumber > 99? '99+' : v.todoNumber}}</div>
-                <div class="idm_applicationcenter_main_list_name">
-                  <div class="empty-view"></div>
-                  <div class="tit">{{ v.name }}</div>
-                </div>
-              </div>
-            </van-grid-item>
+              </van-grid-item>
+            </template>
           </van-grid>
         </template>
       </div>
@@ -592,12 +604,14 @@ export default {
     },
     getApplicationMarkNumber() {
       if(this.propData.shortConfigList) {
+        const userInfo = window.IDM.user.getCurrentUserInfo();
         console.log('propData.shortConfigList',this.propData.shortConfigList)
         for( let i = 0,maxi = this.propData.shortConfigList.length;i < maxi;i++ ) {
           const item = this.propData.shortConfigList[i];
-            if ( item.showTodoNumber && item.dataSource) {
-              this.getApplicationMarkNumberSubmit(item)
-            }
+          this.getApplicationMarkShowBtn(item, userInfo.roleIds);
+          if ( item.showTodoNumber && item.dataSource) {
+            this.getApplicationMarkNumberSubmit(item)
+          }
         }
       }
     },
@@ -621,6 +635,31 @@ export default {
             IDM.message.error(result.data.message)
           }
       })
+    },
+    /**
+     *@Description: 根据角色判断是否显示按钮
+     *@MethodAuthor: AuthorName
+     *@Date: 2022-06-16 10:46:38
+    */
+    getApplicationMarkShowBtn(item, ids) {
+      console.log(item)
+      if(this.moduleObject.env=="production") {
+        if ( !item.shortOpenValid ) {
+          this.$set(item, "isShow", true);
+        } else {
+          if(item.dataSource2 && item.dataSource.value && ids) {
+            if(ids.indexOf(item.dataSource.value) >= 0) {
+              this.$set(item, "isShow", true);
+            }else {
+              this.$set(item, "isShow", false);
+            }
+          }else {
+            this.$set(item, "isShow", false);
+          }
+        }
+      }else{
+        this.$set(item, "isShow", true);
+      }
     },
     /**
      * 主题颜色
@@ -826,7 +865,10 @@ export default {
         overflow: hidden;
         color: white;
         background: #E81B1B;
-        border-radius: 50%;
+        border-radius: 10px;
+        &.number2 {
+          width: 25px;
+        }
       }
     }
     /* 样式三 */
@@ -907,7 +949,10 @@ export default {
         overflow: hidden;
         color: white;
         background: #E81B1B;
-        border-radius: 50%;
+        border-radius: 10px;
+        &.number2 {
+          width: 25px;
+        }
       }
     }
   }
@@ -936,7 +981,10 @@ export default {
         overflow: hidden;
         color: white;
         background: #E81B1B;
-        border-radius: 50%;
+        border-radius: 10px;
+        &.number2 {
+          width: 25px;
+        }
       }
     }
     .short-bg{
