@@ -106,14 +106,8 @@ export default {
         return {
             moduleObject: {},
             propData: this.$root.propData.compositeAttr || {
-                showTodoNumber: true
             },
-            application_data: [
-                {
-                    todoNumber: 100,
-                    showTodoNumber: true
-                }
-            ],
+            application_data: [ ],
             have_power_application_data_ids: [],//用户有权限的appid
             have_power_application_data: [],//用户有权限的app
             is_application_manage_show: false,
