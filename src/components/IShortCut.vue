@@ -943,7 +943,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
-        right: -10px;
+        right: -5px;
         text-align: center;
         font-size: 12px;
         overflow: hidden;
