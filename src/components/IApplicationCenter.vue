@@ -106,9 +106,14 @@ export default {
         return {
             moduleObject: {},
             propData: this.$root.propData.compositeAttr || {
-                
+                showTodoNumber: true
             },
-            application_data: [],
+            application_data: [
+                {
+                    todoNumber: 100,
+                    showTodoNumber: true
+                }
+            ],
             have_power_application_data_ids: [],//用户有权限的appid
             have_power_application_data: [],//用户有权限的app
             is_application_manage_show: false,
@@ -962,15 +967,16 @@ export default {
                 overflow: hidden;
                 color: white;
                 background: #E81B1B;
-                border-radius: 50%;
             }
             .number_small{
                 width: 18px;
                 height: 18px;
                 line-height: 18px;
+                border-radius: 50%;
             }
             .number_big{
-                padding: 1px 2px;
+                padding: 0px 3px;
+                border-radius: 10px 10px 10px 10px;
             }
         }
         .swiper_block{
