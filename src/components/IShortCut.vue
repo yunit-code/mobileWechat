@@ -44,7 +44,7 @@
                   <span>{{v.name}}</span>
                   <!-- <div v-if="v.showTodoNumber && v.todoNumber" class="number">{{ v.todoNumber }}</div> -->
                   <div v-if="v.showTodoNumber && v.todoNumber && v.todoNumber<=99" class="number">{{ v.todoNumber }}</div>
-                  <div v-if="v.showTodoNumber && v.todoNumber && v.todoNumber>99" class="number number2">{{ v.todoNumber }}</div>
+                  <div v-if="v.showTodoNumber && v.todoNumber && v.todoNumber>99" class="number number2">99+</div>
                 </div>
               </li>
             </template>
@@ -59,7 +59,7 @@
                     <img v-if="v.bgUrl" :src="IDM.url.getWebPath(v.bgUrl)">
                     <svg-icon v-else icon-class="application" />
                     <div v-if="v.showTodoNumber && v.todoNumber && v.todoNumber<=99" class="number">{{ v.todoNumber }}</div>
-                    <div v-if="v.showTodoNumber && v.todoNumber && v.todoNumber>99" class="number number2">{{ v.todoNumber }}</div>
+                    <div v-if="v.showTodoNumber && v.todoNumber && v.todoNumber>99" class="number number2">99+</div>
                   </div>
                   <div class="idm_applicationcenter_main_list_name">{{ v.name }}</div>
                 </div>
@@ -87,7 +87,7 @@
                   </div>
                   <!-- <div v-if="v.showTodoNumber && v.todoNumber" class="number">{{ v.todoNumber }}</div> -->
                   <div v-if="v.showTodoNumber && v.todoNumber && v.todoNumber<=99" class="number">{{ v.todoNumber }}</div>
-                  <div v-if="v.showTodoNumber && v.todoNumber && v.todoNumber>99" class="number number2">{{ v.todoNumber }}</div>
+                  <div v-if="v.showTodoNumber && v.todoNumber && v.todoNumber>99" class="number number2">99+</div>
                   <div class="idm_applicationcenter_main_list_name">
                     <div class="empty-view"></div>
                     <div class="tit">{{ v.name }}</div>
