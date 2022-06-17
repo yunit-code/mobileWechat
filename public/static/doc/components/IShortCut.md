@@ -131,6 +131,50 @@ mobileWechat@1.0.8
 
 - 标识：`dataFiled`
 - 默认值：`count`
+##### 权限过滤【shortOpenValid】
+用于设置卡片是否根据角色显示
+- 标识：`显示角标【shortOpenValid】`
+- 默认值：`不显示`
+##### 权限列表
+用于设置拥有该权限的角色
+
+- 标识：`dataSource2`
+- 默认值：`/ctrl/role/getSelfTree`
+- 接口返回格式需要按照以下要求：
+``` json
+{
+    "code":"200",
+    "type":"success",
+    "message":"操作成功",
+    "metadata":null,
+    "token":"",
+    "data": [
+        {
+            "title": "Node1",
+            "value": "0-0",
+            "key": "0-0",
+            "children": [
+                {
+                    "value": "0-0-1",
+                    "key": "0-0-1",
+                    "title": "Child Node1",
+                    "disabled": true
+                },
+                {
+                    "title": "Child Node2",
+                    "value": "0-0-2",
+                    "key": "0-0-2"
+                }
+            ]
+        },
+        {
+            "title": "Node2",
+            "value": "0-1",
+            "key": "0-1"
+        }
+    ]
+}
+```
 ### 标题容器样式
 #### 图标位置【titleIconPosition】
 用于设置标题图标位置

@@ -647,14 +647,16 @@ export default {
         if ( !item.shortOpenValid ) {
           this.$set(item, "isShow", true);
         } else {
-          if(item.dataSource2 && item.dataSource.value && ids) {
-            if(ids.indexOf(item.dataSource.value) >= 0) {
-              this.$set(item, "isShow", true);
-            }else {
-              this.$set(item, "isShow", false);
+          if(item.dataSource2 && item.dataSource2.length && ids) {
+            for(let i = 0; i< item.dataSource2.length; i++) {
+              if(ids.indexOf(item.dataSource[i].value) >= 0) {
+                this.$set(item, "isShow", true);
+                return;
+              }
             }
-          }else {
             this.$set(item, "isShow", false);
+          }else {
+            this.$set(item, "isShow", true);
           }
         }
       }else{
