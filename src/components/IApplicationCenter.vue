@@ -16,7 +16,7 @@
                         <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
                     </svg>
                     <svg-icon class="svg_icon_default" v-else-if="propData.showTitleIcon && propData.titleIconPosition == 'left' && ((!propData.titleIconClass) || !propData.titleIconClass.length)" icon-class="application-icon" />
-                    <div class="idm_applicationcenter_title_left_text">{{ propData.title || '应用中心' }}</div>
+                    <div class="idm_applicationcenter_title_left_text">{{ propData.title }}</div>
                     <svg v-if="propData.showTitleIcon && propData.titleIconPosition == 'right' && propData.titleIconClass && propData.titleIconClass.length" class="idm_filed_svg_icon idm_applicationcenter_title_left_icon2" aria-hidden="true" >
                         <use :xlink:href="`#${propData.titleIconClass[0]}`"></use>
                     </svg>
@@ -67,13 +67,18 @@
                     </van-empty>
                 </div>
             </div>
-
-            <van-popup id="application_manage_pop" v-model="is_application_manage_show" overlay-class="application_manage_pop" @close="closeApplicationManage" closeable round>
-                <IApplicationManage :datas="propData" @openApplicationSearch="openApplicationSearch" v-if="is_application_manage_show"></IApplicationManage>
-            </van-popup> 
-            <van-popup id="application_search_pop" v-model="is_application_search_show" overlay-class="application_search_pop" @close="closeApplicationSearch" closeable round>
-                <IApplicationSearch :datas="propData" v-if="is_application_search_show"></IApplicationSearch>
-            </van-popup>
+            <div @touchmove.stop v-if="is_application_manage_show">
+                <van-popup id="application_manage_pop" v-model="is_application_manage_show" overlay-class="application_manage_pop" @close="closeApplicationManage" closeable round>
+                    <IApplicationManage :datas="propData" @openApplicationSearch="openApplicationSearch" v-if="is_application_manage_show"></IApplicationManage>
+                </van-popup> 
+            </div>
+            <div @touchmove.stop v-if="is_application_search_show">
+                <van-popup id="application_search_pop" v-model="is_application_search_show" overlay-class="application_search_pop" @close="closeApplicationSearch" closeable round>
+                    <IApplicationSearch :datas="propData" v-if="is_application_search_show"></IApplicationSearch>
+                </van-popup>
+            </div>
+            
+            
         </div>
     </div>
 </template>
