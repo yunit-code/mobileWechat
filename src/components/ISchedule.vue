@@ -15,7 +15,7 @@
     <div class="i-schedule-header" v-if="propData.isShowTitleBar === undefined ? true : propData.isShowTitleBar">
       <div class="i-schedule-header-main">
         <div class="i-schedule-header-tit">
-          <span>{{ propData.title || "日程提醒" }}</span>
+          <span>{{ propData.title }}</span>
           <template v-if="propData.showIcon === undefined ? true : propData.showIcon">
             <svg
               v-if="propData.titleIcon && propData.titleIcon.length > 0"
@@ -1056,7 +1056,7 @@ $scale: var(--i-schedule-scale);
     align-items: center;
 
     .i-schedule-header-main {
-      width: 90%;
+      width: 86%;
       display: flex;
       align-items: center;
 
