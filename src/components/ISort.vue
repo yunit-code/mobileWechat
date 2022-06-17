@@ -279,6 +279,13 @@ export default {
             this.pageId = res.data.id;
 
             const list = res.data.page.layout.children;
+            list.forEach(layout => {
+              res.data.page.componentsMap.forEach(component=>{
+                if(layout.id === component.id){
+                  layout.props = component.props
+                } 
+              })
+            })
             this.requestUserCustomization(list);
           } else {
             this.failRequest(url);
