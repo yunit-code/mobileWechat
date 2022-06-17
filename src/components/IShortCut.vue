@@ -608,7 +608,11 @@ export default {
         console.log('propData.shortConfigList',this.propData.shortConfigList)
         for( let i = 0,maxi = this.propData.shortConfigList.length;i < maxi;i++ ) {
           const item = this.propData.shortConfigList[i];
-          this.getApplicationMarkShowBtn(item, userInfo.roleIds);
+          if(userInfo.userid == '2' || this.moduleObject.env!=="production") {
+            this.$set(item, "isShow", true);
+          }else {
+            this.getApplicationMarkShowBtn(item, userInfo.roleIds);
+          }
           if ( item.showTodoNumber && item.dataSource) {
             this.getApplicationMarkNumberSubmit(item)
           }
@@ -642,25 +646,20 @@ export default {
      *@Date: 2022-06-16 10:46:38
     */
     getApplicationMarkShowBtn(item, ids) {
-      console.log(item)
-      if(this.moduleObject.env=="production") {
-        if ( !item.shortOpenValid ) {
-          this.$set(item, "isShow", true);
-        } else {
-          if(item.dataSource2 && item.dataSource2.length && ids) {
-            for(let i = 0; i< item.dataSource2.length; i++) {
-              if(ids.indexOf(item.dataSource2[i].value) >= 0) {
-                this.$set(item, "isShow", true);
-                return;
-              }
-            }
-            this.$set(item, "isShow", false);
-          }else {
-            this.$set(item, "isShow", true);
-          }
-        }
-      }else{
+      if ( !item.shortOpenValid ) {
         this.$set(item, "isShow", true);
+      } else {
+        if(item.dataSource2 && item.dataSource2.length && ids) {
+          for(let i = 0; i< item.dataSource2.length; i++) {
+            if(ids.indexOf(item.dataSource2[i].value) >= 0) {
+              this.$set(item, "isShow", true);
+              return;
+            }
+          }
+          this.$set(item, "isShow", false);
+        }else {
+          this.$set(item, "isShow", true);
+        }
       }
     },
     /**
