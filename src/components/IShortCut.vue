@@ -649,7 +649,7 @@ export default {
         } else {
           if(item.dataSource2 && item.dataSource2.length && ids) {
             for(let i = 0; i< item.dataSource2.length; i++) {
-              if(ids.indexOf(item.dataSource[i].value) >= 0) {
+              if(ids.indexOf(item.dataSource2[i].value) >= 0) {
                 this.$set(item, "isShow", true);
                 return;
               }
@@ -997,7 +997,7 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      color: #fff;
+      // color: #fff;
     }
   }
 </style>
