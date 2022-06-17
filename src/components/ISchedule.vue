@@ -15,8 +15,8 @@
     <div class="i-schedule-header" v-if="propData.isShowTitleBar === undefined ? true : propData.isShowTitleBar">
       <div class="i-schedule-header-main">
         <div class="i-schedule-header-tit">
-          <span>{{ propData.title }}</span>
-          <template v-if="propData.showIcon === undefined ? true : propData.showIcon">
+          <span>{{ propData.title}}</span>
+          <div class="i-schedule-header-tit-icon" v-if="propData.showIcon === undefined ? true : propData.showIcon">
             <svg
               v-if="propData.titleIcon && propData.titleIcon.length > 0"
               class="idm_filed_svg_icon"
@@ -27,7 +27,7 @@
               ></use>
             </svg>
             <svg-icon v-else icon-class="application-icon" />
-          </template>
+          </div>
         </div>
         <div class="i-schedule-header-date">{{ nowDate }}</div>
       </div>
@@ -757,12 +757,10 @@ export default {
               titleStyleObject["text-decoration"] = element.fontDecoration;
               break;
             case "titleIconColor":
-              iconStyleObject["fill"] = IDM.hex8ToRgbaString(element.hex8) + '!important';
+              iconStyleObject["color"] = IDM.hex8ToRgbaString(element.hex8);
               break;
             case "titleIconSize":
-              iconStyleObject["font-size"] = (element * scale) + "px";
-              iconStyleObject["width"] = (element * scale) + "px";
-              iconStyleObject["height"] = (element * scale) + "px";
+              iconStyleObject["font-size"] = element.selectVal === "px" ?  (element.inputVal * scale) + element.selectVal :  element.inputVal + element.selectVal;
               break;
             case "titleIconPosition":
               titleStyleObject["flex-direction"] = element === "right" ? 'row' : 'row-reverse'
@@ -771,7 +769,7 @@ export default {
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
       window.IDM.setStyleToPageHead(
-        this.moduleObject.id + " .i-schedule-header-tit",
+        this.moduleObject.id + " .i-schedule-header-tit span",
         titleStyleObject
       );
       window.IDM.setStyleToPageHead(
@@ -779,7 +777,7 @@ export default {
         innerCardStyleObject
       );
       window.IDM.setStyleToPageHead(
-        this.moduleObject.id + " .i-schedule-header-tit .idm_filed_svg_icon",
+        this.moduleObject.id + " .i-schedule-header-tit .i-schedule-header-tit-icon",
         iconStyleObject
       );
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .van-empty", emptyStyleObject);
@@ -809,15 +807,8 @@ export default {
           "color": item.mainColor ? IDM.hex8ToRgbaString(item.mainColor.hex8) : "",
         };
         let titleSvgStyleObject = {
-          "fill": item.mainColor ? IDM.hex8ToRgbaString(item.mainColor.hex8) : "",
+          "color": item.mainColor ? IDM.hex8ToRgbaString(item.mainColor.hex8) : "",
         };
-
-        console.log("." +
-            themeNamePrefix +
-            item.key +
-            " #" +
-            (this.moduleObject.packageid || "module_demo") +
-            " .i-schedule-header-tit svg")
 
         IDM.setStyleToPageHead(
           "." +
@@ -825,7 +816,7 @@ export default {
             item.key +
             " #" +
             (this.moduleObject.packageid || "module_demo") +
-            " .i-schedule-header-tit svg",
+            " .i-schedule-header-tit i-schedule-header-tit-icon",
           titleSvgStyleObject
         );
         IDM.setStyleToPageHead(
@@ -1075,15 +1066,14 @@ $scale: var(--i-schedule-scale);
           margin: 0 5px;
           width: 90%;
           overflow: hidden;
-          // white-space: nowrap;
-          // text-overflow: ellipsis;
         }
         
         transform: translateX(-5px);
 
         .idm_filed_svg_icon {
-          font-size: calc(14px * #{ $scale });
-          width: calc(14px * #{ $scale });
+          font-size: 1em;
+          width: 1em;
+          height: 1em;
           fill: currentColor;
           vertical-align: -0.15em;
           outline: none;

@@ -205,11 +205,14 @@
                             "bindKey": "titleIconColor"
                         },
                         {
-                            "type": "inputNumber",
+                            "type": "inputNumberUnit",
                             "layoutType": "inline",
                             "text": "图标大小",
                             "bindKey": "titleIconSize",
-                            "default": "14"
+                            "default": {
+                                "inputVal": 18,
+                                "selectVal": "px"
+                            }
                         }
                     ]
                 },
