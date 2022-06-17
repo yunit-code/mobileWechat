@@ -347,7 +347,7 @@
                             "type": "switch",
                             "layoutType": "inline",
                             "text": "权限过滤",
-                            "desc":"设置快捷方式列表角标是否显示",
+                            "desc":"用于设置快捷方式卡片是否根据角色显示",
                             "bindKey": "shortOpenValid",
                             "default": false
                         },
