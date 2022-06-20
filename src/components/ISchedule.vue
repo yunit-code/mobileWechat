@@ -391,6 +391,7 @@ export default {
       
       var styleObject = {};
       var titleStyleObject = {};
+      var titleDirectionStyleObject = {};
       var innerCardStyleObject = {};
       var iconStyleObject = {};
       var emptyStyleObject = {};
@@ -763,7 +764,7 @@ export default {
               iconStyleObject["font-size"] = element.selectVal === "px" ?  (element.inputVal * scale) + element.selectVal :  element.inputVal + element.selectVal;
               break;
             case "titleIconPosition":
-              titleStyleObject["flex-direction"] = element === "right" ? 'row' : 'row-reverse'
+              titleDirectionStyleObject["flex-direction"] = element === "right" ? 'row' : 'row-reverse'
           }
         }
       }
@@ -771,6 +772,10 @@ export default {
       window.IDM.setStyleToPageHead(
         this.moduleObject.id + " .i-schedule-header-tit span",
         titleStyleObject
+      );
+      window.IDM.setStyleToPageHead(
+        this.moduleObject.id + " .i-schedule-header-tit",
+        titleDirectionStyleObject
       );
       window.IDM.setStyleToPageHead(
         this.moduleObject.id + " .i-schedule-content",
