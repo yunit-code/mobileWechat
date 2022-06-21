@@ -13,14 +13,12 @@
     :style="
       moduleObject.env === 'develop' && {
         display: 'flex',
-        'justify-content': this.propData.position === 'left' ? 'flex-start' : 'flex-end',
+        'justify-content': this.propData.position === 'left' ? 'flex-start' : 'flex-end'
       }
     "
   >
     <div
-      v-show="
-        (!visible && menuList.length > 1) || moduleObject.env === 'develop'
-      "
+      v-show="(!visible && menuList.length > 1) || moduleObject.env === 'develop'"
       :class="
         this.propData.position === 'left'
           ? 'hover_button hover_button_left'
@@ -28,7 +26,7 @@
       "
       :style="
         moduleObject.env === 'develop' && {
-          position: 'static',
+          position: 'static'
         }
       "
       @click="handleVisible"
@@ -38,14 +36,9 @@
         class="idm_filed_svg_icon"
         aria-hidden="true"
       >
-        <use
-          :xlink:href="`#${propData.openIcon && propData.openIcon[0]}`"
-        ></use>
+        <use :xlink:href="`#${propData.openIcon && propData.openIcon[0]}`"></use>
       </svg>
-      <van-icon
-        v-else
-        :name="this.propData.position === 'left' ? 'arrow' : 'arrow-left'"
-      />
+      <van-icon v-else :name="this.propData.position === 'left' ? 'arrow' : 'arrow-left'" />
     </div>
     <van-popup
       v-if="moduleObject.env !== 'develop'"
@@ -58,33 +51,34 @@
       style="overflow: visible"
     >
       <div style="overflow-y: scroll; height: 100%">
-        <div
-          v-for="item in menuList"
-          :key="item.key"
-          @touchstart="addClass(item.key)"
-          @touchend="removeClass()"
-          :class="
-            activeKey == item.key ? 'cell_box cell_box_active' : 'cell_box'
-          "
-        >
-          <van-cell
-            @click="onCellChange(item)"
-            :class="selectedKey == item.key && 'cell_selected'"
-          >
-            <template slot="title">
-              <div>
-                {{
-                  IDM.express.replace(
-                    "@[" + propData.dataFiled + "]",
-                    item,
-                    true
-                  )
-                }}
-              </div>
-            </template>
-          </van-cell>
-        </div>
-
+        <van-radio-group :value="radioValue">
+          <van-cell-group>
+            <div
+              v-for="item in menuList"
+              :key="item.key"
+              @touchstart="addClass(item.key)"
+              @touchend="removeClass()"
+              :class="activeKey == item.key ? 'cell_box cell_box_active' : 'cell_box'"
+            >
+              <van-cell
+                @click="onCellChange(item)"
+                :class="selectedKey == item.key && 'cell_selected'"
+              >
+                <div slot="title">
+                  {{ IDM.express.replace('@[' + propData.dataFiled + ']', item, true) }}
+                </div>
+                <div
+                  slot="right-icon"
+                  @click.stop="handleRadioClick(item.pageId)"
+                  @touchstart.stop
+                  @touchend.stop
+                >
+                  <van-radio :name="item.pageId">{{ propData.radioText }}</van-radio>
+                </div>
+              </van-cell>
+            </div>
+          </van-cell-group>
+        </van-radio-group>
         <div
           :class="
             this.propData.position === 'left'
@@ -98,14 +92,9 @@
             class="idm_filed_svg_icon"
             aria-hidden="true"
           >
-            <use
-              :xlink:href="`#${propData.closeIcon && propData.closeIcon[0]}`"
-            ></use>
+            <use :xlink:href="`#${propData.closeIcon && propData.closeIcon[0]}`"></use>
           </svg>
-          <van-icon
-            v-else
-            :name="this.propData.position === 'left' ? 'arrow-left' : 'arrow'"
-          />
+          <van-icon v-else :name="this.propData.position === 'left' ? 'arrow-left' : 'arrow'" />
         </div>
       </div>
     </van-popup>
@@ -113,34 +102,45 @@
 </template>
 
 <script>
-import { Popup, Icon, Cell } from "vant";
-import "vant/lib/popup/style";
-import "vant/lib/icon/style";
-import "vant/lib/cell/style";
+import { Popup, Icon, CellGroup, Cell, RadioGroup, Radio } from 'vant';
+import 'vant/lib/popup/style';
+import 'vant/lib/icon/style';
+import 'vant/lib/cell-group/style';
+import 'vant/lib/cell/style';
+import 'vant/lib/radio-group/style';
+import 'vant/lib/radio/style';
 export default {
-  name: "IPopupWorkbench",
+  name: 'IPopupWorkbench',
   components: {
     [Popup.name]: Popup,
     [Icon.name]: Icon,
+    [CellGroup.name]: CellGroup,
     [Cell.name]: Cell,
+    [RadioGroup.name]: RadioGroup,
+    [Radio.name]: Radio
   },
   data() {
     return {
       moduleObject: {},
       propData: this.$root.propData.compositeAttr || {
-        position: "left",
-        overlayClose: "true",
-        height: "32px",
-        width: "32px",
-        dataFiled: "title",
-        menuWidth: "80%",
-        iconSize: "24px"
+        position: 'left',
+        overlayClose: 'true',
+        height: '32px',
+        width: '32px',
+        dataFiled: 'title',
+        menuWidth: '80%',
+        iconSize: '24px',
+        radioText: '默认门户'
       },
       visible: false,
-      selectedKey: "",
-      activeKey: "",
+      selectedKey: '',
+      activeKey: '',
+      radioValue: '',
       // [{key: '1', pageId: '1', title: '测试用例1'}, {key: '2', pageId: '2', title: '测试用例2'}]
-      menuList: [],
+      menuList: [
+        { key: '1', pageId: '1', title: '测试用例1' },
+        { key: '2', pageId: '2', title: '测试用例2' }
+      ],
       // 当前设备宽度
       currentEquipWidth: 0
     };
@@ -154,10 +154,10 @@ export default {
   },
   methods: {
     getClientWidth() {
-      if ( this.moduleObject.env == 'develop' ) {
-          return
+      if (this.moduleObject.env == 'develop') {
+        return;
       } else {
-          this.currentEquipWidth = window.innerWidth;
+        this.currentEquipWidth = window.innerWidth;
       }
     },
     /**
@@ -172,58 +172,80 @@ export default {
       this.activeKey = key;
     },
     removeClass() {
-      this.activeKey = "";
+      this.activeKey = '';
     },
     handleVisible() {
-      if (this.moduleObject.env === "develop") {
+      if (this.moduleObject.env === 'develop') {
         return false;
       }
       this.visible = !this.visible;
       // this.visible && this.getMenuList();
     },
     onCellChange(item) {
-      if (
-        this.moduleObject.env === "develop" ||
-        this.selectedKey == item.key
-      ) {
+      if (this.moduleObject.env === 'develop' || this.selectedKey == item.key) {
         return false;
       }
       // 改成不再调用接口的形式
       this.selectedKey = item.key;
       const url = window.location.href;
-      const jumpUrl = url.split("#")[0] + "#/preview/" + item.pageId;
-      this.propData.jumpStyle === '_replace' ? window.location.replace(jumpUrl) : window.open(jumpUrl, this.propData.jumpStyle || "_self");
+      const jumpUrl = url.split('#')[0] + '#/preview/' + item.pageId;
+      this.propData.jumpStyle === '_replace'
+        ? window.location.replace(jumpUrl)
+        : window.open(jumpUrl, this.propData.jumpStyle || '_self');
       // window.open(jumpUrl, this.propData.jumpStyle || "_self");
     },
+    handleRadioClick(name) {
+      if (name === this.radioValue) {
+        name = '';
+      }
+      const url = '/ctrl/customizePortal/savePage';
+      IDM.http
+        .get(url, { pageId: name })
+        .done(res => {
+          if (res.type === 'success') {
+            this.radioValue = name;
+          } else {
+            IDM.message.error(res.message);
+          }
+        })
+        .error(error => {});
+      if (name === this.radioValue) {
+        this.radioValue = '';
+      } else {
+        this.radioValue = name;
+      }
+    },
     getMenuList() {
-      if (this.moduleObject.env === "develop") {
+      if (this.moduleObject.env === 'develop') {
         return false;
       }
-      const dataSourceUrl = '/ctrl/customizePortal/loadAllPage?groupId=wxgzt'
+      const dataSourceUrl = '/ctrl/customizePortal/loadAllPage?groupId=wxgzt';
       const pageId =
         window.IDM.broadcast && window.IDM.broadcast.pageModule
           ? window.IDM.broadcast.pageModule.id
-          : "";
+          : '';
       this.visible = false;
-      this.activeKey = "";
+      this.activeKey = '';
       this.selectedKey = pageId;
       this.menuList = [];
       // const layerIndex = IDM.layer.load();
       IDM.http
         .get(dataSourceUrl)
-        .done((res) => {
+        .done(res => {
           // IDM.layer.close(layerIndex);
-          if (res.type === "success") {
-            this.menuList = res.data.map((item) => ({
+          if (res.type === 'success') {
+            this.menuList = res.data.map(item => ({
               ...item,
               key: item.id,
-              pageId: item.id,
+              pageId: item.id
             }));
+            const defaultValue = res.data.find(item => item.isDefault);
+            this.radioValue = defaultValue ? defaultValue.id : '';
           } else {
             IDM.message.error(res.message);
           }
         })
-        .error((error) => {});
+        .error(error => {});
     },
     /**
      * 把属性转换成样式对象
@@ -235,8 +257,7 @@ export default {
       }
       const adaptationBase = this.propData.adaptationBase || 414;
       const adaptationPercent = this.propData.adaptationPercent || 1;
-      const percent =
-        (clientWidth / adaptationBase - 1) * (adaptationPercent - 1) + 1;
+      const percent = (clientWidth / adaptationBase - 1) * (adaptationPercent - 1) + 1;
       return data * percent;
     },
     /**
@@ -245,8 +266,10 @@ export default {
     convertAttrToStyleObject() {
       let btnStyleObject = {};
       let cellSelectedStyleObject = {};
+      let cellStyleObject = {};
       let popupStyleObject = {};
       let titleStyleObject = {};
+      let radioStyleObject = {};
       let iconSizeStyleObject = {};
       for (const key in this.propData) {
         if (this.propData.hasOwnProperty.call(this.propData, key)) {
@@ -255,259 +278,269 @@ export default {
             continue;
           }
           switch (key) {
-            case "btnTop":
-              btnStyleObject["top"] = element;
+            case 'btnTop':
+              btnStyleObject['top'] = element;
               break;
-            case "bdShadow":
-              popupStyleObject["box-shadow"] = element;
-              btnStyleObject["box-shadow"] = element;
+            case 'bdShadow':
+              popupStyleObject['box-shadow'] = element;
+              btnStyleObject['box-shadow'] = element;
               break;
-            case "width":
-              btnStyleObject["width"] = this.translatePxToAdaptation(element) + 'px';
+            case 'width':
+              btnStyleObject['width'] = this.translatePxToAdaptation(element) + 'px';
               break;
-            case "height":
-              btnStyleObject["height"] = this.translatePxToAdaptation(element) + 'px';
+            case 'height':
+              btnStyleObject['height'] = this.translatePxToAdaptation(element) + 'px';
               break;
-            case "iconSize":
-              btnStyleObject["font-size"] = this.translatePxToAdaptation(element) + 'px';
-              iconSizeStyleObject["font-size"] = this.translatePxToAdaptation(element) + 'px';
-              iconSizeStyleObject["width"] = this.translatePxToAdaptation(element) + 'px';
-              iconSizeStyleObject["height"] = this.translatePxToAdaptation(element) + 'px';
+            case 'iconSize':
+              btnStyleObject['font-size'] = this.translatePxToAdaptation(element) + 'px';
+              iconSizeStyleObject['font-size'] = this.translatePxToAdaptation(element) + 'px';
+              iconSizeStyleObject['width'] = this.translatePxToAdaptation(element) + 'px';
+              iconSizeStyleObject['height'] = this.translatePxToAdaptation(element) + 'px';
               break;
-            case "fontStyle":
+            case 'fontStyle':
               if (element.fontFamily) {
-                titleStyleObject["font-family"] = element.fontFamily;
+                titleStyleObject['font-family'] = element.fontFamily;
               }
               if (element.fontColors.hex8) {
-                titleStyleObject["color"] = IDM.hex8ToRgbaString(element.fontColors.hex8);
+                titleStyleObject['color'] = IDM.hex8ToRgbaString(element.fontColors.hex8);
               }
               if (element.fontWeight) {
-                titleStyleObject["font-weight"] =
-                  element.fontWeight && element.fontWeight.split(" ")[0];
+                titleStyleObject['font-weight'] =
+                  element.fontWeight && element.fontWeight.split(' ')[0];
               }
               if (element.fontStyle) {
-                titleStyleObject["font-style"] = element.fontStyle;
+                titleStyleObject['font-style'] = element.fontStyle;
               }
               if (element.fontSize) {
-                titleStyleObject["font-size"] =
+                titleStyleObject['font-size'] =
                   this.translatePxToAdaptation(element.fontSize) + element.fontSizeUnit;
               }
               if (element.fontLineHeight) {
-                titleStyleObject["line-height"] =
+                titleStyleObject['line-height'] =
                   this.translatePxToAdaptation(element.fontLineHeight) +
-                  (element.fontLineHeightUnit == "-"
-                    ? ""
-                    : element.fontLineHeightUnit);
+                  (element.fontLineHeightUnit == '-' ? '' : element.fontLineHeightUnit);
               }
               if (element.fontTextAlign) {
-                titleStyleObject["text-align"] = element.fontTextAlign;
+                titleStyleObject['text-align'] = element.fontTextAlign;
               }
               if (element.fontDecoration) {
-                titleStyleObject["text-decoration"] = element.fontDecoration;
+                titleStyleObject['text-decoration'] = element.fontDecoration;
               }
               break;
-            case "lineHeight":
-              titleStyleObject["height"] = element;
+            case 'radioFontStyle':
+              if (element.fontFamily) {
+                radioStyleObject['font-family'] = element.fontFamily;
+              }
+              if (element.fontColors.hex8) {
+                radioStyleObject['color'] = IDM.hex8ToRgbaString(element.fontColors.hex8);
+              }
+              if (element.fontWeight) {
+                radioStyleObject['font-weight'] =
+                  element.fontWeight && element.fontWeight.split(' ')[0];
+              }
+              if (element.fontStyle) {
+                radioStyleObject['font-style'] = element.fontStyle;
+              }
+              if (element.fontSize) {
+                radioStyleObject['font-size'] =
+                  this.translatePxToAdaptation(element.fontSize) + element.fontSizeUnit;
+              }
+              if (element.fontLineHeight) {
+                radioStyleObject['line-height'] =
+                  this.translatePxToAdaptation(element.fontLineHeight) +
+                  (element.fontLineHeightUnit == '-' ? '' : element.fontLineHeightUnit);
+              }
+              if (element.fontTextAlign) {
+                radioStyleObject['text-align'] = element.fontTextAlign;
+              }
+              if (element.fontDecoration) {
+                radioStyleObject['text-decoration'] = element.fontDecoration;
+              }
               break;
-            case "menuWidth":
-              popupStyleObject["width"] = element;
+            case 'lineHeight':
+              cellStyleObject['height'] = element;
               break;
-            case "box":
+            case 'menuWidth':
+              popupStyleObject['width'] = element;
+              break;
+            case 'box':
               if (element.marginTopVal) {
-                popupStyleObject["margin-top"] = `${element.marginTopVal}`;
+                popupStyleObject['margin-top'] = `${element.marginTopVal}`;
               }
               if (element.marginRightVal) {
-                popupStyleObject["margin-right"] = `${element.marginRightVal}`;
+                popupStyleObject['margin-right'] = `${element.marginRightVal}`;
               }
               if (element.marginBottomVal) {
-                popupStyleObject[
-                  "margin-bottom"
-                ] = `${element.marginBottomVal}`;
+                popupStyleObject['margin-bottom'] = `${element.marginBottomVal}`;
               }
               if (element.marginLeftVal) {
-                popupStyleObject["margin-left"] = `${element.marginLeftVal}`;
+                popupStyleObject['margin-left'] = `${element.marginLeftVal}`;
               }
               if (element.paddingTopVal) {
-                popupStyleObject["padding-top"] = `${element.paddingTopVal}`;
+                popupStyleObject['padding-top'] = `${element.paddingTopVal}`;
               }
               if (element.paddingRightVal) {
-                popupStyleObject[
-                  "padding-right"
-                ] = `${element.paddingRightVal}`;
+                popupStyleObject['padding-right'] = `${element.paddingRightVal}`;
               }
               if (element.paddingBottomVal) {
-                popupStyleObject[
-                  "padding-bottom"
-                ] = `${element.paddingBottomVal}`;
+                popupStyleObject['padding-bottom'] = `${element.paddingBottomVal}`;
               }
               if (element.paddingLeftVal) {
-                popupStyleObject["padding-left"] = `${element.paddingLeftVal}`;
+                popupStyleObject['padding-left'] = `${element.paddingLeftVal}`;
               }
               break;
-            case "border":
+            case 'border':
               if (element.border.top.width > 0) {
-                popupStyleObject["border-top-width"] =
+                popupStyleObject['border-top-width'] =
                   element.border.top.width + element.border.top.widthUnit;
-                popupStyleObject["border-top-style"] = element.border.top.style;
+                popupStyleObject['border-top-style'] = element.border.top.style;
                 if (element.border.top.colors.hex8) {
-                  popupStyleObject["border-top-color"] =
-                    IDM.hex8ToRgbaString(element.border.top.colors.hex8);
+                  popupStyleObject['border-top-color'] = IDM.hex8ToRgbaString(
+                    element.border.top.colors.hex8
+                  );
                 }
               }
               if (element.border.right.width > 0) {
-                popupStyleObject["border-right-width"] =
+                popupStyleObject['border-right-width'] =
                   element.border.right.width + element.border.right.widthUnit;
-                popupStyleObject["border-right-style"] =
-                  element.border.right.style;
+                popupStyleObject['border-right-style'] = element.border.right.style;
                 if (element.border.right.colors.hex8) {
-                  popupStyleObject["border-right-color"] =
-                    IDM.hex8ToRgbaString(element.border.right.colors.hex8);
+                  popupStyleObject['border-right-color'] = IDM.hex8ToRgbaString(
+                    element.border.right.colors.hex8
+                  );
                 }
               }
               if (element.border.bottom.width > 0) {
-                popupStyleObject["border-bottom-width"] =
+                popupStyleObject['border-bottom-width'] =
                   element.border.bottom.width + element.border.bottom.widthUnit;
-                popupStyleObject["border-bottom-style"] =
-                  element.border.bottom.style;
+                popupStyleObject['border-bottom-style'] = element.border.bottom.style;
                 if (element.border.bottom.colors.hex8) {
-                  popupStyleObject["border-bottom-color"] =
-                    IDM.hex8ToRgbaString(element.border.bottom.colors.hex8);
+                  popupStyleObject['border-bottom-color'] = IDM.hex8ToRgbaString(
+                    element.border.bottom.colors.hex8
+                  );
                 }
               }
               if (element.border.left.width > 0) {
-                popupStyleObject["border-left-width"] =
+                popupStyleObject['border-left-width'] =
                   element.border.left.width + element.border.left.widthUnit;
-                popupStyleObject["border-left-style"] =
-                  element.border.left.style;
+                popupStyleObject['border-left-style'] = element.border.left.style;
                 if (element.border.left.colors.hex8) {
-                  popupStyleObject["border-left-color"] =
-                    IDM.hex8ToRgbaString(element.border.left.colors.hex8);
+                  popupStyleObject['border-left-color'] = IDM.hex8ToRgbaString(
+                    element.border.left.colors.hex8
+                  );
                 }
               }
-              popupStyleObject["border-top-left-radius"] =
-                element.radius.leftTop.radius +
-                element.radius.leftTop.radiusUnit;
-              popupStyleObject["border-top-right-radius"] =
-                element.radius.rightTop.radius +
-                element.radius.rightTop.radiusUnit;
-              popupStyleObject["border-bottom-left-radius"] =
-                element.radius.leftBottom.radius +
-                element.radius.leftBottom.radiusUnit;
-              popupStyleObject["border-bottom-right-radius"] =
-                element.radius.rightBottom.radius +
-                element.radius.rightBottom.radiusUnit;
+              popupStyleObject['border-top-left-radius'] =
+                element.radius.leftTop.radius + element.radius.leftTop.radiusUnit;
+              popupStyleObject['border-top-right-radius'] =
+                element.radius.rightTop.radius + element.radius.rightTop.radiusUnit;
+              popupStyleObject['border-bottom-left-radius'] =
+                element.radius.leftBottom.radius + element.radius.leftBottom.radiusUnit;
+              popupStyleObject['border-bottom-right-radius'] =
+                element.radius.rightBottom.radius + element.radius.rightBottom.radiusUnit;
               break;
-            case "btnbox":
+            case 'btnbox':
               if (element.marginTopVal) {
-                btnStyleObject["margin-top"] = `${element.marginTopVal}`;
+                btnStyleObject['margin-top'] = `${element.marginTopVal}`;
               }
               if (element.marginRightVal) {
-                btnStyleObject["margin-right"] = `${element.marginRightVal}`;
+                btnStyleObject['margin-right'] = `${element.marginRightVal}`;
               }
               if (element.marginBottomVal) {
-                btnStyleObject["margin-bottom"] = `${element.marginBottomVal}`;
+                btnStyleObject['margin-bottom'] = `${element.marginBottomVal}`;
               }
               if (element.marginLeftVal) {
-                btnStyleObject["margin-left"] = `${element.marginLeftVal}`;
+                btnStyleObject['margin-left'] = `${element.marginLeftVal}`;
               }
               if (element.paddingTopVal) {
-                btnStyleObject["padding-top"] = `${element.paddingTopVal}`;
+                btnStyleObject['padding-top'] = `${element.paddingTopVal}`;
               }
               if (element.paddingRightVal) {
-                btnStyleObject["padding-right"] = `${element.paddingRightVal}`;
+                btnStyleObject['padding-right'] = `${element.paddingRightVal}`;
               }
               if (element.paddingBottomVal) {
-                btnStyleObject[
-                  "padding-bottom"
-                ] = `${element.paddingBottomVal}`;
+                btnStyleObject['padding-bottom'] = `${element.paddingBottomVal}`;
               }
               if (element.paddingLeftVal) {
-                btnStyleObject["padding-left"] = `${element.paddingLeftVal}`;
+                btnStyleObject['padding-left'] = `${element.paddingLeftVal}`;
               }
               break;
-            case "btnborder":
+            case 'btnborder':
               if (element.border.top.width > 0) {
-                btnStyleObject["border-top-width"] =
+                btnStyleObject['border-top-width'] =
                   element.border.top.width + element.border.top.widthUnit;
-                btnStyleObject["border-top-style"] = element.border.top.style;
+                btnStyleObject['border-top-style'] = element.border.top.style;
                 if (element.border.top.colors.hex8) {
-                  btnStyleObject["border-top-color"] =
-                    IDM.hex8ToRgbaString(element.border.top.colors.hex8);
+                  btnStyleObject['border-top-color'] = IDM.hex8ToRgbaString(
+                    element.border.top.colors.hex8
+                  );
                 }
               }
               if (element.border.right.width > 0) {
-                btnStyleObject["border-right-width"] =
+                btnStyleObject['border-right-width'] =
                   element.border.right.width + element.border.right.widthUnit;
-                btnStyleObject["border-right-style"] =
-                  element.border.right.style;
+                btnStyleObject['border-right-style'] = element.border.right.style;
                 if (element.border.right.colors.hex8) {
-                  btnStyleObject["border-right-color"] =
-                    IDM.hex8ToRgbaString(element.border.right.colors.hex8);
+                  btnStyleObject['border-right-color'] = IDM.hex8ToRgbaString(
+                    element.border.right.colors.hex8
+                  );
                 }
               }
               if (element.border.bottom.width > 0) {
-                btnStyleObject["border-bottom-width"] =
+                btnStyleObject['border-bottom-width'] =
                   element.border.bottom.width + element.border.bottom.widthUnit;
-                btnStyleObject["border-bottom-style"] =
-                  element.border.bottom.style;
+                btnStyleObject['border-bottom-style'] = element.border.bottom.style;
                 if (element.border.bottom.colors.hex8) {
-                  btnStyleObject["border-bottom-color"] =
-                    IDM.hex8ToRgbaString(element.border.bottom.colors.hex8);
+                  btnStyleObject['border-bottom-color'] = IDM.hex8ToRgbaString(
+                    element.border.bottom.colors.hex8
+                  );
                 }
               }
               if (element.border.left.width > 0) {
-                btnStyleObject["border-left-width"] =
+                btnStyleObject['border-left-width'] =
                   element.border.left.width + element.border.left.widthUnit;
-                btnStyleObject["border-left-style"] = element.border.left.style;
+                btnStyleObject['border-left-style'] = element.border.left.style;
                 if (element.border.left.colors.hex8) {
-                  btnStyleObject["border-left-color"] =
-                    IDM.hex8ToRgbaString(element.border.left.colors.hex8);
+                  btnStyleObject['border-left-color'] = IDM.hex8ToRgbaString(
+                    element.border.left.colors.hex8
+                  );
                 }
               }
-              btnStyleObject["border-top-left-radius"] =
-                element.radius.leftTop.radius +
-                element.radius.leftTop.radiusUnit;
-              btnStyleObject["border-top-right-radius"] =
-                element.radius.rightTop.radius +
-                element.radius.rightTop.radiusUnit;
-              btnStyleObject["border-bottom-left-radius"] =
-                element.radius.leftBottom.radius +
-                element.radius.leftBottom.radiusUnit;
-              btnStyleObject["border-bottom-right-radius"] =
-                element.radius.rightBottom.radius +
-                element.radius.rightBottom.radiusUnit;
+              btnStyleObject['border-top-left-radius'] =
+                element.radius.leftTop.radius + element.radius.leftTop.radiusUnit;
+              btnStyleObject['border-top-right-radius'] =
+                element.radius.rightTop.radius + element.radius.rightTop.radiusUnit;
+              btnStyleObject['border-bottom-left-radius'] =
+                element.radius.leftBottom.radius + element.radius.leftBottom.radiusUnit;
+              btnStyleObject['border-bottom-right-radius'] =
+                element.radius.rightBottom.radius + element.radius.rightBottom.radiusUnit;
               break;
           }
         }
       }
+      window.IDM.setStyleToPageHead(this.moduleObject.id + ' .hover_button', btnStyleObject);
       window.IDM.setStyleToPageHead(
-        this.moduleObject.id + " .hover_button",
-        btnStyleObject
+        this.moduleObject.id + ' .hover_button .idm_filed_svg_icon',
+        iconSizeStyleObject
       );
+      window.IDM.setStyleToPageHead('idm_popupWorkbench_popup' + ' .hover_button', btnStyleObject);
       window.IDM.setStyleToPageHead(
-        this.moduleObject.id + " .hover_button .idm_filed_svg_icon",
+        'idm_popupWorkbench_popup' + ' .hover_button .idm_filed_svg_icon',
         iconSizeStyleObject
       );
       window.IDM.setStyleToPageHead(
-        "idm_popupWorkbench_popup" + " .hover_button",
-        btnStyleObject
-      );
-      window.IDM.setStyleToPageHead(
-        "idm_popupWorkbench_popup" + " .hover_button .idm_filed_svg_icon",
-        iconSizeStyleObject
-      );
-      window.IDM.setStyleToPageHead(
-        "idm_popupWorkbench_popup" +
-          " .van-cell.cell_selected .van-cell__title div",
+        'idm_popupWorkbench_popup' + ' .van-cell.cell_selected .van-cell__title div',
         cellSelectedStyleObject
       );
+      window.IDM.setStyleToPageHead('idm_popupWorkbench_popup', popupStyleObject);
+      window.IDM.setStyleToPageHead('idm_popupWorkbench_popup' + ' .van-cell', cellStyleObject);
       window.IDM.setStyleToPageHead(
-        "idm_popupWorkbench_popup",
-        popupStyleObject
+        'idm_popupWorkbench_popup' + ' .van-cell .van-cell__title div',
+        titleStyleObject
       );
       window.IDM.setStyleToPageHead(
-        "idm_popupWorkbench_popup" + " .van-cell .van-cell__title div",
-        titleStyleObject
+        'idm_popupWorkbench_popup' + ' .van-cell .van-radio .van-radio__label',
+        radioStyleObject
       );
     },
     /**
@@ -519,11 +552,9 @@ export default {
         return;
       }
       const themeNamePrefix =
-        IDM.setting &&
-        IDM.setting.applications &&
-        IDM.setting.applications.themeNamePrefix
+        IDM.setting && IDM.setting.applications && IDM.setting.applications.themeNamePrefix
           ? IDM.setting.applications.themeNamePrefix
-          : "idm-theme-";
+          : 'idm-theme-';
       for (var i = 0; i < themeList.length; i++) {
         var item = themeList[i];
         //item.key：为主题样式的key
@@ -534,53 +565,68 @@ export default {
         //     continue;
         // }
         const cssObject_color_main = {
-          color: item.mainColor ? IDM.hex8ToRgbaString(item.mainColor.hex8) : "",
+          color: item.mainColor ? IDM.hex8ToRgbaString(item.mainColor.hex8) : ''
+        };
+        const cssObject_radioChecked_mian = {
+          'background-color': item.mainColor ? IDM.hex8ToRgbaString(item.mainColor.hex8) : '',
+          'border-color': item.mainColor ? IDM.hex8ToRgbaString(item.mainColor.hex8) : ''
+        };
+        const cssObject_radioborder_minor = {
+          'border-color': item.minorColor ? IDM.hex8ToRgbaString(item.minorColor.hex8) : ''
         };
         const cssObject_background_minor = {
-          "background-color": item.minorColor ? IDM.hex8ToRgbaString(item.minorColor.hex8) : "",
+          'background-color': item.minorColor ? IDM.hex8ToRgbaString(item.minorColor.hex8) : ''
         };
         const cssObject_boderColor_minor = {
-          "border-bottom-color": item.minorColor ? IDM.hex8ToRgbaString(item.minorColor.hex8) : "",
+          'border-bottom-color': item.minorColor ? IDM.hex8ToRgbaString(item.minorColor.hex8) : ''
         };
         IDM.setStyleToPageHead(
-          "." +
+          '.' +
             themeNamePrefix +
             item.key +
-            " #" +
-            (this.moduleObject.packageid || "module_demo") +
-            " .hover_button",
+            ' #' +
+            (this.moduleObject.packageid || 'module_demo') +
+            ' .hover_button',
           cssObject_color_main
         );
         IDM.setStyleToPageHead(
-          "." +
-            themeNamePrefix +
-            item.key +
-            " #idm_popupWorkbench_popup" +
-            " .hover_button",
+          '.' + themeNamePrefix + item.key + ' #idm_popupWorkbench_popup' + ' .hover_button',
           cssObject_color_main
         );
         IDM.setStyleToPageHead(
-          "." +
+          '.' +
             themeNamePrefix +
             item.key +
-            " #idm_popupWorkbench_popup" +
-            " .van-cell.cell_selected .van-cell__title div",
+            ' #idm_popupWorkbench_popup' +
+            ' .van-cell.cell_selected .van-cell__title div',
           cssObject_color_main
         );
         IDM.setStyleToPageHead(
-          "." +
+          '.' +
             themeNamePrefix +
             item.key +
-            " #idm_popupWorkbench_popup" +
-            " .van-cell.cell_selected",
+            ' #idm_popupWorkbench_popup' +
+            ' .van-cell .van-radio .van-radio__icon.van-radio__icon--checked .van-icon',
+          cssObject_radioChecked_mian
+        );
+        IDM.setStyleToPageHead(
+          '.' +
+            themeNamePrefix +
+            item.key +
+            ' #idm_popupWorkbench_popup' +
+            ' .van-cell .van-radio .van-radio__icon .van-icon',
+          cssObject_radioborder_minor
+        );
+        IDM.setStyleToPageHead(
+          '.' +
+            themeNamePrefix +
+            item.key +
+            ' #idm_popupWorkbench_popup' +
+            ' .van-cell.cell_selected',
           cssObject_background_minor
         );
         IDM.setStyleToPageHead(
-          "." +
-            themeNamePrefix +
-            item.key +
-            " #idm_popupWorkbench_popup" +
-            " .van-cell :after",
+          '.' + themeNamePrefix + item.key + ' #idm_popupWorkbench_popup' + ' .van-cell :after',
           cssObject_boderColor_minor
         );
       }
@@ -596,21 +642,23 @@ export default {
      * } object
      */
     receiveBroadcastMessage(messageObject) {
-      console.log("组件收到消息",messageObject)
-      if (messageObject.type && messageObject.type == "linkageReload") {
+      // console.log('组件收到消息', messageObject);
+      if (messageObject.type && messageObject.type == 'linkageReload') {
         this.getMenuList();
-      } else if (messageObject.type && messageObject.type == "pageResize") {
+      } else if (messageObject.type && messageObject.type == 'pageResize') {
         this.currentEquipWidth = messageObject.message.width;
         this.convertAttrToStyleObject();
         this.convertThemeListAttrToStyleObject();
       }
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss">
 .idm_popupWorkbench_box {
   .hover_button {
+    width: 30px;
+    height: 30px;
     display: flex;
     align-items: center;
     font-size: 16px;
@@ -647,10 +695,18 @@ export default {
     }
     .van-cell {
       background-color: transparent;
+      align-items: center;
+      .van-radio .van-radio__icon.van-radio__icon--checked .van-icon {
+        background-color: #3976c7;
+        border-color: #3976c7;
+      }
+      .van-radio .van-radio__icon .van-icon {
+        border-color: #ebedf0;
+      }
       :after {
         position: absolute;
         box-sizing: border-box;
-        content: " ";
+        content: ' ';
         pointer-events: none;
         right: 16px;
         bottom: 0;
@@ -666,6 +722,8 @@ export default {
     }
   }
   .hover_button {
+    width: 30px;
+    height: 30px;
     display: flex;
     align-items: center;
     font-size: 16px;
