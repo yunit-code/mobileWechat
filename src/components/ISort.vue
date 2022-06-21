@@ -234,7 +234,7 @@ export default {
     /**
      * 取用户定制化数据
      */
-    requestUserCustomization(defaultList) {
+    requestUserCustomization(defaultList,componentsMap) {
       const pageid = this.commonParam()&& this.commonParam().pageId;
       const url = `/ctrl/idm/api/fetchUserCustomization?pageid=${pageid}&version=${this.pageVersion}`;
       IDM.http
@@ -243,6 +243,13 @@ export default {
           if (res&&res.code === "200" && res.data) {
             const list = JSON.parse(res.data.customData).children
             if (list && list.length > 0) {
+              list.forEach(layout => {
+                componentsMap.forEach(component=>{
+                  if(layout.id === component.id){
+                    layout.props = component.props
+                  } 
+                })
+              })
               this.dealRes(list,defaultList);
             } else {
               this.dealRes(defaultList)
@@ -284,7 +291,7 @@ export default {
                 } 
               })
             })
-            this.requestUserCustomization(list);
+            this.requestUserCustomization(list,res.data.page.componentsMap);
           } else {
             this.failRequest(url);
           }
