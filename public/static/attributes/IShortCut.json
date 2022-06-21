@@ -354,7 +354,7 @@
                         {
                             "type": "treeSelect",
                             "layoutType": "inline",
-                            "text": "权限列表",
+                            "text": "权限选择",
                             "multiple": true,
                             "bindKey": "dataSource2",
                             "dataSourceUrl":"/ctrl/role/getSelfTree",
