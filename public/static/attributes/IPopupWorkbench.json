@@ -110,7 +110,7 @@
           "text": "单选文字",
           "desc": "设置工作台默认选项的文字",
           "bindKey": "radioText",
-          "default": "默认门户"
+          "default": ""
         }
       ]
     },
