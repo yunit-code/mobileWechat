@@ -571,9 +571,6 @@ export default {
           'background-color': item.mainColor ? IDM.hex8ToRgbaString(item.mainColor.hex8) : '',
           'border-color': item.mainColor ? IDM.hex8ToRgbaString(item.mainColor.hex8) : ''
         };
-        const cssObject_radioborder_minor = {
-          'border-color': item.minorColor ? IDM.hex8ToRgbaString(item.minorColor.hex8) : ''
-        };
         const cssObject_background_minor = {
           'background-color': item.minorColor ? IDM.hex8ToRgbaString(item.minorColor.hex8) : ''
         };
@@ -608,14 +605,6 @@ export default {
             ' #idm_popupWorkbench_popup' +
             ' .van-cell .van-radio .van-radio__icon.van-radio__icon--checked .van-icon',
           cssObject_radioChecked_mian
-        );
-        IDM.setStyleToPageHead(
-          '.' +
-            themeNamePrefix +
-            item.key +
-            ' #idm_popupWorkbench_popup' +
-            ' .van-cell .van-radio .van-radio__icon .van-icon',
-          cssObject_radioborder_minor
         );
         IDM.setStyleToPageHead(
           '.' +
@@ -699,9 +688,6 @@ export default {
       .van-radio .van-radio__icon.van-radio__icon--checked .van-icon {
         background-color: #3976c7;
         border-color: #3976c7;
-      }
-      .van-radio .van-radio__icon .van-icon {
-        border-color: #ebedf0;
       }
       :after {
         position: absolute;
