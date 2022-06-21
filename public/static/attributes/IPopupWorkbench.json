@@ -103,6 +103,14 @@
           "bindKey": "closeIcon",
           "multiple": false,
           "default": ""
+        },
+        {
+          "type": "input",
+          "layoutType": "inline",
+          "text": "单选文字",
+          "desc": "设置工作台默认选项的文字",
+          "bindKey": "radioText",
+          "default": "默认门户"
         }
       ]
     },
@@ -114,39 +122,39 @@
       "tabText": "主题[index]",
       "default": [
         {
-            "key": "blue",
-            "mainColor": {
-                "hex": "#0073CA",
-                "hex8": "#0073CAFF"
-            },
-            "minorColor": {
-                "hex": "#ebedf0",
-                "hex8": "#ebedf0FF"
-            }
+          "key": "blue",
+          "mainColor": {
+            "hex": "#0073CA",
+            "hex8": "#0073CAFF"
+          },
+          "minorColor": {
+            "hex": "#ebedf0",
+            "hex8": "#ebedf0FF"
+          }
         },
         {
-            "key": "red",
-            "mainColor": {
-                "hex": "#E21A1A",
-                "hex8": "#E21A1AFF"
-            },
-            "minorColor": {
-                "hex": "#ebedf0",
-                "hex8": "#ebedf0FF"
-            }
+          "key": "red",
+          "mainColor": {
+            "hex": "#E21A1A",
+            "hex8": "#E21A1AFF"
+          },
+          "minorColor": {
+            "hex": "#ebedf0",
+            "hex8": "#ebedf0FF"
+          }
         },
         {
-            "key": "green",
-            "mainColor": {
-                "hex": "#0EAF64",
-                "hex8": "#0EAF64FF"
-            },
-            "minorColor": {
-                "hex": "#ebedf0",
-                "hex8": "#ebedf0FF"
-            }
+          "key": "green",
+          "mainColor": {
+            "hex": "#0EAF64",
+            "hex8": "#0EAF64FF"
+          },
+          "minorColor": {
+            "hex": "#ebedf0",
+            "hex8": "#ebedf0FF"
+          }
         }
-    ],
+      ],
       "children": [
         {
           "type": "select",
@@ -213,7 +221,7 @@
         {
           "type": "font",
           "layoutType": "block",
-          "text": "字体设置",
+          "text": "选项名称字体设置",
           "bindKey": "fontStyle",
           "default": {
             "fontColors": {
@@ -221,6 +229,20 @@
               "hex8": "#333333FF"
             },
             "fontSize": 16,
+            "fontSizeUnit": "px"
+          }
+        },
+        {
+          "type": "font",
+          "layoutType": "block",
+          "text": "默认选项字体设置",
+          "bindKey": "radioFontStyle",
+          "default": {
+            "fontColors": {
+              "hex": "#333333",
+              "hex8": "#333333FF"
+            },
+            "fontSize": 14,
             "fontSizeUnit": "px"
           }
         },
