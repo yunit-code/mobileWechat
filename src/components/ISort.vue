@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { Empty,Loading  } from 'vant';
+import { Empty,Loading, Image as VanImage} from 'vant';
 import 'vant/lib/empty/style';
 import 'vant/lib/loading/style';
 import Draggable from "vuedraggable";
@@ -72,7 +72,8 @@ export default {
   components: {
     Draggable,
     [Empty.name]: Empty,
-    [Loading.name]: Loading
+    [Loading.name]: Loading,
+    [VanImage.name]: VanImage
   },
   data() {
     return {
@@ -219,7 +220,6 @@ export default {
             },
           ];
           this.dealRes(userlist,defaultList)
-          this.isLoading = false
         }, 1000);
       }else if(this.moduleObject.env ===  "production"){
         this.requestDefaultCustomization();
@@ -252,11 +252,9 @@ export default {
           }else {
             this.failRequest(url);
           }
-          this.isLoading = false;
         })
         .error((response) => {
           this.failRequest(url);
-          this.isLoading = false;
         });
     },
     /**
@@ -290,7 +288,6 @@ export default {
           } else {
             this.failRequest(url);
           }
-          this.isLoading = false;
         })
         .error((response) => {
           this.failRequest(url);

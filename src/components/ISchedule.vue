@@ -15,7 +15,7 @@
     <div class="i-schedule-header" v-if="propData.isShowTitleBar === undefined ? true : propData.isShowTitleBar">
       <div class="i-schedule-header-main">
         <div class="i-schedule-header-tit">
-          <span>{{ propData.title}}</span>
+          <span v-if="!propData.titleIconPosition || propData.titleIconPosition === 'right'">{{ propData.title}}</span>
           <div class="i-schedule-header-tit-icon" v-if="propData.showIcon === undefined ? true : propData.showIcon">
             <svg
               v-if="propData.titleIcon && propData.titleIcon.length > 0"
@@ -28,6 +28,7 @@
             </svg>
             <svg-icon v-else icon-class="application-icon" />
           </div>
+          <span v-if="propData.titleIconPosition === 'left'">{{ propData.title}}</span>
         </div>
         <div class="i-schedule-header-date">{{ nowDate }}</div>
       </div>
@@ -135,14 +136,16 @@
 <script>
 import Swiper from "swiper";
 import "swiper/css/swiper.min.css";
-import { Empty, Loading } from "vant";
+import { Empty, Loading, Image as VanImage } from "vant";
 import "vant/lib/empty/style";
 import "vant/lib/loading/style";
+import 'vant/lib/image/style';
 export default {
   name: "ISchedule",
   components: {
     [Empty.name]: Empty,
     [Loading.name]: Loading,
+    [VanImage.name]: VanImage
   },
   data() {
     return {
@@ -388,10 +391,8 @@ export default {
      * 把属性转换成样式对象
      */
     convertAttrToStyleObject(pageSize={}) {
-      
       var styleObject = {};
       var titleStyleObject = {};
-      var titleDirectionStyleObject = {};
       var innerCardStyleObject = {};
       var iconStyleObject = {};
       var emptyStyleObject = {};
@@ -763,8 +764,6 @@ export default {
             case "titleIconSize":
               iconStyleObject["font-size"] = element.selectVal === "px" ?  (element.inputVal * scale) + element.selectVal :  element.inputVal + element.selectVal;
               break;
-            case "titleIconPosition":
-              titleDirectionStyleObject["flex-direction"] = element === "right" ? 'row' : 'row-reverse'
           }
         }
       }
@@ -772,10 +771,6 @@ export default {
       window.IDM.setStyleToPageHead(
         this.moduleObject.id + " .i-schedule-header-tit span",
         titleStyleObject
-      );
-      window.IDM.setStyleToPageHead(
-        this.moduleObject.id + " .i-schedule-header-tit",
-        titleDirectionStyleObject
       );
       window.IDM.setStyleToPageHead(
         this.moduleObject.id + " .i-schedule-content",
@@ -1061,11 +1056,14 @@ $scale: var(--i-schedule-scale);
         color: #333333;
         font-style: normal;
         text-decoration: none;
-        display: flex;
-        align-items: center;
-        flex-direction: row;
         font-size: calc(16px * #{ $scale });
         max-width: 60%;
+        display: flex;
+        align-items: center;
+
+        .i-schedule-header-tit-icon {
+          display: inline-block;
+        }
 
         span {
           margin: 0 5px;
