@@ -1063,12 +1063,14 @@ $scale: var(--i-schedule-scale);
 
         .i-schedule-header-tit-icon {
           display: inline-block;
+          flex: 1;
         }
 
         span {
           margin: 0 5px;
           width: 90%;
           overflow: hidden;
+          flex: 8;
         }
         
         transform: translateX(-5px);
