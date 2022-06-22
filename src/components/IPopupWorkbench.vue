@@ -683,6 +683,7 @@ export default {
       background-color: #d0e8ff;
     }
     .van-cell {
+      margin-top: -1px;
       background-color: transparent;
       align-items: center;
       .van-radio .van-radio__icon.van-radio__icon--checked .van-icon {
