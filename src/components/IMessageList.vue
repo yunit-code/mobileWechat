@@ -439,7 +439,7 @@ export default {
               subBoxStyleObj["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
               break;
             case "titleIconFontColor":
-                styleObjectTitleIcon["fill"] = IDM.hex8ToRgbaString(element.hex8); + ' !important';
+                styleObjectTitleIcon["fill"] = IDM.hex8ToRgbaString(element.hex8) + ' !important';
                 break
             case "titleIconFontSize":
                 styleObjectTitleIcon["font-size"] = getAdaptiveSize.call(this,element) + "px";
@@ -473,7 +473,7 @@ export default {
             case 'titleFontStyleActive':
                 titleFontStyleActiveObj["font-family"] = element.fontFamily;
                 if (element.fontColors.hex8) {
-                    titleFontStyleActiveObj["color"] = IDM.hex8ToRgbaString(element.fontColors.hex8); + ' !important';
+                    titleFontStyleActiveObj["color"] = IDM.hex8ToRgbaString(element.fontColors.hex8) + ' !important';
                 }
                 titleFontStyleActiveObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
                 titleFontStyleActiveObj["font-style"] = element.fontStyle;
