@@ -82,6 +82,13 @@
             "className": "IPopupWorkbench",
             "comType": "common",
             "comLangue": "vue"
+        },
+        {
+            "classId": "idm.componet.mobilewechat.todoPage",
+            "comName": "待办页面",
+            "className": "ITodoPage",
+            "comType": "common",
+            "comLangue": "vue"
         }
     ]
 }
