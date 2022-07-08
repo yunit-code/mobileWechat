@@ -23,12 +23,14 @@
             v-model="searchInfo.title"
             name="标题"
             placeholder="请输入关键字"
+            clearable
           />
           <p>发送人</p>
           <van-field
             v-model="searchInfo.sendUserName"
             name="发送人"
             placeholder="请输入关键字"
+            clearable
           />
           <p>发送时间</p>
           <div class="idm-todo-page-box-header-model-calendar">
@@ -71,51 +73,54 @@
       <van-calendar v-model="endTimeInfo.model" :min-date="endTimeInfo.minDate" :max-date="endTimeInfo.maxDate" @confirm="calendarConfirm($event,1)" />
     </div>
     <div class="idm-todo-page-box-overflow">
-      <van-list
-        v-model="loading"
-        :finished="finished"
-        :finished-text="propData.finishedText"
-        @load="onLoad"
-      >
-        <div class="idm-todo-page-box-sub" v-for="(item, index) in todoData" :key="index" @click="handleClickItem(item)">
-          <div class="idm-todo-page-box-sub-title" :class="{'idm-todo-page-box-sub-no-read': true}">
-            <div class="flex-1">
-              <div class="idm-todo-page-box-sub-content" :class="getExpressData('data', propData.readExpression, item) ?'idm-todo-page-box-sub-hasRead' : ''">
-                <span v-if="item.appShowName" class="ml-7">【{{item.appShowName}}】</span>{{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}
-              </div>
-              <div class="idm-todo-page-box-sub-intr">
-                <div class="d-flex align-c">
-                  <svg v-if="propData.readIcon && propData.readIcon.length > 0 && item.readStatus == '1'" class="idm-todo-page-box-sub-icon-has-read" aria-hidden="true" >
-                    <use :xlink:href="`#${propData.readIcon[0]}`"></use>
-                  </svg>
-                  <svg v-if="propData.noReadIcon && propData.noReadIcon.length > 0 && item.readStatus != '1'" class="idm-todo-page-box-sub-icon-no-read" aria-hidden="true" >
-                    <use :xlink:href="`#${propData.noReadIcon[0]}`"></use>
-                  </svg>
-                  <span>{{item.readStatusText}}</span> 
+      <van-pull-refresh v-model="refreshing" @refresh="onRefresh" :pulling-text="propData.pullingText" :loosing-text="propData.loosingText" :loading-text="propData.loadingText">
+        <van-list
+          v-model="loading"
+          :finished="finished"
+          :finished-text="propData.finishedText"
+          :loading-text="propData.loadingText"
+          @load="onLoad"
+        >
+          <div class="idm-todo-page-box-sub" v-for="(item, index) in todoData" :key="index" @click="handleClickItem(item)">
+            <div class="idm-todo-page-box-sub-title" :class="{'idm-todo-page-box-sub-no-read': true}">
+              <div class="flex-1">
+                <div class="idm-todo-page-box-sub-content" :class="getExpressData('data', propData.readExpression, item) ?'idm-todo-page-box-sub-hasRead' : ''">
+                  <span v-if="item.appShowName" class="ml-7">【{{item.appShowName}}】</span>{{IDM.express.replace('@['+propData.dataFiled+']', item, true)}}
                 </div>
-                <div class="d-flex align-c">
-                  <svg class="idm-todo-page-box-sub-icon" aria-hidden="true">
-                    <use xlink:href="#idm-icon-ren"></use>
-                  </svg>
-                  <span>{{item.sendUserName}}</span> </div>
-                <div class="d-flex align-c">
-                  <svg class="idm-todo-page-box-sub-icon" aria-hidden="true">
-                    <use xlink:href="#idm-icon-shijian"></use>
-                  </svg>
-                  <span>{{item.time}}</span>
+                <div class="idm-todo-page-box-sub-intr">
+                  <div class="d-flex align-c">
+                    <svg v-if="propData.readIcon && propData.readIcon.length > 0 && item.readStatus == '1'" class="idm-todo-page-box-sub-icon-has-read" aria-hidden="true" >
+                      <use :xlink:href="`#${propData.readIcon[0]}`"></use>
+                    </svg>
+                    <svg v-if="propData.noReadIcon && propData.noReadIcon.length > 0 && item.readStatus != '1'" class="idm-todo-page-box-sub-icon-no-read" aria-hidden="true" >
+                      <use :xlink:href="`#${propData.noReadIcon[0]}`"></use>
+                    </svg>
+                    <span>{{item.readStatusText}}</span> 
+                  </div>
+                  <div class="d-flex align-c">
+                    <svg class="idm-todo-page-box-sub-icon" aria-hidden="true">
+                      <use xlink:href="#idm-icon-ren"></use>
+                    </svg>
+                    <span>{{item.sendUserName}}</span> </div>
+                  <div class="d-flex align-c">
+                    <svg class="idm-todo-page-box-sub-icon" aria-hidden="true">
+                      <use xlink:href="#idm-icon-shijian"></use>
+                    </svg>
+                    <span>{{item.time}}</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </van-list>
+        </van-list>
+      </van-pull-refresh>
     </div>
   </div>
 </template>
 
 <script>
 import monent from "moment"
-import { Icon, Field, Popup, Calendar, Button, List, Cell, Picker } from 'vant';
+import { Icon, Field, Popup, Calendar, Button, List, Cell, Picker, PullRefresh } from 'vant';
 import { getAdaptiveSize } from '@/utils/adaptationScreen'
 import 'vant/lib/icon/style';
 import 'vant/lib/field/style';
@@ -125,6 +130,7 @@ import 'vant/lib/button/style';
 import 'vant/lib/list/style';
 import 'vant/lib/cell/style';
 import 'vant/lib/picker/style';
+import 'vant/lib/pull-refresh/style';
 const todoData = [
   {
     jumpUrl: '',
@@ -166,30 +172,22 @@ export default {
     [List.name]: List,
     [Cell.name]: Cell,
     [Picker.name]: Picker,
+    [PullRefresh.name]: PullRefresh,
   },
   data(){
     return {
       moduleObject:{},
       propData:this.$root.propData.compositeAttr||{
         limit: 25,
-        finishedText:'没有更多了',
         showSeach:true,
         width: '100%',
         height: '100vh',
-        titleFontStyle: {
-          fontColors: {
-            colors: {
-              hex: '#333'
-            }
-          },
-          fontSize: 16,
-          fontSizeUnit: "px",
-          fontWeight: "600"
-        },
-        showTodoNumber: false,
         dataFiled: 'title',
         bgColor: '#fff',
-        maxCount: '3', // 最多显示几条
+        pullingText:"下拉即可刷新...",
+        loosingText:"释放即可刷新...",
+        loadingText:"加载中...",
+        finishedText:'没有更多数据',
       },
       todoData: [],
       countKey: 'count',
@@ -214,9 +212,10 @@ export default {
       },
       loading:false,
       finished:false,
-      sortList: ["正序","倒序"],
+      sortList: ["按时间正序","按时间倒序"],
       sortPicker:false,
-      start: 0
+      start: 0,
+      refreshing:false
     }
   },
   created() {
@@ -224,9 +223,17 @@ export default {
     this.convertAttrToStyleObject();
     this.convertThemeListAttrToStyleObject();
     this.initData()
-
   },
   methods:{
+    /**
+     * 下拉刷新
+     */
+    onRefresh(){
+      this.todoData = [];
+      this.start = 0;
+      this.finished = false;
+      this.initData();
+    },
     /**
      * 查询条件重置
      */
@@ -249,8 +256,8 @@ export default {
     searchConfirm(){
       this.todoData = [];
       this.start = 0;
-      this.propData.limit = 25;
       this.filterModel = false;
+      this.finished = false;
       this.initData();
     },
     /**
@@ -273,8 +280,8 @@ export default {
     searchChange(){
       this.todoData = [];
       this.start = 0;
-      this.propData.limit = 25;
       this.filterModel = false;
+      this.finished = false;
       this.initData();
     },
     /**
@@ -351,12 +358,12 @@ export default {
     convertAttrToStyleObject(){
       var styleObject = {};
       let styleObjectTitleIcon = {}
-      let titleFontStyleObj = {}
       let todoFontStyleObj = {}
       let readFontStyleObj = {}
       let emptyBoxHeightObj = {}
       let readIconObj = {}
       let noReadIconObj = {}
+      let subBoxStyleObj = {}
       if(this.propData.bgSize&&this.propData.bgSize=="custom"){
         styleObject["background-size"]=(this.propData.bgSizeWidth?this.propData.bgSizeWidth.inputVal+this.propData.bgSizeWidth.selectVal:"auto")+" "+(this.propData.bgSizeHeight?this.propData.bgSizeHeight.inputVal+this.propData.bgSizeHeight.selectVal:"auto")
       }else if(this.propData.bgSize){
@@ -469,18 +476,6 @@ export default {
                 styleObjectTitleIcon["width"] = getAdaptiveSize.call(this, element) + "px";
                 styleObjectTitleIcon["height"] = getAdaptiveSize.call(this, element) + "px";
                 break
-            case 'titleFontStyle':
-              titleFontStyleObj["font-family"] = element.fontFamily;
-              if (element.fontColors.hex8) {
-                  titleFontStyleObj["color"] = IDM.hex8ToRgbaString(element.fontColors.hex8)
-              }
-              titleFontStyleObj["font-weight"] = element.fontWeight && element.fontWeight.split(" ")[0];
-              titleFontStyleObj["font-style"] = element.fontStyle;
-              titleFontStyleObj["font-size"] = getAdaptiveSize.call(this, element.fontSize) + element.fontSizeUnit;
-              titleFontStyleObj["line-height"] = element.fontLineHeight + (element.fontLineHeightUnit == "-" ? "" : element.fontLineHeightUnit);
-              titleFontStyleObj["text-align"] = element.fontTextAlign;
-              titleFontStyleObj["text-decoration"] = element.fontDecoration;
-              break
             case 'todoFontStyle':
               todoFontStyleObj["font-family"] = element.fontFamily;
               if (element.fontColors.hex8) {
@@ -524,10 +519,85 @@ export default {
                 noReadIconObj["width"] = getAdaptiveSize.call(this, element) + "px";
                 noReadIconObj["height"] = getAdaptiveSize.call(this, element) + "px";
                 break
+            case "subWidth":
+              subBoxStyleObj['width']=element;
+              break;
+            case "subHeight":
+              subBoxStyleObj['height']=element;
+              break;
+            case "subBgColor":
+              if(element&&element.hex8){
+                subBoxStyleObj["background-color"]=IDM.hex8ToRgbaString(element.hex8)
+              }
+              break;
+            case "subBox":
+              if(element.marginTopVal){
+                subBoxStyleObj["margin-top"]=`${element.marginTopVal}`;
+              }
+              if(element.marginRightVal){
+                subBoxStyleObj["margin-right"]=`${element.marginRightVal}`;
+              }
+              if(element.marginBottomVal){
+                subBoxStyleObj["margin-bottom"]=`${element.marginBottomVal}`;
+              }
+              if(element.marginLeftVal){
+                subBoxStyleObj["margin-left"]=`${element.marginLeftVal}`;
+              }
+              if(element.paddingTopVal){
+                subBoxStyleObj["padding-top"]=`${element.paddingTopVal}`;
+              }
+              if(element.paddingRightVal){
+                subBoxStyleObj["padding-right"]=`${element.paddingRightVal}`;
+              }
+              if(element.paddingBottomVal){
+                subBoxStyleObj["padding-bottom"]=`${element.paddingBottomVal}`;
+              }
+              if(element.paddingLeftVal){
+                subBoxStyleObj["padding-left"]=`${element.paddingLeftVal}`;
+              }
+              break;
+            case "subBorder":
+              if(element.border.top.width>0){
+                subBoxStyleObj["border-top-width"]=element.border.top.width+element.border.top.widthUnit;
+                subBoxStyleObj["border-top-style"]=element.border.top.style;
+                if(element.border.top.colors.hex8){
+                  subBoxStyleObj["border-top-color"]=IDM.hex8ToRgbaString(element.border.top.colors.hex8)
+                }
+              }
+              if(element.border.right.width>0){
+                subBoxStyleObj["border-right-width"]=element.border.right.width+element.border.right.widthUnit;
+                subBoxStyleObj["border-right-style"]=element.border.right.style;
+                if(element.border.right.colors.hex8){
+                  subBoxStyleObj["border-right-color"]=IDM.hex8ToRgbaString(element.border.right.colors.hex8)
+                }
+              }
+              if(element.border.bottom.width>0){
+                subBoxStyleObj["border-bottom-width"]=element.border.bottom.width+element.border.bottom.widthUnit;
+                subBoxStyleObj["border-bottom-style"]=element.border.bottom.style;
+                if(element.border.bottom.colors.hex8){
+                  subBoxStyleObj["border-bottom-color"]=IDM.hex8ToRgbaString(element.border.bottom.colors.hex8)
+                }
+              }
+              if(element.border.left.width>0){
+                subBoxStyleObj["border-left-width"]=element.border.left.width+element.border.left.widthUnit;
+                subBoxStyleObj["border-left-style"]=element.border.left.style;
+                if(element.border.left.colors.hex8){
+                  subBoxStyleObj["border-left-color"]=IDM.hex8ToRgbaString(element.border.left.colors.hex8)
+                }
+              }
+              subBoxStyleObj["border-top-left-radius"]=element.radius.leftTop.radius+element.radius.leftTop.radiusUnit;
+              subBoxStyleObj["border-top-right-radius"]=element.radius.rightTop.radius+element.radius.rightTop.radiusUnit;
+              subBoxStyleObj["border-bottom-left-radius"]=element.radius.leftBottom.radius+element.radius.leftBottom.radiusUnit;
+              subBoxStyleObj["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
+              break;
+            case 'boxShadow':
+              subBoxStyleObj['box-shadow']=element;
+              break;
           }
         }
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id,styleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-todo-page-box-overflow", subBoxStyleObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-todo-page-box-sub-content", todoFontStyleObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-todo-page-box-sub-hasRead", readFontStyleObj);
       window.IDM.setStyleToPageHead(this.moduleObject.id + " .idm-todo-page-box-empty", emptyBoxHeightObj);
@@ -653,15 +723,16 @@ export default {
             if (this.todoData.length >= 40) {
               this.finished = true;
             }
+            this.refreshing = false;
           }, 1000);
         }
         return
       }
       // 真实请求
-      const userInfo = IDM.user.getCurrentUserInfo()
+      const userInfo = IDM.user.getCurrentUserInfo();
       this.loading = true
       window.IDM.http
-        .post("ctrl/customizeTodo/getTodoPage", {
+        .post("ctrl/customizeTodo/getUnifyTodoPage", {
           start: this.start,
           limit: this.propData.limit,
           operatorId:userInfo.userid,
@@ -669,7 +740,7 @@ export default {
           title: this.searchInfo.title,
           startDate:this.searchInfo.startTime,
           endDate:this.searchInfo.endTime,
-          orderBy:this.searchInfo.orderBy === "倒序" ? 'desc' : ''
+          orderBy:this.searchInfo.orderBy === "按时间倒序" ? 'desc' : ''
         },{headers: {"Content-Type": "application/json;charset=UTF-8"}})
         .then((res) => {
           if(res.status == 200 && res.data.code == 200){
@@ -688,10 +759,11 @@ export default {
           }
         })
         .catch((error) => {
-
+          console.log(error)
         })
         .finally(()=>{
-          this.loading
+          this.loading = false;
+          this.refreshing = false;
         })
     },
     /**
@@ -896,13 +968,14 @@ export default {
     margin: 0 0 0 8px;
   }
   &-overflow{
-    overflow: hidden;
-    overflow-y: auto;
     height: calc(100% - 36px);
-
-    .van-list {
-      height: 100%;
-    }
+    overflow-x: hidden;
+    overflow-y: auto;
+    // .van-pull-refresh {
+        // height: 100%;
+        // overflow: hidden;
+        // overflow-y: auto;
+    // }
   }
   &-sub{
     border-bottom: .6px solid #eee;
@@ -937,7 +1010,7 @@ export default {
       font-weight: 500;
     }
     &-hasRead{
-      color: #999;
+      color: #363636;
     }
     &-intr{
       padding: 8px 0;
