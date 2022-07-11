@@ -37,12 +37,58 @@
                     "default": 25
                 },
                 {
+                    "type": "select",
+                    "layoutType": "inline",
+                    "text": "跳转方式",
+                    "bindKey": "jumpStyle",
+                    "desc": "设置组件点击链接跳转方式",
+                    "dictionary": [
+                        {
+                            "label": "智能跳转打开",
+                            "value": "_auto"
+                        },
+                        {
+                            "label": "当前页跳转",
+                            "value": "_self"
+                        },
+                        {
+                            "label": "新窗口打开",
+                            "value": "_blank"
+                        }
+                    ],
+                    "default": "_auto"
+                },
+                {
                     "type": "input",
                     "layoutType": "inline",
-                    "text": "提示文案",
+                    "text": "下拉文案",
+                    "desc": "下拉过程提示文案",
+                    "bindKey": "pullingText",
+                    "default": "下拉即可刷新..."
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "释放文案",
+                    "desc": "释放过程提示文案",
+                    "bindKey": "loosingText",
+                    "default": "释放即可刷新..."
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "加载文案",
+                    "desc": "加载过程提示文案",
+                    "bindKey": "loadingText",
+                    "default": "加载中..."
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "完成文案",
                     "desc": "加载完成后的提示文案",
                     "bindKey": "finishedText",
-                    "default": "没有更多了"
+                    "default": "没有更多数据"
                 }
             ]
         },
@@ -177,7 +223,7 @@
                         "fontColors": {
                             "hex": "#000000"
                         },
-                        "fontSize": 15,
+                        "fontSize": 16,
                         "fontSizeUnit": "px",
                         "fontWeight": "600",
                         "fontFamily": "AlibabaPuHuiTi-Regular"
@@ -190,9 +236,9 @@
                     "bindKey": "readFontStyle",
                     "default": {
                         "fontColors": {
-                            "hex": "#343434"
+                            "hex": "#363636"
                         },
-                        "fontSize": 15,
+                        "fontSize": 16,
                         "fontSizeUnit": "px",
                         "fontWeight": "500",
                         "fontFamily": "AlibabaPuHuiTi-Regular"
@@ -255,6 +301,68 @@
                             "default": 15
                         }
                     ]
+                },
+                {
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "背景色",
+                    "bindKey": "subBgColor",
+                    "placeholder": "请选择颜色",
+                    "default": {}
+                },
+                {
+                    "type": "inlineGroup",
+                    "text": "宽高",
+                    "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "block",
+                            "text": "宽",
+                            "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
+                            "bindKey": "subWidth",
+                            "width": "60px",
+                            "default": "auto"
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "block",
+                            "text": "高",
+                            "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
+                            "bindKey": "subHeight",
+                            "width": "60px",
+                            "default": "calc(100% - 36px - 2%)"
+                        }
+                    ]
+                },
+                {
+                    "type": "box",
+                    "layoutType": "block",
+                    "text": "内外边距",
+                    "bindKey": "subBox",
+                    "default":{
+                        "marginTopVal": "2%",
+                        "marginRightVal": "",
+                        "marginBottomVal": "",
+                        "marginLeftVal": "",
+                        "paddingTopVal": "2%",
+                        "paddingRightVal": "2%",
+                        "paddingBottomVal": "2%",
+                        "paddingLeftVal": "2%"
+                    }
+                },
+                {
+                    "type": "border",
+                    "layoutType": "block",
+                    "text": "边框",
+                    "bindKey": "subBorder"
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "阴影样式",
+                    "desc":"填写格式如下：10px 10px 5px #888888，更多请点击查看详细填写说明",
+                    "bindKey": "boxShadow",
+                    "default":"0px 0px 3px rgba(0,0,0,0.1)"
                 }
             ]
         },
